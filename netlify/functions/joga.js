@@ -17,7 +17,7 @@ NIEMALS: Kalaendersprueche, Achtsamkeitsphrasen, Sanskrit, Fitnessstudio-Sprache
 
 Humor ist erlaubt. Trockenheit ist erwuenscht.
 
-Gute JOGA-Sprache klingt so:
+Gute JOGA-Sprache:
 - Mach das statt Kaffee.
 - Du bist nicht alt. Du bist unbeweglich.
 - Der Koerper ist kein Burostuhl.
@@ -49,13 +49,13 @@ Intensitaet: ${params.intensitaet}
 Format: ${params.format}
 
 Liefere:
-TITEL: 
+TITEL:
 HOOK: (1 Satz, provokant oder einladend)
 ABLAUF: (3-5 Moves mit Timing, alltagstauglich zuerst)
 DREHANLEITUNG: (kurz, kameratauglich)
 CAPTION: (TikTok-ready)
 HASHTAGS:
-ENDGEFUEHL: (1 Satz was der Zuschauer nach dem Video fuehlt)
+ENDGEFUEHL: (1 Satz)
 
 Zustand zuerst, nicht Anatomie. Kein Yoga-Vokabular.`;
   }
@@ -63,15 +63,53 @@ Zustand zuerst, nicht Anatomie. Kein Yoga-Vokabular.`;
   if (type === 'hooks') {
     return `Generiere 5 Hook-Varianten fuer JOGA.
 Thema/Move: ${params.thema}
-Zielgefuehl: ${params.gefuehl || 'offen'}
 
-Format: je 1 Satz. Direkt. Keine Erklaerungen.
-Mix aus: provokant, einladend, humorvoll, ehrlich.
-
-Danach: kurze 1-Satz Bewertung welche Hook am staerksten ist und warum.`;
+Format: je 1 Satz. Direkt. Mix aus provokant, einladend, humorvoll, ehrlich.
+Danach: 1 Satz welche Hook am staerksten ist und warum.`;
   }
 
   return `JOGA Content fuer: ${JSON.stringify(params)}. Direkt und praegnant.`;
+}
+
+async function callClaude(prompt, apiKey) {
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: 'claude-opus-4-5',
+      max_tokens: 1000,
+      system: JOGA_BRAIN,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error?.message || 'Claude API error');
+  return data.content[0].text;
+}
+
+async function callGPT(prompt, apiKey) {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiKey
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o',
+      max_tokens: 1000,
+      messages: [
+        { role: 'system', content: JOGA_BRAIN },
+        { role: 'user', content: prompt }
+      ]
+    })
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error?.message || 'OpenAI API error');
+  return data.choices[0].message.content;
 }
 
 exports.handler = async (event) => {
@@ -92,37 +130,25 @@ exports.handler = async (event) => {
 
   try {
     const { type, params } = JSON.parse(event.body);
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const anthropicKey = process.env.ANTHROPIC_API_KEY;
+    const openaiKey = process.env.OPENAI_API_KEY;
+    const prompt = buildPrompt(type, params);
 
-    if (!apiKey) {
-      return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured' }) };
-    }
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-5',
-        max_tokens: 1000,
-        system: JOGA_BRAIN,
-        messages: [{ role: 'user', content: buildPrompt(type, params) }]
-      })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return { statusCode: 500, headers, body: JSON.stringify({ error: data.error?.message || 'API error' }) };
-    }
+    // Call both in parallel
+    const [claudeResult, gptResult] = await Promise.allSettled([
+      anthropicKey ? callClaude(prompt, anthropicKey) : Promise.reject(new Error('No Anthropic key')),
+      openaiKey ? callGPT(prompt, openaiKey) : Promise.reject(new Error('No OpenAI key'))
+    ]);
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ result: data.content[0].text })
+      body: JSON.stringify({
+        claude: claudeResult.status === 'fulfilled' ? claudeResult.value : null,
+        claudeError: claudeResult.status === 'rejected' ? claudeResult.reason.message : null,
+        gpt: gptResult.status === 'fulfilled' ? gptResult.value : null,
+        gptError: gptResult.status === 'rejected' ? gptResult.reason.message : null,
+      })
     };
 
   } catch (err) {
