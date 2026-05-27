@@ -1,2968 +1,424 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-  <title>JOGA 2.0</title>
-  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet"/>
-  <style>*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}body{margin:0;padding:0;background:#030712}textarea,input{font-family:system-ui,sans-serif}</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>JOGA Creator 2.0</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #080808; color: #F0EDE7; }
+    * { -webkit-tap-highlight-color: transparent; }
+    ::-webkit-scrollbar { display: none; }
+
+    textarea, input[type="text"] {
+      outline: none;
+      resize: vertical;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.35s ease both; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid #2a2a2a;
+      border-top-color: #C8960A;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .results-grid {
+      display: flex;
+      gap: 16px;
+    }
+    @media (max-width: 760px) {
+      .results-grid { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script>
-    const { useState, useMemo, useEffect, useRef, useCallback } = React;
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-// ─── THEME ────────────────────────────────────────────────────────────────────
-function makeT(dark) {
-  return dark ? {
-    wrap: 'bg-gray-950 text-white',
-    header: 'bg-gray-950 border-gray-800',
-    card: 'bg-gray-900 border-gray-800',
-    input: 'bg-gray-900 border-gray-800 text-gray-200 placeholder-gray-700',
-    textMain: 'text-white',
-    textSub: 'text-gray-400',
-    textFaint: 'text-gray-600',
-    divider: 'border-gray-800',
-    tabInactive: 'bg-gray-900 text-gray-500 border-gray-800',
-    footer: 'bg-gray-950 border-gray-800',
-    aiMsg: 'bg-gray-800 text-gray-200',
-    aiUser: 'bg-blue-900 text-blue-100'
-  } : {
-    wrap: 'bg-gray-50 text-gray-900',
-    header: 'bg-white border-gray-200',
-    card: 'bg-white border-gray-200',
-    input: 'bg-white border-gray-300 text-gray-900 placeholder-gray-400',
-    textMain: 'text-gray-900',
-    textSub: 'text-gray-500',
-    textFaint: 'text-gray-400',
-    divider: 'border-gray-200',
-    tabInactive: 'bg-gray-100 text-gray-500 border-gray-200',
-    footer: 'bg-white border-gray-200',
-    aiMsg: 'bg-gray-100 text-gray-800',
-    aiUser: 'bg-blue-600 text-white'
-  };
-}
-var COL = {
-  gold: {
-    t: "text-yellow-500",
-    b: "bg-yellow-950",
-    br: "border-yellow-800"
-  },
-  blue: {
-    t: "text-blue-400",
-    b: "bg-blue-950",
-    br: "border-blue-800"
-  },
-  green: {
-    t: "text-green-400",
-    b: "bg-green-950",
-    br: "border-green-800"
-  },
-  orange: {
-    t: "text-orange-400",
-    b: "bg-orange-950",
-    br: "border-orange-800"
-  },
-  violet: {
-    t: "text-purple-400",
-    b: "bg-purple-950",
-    br: "border-purple-800"
-  },
-  red: {
-    t: "text-red-400",
-    b: "bg-red-950",
-    br: "border-red-800"
-  },
-  gray: {
-    t: "text-gray-400",
-    b: "bg-gray-800",
-    br: "border-gray-700"
-  }
-};
-var STATUS = ['offen', 'gedreht', 'geschnitten', 'gepostet'];
-var S_COL = {
-  offen: 'text-gray-500',
-  gedreht: 'text-blue-400',
-  geschnitten: 'text-orange-400',
-  gepostet: 'text-green-400'
-};
-var S_BG = {
-  offen: 'bg-gray-900 border-gray-800',
-  gedreht: 'bg-blue-950 border-blue-900',
-  geschnitten: 'bg-orange-950 border-orange-900',
-  gepostet: 'bg-green-950 border-green-900'
-};
-var BD = {
-  shooting: {
-    setup: 'Wohnzimmer, Ganzkörper, 9:16',
-    camera: 'Statisch. Körper komplett im Bild.',
-    light: 'Natürlich, Morgenlicht',
-    mood: 'trocken, direkt',
-    outfit: 'neutral, barfuß',
-    props: 'keine'
-  },
-  preflight: ['Ganzkörper sichtbar', 'Textbereich oben frei', 'Akku Osmo prüfen', 'Kamera gerade', 'Mic nur bei VO']
-};
+<div id="root"></div>
 
-// ─── DATA ─────────────────────────────────────────────────────────────────────
-var D = {
-  strategie: {
-    label: 'Strategie',
-    color: 'gold',
-    icon: '⚡',
-    sections: [{
-      title: 'Positionierung',
-      items: [{
-        id: 'pos1',
-        title: 'Der Kern',
-        lines: ['Ein lebendiger Mann mit 56.', 'Nicht Yoga. Nicht Fitness. Nicht Anti-Aging.', 'JOGA ist das Handwerk. Oliver ist die Marke.']
-      }, {
-        id: 'pos2',
-        title: 'Energie-Konsistenz',
-        warn: true,
-        lines: ['Alles muss sich anfühlen wie dieselbe Person.', '---', '-> Ruhig -> Trocken -> Leicht ironisch', '-> Körperlich -> Präsent -> Männlich ohne Macho', '-> Lebendig statt optimiert', '---', 'NICHT: Heute Philosophie. Morgen Fitness. Dann Comedy.', 'Wenn ein Video diese Energie nicht hat: nicht posten.']
-      }, {
-        id: 'pos3',
-        title: 'Mit 56-Regel',
-        warn: true,
-        lines: ['MAX 1x pro Woche.', 'Alter = Überraschungseffekt, nicht die Story.', '---', 'Zuschauer sollen denken: Wie alt ist der bitte? RICHTIG', 'Zuschauer sollen denken: Ah, Altwerden-Content. FALSCH']
-      }, {
-        id: 'pos4',
-        title: 'Die 4 Säulen',
-        lines: ['1. FUNCTION 40% – Kompetenz + Saves', '2. REAL TALK 25% – Persönlichkeit + Bindung', '3. WOW 20% – Aufmerksamkeit + Shares', '4. OLIVER 15% – Menschlichkeit + Community', '---', 'Nützlicher Content wird gespeichert.', 'Persönlichkeit wird verfolgt.']
-      }]
-    }, {
-      title: 'Phasen-Plan',
-      items: [{
-        id: 'ph1',
-        title: 'Phase 1 – Jetzt (4 Wochen)',
-        lines: ['70% bestehender Stil / 30% Persönlichkeit', '-> Morning Moves täglich 07:30', '-> Abend-Reihen 17:30–18:30', '-> Erste Couch Talks 1x/Woche']
-      }, {
-        id: 'ph2',
-        title: 'Phase 2 – Nach 4 Wochen',
-        lines: ['-> Couch Talk als regelmäßiges Format', '-> Mit 56-Content max 1x/Woche', '-> Kaffee + Move als Serie']
-      }, {
-        id: 'ph3',
-        title: 'Phase 3 – Wenn Bindung da ist',
-        lines: ['-> Was JOGA mit meinem Leben gemacht hat', '-> Männer + Beweglichkeit', '-> Energie statt Anti-Aging']
-      }]
-    }, {
-      title: 'Plattform-Regeln',
-      items: [{
-        id: 'tt',
-        title: 'TikTok First',
-        lines: ['Schnellste Daten. Unter 60 Sek.', '07:30 und 17:30–18:30. 1 Video/Tag.']
-      }, {
-        id: 'yt',
-        title: 'YouTube',
-        lines: ['Gleiche Videos als Shorts.', 'Lange Flows hier parken.']
-      }, {
-        id: 'ig',
-        title: 'Instagram',
-        lines: ['Statements + Standbilder laufen besser.', 'Persönliche Posts zuerst hier testen.']
-      }, {
-        id: 'tags',
-        title: 'Caption + Tags',
-        lines: ['TikTok: 1–2 Sätze. Dann Hashtags.', '#joga + #nichtyoga immer. Max 5 Tags.']
-      }]
-    }]
-  },
-  function: {
-    label: 'Function 40%',
-    color: 'blue',
-    icon: '💪',
-    sections: [{
-      title: 'Morning Moves',
-      items: [{
-        id: 'mm01',
-        title: 'MM01 – Tornado-Opener',
-        hook: 'Mach das bevor dein Kaffee wirkt.',
-        laenge: '10–15 Sek.',
-        caption: 'Kein Kaffee nötig. #joga #morgen',
-        tags: '#joga #nichtyoga #morgenroutine #bewegung',
-        shooting: {
-          setup: 'Wohnzimmer, Ganzkörper, Raum für Arme',
-          camera: 'Statisch. Arme dürfen nicht rausfliegen.',
-          light: 'Morgenlicht, warm',
-          mood: 'leicht verschlafen, dann plötzlich wach',
-          outfit: 'neutral, beweglich, barfuß',
-          props: 'keine'
-        },
-        timeline: [{
-          time: '0–2 Sek.',
-          text: 'Gesicht. Leicht müde.'
-        }, {
-          time: '2–3 Sek.',
-          text: 'Text-Super: MACH DAS BEVOR DEIN KAFFEE WIRKT'
-        }, {
-          time: '3–12 Sek.',
-          text: 'Tornado-Opener rhythmisch. Arme groß.'
-        }, {
-          time: '12–15 Sek.',
-          text: 'Letzte Öffnung halten. Freeze möglich.'
-        }],
-        textsuper: ['MACH DAS', 'BEVOR DEIN KAFFEE WIRKT'],
-        schnitt: ['Direkter Einstieg', '1 Zoom beim ersten Öffnen', 'Ende kurz stehen lassen'],
-        preflight: ['Ganzkörper sichtbar', 'Arme bleiben im Frame', 'Text oben platzieren'],
-        lines: ['Tiefer weiter Stand, Knie gebeugt', 'Rechte Schulter explosiv hoch', 'Arme reißen auseinander', 'Brustkorb öffnet komplett', 'Seitenwechsel, Rhythmus']
-      }, {
-        id: 'mm02',
-        title: 'MM02 – Anti-Schreibtisch',
-        hook: '8 Stunden sitzen zerstören deinen Körper.',
-        laenge: '10–20 Sek.',
-        caption: 'Aufstehen. Einmal. Jetzt. #joga',
-        tags: '#joga #nichtyoga #schreibtisch',
-        shooting: {
-          setup: 'Schreibtisch sichtbar im Hintergrund',
-          camera: 'Rundrücken zu Beginn zeigen',
-          light: 'Büro-Licht',
-          mood: 'leicht genervt, trocken',
-          outfit: 'Büro-casual',
-          props: 'Stuhl erkennbar'
-        },
-        timeline: [{
-          time: '0–2 Sek.',
-          text: 'Rundrücken, zusammengesackt'
-        }, {
-          time: '2–4 Sek.',
-          text: 'Text-Super erscheint'
-        }, {
-          time: '4–17 Sek.',
-          text: 'Komplette Sequenz'
-        }, {
-          time: '17–20 Sek.',
-          text: 'Offene Endposition'
-        }],
-        textsuper: ['8 STUNDEN SITZEN', 'ZERSTÖREN DEINEN KÖRPER'],
-        schnitt: ['Rundrücken als Kontrast nutzen', 'Öffnung betonen'],
-        preflight: ['Schreibtisch erkennbar', 'Ganzkörper sichtbar'],
-        lines: ['Rundrücken Startposition', 'Großer Ausfallschritt', 'Hände hinter Rücken', 'Brust brutal öffnen', 'WICHTIG: Öffnung übertreiben.']
-      }, {
-        id: 'mm03',
-        title: 'MM03 – Wachmacher-Swing',
-        hook: 'Besser als Kaffee.',
-        laenge: '10–15 Sek.',
-        caption: 'Kaffee kann warten. #joga',
-        tags: '#joga #nichtyoga #morgen',
-        shooting: BD.shooting,
-        timeline: [{
-          time: '0–2 Sek.',
-          text: 'Tiefe Vorbeuge, verschlafen'
-        }, {
-          time: '2–3 Sek.',
-          text: 'Text-Super: BESSER ALS KAFFEE'
-        }, {
-          time: '3–13 Sek.',
-          text: 'Rhythmischer Swing'
-        }, {
-          time: '13–15 Sek.',
-          text: 'Letzte Öffnung'
-        }],
-        textsuper: ['BESSER', 'ALS KAFFEE'],
-        schnitt: ['Rhythmus im Schnitt spürbar'],
-        preflight: ['Höhe für Arme oben', 'Ganzkörper sichtbar'],
-        lines: ['Tiefe Vorbeuge, Arme hängen', 'Explosiv aufrollen', 'Arme riesig schwingen', 'WICHTIG: Kein Stop. Rhythmisch.']
-      }, {
-        id: 'mm05',
-        title: 'MM05 – Wirbelsäulen-Reset',
-        hook: 'Das fühlt sich illegal gut an.',
-        laenge: '15–20 Sek.',
-        caption: 'Musst du nicht verstehen. Nur machen. #joga',
-        tags: '#joga #nichtyoga #rücken',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          mood: 'dead serious. Kein Lächeln.'
-        }),
-        timeline: [{
-          time: '0–2 Sek.',
-          text: 'Direkt in Kamera. Kein Lächeln.'
-        }, {
-          time: '2–4 Sek.',
-          text: 'Text-Super'
-        }, {
-          time: '4–18 Sek.',
-          text: 'Weiche Rolle, dann plötzliche Öffnung'
-        }, {
-          time: '18–20 Sek.',
-          text: 'Große Position halten'
-        }],
-        textsuper: ['DAS FÜHLT SICH', 'ILLEGAL GUT AN'],
-        schnitt: ['Weich zu Beginn', 'Öffnung als Highlight'],
-        preflight: ['Rücken sichtbar', 'Seitenansicht testen'],
-        lines: ['Weicher breiter Stand', 'Langsame Wirbelsäulenrolle', 'Plötzliche riesige Brustöffnung', 'Tiefer Side Bend', 'WICHTIG: Kontrast weich -> groß.']
-      }, {
-        id: 'mm07',
-        title: 'MM07 – JOGA-Move',
-        hook: 'Das ist JOGA. Nicht Yoga. Nicht Sport.',
-        laenge: '15–20 Sek.',
-        caption: 'Das ist JOGA. #joga #nichtyoga',
-        tags: '#joga #nichtyoga #bewegung',
-        shooting: BD.shooting,
-        textsuper: ['DAS IST JOGA.', 'NICHT YOGA.'],
-        schnitt: ['Fließend, kein Stress'],
-        preflight: BD.preflight,
-        lines: ['Rhythmische Rotation', 'Gewicht fließend verlagern', 'Arme komplett öffnen']
-      }, {
-        id: 'mm08',
-        title: 'MM08 – Nervensystem-Move',
-        hook: 'Mach das wenn dein Kopf komplett voll ist.',
-        laenge: '15–20 Sek.',
-        caption: 'Kopf aus. Körper ein. #joga',
-        tags: '#joga #nichtyoga #stress',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          light: 'Gedämpft',
-          mood: 'ruhig, fast überfordert'
-        }),
-        textsuper: ['KOPF ZU VOLL?', 'MACH DAS.'],
-        schnitt: ['Langsam schneiden', 'Atmung hörbar lassen'],
-        preflight: ['Ruhige Umgebung', 'Kein Hintergrundlärm'],
-        lines: ['Große langsame Armkreise', 'Vorbeuge, hochrollen', 'WICHTIG: Atmung hörbar.']
-      }, {
-        id: 'mm09',
-        title: 'MM09 – Anti-Steifheits-Move',
-        hook: 'Du bist nicht alt. Du bist unbeweglich.',
-        laenge: '15–20 Sek.',
-        caption: 'Du brauchst keinen neuen Körper. #joga',
-        tags: '#joga #nichtyoga #beweglichkeit',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          mood: 'trocken, ohne Lächeln'
-        }),
-        textsuper: ['DU BIST NICHT ALT.', 'DU BIST UNBEWEGLICH.'],
-        schnitt: ['Startposition klein betonen', 'Öffnung als Payoff'],
-        preflight: BD.preflight,
-        lines: ['Schwere Vorbeuge', 'Wirbel für Wirbel hochrollen', 'Arme riesig öffnen', 'Transformation: klein -> groß']
-      }, {
-        id: 'mm10',
-        title: 'MM10 – Holy-Shit-Move',
-        hook: 'Dieser Move fühlt sich komplett verrückt an.',
-        laenge: '15–20 Sek.',
-        caption: 'Mach das einmal. Dann weißt du es. #joga',
-        tags: '#joga #nichtyoga #flow',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          mood: 'kurz, direkt, dann volle Energie',
-          outfit: 'dunkel für Silhouette'
-        }),
-        textsuper: ['MACH DAS EINMAL.', 'DANN WEISST DU ES.'],
-        schnitt: ['Silhouette nutzen', 'Maximale Dynamik'],
-        preflight: ['Viel Platz', 'Dunkler Hintergrund'],
-        lines: ['Große Spiralbewegung', 'Tiefer Side Lunge', 'Arm Sweep über Kopf', 'WICHTIG: Silhouette. Raum. Dynamik.']
-      }]
-    }, {
-      title: 'Abend-Reihen',
-      items: [{
-        id: 'ar01',
-        title: 'AR01 – Für den Rücken',
-        hook: 'Die geilste Abendroutine. Rücken.',
-        laenge: '15–30 Sek.',
-        caption: '3 Minuten. Jeden Abend. #joga #rücken',
-        tags: '#joga #nichtyoga #rücken',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['1. Wirbelsäulen-Welle', '2. Sitzende Rotation 15 Sek.', '3. Hängen lassen 30 Sek.']
-      }, {
-        id: 'ar02',
-        title: 'AR02 – Full Body',
-        hook: 'Die geilste Abendroutine. Full Body.',
-        laenge: '15–20 Sek.',
-        caption: 'Oberkörper auf. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['1. Tornado-Opener', '2. Brustöffner-Lunge', '3. Side Spiral']
-      }, {
-        id: 'ar03',
-        title: 'AR03 – Für guten Schlaf',
-        hook: 'Die geilste Abendroutine. Schlaf.',
-        laenge: '15–20 Sek.',
-        caption: 'Schlafen. Richtig. #joga',
-        tags: '#joga #nichtyoga #schlaf',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['1. Nervensystem-Move', '2. Atemwelle', '3. Ausschwingen']
-      }, {
-        id: 'ar04',
-        title: 'AR04 – Hüfte',
-        hook: 'Die geilste Abendroutine. Hüfte.',
-        laenge: '15–30 Sek.',
-        caption: 'Hüfte auf. #joga',
-        tags: '#joga #nichtyoga #hüfte',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['1. Hüftkreise voller Radius', '2. Tiefer Lunge 20 Sek.', '3. Frosch 30 Sek.']
-      }, {
-        id: 'ar05',
-        title: 'AR05 – Schultern',
-        hook: 'Die geilste Abendroutine. Schultern.',
-        laenge: '15–30 Sek.',
-        caption: 'Schultern los. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['1. Schulter-Pendel', '2. Thorax-Rotation', '3. Integration']
-      }, {
-        id: 'ar06',
-        title: 'AR06 – Gegen Stress',
-        hook: 'Die geilste Abendroutine. Stress.',
-        laenge: '15–20 Sek.',
-        caption: 'Stress raus. #joga',
-        tags: '#joga #nichtyoga #stress',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['1. Stille Welle', '2. Atem 4 ein 6 aus', '3. Stehende Stille']
-      }]
-    }, {
-      title: 'JOGA am Schreibtisch',
-      items: [{
-        id: 'sd1',
-        title: 'SD1 – Nacken',
-        hook: 'Dein Nacken hasst dich gerade.',
-        laenge: '~60 Sek.',
-        caption: 'Drei Minuten. #nichtyoga #schreibtisch',
-        tags: '#nichtyoga #joga #schreibtisch',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          setup: 'Schreibtisch sichtbar, Oberkörper',
-          props: 'Stuhl erkennbar'
-        }),
-        preflight: BD.preflight,
-        lines: ['Move 1: Ohr-zu-Schulter – sinken', 'Move 2: Schulter-Drop – fallen', 'Move 3: Schulter-Rollout – rollen']
-      }, {
-        id: 'sd2',
-        title: 'SD2 – Raucherpause',
-        hook: 'Bewegung statt Raucherpause.',
-        laenge: '~60 Sek.',
-        caption: 'Gleiche Zeit. Anderes Ergebnis. #nichtyoga',
-        tags: '#nichtyoga #schreibtisch',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Move 1: Wirbelsäulen-Welle – aufrollen', 'Move 2: Arme hoch – ziehen', 'Move 3: Brustöffnung – aufmachen']
-      }, {
-        id: 'sd3',
-        title: 'SD3 – Hände',
-        hook: 'Deine Hände tippen seit Stunden.',
-        laenge: '~60 Sek.',
-        caption: 'Handgelenke, Unterarme. #nichtyoga',
-        tags: '#nichtyoga #schreibtisch',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          camera: 'NAHAHAUFNAHME – Hände im Großformat!'
-        }),
-        preflight: BD.preflight,
-        lines: ['KAMERA: Nah!', 'Move 1: Ausschütteln + Kreisen', 'Move 2: Finger-Stretch', 'Move 3: Schulter-Nacken']
-      }, {
-        id: 'sd4',
-        title: 'SD4 – Rücken',
-        hook: 'Du sitzt seit zwei Stunden. Dein Rücken auch.',
-        laenge: '~60 Sek.',
-        caption: 'Zwei Stunden. #nichtyoga',
-        tags: '#nichtyoga #schreibtisch #rücken',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Move 1: Sitzende Rotation – drehen', 'Move 2: Vorbeuge hängend', 'Move 3: Katze/Kuh – welle']
-      }, {
-        id: 'sd5',
-        title: 'SD5 – Augen',
-        hook: 'Deine Augen kleben am Bildschirm.',
-        laenge: '~60 Sek.',
-        caption: '60 cm Fokus seit Stunden. #nichtyoga',
-        tags: '#nichtyoga #augen',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          camera: 'NAH ans Gesicht!'
-        }),
-        preflight: BD.preflight,
-        lines: ['KAMERA: Nah!', 'Move 1: Weitsicht-Scan', 'Move 2: Kopf + Augen', 'Move 3: Stirn-Release']
-      }, {
-        id: 'sd6',
-        title: 'SD6 – Beine',
-        hook: 'Deine Beine schlafen.',
-        laenge: '~60 Sek.',
-        caption: 'Deine Beine tun nichts. #nichtyoga',
-        tags: '#nichtyoga #schreibtisch #beine',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Move 1: Ausfallschritt am Stuhl', 'Move 2: Sitzende Hüfte', 'Move 3: Einbein-Balance']
-      }, {
-        id: 'sd7',
-        title: 'SD7 – Wochensummary',
-        hook: 'Die Woche. 90 Sekunden.',
-        laenge: '90 Sek.',
-        caption: 'Die ganze Woche. #nichtyoga',
-        tags: '#nichtyoga #schreibtisch',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Flow ohne Schnitt: Schulter -> Wirbelsäule -> Rotation -> Arme -> Knie -> Vorbeuge']
-      }]
-    }, {
-      title: 'JOGA wie früher',
-      items: [{
-        id: 'wf1',
-        title: 'WF1 – Mit 8 gemacht',
-        hook: 'Das hast du mit 8 jeden Tag gemacht.',
-        laenge: '~60 Sek.',
-        caption: 'Mit 8 selbstverständlich. #nichtyoga',
-        tags: '#nichtyoga #jogawiefrüher',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          setup: 'Freier Raum, Platz für Rollen'
-        }),
-        preflight: ['Matte!', 'Fehlversuche DRINLASSEN!'],
-        lines: ['Vorwärtsrolle – FEHLVERSUCHE ZEIGEN!', 'Rückwärtsrolle vereinfacht', 'Das Zögern IST der Content.']
-      }, {
-        id: 'wf2',
-        title: 'WF2 – Gehopst',
-        hook: 'Wann hast du zuletzt gehopst?',
-        laenge: '~60 Sek.',
-        caption: 'Zu lange her. #nichtyoga',
-        tags: '#nichtyoga #jogawiefrüher',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Einbein-Hopser', 'Seilspringen ohne Seil', 'Seitliche Skips']
-      }, {
-        id: 'wf3',
-        title: 'WF3 – Boden',
-        hook: 'Boden ist unterschätzt.',
-        laenge: '~60 Sek.',
-        caption: 'Als Kind war Boden normal. #nichtyoga',
-        tags: '#nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Robben kurz', 'Krabben-Walk', 'Bärengang']
-      }, {
-        id: 'wf4',
-        title: 'WF4 – Gleichgewicht',
-        hook: 'Gleichgewicht. War mal einfach.',
-        laenge: '~60 Sek.',
-        caption: 'Als Kind auf allem balanciert. #nichtyoga',
-        tags: '#nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Auf Linie gehen', 'Seitliches Balancieren', 'Einbeinstand Augen zu']
-      }, {
-        id: 'wf5',
-        title: 'WF5 – Handstand fast',
-        hook: 'Handstand. Fast.',
-        laenge: '~60 Sek.',
-        caption: 'Als Kind selbstverständlich. #nichtyoga',
-        tags: '#nichtyoga',
-        shooting: BD.shooting,
-        preflight: ['Wand verfügbar', 'Fehlversuche ZEIGEN!'],
-        lines: ['Frosch-Balance (Krähe)', 'Wand-Handstand – FEHLVERSUCHE!', 'Schulterstand']
-      }, {
-        id: 'wf6',
-        title: 'WF6 – Nicht vergessen',
-        hook: 'Was der Körper nicht vergisst.',
-        laenge: '~60 Sek.',
-        caption: 'Manche Dinge vergisst er nie. #nichtyoga',
-        tags: '#nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Tiefe Hocke 20–30 Sek.', 'Kleine Brücke', 'Schneidersitz ohne Lehne']
-      }, {
-        id: 'wf7',
-        title: 'WF7 – Wochensummary',
-        hook: 'Die Woche. 90 Sekunden.',
-        laenge: '90 Sek.',
-        caption: 'Was du konntest. Was du kannst. #nichtyoga',
-        tags: '#nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Vorwärtsrolle -> Hopser -> Robben -> Bärengang -> Linie -> Krähe -> Brücke']
-      }]
-    }, {
-      title: 'Weitere Alltagsformate',
-      items: [{
-        id: 'bett',
-        title: 'JOGA im Bett (7 Parts)',
-        lines: ['P1: Mach das bevor du aufstehst.', 'P2: Dein Rücken schläft noch.', 'P3: Schultern.', 'P4: Hüfte liegend.', 'P5: 2 Min. vor dem Tag.', 'P6: Vor dem Einschlafen.', 'P7: Wochensummary.']
-      }, {
-        id: 'fern',
-        title: 'JOGA vorm Fernseher (7 Parts)',
-        lines: ['P1: Du sitzt sowieso.', 'P2: Netflix kann warten.', 'P3: Rücken merkt die Couch.', 'P4: Beine + Füße.', 'P5: Wirbelsäule.', 'P6: Bester Move.', 'P7: Wochensummary.']
-      }, {
-        id: 'fuesse',
-        title: 'JOGA für die Füße (7 Parts)',
-        lines: ['P1: Jahrelang eingesperrt.', 'P2: Zehen bewegen.', 'P3: Kein Equipment.', 'P4: Füße + Rücken.', 'P5: Kurzfuß + Piano.', 'P7: Wochensummary.']
-      }, {
-        id: 'gesicht',
-        title: 'JOGA fürs Gesicht (7 Parts)',
-        lines: ['P1: Stress sitzt hier.', 'P2: Zähneknirschen.', 'P3: 8h Bildschirm.', 'P4: Nacken fängt im Gesicht an.', 'P6: Sieht bescheuert aus. Wirkt.', 'P7: Wochensummary.']
-      }, {
-        id: 'kinder',
-        title: 'JOGA mit Kindern (7 Parts)',
-        lines: ['Du alleine im Bild.', 'P1: Heute Nachmittag.', 'P2: Wer hält länger?', 'P3: 20 Min. beschäftigt.', 'P6: Runterfahren.', 'P7: Wochensummary.']
-      }]
-    }]
-  },
-  realtalk: {
-    label: 'Real Talk 25%',
-    color: 'green',
-    icon: '🎙',
-    sections: [{
-      title: 'Statements',
-      items: [{
-        id: 'st01',
-        title: 'ST01 – Yoga ist nichts',
-        hook: 'Yoga ist nichts für dich.',
-        laenge: '30–60 Sek.',
-        caption: '8 Stunden sitzen ist kein Bewegungsprogramm. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          setup: 'Wohnzimmer, Oberkörper sichtbar'
-        }),
-        preflight: ['Gesicht gut beleuchtet', 'Ton prüfen!'],
-        lines: ['Direkt in die Kamera.', 'Ein Satz. Dann JOGA zeigen.']
-      }, {
-        id: 'st02',
-        title: 'ST02 – Nicht alt',
-        hook: 'Dein Körper ist nicht alt.',
-        laenge: '30–45 Sek.',
-        caption: 'Er ist unterfordert. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Trocken, direkt. Dann Move zeigen.']
-      }, {
-        id: 'st03',
-        title: 'ST03 – Stretching',
-        hook: 'Die meisten verschwenden Zeit mit Stretching.',
-        laenge: '30–45 Sek.',
-        caption: 'Nicht Stretching. Bewegung. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Provokant. Dann zeigen was besser ist.']
-      }, {
-        id: 'st05',
-        title: 'ST05 – Nicht flexibel',
-        hook: 'Du musst nicht flexibel sein.',
-        laenge: '30–45 Sek.',
-        caption: 'Du musst dich bewegen. Das reicht. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Einladend. Zielgruppe: Männer 40+.']
-      }, {
-        id: 'st06',
-        title: 'ST06 – Schreibtisch',
-        hook: 'Dein Schreibtisch zerstört dich.',
-        laenge: '30–45 Sek.',
-        caption: '3 Minuten dagegen. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Nacken, Rücken, Hüfte. Dann Move.']
-      }, {
-        id: 'st07',
-        title: 'ST07 – Ich bin 56',
-        warn: true,
-        hook: 'Ich bin 56. Das ist mein Körper.',
-        laenge: '45–75 Sek.',
-        caption: 'Mit 56. Jeden Tag. #joga',
-        tags: '#joga #nichtyoga #56',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          mood: 'ruhig selbstbewusst'
-        }),
-        preflight: ['NICHT VORHER POSTEN.', 'Erst wenn die Energie sitzt.'],
-        lines: ['NICHT VORHER POSTEN.', 'WOW-Move danach zeigen.']
-      }]
-    }, {
-      title: 'Couch Talks',
-      items: [{
-        id: 'ct01',
-        title: 'CT01 – Männer',
-        hook: 'Männer warten bis der Körper schreit.',
-        laenge: '20–40 Sek.',
-        shooting: {
-          setup: 'Sofa, Kaffee, morgens',
-          camera: 'Nah, Gesicht klar',
-          light: 'Gedämpft, natürlich',
-          mood: 'trocken',
-          outfit: 'locker',
-          props: 'Kaffeetasse'
-        },
-        preflight: ['Ton prüfen', 'Ruhige Umgebung'],
-        lines: ['Männer warten bis der Körper schreit. Die intelligenten reagieren vorher.']
-      }, {
-        id: 'ct02',
-        title: 'CT02 – Verhandelt nicht',
-        hook: 'Der Körper verhandelt nicht.',
-        laenge: '20–40 Sek.',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Mit 30 ignorierst du ihn. Mit 56 antwortet er.']
-      }, {
-        id: 'ct03',
-        title: 'CT03 – Energie',
-        hook: 'Energie ist wichtiger als Bauchmuskeln.',
-        laenge: '20–30 Sek.',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Ein Satz. Pause. Weg.']
-      }, {
-        id: 'ct04',
-        title: 'CT04 – Warum JOGA',
-        hook: 'Warum ich das jeden Morgen mache.',
-        laenge: '30–45 Sek.',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Nicht weil ich muss. Weil ich weiß wie es ohne anfühlt.']
-      }, {
-        id: 'ct05',
-        title: 'CT05 – Redet',
-        hook: 'Dein Körper redet.',
-        laenge: '20–30 Sek.',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Die meisten hören erst zu wenn er schreit.']
-      }]
-    }, {
-      title: 'Mit 56 (max 1x/Woche!)',
-      items: [{
-        id: 'm56_1',
-        title: 'Mit 56 #01',
-        lines: ['Mit 56 merkst du: Sitzen hat Sportfolgen.']
-      }, {
-        id: 'm56_2',
-        title: 'Mit 56 #02',
-        lines: ['Mit 56: Energie wichtiger als Coolness.']
-      }, {
-        id: 'm56_3',
-        title: 'Mit 56 #03',
-        lines: ['Mit 56 wird Beweglichkeit Luxus.']
-      }, {
-        id: 'm56_4',
-        title: 'Mit 56 #04',
-        lines: ['Mit 56 ist Regeneration keine Option mehr.']
-      }, {
-        id: 'm56_5',
-        title: 'Mit 56 #05',
-        lines: ['Mit 56 entscheidet dein Körper mit.']
-      }, {
-        id: 'm56_6',
-        title: 'Mit 56 #06',
-        lines: ['Mit 56: Der Körper vergisst nichts. Er wartet nur.']
-      }]
-    }, {
-      title: 'JOGA-Sprüche (Standbilder)',
-      items: [{
-        id: 'sp1',
-        title: 'Körperversagen (8)',
-        lines: ['Im Joga nennt man den Krieger: Einer der doch noch einkaufen gegangen ist.', 'Im Joga ist der Hund: erschöpfter Labradoodle.', 'Im Joga ist die Kobra: genervter Gartenschlauch.', 'Im Joga ist die Krähe: schlechte Entscheidungen auf den Händen.', 'Im Joga ist der Tänzer: fast Gleichgewicht verloren.', 'Im Joga nennt man den Adler: Schulterchaos.', 'Im Joga ist die Brücke: Mutig heute.', 'Im Joga ist der Fisch: ein Mensch mit Hoffnung.']
-      }, {
-        id: 'sp2',
-        title: 'Alltagsflucht (6)',
-        lines: ['Kindhaltung = Kurz nicht teilnehmen.', 'Endentspannung = Systemupdate.', 'Happy Baby = Steuererklärung verdrängen.', 'Vorbeuge = Nach dem Ladekabel suchen.', 'Taube = jemand mit Hüftproblemen.', 'Lotussitz = Hauptsache irgendwie sitzen.']
-      }, {
-        id: 'sp3',
-        title: 'Falscher Ehrgeiz (5)',
-        lines: ['Baum = Nicht umfallen.', 'Halbmond = WLAN suchen.', 'Sonnengruß = Mal gucken ob der Rücken mitmacht.', 'Flow = Einmal sortieren bitte.', 'Taube = Jetzt ziehts tief drin.']
-      }, {
-        id: 'sp4',
-        title: 'Übersetzungen (11)',
-        lines: ['Krieger II = Mann der vom Sofa hochgekommen ist.', 'Shavasana = Ruhe vor dem Turnen.', 'Lotus = Sitz mal einfach kurz.', 'Namaste = Na, Moin!', 'Baum oder Trauerweide – egal.', 'Life happens, shit auch. Joga.', 'Kein Joga ist auch keine Lösung.', 'Kerze können = Teelicht reicht.', 'Endentspannung = Systemupdate.']
-      }]
-    }]
-  },
-  wow: {
-    label: 'WOW 20%',
-    color: 'orange',
-    icon: '🔥',
-    sections: [{
-      title: 'WOW-Videos',
-      items: [{
-        id: 'w01',
-        title: 'WOW01 – Tai Chi Flow',
-        warn: true,
-        hook: 'Scheiße, das ist geiler als 8 Stunden Sex.',
-        laenge: 'Produziert – postbereit',
-        caption: 'Dauert nur ein paar Minuten. #joga #taichi',
-        tags: '#joga #nichtyoga #taichi',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Fließende Spiralbewegungen. Ruhige Stärke.', 'NÄCHSTES VIDEO IN DER QUEUE.']
-      }, {
-        id: 'w02',
-        title: 'WOW02 – Samurai Flow',
-        hook: 'Langsam ist manchmal härter.',
-        laenge: 'Aus Flow S1',
-        caption: 'Kontrolle statt Tempo. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: _objectSpread(_objectSpread({}, BD.shooting), {}, {
-          mood: 'ruhige Stärke, Kontrolle'
-        }),
-        preflight: BD.preflight,
-        lines: ['Horse Stance -> langsamer Block -> Slow Rotation']
-      }, {
-        id: 'w03',
-        title: 'WOW03 – Tierkörper',
-        hook: 'Du bewegst dich viel zu menschlich.',
-        laenge: 'Aus Flow S2',
-        caption: 'Tief. Instinktiv. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Squat -> Panther -> Crouch to Open -> Schleichen']
-      }, {
-        id: 'w04',
-        title: 'WOW04 – Rave Flow',
-        hook: 'Dein Körper kennt Rhythmus.',
-        laenge: 'Aus Flow E4',
-        caption: 'Nicht tanzen. Nur bewegen. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Bounce -> Shoulder Groove -> Side Step -> Body Wave']
-      }, {
-        id: 'w05',
-        title: 'WOW05 – Nächster Viral',
-        warn: true,
-        hook: 'Neue Hook – noch offen',
-        laenge: 'Zu entwickeln',
-        lines: ['NICHT: Geilste Morgenroutine – Kopie!', 'Kandidat: Scheiße, das ist geiler als 8 Stunden Schlaf.']
-      }]
-    }, {
-      title: '22 Flows Übersicht',
-      items: [{
-        id: 'fb',
-        title: 'BASIS B1–B8',
-        lines: ['B1 Erdung', 'B2 Welle', 'B3 Öffner', 'B4 Verankerer', 'B5 Atemflow', 'B6 Balance', 'B7 Rücken', 'B8 Schwerlos – 30% Kraft.']
-      }, {
-        id: 'fe',
-        title: 'ENERGIE E1–E5',
-        lines: ['E1 Schleudergang', 'E2 Aufwecker', 'E3 Kraftfluss', 'E4 Rave Flow', 'E5 Sturm']
-      }, {
-        id: 'fr',
-        title: 'REGULATION R1–R4',
-        lines: ['R1 Stille', 'R2 Nacht-Flow', 'R3 Nachtschicht', 'R4 Hände']
-      }, {
-        id: 'fs',
-        title: 'SIGNATURE S1–S5',
-        lines: ['S1 Samurai', 'S2 Tierkörper', 'S3 Magnet', 'S4 Spirale', 'S5 Exorzismus']
-      }]
-    }]
-  },
-  oliver: {
-    label: 'Oliver 15%',
-    color: 'violet',
-    icon: '🎭',
-    sections: [{
-      title: 'Oliver-Formate',
-      items: [{
-        id: 'o01',
-        title: 'OLI01 – Kaffee + Move',
-        hook: 'Starte deinen Tag mit einem Fuck You Müde.',
-        laenge: '10–20 Sek.',
-        caption: 'Jeden Morgen. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: {
-          setup: 'Küche/Wohnzimmer, Kaffeetasse sichtbar',
-          camera: 'Nah bis Oberkörper, dann Ganzkörper',
-          light: 'Morgen, natürlich',
-          mood: 'verschlafen, dann Energie',
-          outfit: 'Morgen-casual',
-          props: 'Kaffeetasse'
-        },
-        preflight: ['Kaffee vorhanden', 'Bewegung ohne loslassen testen'],
-        lines: ['Kaffeetasse in der Hand.', 'Move ohne abzusetzen.']
-      }, {
-        id: 'o02',
-        title: 'OLI02 – Outtake',
-        hook: 'Take 4. Immer noch nicht.',
-        laenge: '15–30 Sek.',
-        caption: 'Das ist mein Leben. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: ['Fehlversuche AUFHEBEN!'],
-        lines: ['Echter Fehlversuch. Reaktion drauf. Trocken.']
-      }, {
-        id: 'o03',
-        title: 'OLI03 – Spaziergang',
-        hook: 'Kurzer Gedanke beim Spazieren.',
-        laenge: '20–40 Sek.',
-        caption: 'Spaziergang. Gedanke. Fertig. #joga',
-        tags: '#joga #hamburg',
-        shooting: {
-          setup: 'Draußen Hamburg',
-          camera: 'Selfie oder jemand filmt',
-          light: 'Tageslicht',
-          mood: 'beiläufig',
-          outfit: 'alltagsnormal',
-          props: 'keine'
-        },
-        preflight: ['Ton bei Wind prüfen'],
-        lines: ['Hamburg draußen. Ein Gedanke. Dann Schluss.']
-      }, {
-        id: 'o04',
-        title: 'OLI04 – Warum JOGA',
-        hook: 'Warum ich das jeden Morgen mache.',
-        laenge: '30–45 Sek.',
-        caption: 'Mein Grund. Nicht deiner. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Kein Coaching. Persönliche Antwort.']
-      }, {
-        id: 'o05',
-        title: 'OLI05 – Kommentar',
-        hook: 'Jemand hat gefragt...',
-        laenge: '20–30 Sek.',
-        caption: 'Gute Frage. #joga',
-        tags: '#joga #nichtyoga',
-        shooting: BD.shooting,
-        preflight: BD.preflight,
-        lines: ['Kommentar zeigen. Trocken antworten. Kurz.']
-      }]
-    }]
-  }
-};
-var WOCHE = [{
-  tag: 'MO',
-  farbe: 'blue',
-  morgen: 'Morning Move 07:30',
-  abend: 'Couch Talk oder Mit 56'
-}, {
-  tag: 'DI',
-  farbe: 'orange',
-  morgen: 'WOW-Clip oder Flow',
-  abend: 'Alltag-Moment'
-}, {
-  tag: 'MI',
-  farbe: 'green',
-  morgen: 'Statement oder JOGA-Spruch',
-  abend: ''
-}, {
-  tag: 'DO',
-  farbe: 'blue',
-  morgen: 'Alltagsformat',
-  abend: ''
-}, {
-  tag: 'FR',
-  farbe: 'orange',
-  morgen: 'WOW oder Flow',
-  abend: ''
-}, {
-  tag: 'SA',
-  farbe: 'violet',
-  morgen: 'Oliver-Moment',
-  abend: ''
-}, {
-  tag: 'SO',
-  farbe: 'green',
-  morgen: 'Statement Sonntag',
-  abend: ''
-}];
-var ALL_IDS = Object.values(D).flatMap(function (cat) {
-  return cat.sections.flatMap(function (s) {
-    return s.items.map(function (i) {
-      return {
-        id: i.id,
-        title: i.title,
-        hook: i.hook || '',
-        cat: cat.label,
-        color: cat.color
-      };
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useCallback } = React;
+
+// ─── Design tokens ───────────────────────────────────────────────────────────
+const G      = '#C8960A';
+const CL_C   = '#CC785C';   // Claude – terracotta
+const GP_C   = '#10A37F';   // GPT-4o – green
+const BG     = '#080808';
+const CARD   = '#0f0f0f';
+const BORDER = '#1e1e1e';
+const TEXT   = '#F0EDE7';
+const MUTED  = '#555';
+const MONO   = "'IBM Plex Mono', monospace";
+const SYNE   = "'Syne', sans-serif";
+
+// ─── Data ────────────────────────────────────────────────────────────────────
+const PILLARS = [
+  { id: 'nutzlich', label: 'Nützlich' },
+  { id: 'wow',      label: 'Wow'      },
+  { id: 'ehrlich',  label: 'Ehrlich'  },
+];
+const PLATFORMS = [
+  { id: 'tiktok',    label: 'TikTok'    },
+  { id: 'instagram', label: 'Instagram' },
+  { id: 'youtube',   label: 'YouTube'   },
+];
+
+// ─── Tiny helpers ────────────────────────────────────────────────────────────
+function Tag({ children, color }) {
+  return (
+    <div style={{
+      fontFamily: MONO, fontSize: 9, letterSpacing: '2.5px',
+      color: color || MUTED, marginBottom: 8, textTransform: 'uppercase',
+    }}>
+      {children}
+    </div>
+  );
+}
+
+function Pill({ active, onClick, children }) {
+  return (
+    <button onClick={onClick} style={{
+      padding: '5px 13px', borderRadius: 20, cursor: 'pointer',
+      border: active ? 'none' : `1px solid ${BORDER}`,
+      background: active ? G : 'transparent',
+      color: active ? '#000' : MUTED,
+      fontFamily: MONO, fontSize: 10, letterSpacing: '0.5px',
+      transition: 'all .15s',
+    }}>
+      {children}
+    </button>
+  );
+}
+
+function CopyBtn({ text }) {
+  const [done, setDone] = useState(false);
+  const copy = () => {
+    const s = Array.isArray(text) ? text.join('\n') : String(text || '');
+    navigator.clipboard?.writeText(s).then(() => {
+      setDone(true);
+      setTimeout(() => setDone(false), 1600);
     });
-  });
-});
-function findItem(id) {
-  for (var _i = 0, _Object$values = Object.values(D); _i < _Object$values.length; _i++) {
-    var cat = _Object$values[_i];
-    var _iterator = _createForOfIteratorHelper(cat.sections),
-      _step;
+  };
+  return (
+    <button onClick={copy} style={{
+      background: 'none', border: 'none', cursor: 'pointer',
+      fontFamily: MONO, fontSize: 9, letterSpacing: '1px',
+      color: done ? G : '#333', transition: 'color .15s', padding: '2px 6px',
+    }}>
+      {done ? 'KOPIERT ✓' : 'KOPIEREN'}
+    </button>
+  );
+}
+
+// ─── Single output field ─────────────────────────────────────────────────────
+function Field({ label, content, accent }) {
+  if (!content && content !== 0) return null;
+
+  const baseCard = {
+    background: '#141414', border: `1px solid ${BORDER}`,
+    borderRadius: 6, padding: '10px 14px',
+    fontFamily: MONO, fontSize: 11, lineHeight: 1.7, color: TEXT,
+  };
+
+  let body;
+
+  if (label === 'HOOK') {
+    body = (
+      <div style={{
+        ...baseCard,
+        borderLeft: `3px solid ${accent}`,
+        borderRadius: '0 6px 6px 0',
+        fontFamily: SYNE, fontSize: 15, fontWeight: 600,
+      }}>
+        {content}
+      </div>
+    );
+  } else if (label === 'TEXTSUPER') {
+    const items = Array.isArray(content) ? content : [content];
+    body = (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {items.map((t, i) => (
+          <div key={i} style={{ ...baseCard, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ color: accent, fontWeight: 600, flexShrink: 0 }}>{i + 1}</span>
+            <span>{t}</span>
+          </div>
+        ))}
+      </div>
+    );
+  } else if (label === 'HASHTAGS') {
+    const tags = Array.isArray(content) ? content
+      : String(content).split(/\s+/).filter(Boolean);
+    body = (
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {tags.map((t, i) => (
+          <span key={i} style={{
+            ...baseCard, padding: '3px 10px', borderRadius: 4,
+            color: '#777', fontSize: 10,
+          }}>{t}</span>
+        ))}
+      </div>
+    );
+  } else if (label === 'ENDGEFÜHL') {
+    body = (
+      <div style={{ ...baseCard, color: '#888', fontStyle: 'italic' }}>
+        „{content}"
+      </div>
+    );
+  } else {
+    body = <div style={{ ...baseCard, whiteSpace: 'pre-wrap' }}>{content}</div>;
+  }
+
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 7 }}>
+        <Tag color={accent}>{label}</Tag>
+        <CopyBtn text={content} />
+      </div>
+      {body}
+    </div>
+  );
+}
+
+// ─── One model panel ─────────────────────────────────────────────────────────
+function ModelPanel({ model, result, loading }) {
+  const color = model === 'claude' ? CL_C : GP_C;
+  const name  = model === 'claude' ? 'CLAUDE SONNET 4.5' : 'GPT-4O';
+
+  return (
+    <div style={{
+      flex: 1, minWidth: 0,
+      background: CARD,
+      border: `1px solid ${BORDER}`,
+      borderTop: `2px solid ${color}`,
+      borderRadius: 12, padding: '18px 18px 24px',
+    }}>
+      {/* Model label */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20,
+        fontFamily: MONO, fontSize: 9, letterSpacing: '2px', color,
+      }}>
+        <span style={{ width: 6, height: 6, borderRadius: '50%', background: color, display: 'inline-block' }} />
+        {name}
+      </div>
+
+      {loading && (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '48px 0' }}>
+          <span className="spin" style={{ borderTopColor: color }} />
+        </div>
+      )}
+
+      {!loading && result?.error && (
+        <div style={{
+          background: '#1a0808', border: '1px solid #3a1515',
+          borderRadius: 8, padding: 14,
+          fontFamily: MONO, fontSize: 11, color: '#ef4444',
+        }}>
+          {result.error}
+        </div>
+      )}
+
+      {!loading && result && !result.error && (
+        <div className="fade-up">
+          <Field label="HOOK"          content={result.hook}          accent={color} />
+          <Field label="TEXTSUPER"     content={result.textsuper}     accent={color} />
+          <Field label="CAPTION"       content={result.caption}       accent={color} />
+          <Field label="DREHANLEITUNG" content={result.drehanleitung} accent={color} />
+          <Field label="HASHTAGS"      content={result.hashtags}      accent={color} />
+          <Field label="ENDGEFÜHL"     content={result.endgefuehl}    accent={color} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Main Content Lab ────────────────────────────────────────────────────────
+function ContentLab() {
+  const [ablauf,   setAblauf]   = useState('');
+  const [pillar,   setPillar]   = useState('nutzlich');
+  const [platform, setPlatform] = useState('tiktok');
+  const [loading,  setLoading]  = useState(false);
+  const [results,  setResults]  = useState(null);
+
+  const ready = ablauf.trim().length > 0 && !loading;
+
+  const generate = useCallback(async () => {
+    if (!ready) return;
+    setLoading(true);
+    setResults(null);
     try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var sec = _step.value;
-        var item = sec.items.find(function (i) {
-          return i.id === id;
-        });
-        if (item) return {
-          item: item,
-          catColor: cat.color
-        };
-      }
-    } catch (err) {
-      _iterator.e(err);
+      const res  = await fetch('/.netlify/functions/joga', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ type: 'verpacken', ablauf, pillar, platform }),
+      });
+      const data = await res.json();
+      setResults(data);
+    } catch (e) {
+      setResults({ claude: { error: e.message }, gpt4o: { error: e.message } });
     } finally {
-      _iterator.f();
+      setLoading(false);
     }
-  }
-  return null;
+  }, [ablauf, pillar, platform, ready]);
+
+  return (
+    <main style={{ maxWidth: 1240, margin: '0 auto', padding: '28px 20px 80px' }}>
+
+      {/* Section header */}
+      <div style={{ marginBottom: 28 }}>
+        <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '3px', color: G, marginBottom: 8 }}>
+          CONTENT LAB
+        </div>
+        <div style={{ fontFamily: SYNE, fontSize: 24, fontWeight: 700 }}>
+          Eigener Ablauf
+        </div>
+        <div style={{ fontFamily: MONO, fontSize: 11, color: MUTED, marginTop: 6, lineHeight: 1.6 }}>
+          Flow rein → Hook · Textsuper · Caption · Drehanleitung · Hashtags · Endgefühl raus.
+          Claude + GPT-4o parallel.
+        </div>
+      </div>
+
+      {/* Textarea */}
+      <div style={{ marginBottom: 20 }}>
+        <Tag>EIGENER ABLAUF</Tag>
+        <textarea
+          value={ablauf}
+          onChange={e => setAblauf(e.target.value)}
+          placeholder={"Beschreibe deinen JOGA-Ablauf / Flow:\n\nz.B.:\n– 5× Arme schwingen von oben nach unten\n– Schulterkreisen rückwärts × 10\n– Nackendehnung links / rechts je 20 Sek\n– Arm-Shake + Ausschütteln zum Abschluss"}
+          rows={9}
+          style={{
+            width: '100%', background: '#0c0c0c',
+            border: `1px solid ${BORDER}`, borderRadius: 8,
+            color: TEXT, padding: 14, fontSize: 12, lineHeight: 1.7,
+            transition: 'border-color .15s',
+          }}
+          onFocus={e => e.target.style.borderColor = G}
+          onBlur={e  => e.target.style.borderColor = BORDER}
+        />
+      </div>
+
+      {/* Controls row */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px 32px', marginBottom: 24 }}>
+        <div>
+          <Tag>SÄULE</Tag>
+          <div style={{ display: 'flex', gap: 6 }}>
+            {PILLARS.map(p => (
+              <Pill key={p.id} active={pillar === p.id} onClick={() => setPillar(p.id)}>
+                {p.label}
+              </Pill>
+            ))}
+          </div>
+        </div>
+        <div>
+          <Tag>PLATTFORM</Tag>
+          <div style={{ display: 'flex', gap: 6 }}>
+            {PLATFORMS.map(p => (
+              <Pill key={p.id} active={platform === p.id} onClick={() => setPlatform(p.id)}>
+                {p.label}
+              </Pill>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Generate button */}
+      <button
+        onClick={generate}
+        disabled={!ready}
+        style={{
+          width: '100%', padding: '13px 0',
+          background: ready ? G : '#181818',
+          color:      ready ? '#000' : '#333',
+          border: 'none', borderRadius: 8, cursor: ready ? 'pointer' : 'not-allowed',
+          fontFamily: MONO, fontSize: 11, letterSpacing: '2.5px', fontWeight: 600,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          transition: 'background .2s, color .2s',
+          marginBottom: 36,
+        }}
+      >
+        {loading && <span className="spin" style={{ borderTopColor: '#555' }} />}
+        {loading ? 'VERPACKE…' : 'ABLAUF VERPACKEN →'}
+      </button>
+
+      {/* Results */}
+      {(results || loading) && (
+        <div className="results-grid fade-up">
+          <ModelPanel model="claude" result={results?.claude} loading={loading} />
+          <ModelPanel model="gpt4o"  result={results?.gpt4o}  loading={loading} />
+        </div>
+      )}
+    </main>
+  );
 }
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+function Header() {
+  return (
+    <header style={{
+      position: 'sticky', top: 0, zIndex: 100,
+      background: BG, borderBottom: `1px solid ${BORDER}`,
+      padding: '14px 20px',
+      display: 'flex', alignItems: 'center', gap: 14,
+    }}>
+      <div style={{ fontFamily: SYNE, fontSize: 17, fontWeight: 800, letterSpacing: '2px' }}>
+        JOGA
+      </div>
+      <div style={{
+        fontFamily: MONO, fontSize: 8, letterSpacing: '2px', color: '#2e2e2e',
+        paddingLeft: 14, borderLeft: `1px solid #1e1e1e`,
+      }}>
+        CREATOR 2.0
+      </div>
+      <div style={{ flex: 1 }} />
+      <div style={{ fontFamily: MONO, fontSize: 9, color: '#2a2a2a', letterSpacing: '1px' }}>
+        CONTENT LAB
+      </div>
+    </header>
+  );
+}
+
+// ─── Root ────────────────────────────────────────────────────────────────────
 function App() {
-  var _useState = useState('heute'),
-    _useState2 = _slicedToArray(_useState, 2),
-    tab = _useState2[0],
-    setTab = _useState2[1];
-  var _useState3 = useState(true),
-    _useState4 = _slicedToArray(_useState3, 2),
-    dark = _useState4[0],
-    setDark = _useState4[1];
-  var _useState5 = useState(0),
-    _useState6 = _slicedToArray(_useState5, 2),
-    openSec = _useState6[0],
-    setOpenSec = _useState6[1];
-  var _useState7 = useState(null),
-    _useState8 = _slicedToArray(_useState7, 2),
-    openPlanDay = _useState8[0],
-    setOpenPlanDay = _useState8[1];
-  var _useState9 = useState('all'),
-    _useState0 = _slicedToArray(_useState9, 2),
-    ideaFilter = _useState0[0],
-    setIdeaFilter = _useState0[1];
-  var _useState1 = useState(null),
-    _useState10 = _slicedToArray(_useState1, 2),
-    openContentItem = _useState10[0],
-    setOpenContentItem = _useState10[1];
-  var _useState11 = useState({}),
-    _useState12 = _slicedToArray(_useState11, 2),
-    posted = _useState12[0],
-    setPosted = _useState12[1];
-  var _useState13 = useState({
-      pflicht: null,
-      test: null
-    }),
-    _useState14 = _slicedToArray(_useState13, 2),
-    heuteIds = _useState14[0],
-    setHeuteIds = _useState14[1];
-  var _useState15 = useState({}),
-    _useState16 = _slicedToArray(_useState15, 2),
-    heuteStatus = _useState16[0],
-    setHeuteStatus = _useState16[1];
-  var _useState17 = useState({
-      woche: {},
-      queue: {
-        drehbereit: [],
-        hookFehlt: [],
-        schnittFehlt: [],
-        postbereit: []
-      },
-      batch: {}
-    }),
-    _useState18 = _slicedToArray(_useState17, 2),
-    planung = _useState18[0],
-    setPlanung = _useState18[1];
-  var _useState19 = useState([]),
-    _useState20 = _slicedToArray(_useState19, 2),
-    ideas = _useState20[0],
-    setIdeas = _useState20[1];
-  var _useState21 = useState(''),
-    _useState22 = _slicedToArray(_useState21, 2),
-    promptBrief = _useState22[0],
-    setPromptBrief = _useState22[1];
-  var _useState23 = useState('hook'),
-    _useState24 = _slicedToArray(_useState23, 2),
-    promptType = _useState24[0],
-    setPromptType = _useState24[1];
-  var _useState25 = useState(''),
-    _useState26 = _slicedToArray(_useState25, 2),
-    builtPrompt = _useState26[0],
-    setBuiltPrompt = _useState26[1];
-  var _useState27 = useState(false),
-    _useState28 = _slicedToArray(_useState27, 2),
-    copied = _useState28[0],
-    setCopied = _useState28[1];
-  var _useState29 = useState(null),
-    _useState30 = _slicedToArray(_useState29, 2),
-    drillItem = _useState30[0],
-    setDrillItem = _useState30[1];
-  var _useState31 = useState({}),
-    _useState32 = _slicedToArray(_useState31, 2),
-    analytics = _useState32[0],
-    setAnalytics = _useState32[1];
-  var _useState33 = useState(null),
-    _useState34 = _slicedToArray(_useState33, 2),
-    qcItem = _useState34[0],
-    setQcItem = _useState34[1];
-  var _useState35 = useState({}),
-    _useState36 = _slicedToArray(_useState35, 2),
-    qcChecks = _useState36[0],
-    setQcChecks = _useState36[1];
-  var _useState37 = useState(''),
-    _useState38 = _slicedToArray(_useState37, 2),
-    search = _useState38[0],
-    setSearch = _useState38[1];
-  var _useState39 = useState(false),
-    _useState40 = _slicedToArray(_useState39, 2),
-    showWoche = _useState40[0],
-    setShowWoche = _useState40[1];
-  var _useState41 = useState(null),
-    _useState42 = _slicedToArray(_useState41, 2),
-    showPicker = _useState42[0],
-    setShowPicker = _useState42[1];
-  var _useState43 = useState(false),
-    _useState44 = _slicedToArray(_useState43, 2),
-    loaded = _useState44[0],
-    setLoaded = _useState44[1];
-  var _useState45 = useState(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    drehtag = _useState46[0],
-    setDrehtag = _useState46[1];
-  var _useState47 = useState(null),
-    _useState48 = _slicedToArray(_useState47, 2),
-    labResult = _useState48[0],
-    setLabResult = _useState48[1];
-  var _useState49 = useState(''),
-    _useState50 = _slicedToArray(_useState49, 2),
-    stmThema = _useState50[0],
-    setStmThema = _useState50[1];
-  var _useState51 = useState('provokant'),
-    _useState52 = _slicedToArray(_useState51, 2),
-    stmTon = _useState52[0],
-    setStmTon = _useState52[1];
-  var _useState53 = useState('statement'),
-    _useState54 = _slicedToArray(_useState53, 2),
-    stmFormat = _useState54[0],
-    setStmFormat = _useState54[1];
-  var _useState55 = useState(''),
-    _useState56 = _slicedToArray(_useState55, 2),
-    stmPrompt = _useState56[0],
-    setStmPrompt = _useState56[1];
-  var _useState57 = useState(false),
-    _useState58 = _slicedToArray(_useState57, 2),
-    stmCopied = _useState58[0],
-    setStmCopied = _useState58[1];
-  var _useState59 = useState(''),
-    _useState60 = _slicedToArray(_useState59, 2),
-    stmResult = _useState60[0],
-    setStmResult = _useState60[1];
-  var _useState61 = useState('ruecken'),
-    _useState62 = _slicedToArray(_useState61, 2),
-    creatorZone = _useState62[0],
-    setCreatorZone = _useState62[1];
-  var _useState63 = useState('energie'),
-    _useState64 = _slicedToArray(_useState63, 2),
-    creatorStimmung = _useState64[0],
-    setCreatorStimmung = _useState64[1];
-  var _useState65 = useState(null),
-    _useState66 = _slicedToArray(_useState65, 2),
-    creatorResult = _useState66[0],
-    setCreatorResult = _useState66[1];
-  var _useState67 = useState({}),
-    _useState68 = _slicedToArray(_useState67, 2),
-    hookVariants = _useState68[0],
-    setHookVariants = _useState68[1];
-  var _useState69 = useState({}),
-    _useState70 = _slicedToArray(_useState69, 2),
-    activeHookIdx = _useState70[0],
-    setActiveHookIdx = _useState70[1];
-  var T = makeT(dark);
-  useEffect(function () {
-    try {
-      var p = localStorage.getItem('joga-posted');
-      var h = localStorage.getItem('joga-heute-ids');
-      var hs = localStorage.getItem('joga-heute-status');
-      var pl = localStorage.getItem('joga-planung');
-      var id = localStorage.getItem('joga-ideas');
-      var th = localStorage.getItem('joga-theme');
-      var an = localStorage.getItem('joga-analytics');
-      var hv = localStorage.getItem('joga-hookvariants');
-      var ah = localStorage.getItem('joga-activehook');
-      var qc = localStorage.getItem('joga-qcchecks');
-      if (p) setPosted(JSON.parse(p));
-      if (h) setHeuteIds(JSON.parse(h));
-      if (hs) setHeuteStatus(JSON.parse(hs));
-      if (pl) setPlanung(JSON.parse(pl));
-      if (id) setIdeas(JSON.parse(id));
-      if (th) setDark(JSON.parse(th));
-      if (an) setAnalytics(JSON.parse(an));
-      if (hv) setHookVariants(JSON.parse(hv));
-      if (ah) setActiveHookIdx(JSON.parse(ah));
-      if (qc) setQcChecks(JSON.parse(qc));
-    } catch (e) {}
-    setLoaded(true);
-  }, []);
-  var sv = function sv(key, val) {
-    try {
-      localStorage.setItem(key, JSON.stringify(val));
-    } catch (e) {}
-  };
-  var togglePosted = function togglePosted(id) {
-    var n = _objectSpread(_objectSpread({}, posted), {}, _defineProperty({}, id, !posted[id]));
-    setPosted(n);
-    sv('joga-posted', n);
-  };
-  var setHeuteId = function setHeuteId(slot, id) {
-    var n = _objectSpread(_objectSpread({}, heuteIds), {}, _defineProperty({}, slot, id));
-    setHeuteIds(n);
-    sv('joga-heute-ids', n);
-    setShowPicker(null);
-  };
-  var setStatus = function setStatus(slot, s) {
-    var n = _objectSpread(_objectSpread({}, heuteStatus), {}, _defineProperty({}, slot, s));
-    setHeuteStatus(n);
-    sv('joga-heute-status', n);
-  };
-  var clearHeute = function clearHeute() {
-    setHeuteIds({
-      pflicht: null,
-      test: null
-    });
-    setHeuteStatus({});
-    sv('joga-heute-ids', {
-      pflicht: null,
-      test: null
-    });
-    sv('joga-heute-status', {});
-  };
-  var upPlanung = function upPlanung(n) {
-    setPlanung(n);
-    sv('joga-planung', n);
-  };
-  var toggleTheme = function toggleTheme() {
-    var n = !dark;
-    setDark(n);
-    sv('joga-theme', n);
-  };
-  var addIdea = function addIdea(txt, type, potential, saeule) {
-    if (!txt || !txt.trim()) return;
-    var n = [{
-      id: Date.now(),
-      text: txt.trim(),
-      type: type || 'hook',
-      status: 'roh',
-      potential: potential || 'mittel',
-      saeule: saeule || 'function',
-      ts: new Date().toLocaleDateString('de'),
-      notes: ''
-    }].concat(_toConsumableArray(ideas));
-    setIdeas(n);
-    sv('joga-ideas', n);
-  };
-  var delIdea = function delIdea(id) {
-    var n = ideas.filter(function (i) {
-      return i.id !== id;
-    });
-    setIdeas(n);
-    sv('joga-ideas', n);
-  };
-  var updateIdea = function updateIdea(id, field, val) {
-    var n = ideas.map(function (i) {
-      return i.id === id ? _objectSpread(_objectSpread({}, i), {}, _defineProperty({}, field, val)) : i;
-    });
-    setIdeas(n);
-    sv('joga-ideas', n);
-  };
-  var ideaToQueue = function ideaToQueue(idea) {
-    var n = _objectSpread(_objectSpread({}, planung), {}, {
-      queue: _objectSpread(_objectSpread({}, planung.queue), {}, {
-        drehbereit: [].concat(_toConsumableArray(planung.queue.drehbereit), [idea.text])
-      })
-    });
-    upPlanung(n);
-    updateIdea(idea.id, 'status', 'drehbereit');
-  };
-  var ideaToPrompt = function ideaToPrompt(idea) {
-    setPromptBrief(idea.text);
-    setPromptType(idea.type || 'hook');
-    setBuiltPrompt('');
-    setTab('content');
-  };
-  var updateAnalytics = function updateAnalytics(id, field, val) {
-    var n = _objectSpread(_objectSpread({}, analytics), {}, _defineProperty({}, id, _objectSpread(_objectSpread({}, analytics[id] || {}), {}, _defineProperty({}, field, val))));
-    setAnalytics(n);
-    sv('joga-analytics', n);
-  };
-  var exportData = function exportData() {
-    var data = {
-      posted: posted,
-      heuteIds: heuteIds,
-      heuteStatus: heuteStatus,
-      planung: planung,
-      ideas: ideas,
-      analytics: analytics,
-      qcChecks: qcChecks,
-      hookVariants: hookVariants,
-      activeHookIdx: activeHookIdx,
-      dark: dark,
-      ts: new Date().toISOString()
-    };
-    var blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: 'application/json'
-    });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    var date = new Date().toLocaleDateString('de').replace(/\./g, '-');
-    a.download = 'joga-backup-' + date + '.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-  var importData = function importData(e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function (ev) {
-      try {
-        var d = JSON.parse(ev.target.result);
-        if (d.posted) {
-          setPosted(d.posted);
-          sv('joga-posted', d.posted);
-        }
-        if (d.heuteIds) {
-          setHeuteIds(d.heuteIds);
-          sv('joga-heute-ids', d.heuteIds);
-        }
-        if (d.heuteStatus) {
-          setHeuteStatus(d.heuteStatus);
-          sv('joga-heute-status', d.heuteStatus);
-        }
-        if (d.planung) {
-          setPlanung(d.planung);
-          sv('joga-planung', d.planung);
-        }
-        if (d.ideas) {
-          setIdeas(d.ideas);
-          sv('joga-ideas', d.ideas);
-        }
-        if (d.analytics) {
-          setAnalytics(d.analytics);
-          sv('joga-analytics', d.analytics);
-        }
-        if (d.qcChecks) {
-          setQcChecks(d.qcChecks);
-          sv('joga-qcchecks', d.qcChecks);
-        }
-        alert('Import erfolgreich.');
-      } catch (err) {
-        alert('Fehler beim Import.');
-      }
-    };
-    reader.readAsText(file);
-  };
-  var QC_LIST = ['Passt zu JOGA? (trocken, direkt, anti-esoterisch)', 'Hook stark genug?', 'Nicht zu coachig?', 'Drehbar in 20 Minuten?', 'Persoenlichkeit spuerbar?'];
-  var saveHookVariants = function saveHookVariants(id, variants) {
-    var n = _objectSpread(_objectSpread({}, hookVariants), {}, _defineProperty({}, id, variants));
-    setHookVariants(n);
-    sv('joga-hookvariants', n);
-  };
-  var setActiveHook = function setActiveHook(id, idx) {
-    var n = _objectSpread(_objectSpread({}, activeHookIdx), {}, _defineProperty({}, id, idx));
-    setActiveHookIdx(n);
-    sv('joga-activehook', n);
-  };
-  var getActiveHook = function getActiveHook(item) {
-    var variants = hookVariants[item.id];
-    if (variants && variants.length > 0) {
-      var idx = activeHookIdx[item.id] || 0;
-      return variants[idx] || item.hook || '';
-    }
-    return item.hook || '';
-  };
-  var buildStatementPrompt = function buildStatementPrompt() {
-    if (!stmThema.trim()) return;
-    var tonMap = {
-      provokant: 'Provokant, polarisierend, macht Leute neugierig. Nicht beleidigend.',
-      einladend: 'Einladend, niedrigschwellig, macht Lust auf Bewegung.',
-      ehrlich: 'Ehrlich, persoenlich, direkt aus eigener Erfahrung.',
-      humorvoll: 'Trocken humorvoll, selbstironisch, JOGA-Stil.'
-    };
-    var fmtMap = {
-      statement: 'Statement-Video: Talking-Head 30-60 Sek., ein Satz der sitzt, dann Move zeigen.',
-      couch: 'Couch Talk: Sofa, Kaffee, morgens, trocken sprechen, kein Coaching.',
-      '56': 'Mit 56-Format: max 1x pro Woche, Alter als Ueberraschung nicht als Thema.',
-      spruch: 'JOGA-Spruch: Im Joga ist [Yoga-Begriff] eher [humorvolle Alltagsuebersetzung].'
-    };
-    var p = "JOGA @JOGAnichtYOGA. Nicht Yoga. Trocken, direkt, anti-esoterisch. Maenner 40+.\n\nBewerte zuerst brutal: Passt es zu JOGA? Zu coachig? Drehbar in 30 Sek.?\n\nThema: ".concat(stmThema, "\nTon: ").concat(tonMap[stmTon], "\nFormat: ").concat(fmtMap[stmFormat], "\n\nGeneriere 3 Varianten. Je: Hook (1 Satz), Kernsatz (1-2 Saetze), CTA (optional). Kein Erklaeren.");
-    setStmPrompt(p);
-  };
-  var copyStmPrompt = function copyStmPrompt() {
-    navigator.clipboard.writeText(stmPrompt).then(function () {
-      setStmCopied(true);
-      setTimeout(function () {
-        return setStmCopied(false);
-      }, 2000);
-    }).catch(function () {});
-  };
-  var saveStatementToHeute = function saveStatementToHeute() {
-    if (!stmResult.trim()) return;
-    var id = 'stm-' + Date.now();
-    var newItem = {
-      id: id,
-      title: 'Statement: ' + stmThema.slice(0, 30),
-      hook: stmResult.split('\n')[0].slice(0, 80),
-      lines: [stmResult],
-      caption: stmThema + '. #joga #nichtyoga',
-      tags: '#joga #nichtyoga #statement'
-    };
-    var n = _objectSpread(_objectSpread({}, heuteIds), {}, {
-      pflicht: id
-    });
-    setHeuteIds(n);
-    sv('joga-heute-ids', n);
-    setTab('heute');
-  };
-  var MOVES_BY_ZONE = {
-    ruecken: ['Wirbelsaeulen-Welle', 'Sitzende Rotation', 'Vorbeuge haengend', 'Katzenwelle', 'Side Bend'],
-    huefte: ['Huefte kreisen', 'Tiefer Lunge', 'Frosch', 'Tauben-Variation', 'Hip Hinge'],
-    schultern: ['Schulter-Pendel', 'Thorax-Rotation', 'Arm-Sweep', 'Brustöffner', 'Schulter-Rollout'],
-    nacken: ['Ohr-zu-Schulter', 'Kinn-Kreise', 'Nacken-Release', 'Kopf-Rotation', 'Gegendruck'],
-    beine: ['Einbein-Balance', 'Ausfallschritt', 'Squat-Variation', 'Wadenstretch', 'Krabben-Walk'],
-    ganzkörper: ['Tornado-Opener', 'Wirbelsaeulen-Welle', 'Tiefer Squat', 'Arm-Sweep', 'Ausschwingen']
-  };
-  var HOOKS_BY_STIMMUNG = {
-    energie: ['Besser als Kaffee.', 'Mach das bevor dein Kaffee wirkt.', 'Starte deinen Tag mit Bewegung statt Pillen.'],
-    ruhe: ['2 Minuten. Kein Fitnessstudio.', 'Dein Nervensystem dankt es dir.', 'Runterfahren ohne Sofa.'],
-    witz: ['Das sieht bescheuert aus. Wirkt trotzdem.', 'Kein Yoga. Versprochen.', 'Du musst das nicht verstehen. Nur machen.'],
-    morgen: ['Bevor du ans Handy gehst.', 'Der erste Move des Tages entscheidet.', 'Dein Ruecken wartet schon.'],
-    abend: ['Den Tag rausschütteln.', '3 Moves bevor du einschlaefst.', 'Besser als doomscrolling.']
-  };
-  var generateVideoCreator = function generateVideoCreator() {
-    var moves = MOVES_BY_ZONE[creatorZone] || MOVES_BY_ZONE['ganzkörper'];
-    var hooks = HOOKS_BY_STIMMUNG[creatorStimmung] || HOOKS_BY_STIMMUNG['energie'];
-    var selected = moves.slice(0, 3 + Math.floor(Math.random() * 2));
-    var hook = hooks[Math.floor(Math.random() * hooks.length)];
-    var names = ['Der ' + creatorZone.charAt(0).toUpperCase() + creatorZone.slice(1) + '-Flow', 'Der ' + creatorStimmung.charAt(0).toUpperCase() + creatorStimmung.slice(1) + '-Move', 'JOGA fuer ' + creatorZone, 'Der schnelle ' + creatorStimmung + ' Flow'];
-    var name = names[Math.floor(Math.random() * names.length)];
-    setCreatorResult({
-      id: 'creator-' + Date.now(),
-      title: name,
-      hook: hook,
-      zone: creatorZone,
-      stimmung: creatorStimmung,
-      moves: selected,
-      laenge: selected.length * 5 + 5 + '-' + (selected.length * 7 + 5) + ' Sek.',
-      caption: hook + ' #joga #nichtyoga #' + creatorZone,
-      tags: '#joga #nichtyoga #bewegung #' + creatorZone
-    });
-  };
-  var saveCreatorToHeute = function saveCreatorToHeute() {
-    if (!creatorResult) return;
-    var n = _objectSpread(_objectSpread({}, heuteIds), {}, {
-      test: creatorResult.id
-    });
-    setHeuteIds(n);
-    sv('joga-heute-ids', n);
-    setTab('heute');
-  };
-  var saveCreatorToQueue = function saveCreatorToQueue() {
-    if (!creatorResult) return;
-    var n = _objectSpread(_objectSpread({}, planung), {}, {
-      queue: _objectSpread(_objectSpread({}, planung.queue), {}, {
-        drehbereit: [].concat(_toConsumableArray(planung.queue.drehbereit), [creatorResult.title + ': ' + creatorResult.hook])
-      })
-    });
-    upPlanung(n);
-  };
-  var handleLabGenerate = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var typeMap, params, res, data, _t;
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.p = _context.n) {
-          case 0:
-            if (promptBrief.trim()) {
-              _context.n = 1;
-              break;
-            }
-            return _context.a(2);
-          case 1:
-            setLabResult(null);
-            setBuiltPrompt('generiert...');
-            typeMap = {
-              hook: 'hooks',
-              statement: 'statement',
-              flow: 'flow',
-              spruch: 'statement',
-              caption: 'statement'
-            };
-            params = {
-              thema: promptBrief,
-              gefuehl: promptBrief,
-              situation: 'allgemein',
-              intensitaet: 'mittel',
-              format: '30s',
-              ton: 'trocken'
-            };
-            _context.p = 2;
-            _context.n = 3;
-            return fetch('/.netlify/functions/joga', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                type: typeMap[promptType] || 'hooks',
-                params: params
-              })
-            });
-          case 3:
-            res = _context.v;
-            _context.n = 4;
-            return res.json();
-          case 4:
-            data = _context.v;
-            setLabResult({
-              claude: data.claude,
-              gpt: data.gpt,
-              claudeError: data.claudeError,
-              gptError: data.gptError
-            });
-            setBuiltPrompt('');
-            _context.n = 6;
-            break;
-          case 5:
-            _context.p = 5;
-            _t = _context.v;
-            setBuiltPrompt('Fehler: ' + _t.message);
-          case 6:
-            return _context.a(2);
-        }
-      }, _callee, null, [[2, 5]]);
-    }));
-    return function handleLabGenerate() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-  var buildPrompt = function buildPrompt() {
-    if (!promptBrief.trim()) return;
-    var QC = 'Bewerte zuerst brutal: (1) Passt es zu JOGA – trocken, direkt, anti-esoterisch? (2) Zu coachig oder zu Yoga? (3) Drehbar in 10-60 Sek.? Dann erst Varianten.\n\n';
-    var map = {
-      hook: 'JOGA @JOGAnichtYOGA. Nicht Yoga. Trocken, direkt, leicht ironisch, anti-esoterisch.\n\n' + QC + 'Generiere 5 TikTok-Hooks.\nThema: ' + promptBrief + '\nFormat: ein Satz, provokant. Keine Wellness.\nBeispiele: Besser als Kaffee. / Du bist nicht alt. Du bist unbeweglich.',
-      statement: 'JOGA @JOGAnichtYOGA. Zielgruppe: Maenner 40+.\n\n' + QC + 'Statement-Video-Konzept.\nThema: ' + promptBrief + '\nFormat: Talking-Head 30-60 Sek., trocken, kein Coaching.',
-      flow: 'JOGA 22-Flow-System: Basis B1-B8, Energie E1-E5, Regulation R1-R4, Signature S1-S5.\n\n' + QC + 'Neuen JOGA-Flow entwickeln.\nFokus: ' + promptBrief + '\nFormat: Name, Hook, 3-5 Moves, Kategorie.',
-      spruch: 'JOGA Spruch-Muster: Im Joga ist [Yoga-Begriff] eher [humorvolle Alltagsuebersetzung].\n\n' + QC + '5 neue JOGA-Sprueche.\nBezug: ' + promptBrief,
-      caption: 'JOGA TikTok. Caption: 1-2 Saetze, dann Hashtags. #joga #nichtyoga immer.\n\n' + QC + '3 Captions.\nVideo: ' + promptBrief
-    };
-    setBuiltPrompt(map[promptType] || '');
-  };
-  var copyPrompt = function copyPrompt() {
-    if (!builtPrompt) return;
-    navigator.clipboard.writeText(builtPrompt).then(function () {
-      setCopied(true);
-      setTimeout(function () {
-        return setCopied(false);
-      }, 2000);
-    }).catch(function () {});
-  };
-  var cur = D[tab];
-  var col = cur ? COL[cur.color] : COL.blue;
-  var doneCount = Object.values(posted).filter(Boolean).length;
-  var readyCount = ideas.filter(function (i) {
-    return i.status === 'drehbereit';
-  }).length;
-  var filtered = useMemo(function () {
-    if (!cur) return [];
-    if (!search.trim()) return cur.sections;
-    var q = search.toLowerCase();
-    return cur.sections.map(function (s) {
-      return _objectSpread(_objectSpread({}, s), {}, {
-        items: s.items.filter(function (it) {
-          return it.title.toLowerCase().includes(q) || it.hook && it.hook.toLowerCase().includes(q) || it.lines && it.lines.some(function (l) {
-            return l.toLowerCase().includes(q);
-          });
-        })
-      });
-    }).filter(function (s) {
-      return s.items.length > 0;
-    });
-  }, [tab, search, cur]);
-  var pickerF = useMemo(function () {
-    if (!search.trim()) return ALL_IDS;
-    var q = search.toLowerCase();
-    return ALL_IDS.filter(function (i) {
-      return i.title.toLowerCase().includes(q) || i.hook.toLowerCase().includes(q);
-    });
-  }, [showPicker, search]);
-  if (!loaded) {
-    return /*#__PURE__*/React.createElement("div", {
-      style: {
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#030712',
-        color: '#6b7280',
-        fontFamily: 'system-ui'
-      }
-    }, "Lade...");
-  }
-  var tabList = ['heute', 'produktion', 'planung', 'statement', 'creator', 'content'].concat(_toConsumableArray(Object.keys(D)));
-  var tabLabels = {
-    heute: 'Heute',
-    produktion: 'Produktion',
-    planung: 'Planung',
-    statement: 'Statement',
-    creator: 'Creator',
-    content: 'Content Lab'
-  };
-  var tabIcons = {
-    heute: '🎯',
-    produktion: '🎬',
-    planung: '📋',
-    statement: '🎭',
-    creator: '🎲',
-    content: '✨'
-  };
-  var tabColors = {
-    heute: COL.gold,
-    produktion: COL.orange,
-    planung: COL.green,
-    statement: COL.green,
-    creator: COL.orange,
-    content: COL.violet
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    className: 'min-h-screen ' + T.wrap,
-    style: {
-      fontFamily: 'system-ui,sans-serif'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'sticky top-0 z-50 border-b ' + T.header
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between px-4 py-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: 'font-bold ' + T.textMain
-  }, "JOGA 2.0 ", /*#__PURE__*/React.createElement("span", {
-    className: 'text-xs font-normal ' + T.textFaint
-  }, "Master")), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-2"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setDrehtag(!drehtag);
-    },
-    className: 'text-xs px-3 py-1.5 rounded-full border font-bold ' + (drehtag ? 'bg-orange-950 text-orange-400 border-orange-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-  }, drehtag ? '🎬 Drehtag' : '📋 Alle'), /*#__PURE__*/React.createElement("button", {
-    onClick: toggleTheme,
-    className: 'text-xs px-2.5 py-1.5 rounded-full border ' + T.card + ' ' + T.textSub
-  }, dark ? '☀️' : '🌙'))), showWoche && /*#__PURE__*/React.createElement("div", {
-    className: 'border-b px-4 py-3 ' + T.card
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-yellow-500 mb-2"
-  }, "Content-Woche"), WOCHE.map(function (w) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: w.tag,
-      className: "flex gap-2 mb-1"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: 'text-xs font-bold w-7 shrink-0 ' + COL[w.farbe].t
-    }, w.tag), /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs ' + T.textSub
-    }, w.morgen, w.abend && /*#__PURE__*/React.createElement("span", {
-      className: T.textFaint
-    }, " \xB7 ", w.abend)));
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "flex overflow-x-auto gap-1 px-3 py-2"
-  }, (drehtag ? ['heute'] : tabList).map(function (id) {
-    var d = D[id];
-    var c = d ? COL[d.color] : tabColors[id] || COL.gray;
-    var label = d ? d.icon + ' ' + d.label : (tabIcons[id] || '') + ' ' + tabLabels[id];
-    var active = tab === id;
-    return /*#__PURE__*/React.createElement("button", {
-      key: id,
-      onClick: function onClick() {
-        setTab(id);
-        setOpenSec(0);
-        setOpenContentItem(null);
-        setSearch('');
-      },
-      className: 'shrink-0 text-xs px-3 py-1.5 rounded-full border whitespace-nowrap ' + (active ? c.b + ' ' + c.t + ' ' + c.br : T.tabInactive)
-    }, label);
-  })), !['heute', 'produktion', 'planung', 'content'].includes(tab) && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 pb-2"
-  }, /*#__PURE__*/React.createElement("input", {
-    value: search,
-    onChange: function onChange(e) {
-      return setSearch(e.target.value);
-    },
-    placeholder: "Suchen...",
-    className: 'w-full rounded-lg px-3 py-1.5 text-sm outline-none border ' + T.input
-  }))), tab === 'heute' && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 py-4 pb-20"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between mb-4"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: 'text-lg font-bold ' + (drehtag ? 'text-orange-400' : 'text-yellow-500')
-  }, drehtag ? 'Drehtag' : 'Heute'), /*#__PURE__*/React.createElement("button", {
-    onClick: clearHeute,
-    className: 'text-xs border rounded-full px-3 py-1 ' + T.textFaint + ' ' + T.card + ' ' + T.divider
-  }, "Reset")), ['pflicht', 'test'].map(function (slot) {
-    var vid = heuteIds[slot] ? findItem(heuteIds[slot]) : null;
-    var item = vid ? vid.item : null;
-    var itemCol = vid ? vid.catColor : 'blue';
-    var st = heuteStatus[slot] || 'idee';
-    var variants = item ? hookVariants[item.id] || [] : [];
-    var activeIdx = item ? activeHookIdx[item.id] || 0 : 0;
-    var displayHook = item ? getActiveHook(item) : '';
-    return /*#__PURE__*/React.createElement("div", {
-      key: slot,
-      className: 'mb-5 rounded-2xl border overflow-hidden ' + (item ? dark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200' : T.card + ' ' + T.divider)
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'flex items-center justify-between px-4 pt-3 pb-1'
-    }, /*#__PURE__*/React.createElement("span", {
-      className: 'text-xs font-bold uppercase ' + T.textFaint
-    }, slot === 'pflicht' ? 'Pflicht' : 'Test'), item && /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-1"
-    }, ['idee', 'drehbereit', 'gepostet'].map(function (s) {
-      return /*#__PURE__*/React.createElement("button", {
-        key: s,
-        onClick: function onClick() {
-          return setStatus(slot, s);
-        },
-        className: 'text-xs px-2 py-0.5 rounded-full border ' + (st === s ? s === 'idee' ? 'bg-gray-800 text-gray-300 border-gray-600' : s === 'drehbereit' ? 'bg-orange-950 text-orange-400 border-orange-800' : 'bg-green-950 text-green-400 border-green-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-      }, s);
-    }))), !item ? /*#__PURE__*/React.createElement("div", {
-      className: "px-4 pb-4"
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        setShowPicker(slot);
-        setSearch('');
-      },
-      className: 'w-full py-4 rounded-xl border border-dashed text-sm font-bold ' + T.textFaint + ' ' + T.divider
-    }, "+ Video auswaehlen")) : /*#__PURE__*/React.createElement("div", {
-      className: "px-4 pb-4"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs mb-2 ' + T.textFaint
-    }, item.title), /*#__PURE__*/React.createElement("div", {
-      className: 'text-2xl font-black leading-tight mb-3 ' + COL[itemCol].t
-    }, displayHook || 'Kein Hook gesetzt'), (variants.length > 0 || true) && /*#__PURE__*/React.createElement("div", {
-      className: "mb-3"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs font-bold mb-1 ' + T.textFaint
-    }, "HOOK-VARIANTE"), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-1 flex-wrap mb-1"
-    }, (variants.length > 0 ? variants : [item.hook || '']).map(function (v, i) {
-      return /*#__PURE__*/React.createElement("button", {
-        key: i,
-        onClick: function onClick() {
-          return setActiveHook(item.id, i);
-        },
-        className: 'text-xs px-2.5 py-1 rounded-full border font-bold ' + (activeIdx === i ? 'bg-blue-950 text-blue-300 border-blue-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-      }, String.fromCharCode(65 + i));
-    }), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        var cur = hookVariants[item.id] || (item.hook ? [item.hook] : []);
-        saveHookVariants(item.id, [].concat(_toConsumableArray(cur), ['']));
-        setActiveHook(item.id, cur.length);
-      },
-      className: 'text-xs px-2.5 py-1 rounded-full border ' + (T.card + ' text-purple-400 border-purple-800')
-    }, "+ Variante")), variants.length > 0 && /*#__PURE__*/React.createElement("input", {
-      value: variants[activeIdx] || '',
-      onChange: function onChange(e) {
-        var nv = _toConsumableArray(variants);
-        nv[activeIdx] = e.target.value;
-        saveHookVariants(item.id, nv);
-      },
-      placeholder: "Hook-Text...",
-      className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border font-semibold ' + T.input
-    })), item.textsuper && item.textsuper.length > 0 && /*#__PURE__*/React.createElement("div", {
-      className: 'rounded-xl p-3 mb-3 ' + (dark ? 'bg-gray-950 border border-gray-800' : 'bg-gray-50 border border-gray-200')
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs font-bold mb-1 ' + T.textFaint
-    }, "TEXT-SUPER"), item.textsuper.map(function (t, i) {
-      return /*#__PURE__*/React.createElement("div", {
-        key: i,
-        className: 'text-lg font-black tracking-wide ' + T.textMain
-      }, t);
-    })), item.preflight && /*#__PURE__*/React.createElement("div", {
-      className: 'rounded-xl p-3 mb-4 ' + (dark ? 'bg-gray-950 border border-gray-800' : 'bg-gray-50 border border-gray-200')
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs font-bold mb-1 text-orange-400'
-    }, "VOR DREH"), item.preflight.map(function (p, i) {
-      return /*#__PURE__*/React.createElement("div", {
-        key: i,
-        className: 'text-xs ' + T.textSub
-      }, '☐ ' + p);
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-2 mb-2"
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        var v = findItem(item.id);
-        if (v) setDrillItem(v);
-      },
-      className: "flex-1 py-3 rounded-xl text-sm font-bold bg-orange-950 text-orange-400 border border-orange-800"
-    }, "\uD83C\uDFAC Drehmodus"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setQcItem(item.id);
-      },
-      className: 'flex-1 py-3 rounded-xl text-sm font-bold ' + (posted[item.id] ? 'bg-green-950 text-green-400 border border-green-800' : dark ? 'bg-gray-800 text-gray-300 border border-gray-700' : 'bg-gray-100 text-gray-600 border border-gray-300')
-    }, posted[item.id] ? '✓ Gepostet' : 'Raus damit →')), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-2"
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setHeuteId(slot, null);
-      },
-      className: 'flex-1 py-1.5 text-xs rounded-lg border ' + T.card + ' ' + T.textFaint + ' ' + T.divider
-    }, "Entfernen"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        setShowPicker(slot);
-        setSearch('');
-      },
-      className: 'flex-1 py-1.5 text-xs rounded-lg border ' + T.card + ' ' + T.textSub + ' ' + T.divider
-    }, "Aendern"))));
-  }), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-3 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex justify-between items-center"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: 'text-xs ' + T.textFaint
-  }, doneCount + ' gepostet'), /*#__PURE__*/React.createElement("span", {
-    className: 'text-xs ' + T.textFaint
-  }, ALL_IDS.length + ' Videos')))), tab === 'produktion' && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 py-4 pb-20"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-lg font-bold text-orange-400 mb-4"
-  }, "Produktion"), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-orange-400 mb-3"
-  }, "PUFFER-STATUS"), [{
-    l: 'Drehbereit',
-    k: 'drehbereit',
-    c: 'text-blue-400'
-  }, {
-    l: 'Braucht Schnitt',
-    k: 'schnittFehlt',
-    c: 'text-orange-400'
-  }, {
-    l: 'Postbereit',
-    k: 'postbereit',
-    c: 'text-green-400'
-  }].map(function (q) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: q.k,
-      className: "flex items-center justify-between mb-2"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: 'text-sm ' + T.textSub
-    }, q.l), /*#__PURE__*/React.createElement("span", {
-      className: 'text-sm font-bold ' + q.c
-    }, (planung.queue[q.k] || []).length, " Videos"));
-  }), /*#__PURE__*/React.createElement("div", {
-    className: 'mt-3 pt-3 border-t ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs ' + T.textFaint
-  }, "Ziel: 5+ postbereite Videos als Puffer"))), /*#__PURE__*/React.createElement("div", {
-    className: "mb-4"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-sm font-bold mb-3 ' + T.textSub
-  }, "DREH-QUEUE"), [{
-    k: 'drehbereit',
-    l: 'Drehbereit',
-    c: 'blue'
-  }, {
-    k: 'hookFehlt',
-    l: 'Hook fehlt',
-    c: 'orange'
-  }, {
-    k: 'schnittFehlt',
-    l: 'Braucht Schnitt',
-    c: 'violet'
-  }, {
-    k: 'postbereit',
-    l: 'Postbereit',
-    c: 'green'
-  }].map(function (q) {
-    var items = planung.queue[q.k] || [];
-    return /*#__PURE__*/React.createElement("div", {
-      key: q.k,
-      className: 'mb-3 rounded-xl border p-3 ' + T.card + ' ' + T.divider
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs font-bold mb-2 ' + COL[q.c].t
-    }, q.l + ' (' + items.length + ')'), items.map(function (it, i) {
-      return /*#__PURE__*/React.createElement("div", {
-        key: i,
-        className: "flex items-center gap-2 mb-1"
-      }, /*#__PURE__*/React.createElement("span", {
-        className: 'text-xs flex-1 ' + T.textSub
-      }, it), /*#__PURE__*/React.createElement("button", {
-        onClick: function onClick() {
-          var n = _objectSpread(_objectSpread({}, planung), {}, {
-            queue: _objectSpread(_objectSpread({}, planung.queue), {}, _defineProperty({}, q.k, items.filter(function (_, j) {
-              return j !== i;
-            })))
-          });
-          upPlanung(n);
-        },
-        className: 'text-xs ' + T.textFaint
-      }, "x"));
-    }), /*#__PURE__*/React.createElement("input", {
-      onKeyDown: function onKeyDown(e) {
-        if (e.key === 'Enter' && e.target.value.trim()) {
-          var n = _objectSpread(_objectSpread({}, planung), {}, {
-            queue: _objectSpread(_objectSpread({}, planung.queue), {}, _defineProperty({}, q.k, [].concat(_toConsumableArray(items), [e.target.value.trim()])))
-          });
-          upPlanung(n);
-          e.target.value = '';
-        }
-      },
-      placeholder: "+ Hinzufuegen (Enter)",
-      className: 'w-full rounded-lg px-3 py-1.5 text-xs outline-none mt-1 border ' + T.input
-    }));
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "mb-4"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-sm font-bold mb-3 ' + T.textSub
-  }, "BATCH-DREH"), [{
-    id: 'a',
-    l: 'Setup A - Wohnzimmer',
-    d: 'Morning Moves, Flows, Statements'
-  }, {
-    id: 'b',
-    l: 'Setup B - Schreibtisch',
-    d: 'JOGA am Schreibtisch'
-  }, {
-    id: 'c',
-    l: 'Setup C - Sofa',
-    d: 'Couch Talk, Oliver, Mit 56'
-  }, {
-    id: 'd',
-    l: 'Setup D - Draussen',
-    d: 'Spaziergaenge, Hamburg'
-  }].map(function (s) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: s.id,
-      className: 'mb-3 rounded-xl border p-3 ' + T.card + ' ' + T.divider
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "text-xs font-bold text-orange-400 mb-1"
-    }, s.l), /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs mb-2 ' + T.textFaint
-    }, s.d), /*#__PURE__*/React.createElement("textarea", {
-      value: planung.batch[s.id] || '',
-      onChange: function onChange(e) {
-        var n = _objectSpread(_objectSpread({}, planung), {}, {
-          batch: _objectSpread(_objectSpread({}, planung.batch), {}, _defineProperty({}, s.id, e.target.value))
-        });
-        upPlanung(n);
-      },
-      placeholder: "Videos fuer diesen Drehtag...",
-      rows: 2,
-      className: 'w-full rounded-lg px-3 py-1.5 text-xs outline-none resize-none border ' + T.input
-    }));
-  }))), tab === 'planung' && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 py-4 pb-20"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-lg font-bold text-green-400 mb-4"
-  }, "Diese Woche"), WOCHE.map(function (w) {
-    var key = 'week-' + w.tag;
-    var val = planung.woche[key] || {
-      pflicht: '',
-      test: '',
-      thema: '',
-      status: 'offen',
-      notiz: ''
-    };
-    var isOpen = openPlanDay === key;
-    var stColors = {
-      offen: 'text-gray-500',
-      gedreht: 'text-blue-400',
-      geschnitten: 'text-orange-400',
-      gepostet: 'text-green-400'
-    };
-    return /*#__PURE__*/React.createElement("div", {
-      key: w.tag,
-      className: 'mb-3 rounded-xl border overflow-hidden ' + T.card + ' ' + T.divider
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setOpenPlanDay(isOpen ? null : key);
-      },
-      className: "w-full flex items-center justify-between px-4 py-3"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "flex items-center gap-3"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: 'text-xs font-bold w-7 ' + COL[w.farbe].t
-    }, w.tag), /*#__PURE__*/React.createElement("div", {
-      className: "text-left"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-sm ' + T.textMain
-    }, val.thema || w.morgen), val.pflicht && /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs ' + T.textFaint
-    }, val.pflicht))), /*#__PURE__*/React.createElement("span", {
-      className: 'text-xs font-bold ' + stColors[val.status || 'offen']
-    }, (val.status || 'offen').toUpperCase())), isOpen && /*#__PURE__*/React.createElement("div", {
-      className: 'px-4 pb-4 border-t ' + T.divider
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "mt-3 space-y-2"
-    }, ['thema', 'pflicht', 'test', 'notiz'].map(function (field) {
-      return /*#__PURE__*/React.createElement("div", {
-        key: field
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-1 ' + T.textFaint
-      }, field.toUpperCase()), /*#__PURE__*/React.createElement("input", {
-        value: val[field] || '',
-        onChange: function onChange(e) {
-          var n = _objectSpread(_objectSpread({}, planung), {}, {
-            woche: _objectSpread(_objectSpread({}, planung.woche), {}, _defineProperty({}, key, _objectSpread(_objectSpread({}, val), {}, _defineProperty({}, field, e.target.value))))
-          });
-          upPlanung(n);
-        },
-        placeholder: field === 'thema' ? 'Thema...' : field === 'pflicht' ? 'Pflicht-Video...' : field === 'test' ? 'Test-Video...' : 'Notizen...',
-        className: 'w-full rounded-lg px-3 py-1.5 text-xs outline-none border ' + T.input
-      }));
-    }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs font-bold mb-1 ' + T.textFaint
-    }, "STATUS"), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-1 flex-wrap"
-    }, STATUS.map(function (s) {
-      return /*#__PURE__*/React.createElement("button", {
-        key: s,
-        onClick: function onClick() {
-          var n = _objectSpread(_objectSpread({}, planung), {}, {
-            woche: _objectSpread(_objectSpread({}, planung.woche), {}, _defineProperty({}, key, _objectSpread(_objectSpread({}, val), {}, {
-              status: s
-            })))
-          });
-          upPlanung(n);
-        },
-        className: 'text-xs px-2.5 py-1 rounded-full border ' + ((val.status || 'offen') === s ? dark ? 'bg-gray-800 border-gray-600 ' + stColors[s] : 'bg-gray-100 ' + stColors[s] : T.card + ' ' + T.textFaint + ' ' + T.divider)
-      }, s);
-    }))))));
-  })), tab === 'statement' && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 py-4 pb-20"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-lg font-bold text-green-400 mb-1"
-  }, "Statement Generator"), /*#__PURE__*/React.createElement("p", {
-    className: 'text-xs mb-4 ' + T.textFaint
-  }, "Thema eingeben \u2192 KI generiert direkt"), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-green-400 mb-3"
-  }, "THEMA"), /*#__PURE__*/React.createElement("textarea", {
-    value: stmThema,
-    onChange: function onChange(e) {
-      return setStmThema(e.target.value);
-    },
-    placeholder: "Was willst du sagen? Eine Beobachtung, Provokation, Wahrheit...",
-    rows: 3,
-    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none resize-none border mb-3 ' + T.input
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs font-bold mb-2 ' + T.textFaint
-  }, "TON"), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1 flex-wrap"
-  }, [{
-    k: 'provokant',
-    l: 'Provokant'
-  }, {
-    k: 'einladend',
-    l: 'Einladend'
-  }, {
-    k: 'ehrlich',
-    l: 'Ehrlich'
-  }, {
-    k: 'humorvoll',
-    l: 'Humorvoll'
-  }].map(function (t) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: t.k,
-      onClick: function onClick() {
-        return setStmTon(t.k);
-      },
-      className: 'text-xs px-3 py-1.5 rounded-full border ' + (stmTon === t.k ? 'bg-green-950 text-green-300 border-green-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-    }, t.l);
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "mb-4"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs font-bold mb-2 ' + T.textFaint
-  }, "FORMAT"), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1 flex-wrap"
-  }, [{
-    k: 'statement',
-    l: 'Statement'
-  }, {
-    k: 'couch',
-    l: 'Couch Talk'
-  }, {
-    k: '56',
-    l: 'Mit 56'
-  }, {
-    k: 'spruch',
-    l: 'JOGA-Spruch'
-  }].map(function (f) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: f.k,
-      onClick: function onClick() {
-        return setStmFormat(f.k);
-      },
-      className: 'text-xs px-3 py-1.5 rounded-full border ' + (stmFormat === f.k ? 'bg-green-950 text-green-300 border-green-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-    }, f.l);
-  }))), /*#__PURE__*/React.createElement("button", {
-    onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-      var res, data, _t2;
-      return _regenerator().w(function (_context2) {
-        while (1) switch (_context2.p = _context2.n) {
-          case 0:
-            if (stmThema.trim()) {
-              _context2.n = 1;
-              break;
-            }
-            return _context2.a(2);
-          case 1:
-            setStmResult('');
-            setStmPrompt('wird generiert...');
-            _context2.p = 2;
-            _context2.n = 3;
-            return fetch('/.netlify/functions/joga', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                type: 'statement',
-                params: {
-                  thema: stmThema,
-                  ton: stmTon,
-                  format: stmFormat
-                }
-              })
-            });
-          case 3:
-            res = _context2.v;
-            _context2.n = 4;
-            return res.json();
-          case 4:
-            data = _context2.v;
-            if (!data.error) {
-              _context2.n = 5;
-              break;
-            }
-            throw new Error(data.error);
-          case 5:
-            setStmResult({
-              claude: data.claude,
-              gpt: data.gpt,
-              claudeError: data.claudeError,
-              gptError: data.gptError
-            });
-            setStmPrompt('');
-            _context2.n = 7;
-            break;
-          case 6:
-            _context2.p = 6;
-            _t2 = _context2.v;
-            setStmPrompt('Fehler: ' + _t2.message);
-          case 7:
-            return _context2.a(2);
-        }
-      }, _callee2, null, [[2, 6]]);
-    })),
-    disabled: stmPrompt === 'wird generiert...',
-    className: 'w-full py-3 rounded-xl text-sm font-bold border ' + (stmPrompt === 'wird generiert...' ? 'bg-gray-800 text-gray-500 border-gray-700' : 'bg-green-950 text-green-400 border-green-800')
-  }, stmPrompt === 'wird generiert...' ? 'KI denkt...' : 'Statement generieren'), stmPrompt && stmPrompt !== 'wird generiert...' && stmPrompt !== '' && /*#__PURE__*/React.createElement("div", {
-    className: 'mt-3 rounded-lg p-3 border text-xs text-red-400 border-red-900 bg-red-950'
-  }, stmPrompt)), stmResult && /*#__PURE__*/React.createElement("div", null, stmResult.claude && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-3 ' + (dark ? 'bg-gray-900 border-blue-900' : 'bg-blue-50 border-blue-200')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 mb-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-xs font-bold text-blue-400"
-  }, "CLAUDE")), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-sm leading-relaxed mb-3 ' + (dark ? 'bg-gray-950 border-gray-800 text-gray-300' : 'bg-white border-gray-200 text-gray-700'),
-    style: {
-      whiteSpace: 'pre-wrap'
-    }
-  }, stmResult.claude), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-2"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setStmResult(function (prev) {
-        return _objectSpread(_objectSpread({}, prev), {}, {
-          _saved: stmResult.claude
-        });
-      });
-      saveStatementToHeute();
-    },
-    className: "flex-1 py-2 rounded-lg bg-blue-950 text-blue-300 border border-blue-800 text-xs font-bold"
-  }, "In Heute"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return addIdea((stmResult.claude || '').split('\n')[0].slice(0, 80), 'statement', 'hoch', 'realtalk');
-    },
-    className: "flex-1 py-2 rounded-lg bg-purple-950 text-purple-300 border border-purple-800 text-xs font-bold"
-  }, "In Inbox"))), stmResult.gpt && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-3 ' + (dark ? 'bg-gray-900 border-green-900' : 'bg-green-50 border-green-200')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 mb-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-xs font-bold text-green-400"
-  }, "GPT-4o")), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-sm leading-relaxed mb-3 ' + (dark ? 'bg-gray-950 border-gray-800 text-gray-300' : 'bg-white border-gray-200 text-gray-700'),
-    style: {
-      whiteSpace: 'pre-wrap'
-    }
-  }, stmResult.gpt), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-2"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return addIdea((stmResult.gpt || '').split('\n')[0].slice(0, 80), 'statement', 'hoch', 'realtalk');
-    },
-    className: "flex-1 py-2 rounded-lg bg-purple-950 text-purple-300 border border-purple-800 text-xs font-bold"
-  }, "In Inbox"))), (stmResult.claudeError || stmResult.gptError) && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-xs text-red-400 border-red-900 bg-red-950 mb-3'
-  }, stmResult.claudeError && 'Claude: ' + stmResult.claudeError, stmResult.claudeError && stmResult.gptError && ' | ', stmResult.gptError && 'GPT: ' + stmResult.gptError))), tab === 'creator' && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 py-4 pb-20"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-lg font-bold text-orange-400 mb-1"
-  }, "Video Creator"), /*#__PURE__*/React.createElement("p", {
-    className: 'text-xs mb-4 ' + T.textFaint
-  }, "Parameter waehlen \u2192 KI baut den Flow"), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "mb-4"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs font-bold mb-2 ' + T.textFaint
-  }, "GEFUEHL"), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1 flex-wrap"
-  }, ['wach werden', 'runterkommen', 'Kopf frei', 'Energie', 'entstressen', 'lockern', 'aktivieren'].map(function (z) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: z,
-      onClick: function onClick() {
-        return setCreatorZone(z);
-      },
-      className: 'text-xs px-3 py-1.5 rounded-full border ' + (creatorZone === z ? 'bg-orange-950 text-orange-400 border-orange-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-    }, z);
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "mb-4"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs font-bold mb-2 ' + T.textFaint
-  }, "SITUATION"), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1 flex-wrap"
-  }, ['morgens', 'abends', 'Schreibtisch', 'nach Arbeit', 'zwischendurch', 'Wochenende'].map(function (s) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: s,
-      onClick: function onClick() {
-        return setCreatorStimmung(s);
-      },
-      className: 'text-xs px-3 py-1.5 rounded-full border ' + (creatorStimmung === s ? 'bg-orange-950 text-orange-400 border-orange-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-    }, s);
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "mb-4"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs font-bold mb-2 ' + T.textFaint
-  }, "FORMAT"), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1 flex-wrap"
-  }, [{
-    k: '15s',
-    l: '15 Sek.'
-  }, {
-    k: '30s',
-    l: '30 Sek.'
-  }, {
-    k: '3min',
-    l: '3 Min.'
-  }, {
-    k: '6min',
-    l: '6 Min.'
-  }].map(function (f) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: f.k,
-      onClick: function onClick() {
-        return setStmFormat(f.k);
-      },
-      className: 'text-xs px-3 py-1.5 rounded-full border ' + (stmFormat === f.k ? 'bg-orange-950 text-orange-400 border-orange-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-    }, f.l);
-  }))), /*#__PURE__*/React.createElement("button", {
-    onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-      var res, data, _t3;
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.p = _context3.n) {
-          case 0:
-            setCreatorResult(null);
-            setStmPrompt('wird generiert...');
-            _context3.p = 1;
-            _context3.n = 2;
-            return fetch('/.netlify/functions/joga', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                type: 'flow',
-                params: {
-                  gefuehl: creatorZone,
-                  situation: creatorStimmung,
-                  intensitaet: 'mittel',
-                  format: stmFormat || '30s'
-                }
-              })
-            });
-          case 2:
-            res = _context3.v;
-            _context3.n = 3;
-            return res.json();
-          case 3:
-            data = _context3.v;
-            if (!data.error) {
-              _context3.n = 4;
-              break;
-            }
-            throw new Error(data.error);
-          case 4:
-            setCreatorResult({
-              id: 'creator-' + Date.now(),
-              claude: data.claude,
-              gpt: data.gpt,
-              title: creatorZone + ' – ' + creatorStimmung
-            });
-            setStmPrompt('');
-            _context3.n = 6;
-            break;
-          case 5:
-            _context3.p = 5;
-            _t3 = _context3.v;
-            setStmPrompt('Fehler: ' + _t3.message);
-          case 6:
-            return _context3.a(2);
-        }
-      }, _callee3, null, [[1, 5]]);
-    })),
-    disabled: stmPrompt === 'wird generiert...',
-    className: 'w-full py-3 rounded-xl text-sm font-bold border ' + (stmPrompt === 'wird generiert...' ? 'bg-gray-800 text-gray-500 border-gray-700' : 'bg-orange-950 text-orange-400 border-orange-800')
-  }, stmPrompt === 'wird generiert...' ? 'KI baut Flow...' : 'Flow generieren'), stmPrompt && stmPrompt !== 'wird generiert...' && stmPrompt !== '' && /*#__PURE__*/React.createElement("div", {
-    className: 'mt-3 rounded-lg p-3 border text-xs text-red-400 border-red-900 bg-red-950'
-  }, stmPrompt)), creatorResult && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-orange-400 mb-3"
-  }, "GENERIERTER FLOW"), /*#__PURE__*/React.createElement("div", {
-    className: 'text-xl font-black mb-3 ' + T.textMain
-  }, creatorResult.title), creatorResult.claude && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-sm leading-relaxed mb-3 ' + (dark ? 'bg-gray-950 border-blue-900 text-gray-300' : 'bg-blue-50 border-blue-200 text-gray-700')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-blue-400 mb-1"
-  }, "CLAUDE"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      whiteSpace: 'pre-wrap'
-    }
-  }, creatorResult.claude)), creatorResult.gpt && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-sm leading-relaxed mb-3 ' + (dark ? 'bg-gray-950 border-green-900 text-gray-300' : 'bg-green-50 border-green-200 text-gray-700')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-green-400 mb-1"
-  }, "GPT-4o"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      whiteSpace: 'pre-wrap'
-    }
-  }, creatorResult.gpt)), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-2"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: saveCreatorToHeute,
-    className: "flex-1 py-2.5 rounded-xl text-sm font-bold bg-orange-950 text-orange-400 border border-orange-800"
-  }, "Heute drehen"), /*#__PURE__*/React.createElement("button", {
-    onClick: saveCreatorToQueue,
-    className: 'flex-1 py-2.5 rounded-xl text-sm font-bold border ' + (dark ? 'bg-gray-800 text-gray-300 border-gray-700' : 'bg-gray-100 text-gray-700 border-gray-300')
-  }, "In Queue")))), tab === 'content' && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 py-4 pb-20"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-lg font-bold text-purple-400 mb-1"
-  }, "Content Lab"), /*#__PURE__*/React.createElement("p", {
-    className: 'text-xs mb-4 ' + T.textFaint
-  }, "KI generiert direkt \u2013 Claude vs. GPT-4o"), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-purple-400 mb-3"
-  }, "HOOK GENERATOR"), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1 mb-3 flex-wrap"
-  }, [{
-    k: 'hook',
-    l: 'Hooks'
-  }, {
-    k: 'statement',
-    l: 'Statement'
-  }, {
-    k: 'flow',
-    l: 'Flow'
-  }, {
-    k: 'spruch',
-    l: 'Spruch'
-  }, {
-    k: 'caption',
-    l: 'Caption'
-  }].map(function (t) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: t.k,
-      onClick: function onClick() {
-        setPromptType(t.k);
-        setBuiltPrompt('');
-      },
-      className: 'text-xs px-2.5 py-1 rounded-full border ' + (promptType === t.k ? 'bg-purple-950 text-purple-300 border-purple-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-    }, t.l);
-  })), /*#__PURE__*/React.createElement("input", {
-    value: promptBrief,
-    onChange: function onChange(e) {
-      return setPromptBrief(e.target.value);
-    },
-    onKeyDown: function onKeyDown(e) {
-      if (e.key === 'Enter') handleLabGenerate();
-    },
-    placeholder: promptType === 'hook' ? 'Move oder Thema...' : promptType === 'spruch' ? 'Yoga-Pose...' : promptType === 'statement' ? 'Thema...' : promptType === 'flow' ? 'Koerperzone...' : 'Video beschreiben...',
-    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border mb-2 ' + T.input
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: handleLabGenerate,
-    disabled: builtPrompt === 'generiert...',
-    className: 'w-full py-2 rounded-xl text-sm font-bold border ' + (builtPrompt === 'generiert...' ? 'bg-gray-800 text-gray-500 border-gray-700' : 'bg-purple-950 text-purple-300 border-purple-800')
-  }, builtPrompt === 'generiert...' ? 'KI denkt...' : 'Generieren – Claude + GPT')), labResult && /*#__PURE__*/React.createElement("div", {
-    className: "mb-4"
-  }, labResult.claude && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-3 ' + (dark ? 'bg-gray-900 border-blue-900' : 'bg-blue-50 border-blue-200')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-blue-400 mb-2"
-  }, "CLAUDE"), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-sm leading-relaxed mb-2 ' + (dark ? 'bg-gray-950 border-gray-800 text-gray-300' : 'bg-white border-gray-200 text-gray-700'),
-    style: {
-      whiteSpace: 'pre-wrap'
-    }
-  }, labResult.claude), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return addIdea((labResult.claude || '').split('\n')[0].slice(0, 80), promptType, 'hoch', 'function');
-    },
-    className: "w-full py-1.5 rounded-lg text-xs font-bold bg-purple-950 text-purple-300 border border-purple-800"
-  }, "In Ideen-Inbox")), labResult.gpt && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-3 ' + (dark ? 'bg-gray-900 border-green-900' : 'bg-green-50 border-green-200')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-green-400 mb-2"
-  }, "GPT-4o"), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-sm leading-relaxed mb-2 ' + (dark ? 'bg-gray-950 border-gray-800 text-gray-300' : 'bg-white border-gray-200 text-gray-700'),
-    style: {
-      whiteSpace: 'pre-wrap'
-    }
-  }, labResult.gpt), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return addIdea((labResult.gpt || '').split('\n')[0].slice(0, 80), promptType, 'hoch', 'function');
-    },
-    className: "w-full py-1.5 rounded-lg text-xs font-bold bg-purple-950 text-purple-300 border border-purple-800"
-  }, "In Ideen-Inbox")), (labResult.claudeError || labResult.gptError) && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-lg p-3 border text-xs text-red-400 border-red-900 bg-red-950 mb-3'
-  }, labResult.claudeError && 'Claude: ' + labResult.claudeError, labResult.gptError && ' | GPT: ' + labResult.gptError)), /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between mb-3"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-purple-400"
-  }, 'IDEEN-INBOX (' + ideas.length + ')'), /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs ' + T.textFaint
-  }, readyCount + ' drehbereit')), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-2 mb-3"
-  }, /*#__PURE__*/React.createElement("input", {
-    id: "idea-in",
-    placeholder: "Idee, Hook, Ergebnis...",
-    onKeyDown: function onKeyDown(e) {
-      if (e.key === 'Enter') {
-        addIdea(e.target.value, 'hook', 'mittel', 'function');
-        e.target.value = '';
-      }
-    },
-    className: 'flex-1 rounded-lg px-3 py-2 text-sm outline-none border ' + T.input
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      var el = document.getElementById('idea-in');
-      if (el && el.value.trim()) {
-        addIdea(el.value, 'hook', 'mittel', 'function');
-        el.value = '';
-      }
-    },
-    className: "px-3 py-2 rounded-lg bg-purple-950 text-purple-300 border border-purple-800 text-sm font-bold"
-  }, "+")), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1 mb-3 flex-wrap"
-  }, ['all', 'roh', 'entwickelt', 'drehbereit', 'verworfen'].map(function (f) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: f,
-      onClick: function onClick() {
-        return setIdeaFilter(f);
-      },
-      className: 'text-xs px-2.5 py-1 rounded-full border ' + (ideaFilter === f ? 'bg-purple-950 text-purple-300 border-purple-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
-    }, f === 'all' ? 'Alle' : f);
-  })), ideas.length === 0 && /*#__PURE__*/React.createElement("div", {
-    className: 'text-sm ' + T.textFaint
-  }, "Noch keine Ideen."), ideas.filter(function (idea) {
-    return ideaFilter === 'all' || idea.status === ideaFilter;
-  }).map(function (idea) {
-    var sCOL = {
-      roh: 'text-gray-400',
-      entwickelt: 'text-blue-400',
-      drehbereit: 'text-green-400',
-      verworfen: 'text-red-400'
-    };
-    var pCOL = {
-      niedrig: 'text-gray-500',
-      mittel: 'text-yellow-500',
-      hoch: 'text-green-400'
-    };
-    var slCOL = {
-      function: 'text-blue-400',
-      realtalk: 'text-green-400',
-      wow: 'text-orange-400',
-      oliver: 'text-purple-400'
-    };
-    return /*#__PURE__*/React.createElement("div", {
-      key: idea.id,
-      className: 'mb-3 rounded-xl border p-3 ' + (dark ? 'bg-gray-950 border-gray-800' : 'bg-gray-50 border-gray-200')
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "flex items-start gap-2 mb-2"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "flex-1"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-sm ' + T.textMain
-    }, idea.text), /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs mt-0.5 ' + T.textFaint
-    }, idea.ts)), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return delIdea(idea.id);
-      },
-      className: 'text-xs shrink-0 ' + T.textFaint
-    }, "x")), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-1 flex-wrap mb-1"
-    }, ['roh', 'entwickelt', 'drehbereit', 'verworfen'].map(function (s) {
-      return /*#__PURE__*/React.createElement("button", {
-        key: s,
-        onClick: function onClick() {
-          return updateIdea(idea.id, 'status', s);
-        },
-        className: 'text-xs px-2 py-0.5 rounded-full border ' + (idea.status === s ? 'border-current ' + sCOL[s] : T.card + ' ' + T.textFaint + ' ' + T.divider)
-      }, s);
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-1 flex-wrap mb-2"
-    }, ['niedrig', 'mittel', 'hoch'].map(function (p) {
-      return /*#__PURE__*/React.createElement("button", {
-        key: p,
-        onClick: function onClick() {
-          return updateIdea(idea.id, 'potential', p);
-        },
-        className: 'text-xs px-2 py-0.5 rounded-full border ' + (idea.potential === p ? 'border-current ' + pCOL[p] : T.card + ' ' + T.textFaint + ' ' + T.divider)
-      }, '⚡' + p);
-    }), ['function', 'realtalk', 'wow', 'oliver'].map(function (s) {
-      return /*#__PURE__*/React.createElement("button", {
-        key: s,
-        onClick: function onClick() {
-          return updateIdea(idea.id, 'saeule', s);
-        },
-        className: 'text-xs px-2 py-0.5 rounded-full border ' + (idea.saeule === s ? 'border-current ' + slCOL[s] : T.card + ' ' + T.textFaint + ' ' + T.divider)
-      }, s);
-    })), /*#__PURE__*/React.createElement("input", {
-      value: idea.notes || '',
-      onChange: function onChange(e) {
-        return updateIdea(idea.id, 'notes', e.target.value);
-      },
-      placeholder: "Notizen...",
-      className: 'w-full rounded-lg px-2 py-1 text-xs outline-none border mb-2 ' + T.input
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-2"
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return ideaToPrompt(idea);
-      },
-      className: "flex-1 py-1.5 text-xs rounded-lg border bg-purple-950 text-purple-300 border-purple-800"
-    }, "Prompt aus Idee"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return ideaToQueue(idea);
-      },
-      className: 'flex-1 py-1.5 text-xs rounded-lg border ' + (idea.status === 'drehbereit' ? 'bg-green-950 text-green-400 border-green-800' : 'bg-gray-900 text-gray-400 border-gray-700')
-    }, idea.status === 'drehbereit' ? 'In Dreh-Queue' : 'Drehbereit + Queue')));
-  }))), drillItem && /*#__PURE__*/React.createElement("div", {
-    className: 'fixed inset-0 flex flex-col ' + T.wrap,
-    style: {
-      zIndex: 60
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'sticky top-0 border-b px-4 py-3 flex items-center justify-between ' + T.header
-  }, /*#__PURE__*/React.createElement("span", {
-    className: 'font-bold ' + T.textMain
-  }, "Drehmodus"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setDrillItem(null);
-    },
-    className: 'text-sm px-3 py-1.5 rounded-full border ' + T.card + ' ' + T.textSub + ' ' + T.divider
-  }, "Beenden")), /*#__PURE__*/React.createElement("div", {
-    className: "flex-1 overflow-y-auto px-4 py-4 pb-24"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xl font-bold mb-1 ' + COL[drillItem.catColor || 'blue'].t
-  }, drillItem.item.title), drillItem.item.hook && /*#__PURE__*/React.createElement("div", {
-    className: 'text-base font-semibold mb-4 ' + T.textMain
-  }, drillItem.item.hook), drillItem.item.preflight && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-orange-400 mb-2"
-  }, "VOR DREH PRUEFEN"), drillItem.item.preflight.map(function (p, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      className: 'text-base mb-2 ' + T.textMain
-    }, '☐ ' + p);
-  })), drillItem.item.timeline && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-blue-400 mb-2"
-  }, "ABLAUF"), drillItem.item.timeline.map(function (s, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      className: "mb-3"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs font-bold ' + COL[drillItem.catColor || 'blue'].t
-    }, s.time), /*#__PURE__*/React.createElement("div", {
-      className: 'text-sm ' + T.textMain
-    }, s.text));
-  })), drillItem.item.textsuper && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-yellow-500 mb-2"
-  }, "TEXT-SUPER"), drillItem.item.textsuper.map(function (t, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      className: 'text-xl font-black mb-1 ' + T.textMain
-    }, t);
-  })), drillItem.item.caption && /*#__PURE__*/React.createElement("div", {
-    className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-xs font-bold text-green-400 mb-2"
-  }, "CAPTION"), /*#__PURE__*/React.createElement("div", {
-    className: 'text-base ' + T.textMain
-  }, drillItem.item.caption), drillItem.item.tags && /*#__PURE__*/React.createElement("div", {
-    className: 'text-sm mt-1 ' + T.textFaint
-  }, drillItem.item.tags))), /*#__PURE__*/React.createElement("div", {
-    className: 'sticky bottom-0 px-4 py-3 border-t ' + T.footer
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setQcItem(drillItem.item.id);
-      setDrillItem(null);
-    },
-    className: "w-full py-3 rounded-xl bg-green-950 text-green-400 border border-green-800 font-bold text-sm"
-  }, "Qualitaetscheck vor Post"))), qcItem && /*#__PURE__*/React.createElement("div", {
-    className: 'fixed inset-0 flex flex-col ' + T.wrap,
-    style: {
-      zIndex: 60
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'sticky top-0 border-b px-4 py-3 flex items-center justify-between ' + T.header
-  }, /*#__PURE__*/React.createElement("span", {
-    className: 'font-bold ' + T.textMain
-  }, "Qualitaetscheck"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setQcItem(null);
-    },
-    className: 'text-lg ' + T.textFaint
-  }, "x")), /*#__PURE__*/React.createElement("div", {
-    className: "flex-1 overflow-y-auto px-4 py-4"
-  }, /*#__PURE__*/React.createElement(QCModal, {
-    itemId: qcItem,
-    qcChecks: qcChecks,
-    setQcChecks: setQcChecks,
-    QC_LIST: QC_LIST,
-    T: T,
-    dark: dark,
-    onPost: function onPost() {
-      togglePosted(qcItem);
-      setQcItem(null);
-    }
-  }))), showPicker && /*#__PURE__*/React.createElement("div", {
-    className: 'fixed inset-0 flex flex-col ' + T.wrap,
-    style: {
-      zIndex: 60
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'sticky top-0 border-b px-4 py-3 ' + T.header
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between mb-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: 'font-bold text-sm ' + T.textMain
-  }, "Video auswaehlen"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setShowPicker(null);
-    },
-    className: 'text-lg ' + T.textFaint
-  }, "x")), /*#__PURE__*/React.createElement("input", {
-    value: search,
-    onChange: function onChange(e) {
-      return setSearch(e.target.value);
-    },
-    placeholder: "Suchen...",
-    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border ' + T.input,
-    autoFocus: true
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "flex-1 overflow-y-auto px-3 py-2"
-  }, pickerF.map(function (entry) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: entry.id,
-      onClick: function onClick() {
-        return setHeuteId(showPicker, entry.id);
-      },
-      className: 'w-full text-left mb-2 p-3 rounded-xl border ' + T.card + ' ' + T.divider
-    }, /*#__PURE__*/React.createElement("div", {
-      className: 'text-sm font-semibold ' + T.textMain
-    }, entry.title), entry.hook && /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs mt-0.5 ' + (COL[entry.color] ? COL[entry.color].t : 'text-gray-400')
-    }, entry.hook), /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs mt-0.5 ' + T.textFaint
-    }, entry.cat));
-  }))), !['heute', 'produktion', 'planung', 'content'].includes(tab) && cur && /*#__PURE__*/React.createElement("div", {
-    className: "px-3 py-3 pb-20"
-  }, filtered.map(function (sec, si) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: si,
-      className: "mb-4"
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        setOpenSec(openSec === si ? -1 : si);
-        setOpenContentItem(null);
-      },
-      className: "w-full flex items-center justify-between mb-2 px-1"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: 'text-sm font-bold ' + col.t
-    }, sec.title), /*#__PURE__*/React.createElement("span", {
-      className: 'text-xs ' + T.textFaint
-    }, (openSec === si ? '▲' : '▼') + ' ' + sec.items.length)), (openSec === si || search.trim()) && sec.items.map(function (item) {
-      var isOpen = openContentItem === item.id;
-      var isDone = posted[item.id];
-      var itemAnalytics = analytics[item.id] || {};
-      return /*#__PURE__*/React.createElement("div", {
-        key: item.id,
-        className: 'mb-2 rounded-xl border ' + T.card + ' ' + T.divider + (isDone ? ' opacity-40' : '')
-      }, /*#__PURE__*/React.createElement("button", {
-        onClick: function onClick() {
-          return setOpenContentItem(isOpen ? null : item.id);
-        },
-        className: "w-full text-left px-4 py-3"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "flex items-start justify-between gap-2"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "flex-1"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-sm font-semibold ' + (isDone ? 'line-through ' + T.textFaint : T.textMain)
-      }, item.title), item.hook && /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs mt-0.5 ' + col.t
-      }, item.hook), item.laenge && /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs mt-0.5 ' + T.textFaint
-      }, item.laenge)), /*#__PURE__*/React.createElement("span", {
-        className: 'text-xs mt-1 ' + T.textFaint
-      }, isOpen ? '▲' : '▼'))), isOpen && /*#__PURE__*/React.createElement("div", {
-        className: "px-4 pb-4"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'h-px mb-3 border-t ' + col.br
-      }), item.warn && /*#__PURE__*/React.createElement("div", {
-        className: "text-xs text-orange-400 font-bold mb-3 bg-orange-950 border border-orange-900 rounded-lg px-3 py-2"
-      }, "Besondere Aufmerksamkeit"), item.lines && /*#__PURE__*/React.createElement("div", {
-        className: "mb-3 space-y-1"
-      }, item.lines.map(function (l, li) {
-        return /*#__PURE__*/React.createElement("div", {
-          key: li,
-          className: 'text-sm ' + (l === '---' ? 'border-t ' + T.divider + ' my-2' : T.textSub)
-        }, l !== '---' ? l : '');
-      })), item.shooting && /*#__PURE__*/React.createElement("div", {
-        className: "mt-3"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-1 ' + T.textFaint
-      }, "DREHBRIEFING"), /*#__PURE__*/React.createElement("div", {
-        className: 'rounded-lg px-3 py-2 border ' + (dark ? 'bg-gray-950 border-gray-800' : 'bg-gray-50 border-gray-200')
-      }, Object.entries(item.shooting).map(function (_ref4) {
-        var _ref5 = _slicedToArray(_ref4, 2),
-          k = _ref5[0],
-          v = _ref5[1];
-        return /*#__PURE__*/React.createElement("div", {
-          key: k,
-          className: 'text-xs mb-1 ' + T.textSub
-        }, /*#__PURE__*/React.createElement("span", {
-          className: 'uppercase ' + T.textFaint
-        }, k + ': '), v);
-      })), /*#__PURE__*/React.createElement("div", {
-        className: "mt-2"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs mb-0.5 ' + T.textFaint
-      }, "notiz"), /*#__PURE__*/React.createElement("input", {
-        type: "text",
-        value: itemAnalytics.notiz || '',
-        onChange: function onChange(e) {
-          return updateAnalytics(item.id, 'notiz', e.target.value);
-        },
-        placeholder: "Beobachtung, Lernpunkt...",
-        className: 'w-full rounded-lg px-2 py-1 text-xs outline-none border ' + T.input
-      }))), item.timeline && /*#__PURE__*/React.createElement("div", {
-        className: "mt-3"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-1 ' + T.textFaint
-      }, "ABLAUF"), item.timeline.map(function (s, i) {
-        return /*#__PURE__*/React.createElement("div", {
-          key: i,
-          className: 'text-xs mb-1 ' + T.textSub
-        }, /*#__PURE__*/React.createElement("span", {
-          className: col.t
-        }, s.time + ': '), s.text);
-      })), item.textsuper && /*#__PURE__*/React.createElement("div", {
-        className: "mt-3"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-1 ' + T.textFaint
-      }, "TEXT-SUPER"), item.textsuper.map(function (t, i) {
-        return /*#__PURE__*/React.createElement("div", {
-          key: i,
-          className: 'text-xs rounded-lg px-3 py-1.5 border mb-1 ' + col.t + ' ' + col.br + (dark ? ' bg-gray-950' : ' bg-gray-50')
-        }, t);
-      })), item.schnitt && /*#__PURE__*/React.createElement("div", {
-        className: "mt-3"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-1 ' + T.textFaint
-      }, "SCHNITT"), item.schnitt.map(function (s, i) {
-        return /*#__PURE__*/React.createElement("div", {
-          key: i,
-          className: 'text-xs mb-1 ' + T.textSub
-        }, '• ' + s);
-      })), item.preflight && /*#__PURE__*/React.createElement("div", {
-        className: "mt-3"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-1 ' + T.textFaint
-      }, "VOR DREH PRUEFEN"), item.preflight.map(function (p, i) {
-        return /*#__PURE__*/React.createElement("div", {
-          key: i,
-          className: 'text-xs mb-1 ' + T.textSub
-        }, '☐ ' + p);
-      })), item.caption && /*#__PURE__*/React.createElement("div", {
-        className: "mt-3"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-1 ' + T.textFaint
-      }, "CAPTION"), /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs rounded-lg px-3 py-2 border ' + col.t + ' ' + col.br + (dark ? ' bg-gray-950' : ' bg-gray-50')
-      }, item.caption)), item.tags && /*#__PURE__*/React.createElement("div", {
-        className: 'mt-1.5 text-xs ' + T.textFaint
-      }, item.tags), /*#__PURE__*/React.createElement("div", {
-        className: "flex gap-2 mt-3"
-      }, /*#__PURE__*/React.createElement("button", {
-        onClick: function onClick() {
-          var v = findItem(item.id);
-          if (v) setDrillItem(v);
-        },
-        className: "px-3 py-2 rounded-lg text-xs font-bold bg-orange-950 text-orange-400 border border-orange-800"
-      }, "Drehen"), /*#__PURE__*/React.createElement("button", {
-        onClick: function onClick() {
-          if (isDone) {
-            togglePosted(item.id);
-          } else {
-            setQcItem(item.id);
-          }
-        },
-        className: 'flex-1 py-2 rounded-lg text-xs font-bold ' + (isDone ? T.card + ' ' + T.textFaint + ' border ' + T.divider : col.b + ' ' + col.t + ' border ' + col.br)
-      }, isDone ? 'Gepostet - Zuruecksetzen' : 'Qualitaetscheck + Post'), /*#__PURE__*/React.createElement("button", {
-        onClick: function onClick() {
-          return addIdea(item.hook || item.title, 'hook', 'mittel', 'function');
-        },
-        className: "px-3 py-2 rounded-lg text-xs border bg-purple-950 text-purple-300 border-purple-800"
-      }, "Idee")), isDone && /*#__PURE__*/React.createElement("div", {
-        className: 'mt-3 rounded-xl border p-3 ' + T.card + ' ' + T.divider
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs font-bold mb-2 ' + T.textFaint
-      }, "ANALYTICS"), /*#__PURE__*/React.createElement("div", {
-        className: "grid grid-cols-3 gap-2"
-      }, ['views', 'likes', 'saves', 'shares', 'follower', 'comments'].map(function (field) {
-        return /*#__PURE__*/React.createElement("div", {
-          key: field
-        }, /*#__PURE__*/React.createElement("div", {
-          className: 'text-xs mb-0.5 capitalize ' + T.textFaint
-        }, field), /*#__PURE__*/React.createElement("input", {
-          type: "number",
-          value: itemAnalytics[field] || '',
-          onChange: function onChange(e) {
-            return updateAnalytics(item.id, field, e.target.value);
-          },
-          placeholder: "0",
-          className: 'w-full rounded-lg px-2 py-1 text-xs outline-none border text-center ' + T.input
-        }));
-      })), /*#__PURE__*/React.createElement("div", {
-        className: "mt-2"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: 'text-xs mb-0.5 ' + T.textFaint
-      }, "notiz"), /*#__PURE__*/React.createElement("input", {
-        type: "text",
-        value: itemAnalytics.notiz || '',
-        onChange: function onChange(e) {
-          return updateAnalytics(item.id, 'notiz', e.target.value);
-        },
-        placeholder: "Beobachtung, Lernpunkt...",
-        className: 'w-full rounded-lg px-2 py-1 text-xs outline-none border ' + T.input
-      })))));
-    }));
-  })), /*#__PURE__*/React.createElement("div", {
-    className: 'fixed bottom-0 left-0 right-0 border-t px-3 py-2 ' + T.footer
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between gap-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: 'text-xs ' + T.textFaint
-  }, doneCount + ' gepostet · ' + readyCount + ' drehbereit'), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-1"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: exportData,
-    className: 'text-xs px-2.5 py-1 rounded-full border ' + T.card + ' ' + T.textFaint + ' ' + T.divider
-  }, "Export"), /*#__PURE__*/React.createElement("label", {
-    className: 'text-xs px-2.5 py-1 rounded-full border cursor-pointer ' + T.card + ' ' + T.textFaint + ' ' + T.divider
-  }, "Import", /*#__PURE__*/React.createElement("input", {
-    type: "file",
-    accept: ".json",
-    onChange: importData,
-    style: {
-      display: 'none'
-    }
-  }))))));
+  return (
+    <>
+      <Header />
+      <ContentLab />
+    </>
+  );
 }
-function QCModal(_ref6) {
-  var itemId = _ref6.itemId,
-    qcChecks = _ref6.qcChecks,
-    setQcChecks = _ref6.setQcChecks,
-    QC_LIST = _ref6.QC_LIST,
-    T = _ref6.T,
-    dark = _ref6.dark,
-    onPost = _ref6.onPost;
-  var checks = qcChecks[itemId] || {};
-  var allPassed = QC_LIST.every(function (_, i) {
-    return checks[i];
-  });
-  var toggle = function toggle(i) {
-    var n = _objectSpread(_objectSpread({}, qcChecks), {}, _defineProperty({}, itemId, _objectSpread(_objectSpread({}, checks), {}, _defineProperty({}, i, !checks[i]))));
-    setQcChecks(n);
-    try {
-      localStorage.setItem('joga-qcchecks', JSON.stringify(n));
-    } catch (e) {}
-  };
-  return /*#__PURE__*/React.createElement("div", null, QC_LIST.map(function (q, i) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: i,
-      onClick: function onClick() {
-        return toggle(i);
-      },
-      className: 'w-full text-left p-3 rounded-xl border mb-2 flex items-center gap-3 ' + (checks[i] ? 'bg-green-950 border-green-800' : T.card + ' ' + T.divider)
-    }, /*#__PURE__*/React.createElement("span", {
-      className: 'text-lg ' + (checks[i] ? 'text-green-400' : 'text-gray-600')
-    }, checks[i] ? '✓' : '☐'), /*#__PURE__*/React.createElement("span", {
-      className: 'text-sm ' + (checks[i] ? 'text-green-300' : T.textSub)
-    }, q));
-  }), /*#__PURE__*/React.createElement("div", {
-    className: 'mt-4 rounded-xl border p-3 ' + (allPassed ? 'bg-green-950 border-green-800' : 'bg-orange-950 border-orange-800')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-sm font-bold ' + (allPassed ? 'text-green-400' : 'text-orange-400')
-  }, allPassed ? 'Bereit zum Posten' : QC_LIST.filter(function (_, i) {
-    return !checks[i];
-  }).length + ' Punkte offen')), !allPassed && /*#__PURE__*/React.createElement("div", {
-    className: "mt-3"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: 'text-xs font-bold mb-1 ' + T.textFaint
-  }, "Warum nicht posten?"), /*#__PURE__*/React.createElement("textarea", {
-    value: checks.reason || '',
-    onChange: function onChange(e) {
-      var n = _objectSpread(_objectSpread({}, qcChecks), {}, _defineProperty({}, itemId, _objectSpread(_objectSpread({}, checks), {}, {
-        reason: e.target.value
-      })));
-      setQcChecks(n);
-      try {
-        localStorage.setItem('joga-qcchecks', JSON.stringify(n));
-      } catch (err) {}
-    },
-    placeholder: "Was fehlt noch? Was passt nicht?",
-    rows: 2,
-    className: 'w-full rounded-lg px-3 py-2 text-xs outline-none resize-none border ' + T.input
-  })), /*#__PURE__*/React.createElement("button", {
-    onClick: onPost,
-    disabled: !allPassed,
-    className: 'w-full mt-4 py-3 rounded-xl font-bold text-sm border ' + (allPassed ? 'bg-green-950 text-green-400 border-green-800' : 'bg-gray-900 text-gray-600 border-gray-800')
-  }, allPassed ? 'Als gepostet markieren' : 'Alle Checks bestaetigen'));
-}
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(App));
-  </script>
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
 </body>
 </html>
