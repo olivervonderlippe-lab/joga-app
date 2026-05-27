@@ -1121,68 +1121,52 @@ function App() {
     setLabResult = _useState48[1];
   var _useState49 = useState(''),
     _useState50 = _slicedToArray(_useState49, 2),
-    stmThema = _useState50[0],
-    setStmThema = _useState50[1];
-  var _useState51 = useState('provokant'),
+    eigenerAblauf = _useState50[0],
+    setEigenerAblauf = _useState50[1];
+  var _useState51 = useState(''),
     _useState52 = _slicedToArray(_useState51, 2),
-    stmTon = _useState52[0],
-    setStmTon = _useState52[1];
-  var _useState53 = useState('statement'),
+    stmThema = _useState52[0],
+    setStmThema = _useState52[1];
+  var _useState53 = useState('provokant'),
     _useState54 = _slicedToArray(_useState53, 2),
-    stmFormat = _useState54[0],
-    setStmFormat = _useState54[1];
-  var _useState55 = useState(''),
+    stmTon = _useState54[0],
+    setStmTon = _useState54[1];
+  var _useState55 = useState('statement'),
     _useState56 = _slicedToArray(_useState55, 2),
-    stmPrompt = _useState56[0],
-    setStmPrompt = _useState56[1];
-  var _useState57 = useState(false),
+    stmFormat = _useState56[0],
+    setStmFormat = _useState56[1];
+  var _useState57 = useState(''),
     _useState58 = _slicedToArray(_useState57, 2),
-    stmCopied = _useState58[0],
-    setStmCopied = _useState58[1];
-  var _useState59 = useState(''),
+    stmPrompt = _useState58[0],
+    setStmPrompt = _useState58[1];
+  var _useState59 = useState(false),
     _useState60 = _slicedToArray(_useState59, 2),
-    stmResult = _useState60[0],
-    setStmResult = _useState60[1];
-  var _useState61 = useState('ruecken'),
+    stmCopied = _useState60[0],
+    setStmCopied = _useState60[1];
+  var _useState61 = useState(''),
     _useState62 = _slicedToArray(_useState61, 2),
-    creatorZone = _useState62[0],
-    setCreatorZone = _useState62[1];
-  var _useState63 = useState('energie'),
+    stmResult = _useState62[0],
+    setStmResult = _useState62[1];
+  var _useState63 = useState('ruecken'),
     _useState64 = _slicedToArray(_useState63, 2),
-    creatorStimmung = _useState64[0],
-    setCreatorStimmung = _useState64[1];
-  var _useState65 = useState(null),
+    creatorZone = _useState64[0],
+    setCreatorZone = _useState64[1];
+  var _useState65 = useState('energie'),
     _useState66 = _slicedToArray(_useState65, 2),
-    creatorResult = _useState66[0],
-    setCreatorResult = _useState66[1];
-  var _useState67 = useState({}),
+    creatorStimmung = _useState66[0],
+    setCreatorStimmung = _useState66[1];
+  var _useState67 = useState(null),
     _useState68 = _slicedToArray(_useState67, 2),
-    hookVariants = _useState68[0],
-    setHookVariants = _useState68[1];
+    creatorResult = _useState68[0],
+    setCreatorResult = _useState68[1];
   var _useState69 = useState({}),
     _useState70 = _slicedToArray(_useState69, 2),
-    activeHookIdx = _useState70[0],
-    setActiveHookIdx = _useState70[1];
-  var _useState71 = useState(''),
+    hookVariants = _useState70[0],
+    setHookVariants = _useState70[1];
+  var _useState71 = useState({}),
     _useState72 = _slicedToArray(_useState71, 2),
-    ablauf = _useState72[0],
-    setAblauf = _useState72[1];
-  var _useState73 = useState('nutzlich'),
-    _useState74 = _slicedToArray(_useState73, 2),
-    ablaufPillar = _useState74[0],
-    setAblaufPillar = _useState74[1];
-  var _useState75 = useState('tiktok'),
-    _useState76 = _slicedToArray(_useState75, 2),
-    ablaufPlatform = _useState76[0],
-    setAblaufPlatform = _useState76[1];
-  var _useState77 = useState(false),
-    _useState78 = _slicedToArray(_useState77, 2),
-    ablaufLoading = _useState78[0],
-    setAblaufLoading = _useState78[1];
-  var _useState79 = useState(null),
-    _useState80 = _slicedToArray(_useState79, 2),
-    ablaufResult = _useState80[0],
-    setAblaufResult = _useState80[1];
+    activeHookIdx = _useState72[0],
+    setActiveHookIdx = _useState72[1];
   var T = makeT(dark);
   useEffect(function () {
     try {
@@ -1483,7 +1467,7 @@ function App() {
   };
   var handleLabGenerate = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var typeMap, params, res, data, _t;
+      var hasAblauf, type, params, res, data, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -1495,14 +1479,12 @@ function App() {
           case 1:
             setLabResult(null);
             setBuiltPrompt('generiert...');
-            typeMap = {
-              hook: 'hooks',
-              statement: 'statement',
-              flow: 'flow',
-              spruch: 'statement',
-              caption: 'statement'
-            };
-            params = {
+            hasAblauf = eigenerAblauf.trim().length > 0;
+            type = hasAblauf ? 'verpacken' : promptType === 'flow' ? 'flow' : promptType === 'hook' ? 'hooks' : 'statement';
+            params = hasAblauf ? {
+              thema: promptBrief,
+              ablauf: eigenerAblauf
+            } : {
               thema: promptBrief,
               gefuehl: promptBrief,
               situation: 'allgemein',
@@ -1518,7 +1500,7 @@ function App() {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                type: typeMap[promptType] || 'hooks',
+                type: type,
                 params: params
               })
             });
@@ -1561,24 +1543,6 @@ function App() {
       caption: 'JOGA TikTok. Caption: 1-2 Saetze, dann Hashtags. #joga #nichtyoga immer.\n\n' + QC + '3 Captions.\nVideo: ' + promptBrief
     };
     setBuiltPrompt(map[promptType] || '');
-  };
-  var handleVerpacken = async function() {
-    if (!ablauf.trim()) return;
-    setAblaufLoading(true);
-    setAblaufResult(null);
-    try {
-      var res = await fetch('/.netlify/functions/joga', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({type: 'verpacken', ablauf: ablauf, pillar: ablaufPillar, platform: ablaufPlatform})
-      });
-      var data = await res.json();
-      setAblaufResult(data);
-    } catch(e) {
-      setAblaufResult({error: e.message});
-    } finally {
-      setAblaufLoading(false);
-    }
   };
   var copyPrompt = function copyPrompt() {
     if (!builtPrompt) return;
@@ -2433,129 +2397,27 @@ function App() {
     onChange: function onChange(e) {
       return setPromptBrief(e.target.value);
     },
-    onKeyDown: function onKeyDown(e) {
-      if (e.key === 'Enter') handleLabGenerate();
+    placeholder: promptType === 'hook' ? 'Move oder Thema...' : promptType === 'spruch' ? 'Yoga-Pose...' : promptType === 'statement' ? 'Thema...' : promptType === 'flow' ? 'Stichwort oder Gefuehl...' : 'Video beschreiben...',
+    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border mb-3 ' + T.input
+  }), /*#__PURE__*/React.createElement("div", {
+    className: 'mb-3'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs font-bold mb-1 ' + T.textFaint
+  }, "EIGENER ABLAUF ", /*#__PURE__*/React.createElement("span", {
+    className: 'font-normal'
+  }, "\u2013 optional, wenn du den Flow bereits hast")), /*#__PURE__*/React.createElement("textarea", {
+    value: eigenerAblauf,
+    onChange: function onChange(e) {
+      return setEigenerAblauf(e.target.value);
     },
-    placeholder: promptType === 'hook' ? 'Move oder Thema...' : promptType === 'spruch' ? 'Yoga-Pose...' : promptType === 'statement' ? 'Thema...' : promptType === 'flow' ? 'Koerperzone...' : 'Video beschreiben...',
-    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border mb-2 ' + T.input
-  }), /*#__PURE__*/React.createElement("button", {
+    placeholder: "Deinen konkreten Ablauf hier eingeben. Die KI baut Hook, Caption, Textsuper und Drehanleitung darum herum. z.B.: Daumen verschraenken, Rueckbeuge, Stuhl, Vorbeuge, Plank, 1x Liegestuetz...",
+    rows: 4,
+    className: 'w-full rounded-lg px-3 py-2 text-xs outline-none resize-none border ' + T.input
+  })), /*#__PURE__*/React.createElement("button", {
     onClick: handleLabGenerate,
     disabled: builtPrompt === 'generiert...',
     className: 'w-full py-2 rounded-xl text-sm font-bold border ' + (builtPrompt === 'generiert...' ? 'bg-gray-800 text-gray-500 border-gray-700' : 'bg-purple-950 text-purple-300 border-purple-800')
-  }, builtPrompt === 'generiert...' ? 'KI denkt...' : 'Generieren – Claude + GPT')),
-  React.createElement("div", {className:'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider},
-    React.createElement("div", {className:"text-xs font-bold text-purple-400 mb-1"}, "EIGENER ABLAUF"),
-    React.createElement("div", {className:'text-xs mb-3 ' + T.textFaint}, "Flow rein → Hook · Textsuper · Caption · Drehanleitung · Hashtags · Endgefühl"),
-    React.createElement("textarea", {
-      value: ablauf,
-      onChange: function(e){setAblauf(e.target.value);},
-      placeholder: "Beschreibe deinen JOGA-Ablauf / Flow...\n\nz.B.:\n– 5x Arme schwingen von oben nach unten\n– Schulterkreisen rückwärts × 10\n– Nackendehnung links/rechts je 20 Sek\n– Arm-Shake + Ausschütteln",
-      rows: 6,
-      className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border mb-3 ' + T.input,
-      style: {resize:'vertical'}
-    }),
-    React.createElement("div", {className:"flex gap-4 mb-3 flex-wrap"},
-      React.createElement("div", {},
-        React.createElement("div", {className:'text-xs font-bold mb-1 ' + T.textFaint}, "SÄULE"),
-        React.createElement("div", {className:"flex gap-1"},
-          [{k:'nutzlich',l:'Nützlich'},{k:'wow',l:'Wow'},{k:'ehrlich',l:'Ehrlich'}].map(function(p){
-            return React.createElement("button",{key:p.k,onClick:function(){setAblaufPillar(p.k);},className:'text-xs px-2.5 py-1 rounded-full border '+(ablaufPillar===p.k?'bg-purple-950 text-purple-300 border-purple-800':T.card+' '+T.textFaint+' '+T.divider)},p.l);
-          })
-        )
-      ),
-      React.createElement("div", {},
-        React.createElement("div", {className:'text-xs font-bold mb-1 ' + T.textFaint}, "PLATTFORM"),
-        React.createElement("div", {className:"flex gap-1"},
-          [{k:'tiktok',l:'TikTok'},{k:'instagram',l:'Instagram'},{k:'youtube',l:'YouTube'}].map(function(p){
-            return React.createElement("button",{key:p.k,onClick:function(){setAblaufPlatform(p.k);},className:'text-xs px-2.5 py-1 rounded-full border '+(ablaufPlatform===p.k?'bg-purple-950 text-purple-300 border-purple-800':T.card+' '+T.textFaint+' '+T.divider)},p.l);
-          })
-        )
-      )
-    ),
-    React.createElement("button", {
-      onClick: handleVerpacken,
-      disabled: !ablauf.trim() || ablaufLoading,
-      className: 'w-full py-2 rounded-xl text-sm font-bold border ' + (!ablauf.trim() || ablaufLoading ? 'bg-gray-800 text-gray-500 border-gray-700' : 'bg-purple-950 text-purple-300 border-purple-800')
-    }, ablaufLoading ? 'Verpacke...' : 'Ablauf verpacken → Claude + GPT-4o')
-  ),
-  ablaufResult && React.createElement("div", {className:"mb-4"},
-    ablaufResult.error && React.createElement("div", {className:'rounded-lg p-3 border text-xs text-red-400 border-red-900 bg-red-950 mb-3'}, "Fehler: "+ablaufResult.error),
-    ablaufResult.claude && !ablaufResult.claude.error && React.createElement("div", {className:'rounded-xl border p-4 mb-3 '+(dark?'bg-gray-900 border-blue-900':'bg-blue-50 border-blue-200')},
-    React.createElement("div", {className:"text-xs font-bold text-blue-400 mb-3"}, "CLAUDE"),
-    ablaufResult.claude.hook && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-blue-400 mb-1"}, "HOOK"),
-      React.createElement("div", {className:'text-sm font-semibold p-3 rounded-lg border '+(dark?'bg-gray-950 border-blue-900 text-white':'bg-blue-100 border-blue-300 text-gray-900')}, ablaufResult.claude.hook)
-    ),
-    ablaufResult.claude.textsuper && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-blue-400 mb-1"}, "TEXTSUPER"),
-      React.createElement("div", {className:"flex flex-col gap-1"},
-        (Array.isArray(ablaufResult.claude.textsuper)?ablaufResult.claude.textsuper:[ablaufResult.claude.textsuper]).map(function(t,i){
-          return React.createElement("div",{key:i,className:'text-sm p-2 rounded border '+(dark?'bg-gray-950 border-gray-800 text-gray-300':'bg-gray-50 border-gray-200 text-gray-700')},(i+1)+". "+t);
-        })
-      )
-    ),
-    ablaufResult.claude.caption && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-blue-400 mb-1"}, "CAPTION"),
-      React.createElement("div", {className:'text-sm p-3 rounded-lg border whitespace-pre-wrap '+(dark?'bg-gray-950 border-gray-800 text-gray-300':'bg-gray-50 border-gray-200 text-gray-700')}, ablaufResult.claude.caption)
-    ),
-    ablaufResult.claude.drehanleitung && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-blue-400 mb-1"}, "DREHANLEITUNG"),
-      React.createElement("div", {className:'text-sm p-3 rounded-lg border whitespace-pre-wrap '+(dark?'bg-gray-950 border-gray-800 text-gray-300':'bg-gray-50 border-gray-200 text-gray-700')}, ablaufResult.claude.drehanleitung)
-    ),
-    ablaufResult.claude.hashtags && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-blue-400 mb-1"}, "HASHTAGS"),
-      React.createElement("div", {className:"flex flex-wrap gap-1"},
-        (Array.isArray(ablaufResult.claude.hashtags)?ablaufResult.claude.hashtags:String(ablaufResult.claude.hashtags).split(/\s+/)).map(function(t,i){
-          return React.createElement("span",{key:i,className:'text-xs px-2 py-0.5 rounded border '+(dark?'bg-gray-800 border-gray-700 text-gray-400':'bg-gray-100 border-gray-300 text-gray-600')},t);
-        })
-      )
-    ),
-    ablaufResult.claude.endgefuehl && React.createElement("div", {className:"mb-1"},
-      React.createElement("div", {className:"text-xs text-blue-400 mb-1"}, "ENDGEFÜHL"),
-      React.createElement("div", {className:'text-sm italic p-3 rounded-lg border '+(dark?'bg-gray-950 border-gray-800 text-gray-400':'bg-gray-50 border-gray-200 text-gray-500')}, "„"+ablaufResult.claude.endgefuehl+"“")
-    )
-  ),
-    ablaufResult.gpt4o && !ablaufResult.gpt4o.error && React.createElement("div", {className:'rounded-xl border p-4 mb-3 '+(dark?'bg-gray-900 border-green-900':'bg-green-50 border-green-200')},
-    React.createElement("div", {className:"text-xs font-bold text-green-400 mb-3"}, "GPT-4o"),
-    ablaufResult.gpt4o.hook && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-green-400 mb-1"}, "HOOK"),
-      React.createElement("div", {className:'text-sm font-semibold p-3 rounded-lg border '+(dark?'bg-gray-950 border-green-900 text-white':'bg-green-100 border-green-300 text-gray-900')}, ablaufResult.gpt4o.hook)
-    ),
-    ablaufResult.gpt4o.textsuper && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-green-400 mb-1"}, "TEXTSUPER"),
-      React.createElement("div", {className:"flex flex-col gap-1"},
-        (Array.isArray(ablaufResult.gpt4o.textsuper)?ablaufResult.gpt4o.textsuper:[ablaufResult.gpt4o.textsuper]).map(function(t,i){
-          return React.createElement("div",{key:i,className:'text-sm p-2 rounded border '+(dark?'bg-gray-950 border-gray-800 text-gray-300':'bg-gray-50 border-gray-200 text-gray-700')},(i+1)+". "+t);
-        })
-      )
-    ),
-    ablaufResult.gpt4o.caption && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-green-400 mb-1"}, "CAPTION"),
-      React.createElement("div", {className:'text-sm p-3 rounded-lg border whitespace-pre-wrap '+(dark?'bg-gray-950 border-gray-800 text-gray-300':'bg-gray-50 border-gray-200 text-gray-700')}, ablaufResult.gpt4o.caption)
-    ),
-    ablaufResult.gpt4o.drehanleitung && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-green-400 mb-1"}, "DREHANLEITUNG"),
-      React.createElement("div", {className:'text-sm p-3 rounded-lg border whitespace-pre-wrap '+(dark?'bg-gray-950 border-gray-800 text-gray-300':'bg-gray-50 border-gray-200 text-gray-700')}, ablaufResult.gpt4o.drehanleitung)
-    ),
-    ablaufResult.gpt4o.hashtags && React.createElement("div", {className:"mb-3"},
-      React.createElement("div", {className:"text-xs text-green-400 mb-1"}, "HASHTAGS"),
-      React.createElement("div", {className:"flex flex-wrap gap-1"},
-        (Array.isArray(ablaufResult.gpt4o.hashtags)?ablaufResult.gpt4o.hashtags:String(ablaufResult.gpt4o.hashtags).split(/\s+/)).map(function(t,i){
-          return React.createElement("span",{key:i,className:'text-xs px-2 py-0.5 rounded border '+(dark?'bg-gray-800 border-gray-700 text-gray-400':'bg-gray-100 border-gray-300 text-gray-600')},t);
-        })
-      )
-    ),
-    ablaufResult.gpt4o.endgefuehl && React.createElement("div", {className:"mb-1"},
-      React.createElement("div", {className:"text-xs text-green-400 mb-1"}, "ENDGEFÜHL"),
-      React.createElement("div", {className:'text-sm italic p-3 rounded-lg border '+(dark?'bg-gray-950 border-gray-800 text-gray-400':'bg-gray-50 border-gray-200 text-gray-500')}, "„"+ablaufResult.gpt4o.endgefuehl+"“")
-    )
-  ),
-    (ablaufResult.claude && ablaufResult.claude.error || ablaufResult.gpt4o && ablaufResult.gpt4o.error) && React.createElement("div", {className:'rounded-lg p-3 border text-xs text-red-400 border-red-900 bg-red-950 mb-3'},
-      ablaufResult.claude && ablaufResult.claude.error ? "Claude: "+ablaufResult.claude.error : null,
-      ablaufResult.gpt4o && ablaufResult.gpt4o.error ? " | GPT-4o: "+ablaufResult.gpt4o.error : null
-    )
-  ),
-  labResult && /*#__PURE__*/React.createElement("div", {
+  }, builtPrompt === 'generiert...' ? 'KI denkt...' : eigenerAblauf.trim() ? 'Flow verpacken – Claude + GPT' : 'Generieren – Claude + GPT')), labResult && /*#__PURE__*/React.createElement("div", {
     className: "mb-4"
   }, labResult.claude && /*#__PURE__*/React.createElement("div", {
     className: 'rounded-xl border p-4 mb-3 ' + (dark ? 'bg-gray-900 border-blue-900' : 'bg-blue-50 border-blue-200')
