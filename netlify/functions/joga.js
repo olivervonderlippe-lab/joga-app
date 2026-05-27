@@ -68,6 +68,23 @@ Format: je 1 Satz. Direkt. Mix aus provokant, einladend, humorvoll, ehrlich.
 Danach: 1 Satz welche Hook am staerksten ist und warum.`;
   }
 
+  if (type === 'verpacken') {
+    return `Ich habe einen fertigen JOGA-Flow. Verpacke ihn fuer TikTok.
+
+Thema/Titel: ${params.thema}
+Mein Ablauf: ${params.ablauf}
+
+Liefere NUR:
+HOOK: (1 Satz, der neugierig macht – nicht den Ablauf beschreiben)
+TEXTSUPER: (1-3 Woerter fuer Video-Overlay)
+DREHANLEITUNG: (2-3 Saetze: Kamera, Tempo, worauf achten)
+CAPTION: (TikTok-ready, mit #joga #nichtyoga)
+HASHTAGS: (5-7 relevante Tags)
+ENDGEFUEHL: (1 Satz was der Zuschauer danach fuehlt)
+
+Den Ablauf NICHT veraendern. Nur verpacken. Kein Yoga-Vokabular.`;
+  }
+
   return `JOGA Content fuer: ${JSON.stringify(params)}. Direkt und praegnant.`;
 }
 
