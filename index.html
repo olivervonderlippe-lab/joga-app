@@ -99,7 +99,9 @@ var COL = {
     t: "text-gray-400",
     b: "bg-gray-800",
     br: "border-gray-700"
-  }
+  },
+  teal: {t:'text-teal-400',b:'bg-teal-950',br:'border-teal-800'},
+  cyan: {t:'text-cyan-400',b:'bg-cyan-950',br:'border-cyan-800'}
 };
 var STATUS = ['offen', 'gedreht', 'geschnitten', 'gepostet'];
 var S_COL = {
@@ -931,209 +933,115 @@ var D = {
         lines: ['Kommentar zeigen. Trocken antworten. Kurz.']
       }]
     }]
-  },
-  instagram14: {
-    label: '14 Tage IG',
-    color: 'violet',
-    icon: 'IG',
-    sections: [{
-      title: 'Hypothese + Regeln',
-      items: [{
-        id: 'ig_strategie',
-        title: 'TikTok folgt JOGA. Instagram folgt Oliver.',
-        lines: [
-          'Test: 14 Tage • 70% Oliver / 30% Statement',
-          '---',
-          'POSTING-RHYTHMUS (Abendslot ~19:00)',
-          'MO Oliver · DI Statement · MI Oliver · DO Statement · FR Oliver · SA Oliver · SO Statement',
-          '+ Morning Moves täglich 08:00 Uhr unverändert',
-          '---',
-          'OLIVER-FORMAT: Reel 20-50 Sek · iPhone Pro Max Augenhöhe · neutrales Setting · 1 Take kein Jump Cut · kein Hey',
-          'STATEMENT-FORMAT: Reel 15-22 Sek · Text auf schwarz weiße Schrift · jede Zeile eigener Beat · Caption 1-2 Zeilen',
-          '---',
-          'AUSWERTUNG TAG 14:',
-          'Oliver > Statements: Instagram dauerhaft auf Oliver als Gesicht umstellen',
-          'Beide ähnlich: Oliver 2x/Woche als festes Format',
-          'Statements besser: Stil und Thema analysieren, nicht Format'
-        ]
-      }]
-    }, {
-      title: 'Woche 1 – Tag 1-7',
-      items: [{
-        id: 'ig01',
-        title: 'Tag 1 — MO · Oliver · Marken aufgebaut (Eröffnung)',
-        lines: [
-          'SKRIPT:',
-          'Ich habe mein ganzes Berufsleben Marken aufgebaut.',
-          '[Pause 1 Sek.] Strategie, Positionierung, Kommunikation. Ich weiß, wie das geht.',
-          '[Pause 1,5 Sek.] Und dann stehe ich mit 56 da und merke: Ich habe mich selbst nie so konsequent aufgebaut.',
-          '[Pause 1 Sek.] Jetzt tue ich das. Nicht weil ich eine Krise hatte. Sondern weil ich nicht warten wollte, bis eine kommt.',
-          '---',
-          'CAPTION: Beste Investition des Jahres: der eigene Körper. #JOGA #NichtYoga #Männer40',
-          'FORMAT: Reel · direkt in die Kamera'
-        ]
-      }, {
-        id: 'ig02',
-        title: 'Tag 2 — DI · Statement · Campingstuhl',
-        lines: [
-          'TEXT: Dein Körper ist kein Campingstuhl.',
-          'TIMING: Einblende 0-3 Sek. · stehen lassen bis 20 Sek.',
-          '---',
-          'CAPTION: Zusammenfalten war gestern.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40',
-          'Prägnantestes Statement im Plan. Kein zweiter Satz. Stehen lassen.'
-        ]
-      }, {
-        id: 'ig03',
-        title: 'Tag 3 — MI · Oliver · Mit 30 erfolgreich',
-        lines: [
-          'SKRIPT:',
-          'Mit 30 wollte ich erfolgreich sein.',
-          '[Pause 1 Sek.] Mit 56 will ich beweglich bleiben.',
-          '[Pause 1,5 Sek.] Nicht weil Erfolg nichts zählt. Sondern weil ich gemerkt habe, dass ich meinen Körper die ganze Zeit mitgeschleift habe — und er irgendwann die Rechnung schickt.',
-          '[Pause 1 Sek.] JOGA ist meine Art, die Rechnung klein zu halten.',
-          '---',
-          'CAPTION: Der Körper führt immer Buch. #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig04',
-        title: 'Tag 4 — DO · Statement · Älter werden',
-        lines: [
-          'TEXT:',
-          'Älter werden passiert von allein.',
-          'Beweglich bleiben nicht.',
-          'TIMING: Zeile 1 = 0-7 Sek. · Zeile 2 = 7-20 Sek.',
-          '---',
-          'CAPTION: Zwei Prozesse. Einer läuft von selbst.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig05',
-        title: 'Tag 5 — FR · Oliver · Handstand lernen',
-        lines: [
-          'SKRIPT:',
-          'Ich bin 56.',
-          '[Pause 1 Sek.] Und lerne gerade Handstand.',
-          '[Pause 1 Sek.] Nicht weil ich muss. Sondern weil ich noch nicht fertig bin.',
-          '---',
-          'CAPTION: Mit 56 noch Schüler sein. Ich finde das ist kein Nachteil.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig06',
-        title: 'Tag 6 — SA · Oliver · Gut aussehen vs. gut fühlen',
-        lines: [
-          'SKRIPT:',
-          'Mit 30 wollte ich gut aussehen.',
-          '[Pause 1 Sek.] Mit 56 möchte ich mich gut fühlen.',
-          '[Pause 1,5 Sek.] War deutlich schwerer zu verstehen.',
-          '---',
-          'CAPTION: Irgendwann ändert sich die Frage. Dann ändert sich alles andere auch.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig07',
-        title: 'Tag 7 — SO · Statement · Wer sich nicht bewegt',
-        lines: [
-          'TEXT:',
-          'Wer sich nicht bewegt,',
-          'wird bewegt.',
-          'TIMING: Zeile 1 = 0-6 Sek. · Zeile 2 = 6-20 Sek.',
-          '---',
-          'CAPTION: Von der Zeit. Vom Körper. Vom Sofa.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40',
-          'Die Pause dazwischen ist der Witz.'
-        ]
-      }]
-    }, {
-      title: 'Woche 2 – Tag 8-14',
-      items: [{
-        id: 'ig08',
-        title: 'Tag 8 — MO · Oliver · Die größte Fitnesslüge',
-        lines: [
-          'SKRIPT:',
-          'Die größte Fitnesslüge:',
-          '[Pause 2 Sek.] Es ist zu spät.',
-          '[Pause 2 Sek.] Zu spät für was genau? Um anzufangen, sich zu bewegen? Um neugierig zu bleiben? Um seinen Körper ernst zu nehmen?',
-          '[Pause 1 Sek.] Die Lüge funktioniert, weil sie sich wie die Wahrheit anfühlt. Ist sie aber nicht.',
-          '---',
-          'CAPTION: Zu spät ist ein sehr bequemer Gedanke. #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig09',
-        title: 'Tag 9 — DI · Statement · Früher konntest du das',
-        lines: [
-          'TEXT:',
-          'Früher konntest du das.',
-          'Dann hast du aufgehört.',
-          'Nicht dein Körper.',
-          'TIMING: Zeile 1 = 0-5 Sek. · Zeile 2 = 5-10 Sek. · Zeile 3 = 10-20 Sek.',
-          '---',
-          'CAPTION: Der Körper erinnert sich. Er wartet nur.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig10',
-        title: 'Tag 10 — MI · Oliver · Nicht für den Sommer',
-        lines: [
-          'SKRIPT:',
-          'Ich trainiere nicht für den Sommer.',
-          '[Pause 1 Sek.] Ich trainiere dafür, dass ich mit 70 noch vom Boden hochkomme.',
-          '---',
-          'CAPTION: Sommer kommt und geht. Die nächsten 30 Jahre auch — die Frage ist wie.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig11',
-        title: 'Tag 11 — DO · Statement · 56 Jahre Mietwagen',
-        lines: [
-          'TEXT:',
-          'Seit 56 Jahren wohne ich in diesem Körper.',
-          'Langsam sollte ich aufhören, ihn wie einen Mietwagen zu behandeln.',
-          'TIMING: Zeile 1-2 = 0-7 Sek. · Zeile 3-4 = 7-22 Sek.',
-          '---',
-          'CAPTION: War eigentlich schon immer klar.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig12',
-        title: 'Tag 12 — FR · Oliver · Jünger aussehen',
-        lines: [
-          'SKRIPT:',
-          'Ich habe kein Interesse daran, jünger auszusehen.',
-          '[Pause 1,5 Sek.] Aber großes Interesse daran, mich jünger zu bewegen.',
-          '---',
-          'CAPTION: Von innen nach außen. Nicht andersrum.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig13',
-        title: 'Tag 13 — SA · Oliver · Handstand mit 56 ausgebaut',
-        lines: [
-          'SKRIPT:',
-          'Ich kann noch keinen perfekten Handstand.',
-          '[Pause 1 Sek.] Aber ich bin 56.',
-          '[Pause 1 Sek.] Und ich finde es ziemlich geil, dass ich es immer noch versuche.',
-          '[Pause 1 Sek.] Die meisten geben ihre Neugier viel früher auf. Ich nicht.',
-          '---',
-          'CAPTION: Neugier ist kein Jugendprivileg.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40'
-        ]
-      }, {
-        id: 'ig14',
-        title: 'Tag 14 — SO · Statement · Motivation vs. Gewohnheit',
-        lines: [
-          'TEXT:',
-          'Motivation ist: Heute habe ich Lust.',
-          'Gewohnheit ist: Heute mache ich’s trotzdem.',
-          'TIMING: Zeile 1-2 = 0-8 Sek. · Zeile 3-4 = 8-22 Sek.',
-          '---',
-          'CAPTION: 14 Tage. Kein Test. Ein Anfang.',
-          'HASHTAGS: #JOGA #NichtYoga #Männer40',
-          'Schließt den Bogen. Caption bewusst auf die 14 Tage bezogen.'
-        ]
-      }]
-    }]
+  }
+
+  ,urlaubsplan:{
+    label:'Urlaub 12T',
+    color:'teal',
+    icon:'🌊',
+    sections:[
+      {title:'Prinzip',items:[
+        {id:'up0',title:'Kein VO. Keine Statements. Kein Druck.',
+         lines:['Morgens/Tagsüber: Dänemark-Atmosphäre · kein Wort · Bilder laufen lassen','Abends: Bewegung · kein VO · Musik trägt','---','Text-Super Englisch (max. 4 Wörter): morning in denmark · JOGA in denmark · hygge > stress · this is enough · still moving · 56. still here. · no mat required','---','NICHT: Mit 56-Videos · Meinungsfragen · Oliver-Talks · Statements · Stressdruck'],
+         caption:'Kein Druck. Bilder sprechen lassen.',tags:''},
+        {id:'up1',title:'Kill Rule für Urlaub',warn:true,
+         lines:['Alles Sprachige als Entwurf.','WOW und Bewegungs-Clips jetzt posten — auf Englisch oder wortlos.','Algorithmus-Problem: TikTok zeigt zuerst Dänemark-Publikum.','Dänischer Zuschauer skippt deutsche VO → Watch Time bricht ein.','Lösung: kein VO + englischer Text-Super = internationale Ausspielung.']}
+      ]},
+      {title:'Tage 1-6',items:[
+        {id:'u01',title:'Tag 1 — Mo',hook:'morning in denmark',lines:['Morgen (Mo): Ankunft · erste Eindrücke · Meer','Abend: MM01 Tornado-Opener · Musik · kein VO','---','Text-Super: \"morning in denmark\"'],caption:'morning in denmark',tags:'#JOGA #NichtYoga'},
+{id:'u02',title:'Tag 2 — Di',hook:'still moving',lines:['Morgen (Di): Fahrradtour · Landschaft · Stimmung','Abend: MM09 Anti-Steifheits · Musik · kein VO','---','Text-Super: \"still moving\"'],caption:'still moving',tags:'#JOGA #NichtYoga'},
+{id:'u03',title:'Tag 3 — Mi',hook:'JOGA in denmark',lines:['Morgen (Mi): Morgenspaziergang · Kaffee · Dünen','Abend: MM05 Wirbelsäulen-Reset · Musik · kein VO','---','Text-Super: \"JOGA in denmark\"'],caption:'JOGA in denmark',tags:'#JOGA #NichtYoga'},
+{id:'u04',title:'Tag 4 — Do',hook:'hygge > stress',lines:['Morgen (Do): Strand · Wasser · Horizont','Abend: MM03 Wachmacher-Swing · Musik · kein VO','---','Text-Super: \"hygge > stress\"'],caption:'hygge > stress',tags:'#JOGA #NichtYoga'},
+{id:'u05',title:'Tag 5 — Fr',hook:'this is enough',lines:['Morgen (Fr): Dorfleben · lokale Details','Abend: MM02 Anti-Schreibtisch · Musik · kein VO','---','Text-Super: \"this is enough\"'],caption:'this is enough',tags:'#JOGA #NichtYoga'},
+{id:'u06',title:'Tag 6 — Sa',hook:'56. still here.',lines:['Morgen (Sa): Sonnenuntergang · golden hour','Abend: MM10 Holy-Shit-Move · Musik · kein VO','---','Text-Super: \"56. still here.\"'],caption:'56. still here.',tags:'#JOGA #NichtYoga'}
+      ]},
+      {title:'Tage 7-12',items:[
+        {id:'u07',title:'Tag 7 — So',hook:'no mat required',lines:['Morgen (So): Freier Tag · was auch immer','Abend: MM06 Energy-Reset · Musik · kein VO','---','Text-Super: \"no mat required\"'],caption:'no mat required',tags:'#JOGA #NichtYoga'},
+{id:'u08',title:'Tag 8 — Mo',hook:'morning in denmark',lines:['Morgen (Mo): Rückkehr zu Lieblingsspot','Abend: MM08 Nervensystem-Move · Musik · kein VO','---','Text-Super: \"morning in denmark\"'],caption:'morning in denmark',tags:'#JOGA #NichtYoga'},
+{id:'u09',title:'Tag 9 — Di',hook:'still moving',lines:['Morgen (Di): Frühmorgendlicher Spaziergang','Abend: MM07 Nicht-Yoga-Move · Musik · kein VO','---','Text-Super: \"still moving\"'],caption:'still moving',tags:'#JOGA #NichtYoga'},
+{id:'u10',title:'Tag 10 — Mi',hook:'this is enough',lines:['Morgen (Mi): Ruhetag · kein Druck','Abend: MM04 Tiefer Rotator · Musik · kein VO','---','Text-Super: \"this is enough\"'],caption:'this is enough',tags:'#JOGA #NichtYoga'},
+{id:'u11',title:'Tag 11 — Do',hook:'JOGA in denmark',lines:['Morgen (Do): Letzter voller Tag · bewusst genießen','Abend: Freier Flow · Instinkt · Musik · kein VO','---','Text-Super: \"JOGA in denmark\"'],caption:'JOGA in denmark',tags:'#JOGA #NichtYoga'},
+{id:'u12',title:'Tag 12 — Fr',hook:'no mat required',lines:['Morgen (Fr): Abreise oder Hamburg','Abend: Morning Move freie Wahl · Musik · kein VO','---','Text-Super: \"no mat required\"'],caption:'no mat required',tags:'#JOGA #NichtYoga'}
+      ]}
+    ]
+  }
+  ,fokusplan:{
+    label:'Fokus 44T',
+    color:'cyan',
+    icon:'🎯',
+    sections:[
+      {title:'System',items:[
+        {id:'fk0',title:'3 Säulen · 44 Tage · Kein Overload',
+         lines:['SÄULE 1: JOGA auf Ehrlich · Folge 5-30 · 3x/Woche → Reichweite + Shares','SÄULE 2: Mit 56 · Folge 4-20 · 2x/Woche → Follower-Bindung','SÄULE 3: Oliver direkt · Video 3-15 · 1-2x/Woche → Persönlichkeit','---','HINTERGRUND: Morning Moves täglich · WOW 1x/Woche · kein Pflichtprogramm','INSTAGRAM: TikTok Top-Performer 24h später spiegeln · kein eigenes Programm','---','WOCHENTAKT: Mo Ehrlich · Di Mit56 · Mi Oliver · Do Ehrlich · Fr Oliver/Mit56 · Sa WOW · So Ehrlich'],
+         caption:'3 Säulen. 44 Tage. Daten sammeln.',tags:''},
+        {id:'fk1',title:'Batch-Drehtage',warn:true,
+         lines:['BATCH A+B — Tag 13-14: Ehrlich #5-12 (8x) · Mit56 #4-8 (5x) · Oliver #3-5 (3x) · ca. 2 Std.','BATCH C+D — Tag 27-28: Ehrlich #13-22 (10x) · Mit56 #9-15 (7x) · Oliver #6-10 (5x) · ca. 2,5 Std.','BATCH E — Tag 41-42: Ehrlich #23-30 (8x) · Mit56 #16-20 (5x) · Oliver #11-15 (5x) · ca. 2 Std.']},
+        {id:'fk2',title:'Kill Rule — Tag 56',warn:true,
+         lines:['TOP 2 FORMATE: VERDOPPELN','MITTELFELD: HALTEN','BOTTOM 20%: STREICHEN — ohne Diskussion, ohne Bauchgefühl, ohne "aber ich mag das"','---','KERNFRAGE: Reagieren Menschen stärker auf Ehrlich oder auf Mit 56?','Ehrlich > Mit 56 → Ehrlich auf 4x/Woche · Vorher/Nachher als Ergänzung','Mit 56 > Ehrlich → Mit 56 auf 3x/Woche · Challenge starten','Oliver verliert nie — bleibt immer.']}
+      ]},
+      {title:'JOGA auf Ehrlich #5-30',items:[
+        {id:'fe05',title:'#5 — Krieger II',hook:'Yoga: Krieger II',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Krieger II. JOGA nennt es: einfach machen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Krieger II.','','[Pause, 1 Sek.]','','JOGA nennt das:','Zwei Schritte breit stehen und die Arme heben.','','Klingt nach nichts.','Fühlt sich nach allem an.']},
+{id:'fe06',title:'#6 — Herabschauender Hund',hook:'Yoga: Herabschauender Hund',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Hund. JOGA nennt es: Annäherung. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Herabschauender Hund.','','[Pause, 1 Sek.]','','JOGA nennt das:','Hinten beugen und hoffen, dass die Fersen den Boden berühren.','','Meistens tun sie das nicht.','','Das ist auch okay.']},
+{id:'fe07',title:'#7 — Kindshaltung',hook:'Yoga: Kindshaltung',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Kindshaltung. JOGA nennt es: ankommen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Kindshaltung.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf die Knie, Stirn auf den Boden.','','Das klingt nach Kapitulation.','Fühlt sich nach Erholung an.']},
+{id:'fe08',title:'#8 — Bergstellung',hook:'Yoga: Bergstellung',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Bergstellung. JOGA nennt es: bewusst stehen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Bergstellung.','','[Pause, 1 Sek.]','','JOGA nennt das:','Einfach stehen.','','Das klingt nach nichts.','','Probier es mal aus.']},
+{id:'fe09',title:'#9 — Baum',hook:'Yoga: Baum',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Baum. JOGA nennt es: Gleichgewicht testen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Baum.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf einem Bein stehen und so tun als wäre das normal.','','Mit offenen Augen: geht.','Mit geschlossenen Augen: interessant.']},
+{id:'fe10',title:'#10 — Katze / Kuh',hook:'Yoga: Katze / Kuh',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Katze/Kuh. JOGA nennt es: Wirbelsäule bewegen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Katze / Kuh.','','[Pause, 1 Sek.]','','JOGA nennt das:','Rücken rund, Rücken hohl.','','Klingt nach nichts.','Dein Rücken ist anderer Meinung.']},
+{id:'fe11',title:'#11 — Kobra',hook:'Yoga: Kobra',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Kobra. JOGA nennt es: Rücken öffnen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Kobra.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf dem Bauch liegen und die Brust heben.','','Sehr theatralisch.','Sehr wirksam.']},
+{id:'fe12',title:'#12 — Taube',hook:'Yoga: Taube',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Taube. JOGA nennt es: Hüfte entstauben. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Taube.','','[Pause, 1 Sek.]','','JOGA nennt das:','Hüftöffner für Menschen die zu viel sitzen.','','Das bin ich.','Das bist du wahrscheinlich auch.']},
+{id:'fe13',title:'#13 — Brücke',hook:'Yoga: Brücke',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Brücke. JOGA nennt es: drei Wörter. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Brücke.','','[Pause, 1 Sek.]','','JOGA nennt das:','Becken hoch. Schultern unten. Atmen.','','Drei Wörter. Mehr braucht es nicht.','','Stimmt meistens auch.']},
+{id:'fe14',title:'#14 — Vorwärtsbeuge',hook:'Yoga: Vorwärtsbeuge',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Vorwärtsbeuge. JOGA nennt es: ehrlicher Check. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Vorwärtsbeuge.','','[Pause, 1 Sek.]','','JOGA nennt das:','Versuchen, die Zehen zu berühren.','','Wer es schafft: super.','Wer nicht: willkommen im Club.']},
+{id:'fe15',title:'#15 — Drehsitz',hook:'Yoga: Drehsitz',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Drehsitz. JOGA nennt es: Wirbelsäule entstören. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Drehsitz.','','[Pause, 1 Sek.]','','JOGA nennt das:','Sitzen und drehen bis es knackt.','','Das Knacken ist okay.','Der Moment danach: besser.']},
+{id:'fe16',title:'#16 — Halber Mond',hook:'Yoga: Halber Mond',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Halber Mond. JOGA nennt es: Gleichgewicht herausfordern. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Halber Mond.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf einem Bein stehen, ein Arm zum Boden, einer nach oben.','','Sieht spektakulär aus.','Fühlt sich genauso an.','','Selten beides gleichzeitig.']},
+{id:'fe17',title:'#17 — Stuhl',hook:'Yoga: Stuhl',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Stuhl. JOGA nennt es: Beine arbeiten lassen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Stuhl.','','[Pause, 1 Sek.]','','JOGA nennt das:','In die Knie gehen und so tun als würde man sitzen.','','Kein Stuhl da.','Oberschenkel trotzdem an.']},
+{id:'fe18',title:'#18 — Krähe',hook:'Yoga: Krähe',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Krähe. JOGA nennt es: lernen durch Fallen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Krähe.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf den Händen balancieren.','','Spoiler: das dauert.','','Aber irgendwann geht es.','Oder man fällt.','Beides zählt.']},
+{id:'fe19',title:'#19 — Delphin',hook:'Yoga: Delphin',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Delphin. JOGA nennt es: den freundlicheren Handstand. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Delphin.','','[Pause, 1 Sek.]','','JOGA nennt das:','Unterarmstütze mit Gesäß nach oben.','','Ist das der freundlichere Handstand?','','Ja.','Kaum.']},
+{id:'fe20',title:'#20 — Held I',hook:'Yoga: Held I',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Held I. JOGA nennt es: Lunge mit Haltung. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Held I.','','[Pause, 1 Sek.]','','JOGA nennt das:','Großer Schritt nach vorne, Arme hoch, Brust offen.','','Held I ist der freundlichste Ausfallschritt der Welt.','','Man versteht sofort warum er so heißt.']},
+{id:'fe21',title:'#21 — Held II',hook:'Yoga: Held II',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Held II. JOGA nennt es: stehen bleiben. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Held II.','','[Pause, 1 Sek.]','','JOGA nennt das:','Ausfallschritt mit Armen parallel zum Boden.','','Der Held schaut zur Seite.','Der JOGA-Held auch.','Er ist müde. Aber er steht.']},
+{id:'fe22',title:'#22 — Held III',hook:'Yoga: Held III',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Held III. JOGA nennt es: Mut zum Kipppunkt. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Held III.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf einem Bein nach vorne fallen — kontrolliert.','','Das Wort fallen ist hier wichtig.','','Kontrolliert.','','Die meisten fallen unkontrolliert.','Das zählt auch.']},
+{id:'fe23',title:'#23 — Lotussitz',hook:'Yoga: Lotussitz',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Lotussitz. JOGA nennt es: auf dem Boden sitzen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Lotussitz.','','[Pause, 1 Sek.]','','JOGA nennt das:','Im Schneidersitz auf dem Boden sitzen.','','Das ist schon der Lotussitz.','','Wer es nicht glaubt: probiert mal.']},
+{id:'fe24',title:'#24 — Schulterstand',hook:'Yoga: Schulterstand',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Schulterstand. JOGA nennt es: umgekehrt denken. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Schulterstand.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf den Schultern liegen, Beine senkrecht hoch.','','Das Blut fließt anders.','','Das ist der Punkt. Keine Magie.']},
+{id:'fe25',title:'#25 — Fisch',hook:'Yoga: Fisch',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Fisch. JOGA nennt es: das Gegenteil des Alltags. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Fisch.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf dem Rücken liegen und die Brust nach oben öffnen.','','Das Gegenteil von allem,','was wir den ganzen Tag tun.','','Warum machen wir das so selten?']},
+{id:'fe26',title:'#26 — Bogenschütze',hook:'Yoga: Bogenschütze',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Bogenschütze. JOGA nennt es: Rotation aus der Tiefe. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Bogenschütze.','','[Pause, 1 Sek.]','','JOGA nennt das:','Tiefer Ausfallschritt, Oberkörper aufdrehen, ein Arm nach vorne.','','Kein Pfeil. Keine Jagd.','','Nur der Körper, der sich öffnet.','Das reicht.']},
+{id:'fe27',title:'#27 — Pflug',hook:'Yoga: Pflug',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Pflug. JOGA nennt es: Grenzen testen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Pflug.','','[Pause, 1 Sek.]','','JOGA nennt das:','Beine über den Kopf.','','Das klingt unmöglich.','Ist es meistens auch.','','Trotzdem versuchen.']},
+{id:'fe28',title:'#28 — Garbe',hook:'Yoga: Garbe',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Garbe. JOGA nennt es: die Frage stellen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Garbe.','','[Pause, 1 Sek.]','','JOGA nennt das:','Vorwärtsbeuge mit verschränkten Armen.','','Warum?','','[lange Pause]','','Das habe ich mich auch gefragt.','Und dann hat mein Rücken geantwortet.']},
+{id:'fe29',title:'#29 — Toter Mann',hook:'Yoga: Toter Mann',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'Yoga nennt es Toter Mann. JOGA nennt es: liegen lassen. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Toter Mann.','','[Pause, 1 Sek.]','','JOGA nennt das:','Auf dem Rücken liegen. Nichts tun.','','Das.','','Genau das.']},
+{id:'fe30',title:'#30 — Surya Namaskar',hook:'Yoga: Surya Namaskar',laenge:'20-30 Sek. · Direkt in Kamera · kein Schnitt',caption:'30 Folgen. Eine Haltung. #JOGA #NichtYoga #JOGAaufEhrlich',tags:'#JOGA #NichtYoga #JOGAaufEhrlich',lines:['Yoga nennt das: Surya Namaskar.','','[Pause, 1 Sek.]','','JOGA nennt das:','Sonnengruß.','','JOGA nennt das auch Sonnengruß.','Sieht nur anders aus.','','Wir nennen es Beast Mode.']}
+      ]},
+      {title:'Mit 56 #4-20',items:[
+        {id:'m56n04',title:'#4',hook:'Mit 56 brauche ich länger',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Der Körper braucht Zeit. Ich gebe sie ihm. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 brauche ich länger','um morgens anzukommen.','','[Pause, 1 Sek.]','','Der Körper ist kein Schalter.','Er ist ein Prozess.']},
+{id:'m56n05',title:'#5',hook:'Mit 56 mache ich Dinge,',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Mit 30 für unmöglich gehalten. Mit 56 gemacht. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 mache ich Dinge,','die ich mit 30 für unmöglich hielt.','','[Pause, 1,5 Sek.]','','Das ist keine Motivation.','Das ist eine Feststellung.']},
+{id:'m56n06',title:'#6',hook:'Mit 56 ist der Unterschied zwischen',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Das Aufwärmen ist das Training. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 ist der Unterschied zwischen','Aufwärmen und Training','kleiner geworden.','','[Pause, 1 Sek.]','','Das Aufwärmen ist das Training.']},
+{id:'m56n07',title:'#7',hook:'Mit 56 achte ich auf Dinge,',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Der Körper buchführt. Immer. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 achte ich auf Dinge,','die ich mit 36 ignoriert habe.','','[Pause, 1 Sek.]','','Schlaf. Wasser. Pausen.','','Nicht weil ich muss.','Weil ich weiß was passiert wenn nicht.']},
+{id:'m56n08',title:'#8',hook:'Mit 56 fange ich Dinge an,',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Es passt nie. Also jetzt. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 fange ich Dinge an,','die ich nie lernen konnte.','','[Pause, 1 Sek.]','','Nicht weil ich jetzt Zeit hätte.','Sondern weil ich aufgehört habe zu warten.']},
+{id:'m56n09',title:'#9',hook:'Mit 56 verhandle ich nicht mehr',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Aufgehört zu verhandeln. Angefangen zuzuhören. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 verhandle ich nicht mehr','mit meinem Körper.','','[Pause, 1 Sek.]','','Ich höre ihm zu.','','Das ist der Unterschied.']},
+{id:'m56n10',title:'#10',hook:'Mit 56 ist Steifheit am Morgen',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Steifheit ist Feedback, kein Urteil. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 ist Steifheit am Morgen','kein Zeichen von Alter.','','[Pause, 1 Sek.]','','Es ist ein Zeichen,','dass ich mich gestern bewegt habe.']},
+{id:'m56n11',title:'#11',hook:'Mit 56 weiß ich was der Körper',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Informiert handeln ist nicht dasselbe wie vorsichtig sein. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 weiß ich was der Körper','am nächsten Tag bezahlen muss.','','[Pause, 1 Sek.]','','Und ich mache es trotzdem.','Aber ich weiß es.']},
+{id:'m56n12',title:'#12',hook:'Mit 56 bin ich nicht mehr',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Neugier ist keine Altersfrage. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 bin ich nicht mehr','der fitteste Mann im Raum.','','[Pause, 1 Sek.]','','Der neugierigste?','Vielleicht.']},
+{id:'m56n13',title:'#13',hook:'Mit 56 trainiere ich gegen nichts.',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Einfach trainieren. Das reicht. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 trainiere ich gegen nichts.','','[Pause, 1,5 Sek.]','','Nicht gegen das Alter.','Nicht gegen die Zeit.','','Ich trainiere einfach.']},
+{id:'m56n14',title:'#14',hook:'Mit 56 habe ich aufgehört,',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Vergleiche mit dir selbst sind bereits zu viele. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 habe ich aufgehört,','meinen Körper','mit dem von 30 zu vergleichen.','','[Pause, 1 Sek.]','','Das war die beste Entscheidung','des letzten Jahrzehnts.']},
+{id:'m56n15',title:'#15',hook:'Mit 56 braucht mein Körper',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Konsistenz schlägt Intensität. Immer. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 braucht mein Körper','keine Herausforderung.','','[Pause, 1 Sek.]','','Er braucht Konsistenz.','','Das ist die eigentliche Herausforderung.']},
+{id:'m56n16',title:'#16',hook:'Mit 56 lerne ich immer noch,',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Den Unterschied lernt man durch Bewegung. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 lerne ich immer noch,','dass Schmerz und Unbehagen','verschiedene Dinge sind.','','[Pause, 1 Sek.]','','Unbehagen: weiter.','Schmerz: stop.']},
+{id:'m56n17',title:'#17',hook:'Mit 56 ist mein Körper',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Pflegen, nicht ausbeuten. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 ist mein Körper','kein Statussymbol mehr.','','[Pause, 1 Sek.]','','Er ist Werkzeug.','','Und das Werkzeug pflegt man.']},
+{id:'m56n18',title:'#18',hook:'Mit 56 gibt es Tage',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Gewohnheit ist stärker als Motivation. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 gibt es Tage','wo alles zieht, alles schwer ist','und nichts stimmt.','','[Pause, 1 Sek.]','','Ich mache es trotzdem.','','Nicht wegen Motivation.','Wegen Gewohnheit.']},
+{id:'m56n19',title:'#19',hook:'Mit 56 überrasche ich mich',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Aufgehört, sich selbst zu unterschätzen. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56 überrasche ich mich','regelmäßig selbst.','','[Pause, 1,5 Sek.]','','Das ist kein Kunststück.','Das ist das Ergebnis davon,','dass ich aufgehört habe','mich selbst zu unterschätzen.']},
+{id:'m56n20',title:'#20',hook:'Mit 56.',laenge:'15-25 Sek. · ein Take · kein VO',caption:'Stand der Dinge. #JOGA #Mit56 #NichtYoga',tags:'#JOGA #Mit56 #NichtYoga',lines:['Mit 56.','','[Pause, 2 Sek.]','','Handstand in Arbeit.','Rücken manchmal laut.','Neugier unverändert.','','[Pause, 1 Sek.]','','Das ist der Stand der Dinge.']}
+      ]},
+      {title:'Oliver #3-15',items:[
+        {id:'olinew03',title:'#3 — Ich bin 56, lerne Handstand',hook:'Ich bin 56.',laenge:'ca. 25 Sek. · Augenhöhe · Statisch · ein Take',caption:'Mit 56 noch Schüler sein. Ich finde das ist kein Nachteil. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Ich bin 56.','','[Pause, 1 Sek.]','','Und lerne gerade Handstand.','','[Pause, 1 Sek.]','','Nicht weil ich muss.','Sondern weil ich noch nicht fertig bin.']},
+{id:'olinew04',title:'#4 — Fitnesslüge',hook:'Die größte Fitnesslüge:',laenge:'ca. 25 Sek. · Augenhöhe · Statisch · ein Take',caption:'Zu spät ist ein sehr bequemer Gedanke. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Die größte Fitnesslüge:','','[Pause, 2 Sek.]','','Es ist zu spät.','','[Pause, 2 Sek.]','','Zu spät für was genau?','','Die Lüge funktioniert,','weil sie sich wie die Wahrheit anfühlt.','','Ist sie aber nicht.']},
+{id:'olinew05',title:'#5 — Handstand mit 56',hook:'Ich kann noch keinen perfekten Handstand.',laenge:'ca. 40 Sek. · Augenhöhe · Statisch · ein Take',caption:'Neugier ist kein Jugendprivileg. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Ich kann noch keinen perfekten Handstand.','','[Pause, 1 Sek.]','','Aber ich bin 56.','','Und ich finde es ziemlich geil,','dass ich es immer noch versuche.','','[Pause, 1 Sek.]','','Die meisten geben ihre Neugier','viel früher auf.','','Ich nicht.']},
+{id:'olinew06',title:'#6 — Warum Yogalehrerausbildung',hook:'Ich habe eine Yogalehrerausbildung gemacht.',laenge:'ca. 35 Sek. · Augenhöhe · Statisch · ein Take',caption:'Verstehen was man tut. Das ist der eigentliche Move. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Ich habe eine Yogalehrerausbildung gemacht.','','[Pause, 1 Sek.]','','Nicht weil ich Yogalehrer werden wollte.','Sondern weil ich verstehen wollte,','was ich da eigentlich tue.','','[Pause, 1 Sek.]','','Der Unterschied ist kleiner als ich dachte.','Und größer als ich erwartet habe.']},
+{id:'olinew07',title:'#7 — Heute beim Gehen',hook:'Ich bin gerade draußen.',laenge:'ca. 30 Sek. · Augenhöhe · Statisch · ein Take',caption:'Mit 30 benutzt man den Körper. Mit 56 hört man ihm zu. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Ich bin gerade draußen.','','[Pause, 1 Sek.]','','Und denke daran, dass ich mit 30','gedacht habe, ich kenne meinen Körper.','','Ich kannte ihn nicht.','Ich habe ihn nur benutzt.','','Jetzt höre ich zu.']},
+{id:'olinew08',title:'#8 — Was Yoga mir gegeben hat',hook:'Yoga hat mir Körpergefühl gegeben.',laenge:'ca. 35 Sek. · Augenhöhe · Statisch · ein Take',caption:'Gleiche Wirkung. Anderes Bild. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Yoga hat mir Körpergefühl gegeben.','Flexibilität. Präsenz.','','[Pause, 1 Sek.]','','Was es mir nicht gegeben hat:','Den Wunsch, in Räucherstäbchen zu sitzen.','','Deshalb gibt es JOGA.','Gleiche Wirkung. Anderes Bild.']},
+{id:'olinew09',title:'#9 — Mit 56 macht man das',hook:'Mit 56 trainiert man nicht mehr',laenge:'ca. 30 Sek. · Augenhöhe · Statisch · ein Take',caption:'Keine Entschuldigung. Eine Entscheidung. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Mit 56 trainiert man nicht mehr','um besser auszusehen.','','[Pause, 1 Sek.]','','Man trainiert um sich besser zu fühlen.','Um beweglich zu bleiben.','Um neugierig zu bleiben.','','Das ist kein Rückzug.','Das ist eine Entscheidung.']},
+{id:'olinew10',title:'#10 — Rückblick Woche 6',hook:'6 Wochen.',laenge:'ca. 25 Sek. · Augenhöhe · Statisch · ein Take',caption:'Das eigentliche Ergebnis ist Gewohnheit. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['6 Wochen.','','[Pause, 1 Sek.]','','Ich dachte das Ergebnis wäre','mehr Flexibilität.','','Das Ergebnis ist:','es fühlt sich komisch an wenn ich es nicht mache.','','Das ist mehr.']},
+{id:'olinew11',title:'#11 — Die Einladung',hook:'JOGA ist nicht für alle.',laenge:'ca. 30 Sek. · Augenhöhe · Statisch · ein Take',caption:'JOGA ist nicht für alle. Aber vielleicht für dich. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['JOGA ist nicht für alle.','','[Pause, 1,5 Sek.]','','Aber vielleicht für dich.','','Wenn du das kennst —','dieses Gefühl, dass der Körper','irgendwann die Rechnung schickt —','','dann bist du hier richtig.']},
+{id:'olinew12',title:'#12 — Was sich verändert hat',hook:'Vor einem Jahr hätte ich das nicht gesagt.',laenge:'ca. 40 Sek. · Augenhöhe · Statisch · ein Take',caption:'Bewegung stabilisiert den Tag. Das war die Überraschung. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Vor einem Jahr hätte ich das nicht gesagt.','','[Pause, 1 Sek.]','','Dass Bewegung das Ding ist,','das meinen Tag stabilisiert.','Nicht Kaffee. Nicht Produktivität.','','Bewegung.','','[Pause, 1 Sek.]','','Das hört sich esoterisch an.','Ist es nicht.','Es ist einfach wahr.']},
+{id:'olinew13',title:'#13 — Feierabend-Gedanke',hook:'Der Tag läuft noch.',laenge:'ca. 20 Sek. · Augenhöhe · Statisch · ein Take',caption:'Der Körper macht seinen Teil. Täglich. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Der Tag läuft noch.','','[Pause, 1 Sek.]','','Aber der Körper hat seinen Teil','schon erledigt.','','Das ist kein kleines Ding.']},
+{id:'olinew14',title:'#14 — Die Wette',hook:'Ich glaube nicht, dass JOGA wächst',laenge:'ca. 30 Sek. · Augenhöhe · Statisch · ein Take',caption:'Das könnte ich auch sein. Das ist die Einladung. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['Ich glaube nicht, dass JOGA wächst','weil ich bessere Flows zeige.','','[Pause, 1 Sek.]','','Ich glaube, JOGA wächst','wenn Menschen sehen:','','Das ist ein echter Typ.','Mit 56.','Der sich noch bewegt.','','Das könnte ich auch sein.']},
+{id:'olinew15',title:'#15 — 56-Tage-Fazit',hook:'56 Tage.',laenge:'ca. 45 Sek. · Augenhöhe · Statisch · ein Take',caption:'56 Tage. Ich höre nicht auf. #JOGA #NichtYoga #Männer40',tags:'#JOGA #NichtYoga #Männer40',lines:['56 Tage.','','[Pause, 1 Sek.]','','Ich weiß jetzt was mein Körper','als Tagesbeginn braucht.','','Ich weiß was auf TikTok funktioniert','und was nicht.','','[Pause, 1,5 Sek.]','','Ich weiß nicht ob JOGA groß wird.','','Ich weiß, dass ich nicht aufhöre.','','[Pause, 1 Sek.]','','Das ist genug.']}
+      ]}
+    ]
   }
 };
 var WOCHE = [{
