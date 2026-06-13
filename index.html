@@ -1278,6 +1278,30 @@ function App() {
     _useState72 = _slicedToArray(_useState71, 2),
     activeHookIdx = _useState72[0],
     setActiveHookIdx = _useState72[1];
+  var _useStateMeta = useState({}),
+    _useStateMeta2 = _slicedToArray(_useStateMeta, 2),
+    meta = _useStateMeta2[0],
+    setMeta = _useStateMeta2[1];
+  var _useStateQ1 = useState(''),
+    _useStateQ1b = _slicedToArray(_useStateQ1, 2),
+    quelleId = _useStateQ1b[0],
+    setQuelleId = _useStateQ1b[1];
+  var _useStateQ2 = useState('routine'),
+    _useStateQ2b = _slicedToArray(_useStateQ2, 2),
+    quelleZiel = _useStateQ2b[0],
+    setQuelleZiel = _useStateQ2b[1];
+  var _useStateQ3 = useState(null),
+    _useStateQ3b = _slicedToArray(_useStateQ3, 2),
+    quelleResult = _useStateQ3b[0],
+    setQuelleResult = _useStateQ3b[1];
+  var _useStateQ4 = useState(''),
+    _useStateQ4b = _slicedToArray(_useStateQ4, 2),
+    quelleStatus = _useStateQ4b[0],
+    setQuelleStatus = _useStateQ4b[1];
+  var _useStateQ5 = useState(false),
+    _useStateQ5b = _slicedToArray(_useStateQ5, 2),
+    quelleCopied = _useStateQ5b[0],
+    setQuelleCopied = _useStateQ5b[1];
   var T = makeT(dark);
   useEffect(function () {
     try {
@@ -1291,6 +1315,7 @@ function App() {
       var hv = localStorage.getItem('joga-hookvariants');
       var ah = localStorage.getItem('joga-activehook');
       var qc = localStorage.getItem('joga-qcchecks');
+      var mt = localStorage.getItem('joga-meta');
       if (p) setPosted(JSON.parse(p));
       if (h) setHeuteIds(JSON.parse(h));
       if (hs) setHeuteStatus(JSON.parse(hs));
@@ -1301,6 +1326,7 @@ function App() {
       if (hv) setHookVariants(JSON.parse(hv));
       if (ah) setActiveHookIdx(JSON.parse(ah));
       if (qc) setQcChecks(JSON.parse(qc));
+      if (mt) setMeta(JSON.parse(mt));
     } catch (e) {}
     setLoaded(true);
   }, []);
@@ -1308,6 +1334,11 @@ function App() {
     try {
       localStorage.setItem(key, JSON.stringify(val));
     } catch (e) {}
+  };
+  var setMetaField = function setMetaField(id, field, val) {
+    var n = _objectSpread(_objectSpread({}, meta), {}, _defineProperty({}, id, _objectSpread(_objectSpread({}, meta[id] || {}), {}, _defineProperty({}, field, val))));
+    setMeta(n);
+    sv('joga-meta', n);
   };
   var togglePosted = function togglePosted(id) {
     var n = _objectSpread(_objectSpread({}, posted), {}, _defineProperty({}, id, !posted[id]));
@@ -1406,6 +1437,7 @@ function App() {
       qcChecks: qcChecks,
       hookVariants: hookVariants,
       activeHookIdx: activeHookIdx,
+      meta: meta,
       dark: dark,
       ts: new Date().toISOString()
     };
@@ -1454,6 +1486,10 @@ function App() {
         if (d.qcChecks) {
           setQcChecks(d.qcChecks);
           sv('joga-qcchecks', d.qcChecks);
+        }
+        if (d.meta) {
+          setMeta(d.meta);
+          sv('joga-meta', d.meta);
         }
         alert('Import erfolgreich.');
       } catch (err) {
@@ -1575,6 +1611,121 @@ function App() {
       })
     });
     upPlanung(n);
+  };
+  var QUELLE_LIST = useMemo(function () {
+    var out = [];
+    Object.values(D).forEach(function (cat) {
+      cat.sections.forEach(function (sec) {
+        sec.items.forEach(function (it) {
+          if (it.lines && it.lines.length > 0) {
+            out.push({
+              id: it.id,
+              title: it.title,
+              section: sec.title,
+              cat: cat.label,
+              color: cat.color,
+              ablauf: it.lines.filter(function (l) {
+                return l !== '---' && l.trim() !== '';
+              }).join(' · '),
+              hook: it.hook || ''
+            });
+          }
+        });
+      });
+    });
+    return out;
+  }, []);
+  var buildQuellePrompt = function buildQuellePrompt(src, ziel) {
+    var zielText = {
+      snack: 'einen 10-30 Sekunden Snack: 3 Moves, schnell konsumierbar, klare Nutzen-Hook',
+      routine: 'eine Routine 90-180 Sek: kompletter Ablauf zum Mitmachen, Save-Anlass am Ende (z.B. SPEICHERN + taeglich X Minuten machen)',
+      statement: 'ein Statement-Video: ein Satz der sitzt, dann Move zeigen',
+      wow: 'einen WOW-Clip: ungewoehnlich, teilbar, starke Behauptung als Hook'
+    };
+    return 'Aus diesem bestehenden JOGA-Material soll ' + (zielText[ziel] || zielText.routine) + ' entstehen.\n\nQuell-Format: ' + src.title + ' (' + src.section + ')\nAblauf/Inhalt: ' + src.ablauf + (src.hook ? '\nBisheriger Hook: ' + src.hook : '');
+  };
+  var generateQuelle = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var src, prompt, res, data, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            src = QUELLE_LIST.find(function (q) {
+              return q.id === quelleId;
+            });
+            if (src) {
+              _context.n = 1;
+              break;
+            }
+            return _context.a(2);
+          case 1:
+            setQuelleResult(null);
+            setQuelleStatus('wird generiert...');
+            prompt = buildQuellePrompt(src, quelleZiel);
+            _context.p = 2;
+            _context.n = 3;
+            return fetch('/.netlify/functions/joga', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                type: 'verpacken',
+                params: {
+                  thema: src.title + ' (' + quelleZiel + ')',
+                  ablauf: prompt
+                }
+              })
+            });
+          case 3:
+            res = _context.v;
+            _context.n = 4;
+            return res.json();
+          case 4:
+            data = _context.v;
+            if (!data.error) {
+              _context.n = 5;
+              break;
+            }
+            throw new Error(data.error);
+          case 5:
+            setQuelleResult({
+              claude: data.claude,
+              gpt: data.gpt,
+              claudeError: data.claudeError,
+              gptError: data.gptError,
+              prompt: prompt,
+              src: src
+            });
+            setQuelleStatus('');
+            _context.n = 7;
+            break;
+          case 6:
+            _context.p = 6;
+            _t = _context.v;
+            setQuelleResult({
+              prompt: prompt,
+              src: src,
+              fallback: true
+            });
+            setQuelleStatus('');
+          case 7:
+            return _context.a(2);
+        }
+      }, _callee, null, [[2, 6]]);
+    }));
+    return function generateQuelle() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+  var copyQuellePrompt = function copyQuellePrompt() {
+    if (!quelleResult || !quelleResult.prompt) return;
+    navigator.clipboard.writeText(quelleResult.prompt).then(function () {
+      setQuelleCopied(true);
+      setTimeout(function () {
+        return setQuelleCopied(false);
+      }, 2000);
+    }).catch(function () {});
   };
   var handleLabGenerate = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
@@ -2323,6 +2474,108 @@ function App() {
   }, "Video Creator"), /*#__PURE__*/React.createElement("p", {
     className: 'text-xs mb-4 ' + T.textFaint
   }, "Parameter waehlen \u2192 KI baut den Flow"), /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-xl border p-4 mb-4 ' + (dark ? 'bg-gray-900 border-cyan-900' : 'bg-cyan-50 border-cyan-200')
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-cyan-400 mb-1"
+  }, "AUS BESTEHENDEM MATERIAL"), /*#__PURE__*/React.createElement("p", {
+    className: 'text-xs mb-3 ' + T.textFaint
+  }, "Vorhandenes Format w\xE4hlen \u2192 neuen Snack, Routine, Statement oder WOW daraus bauen"), /*#__PURE__*/React.createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs font-bold mb-1 ' + T.textFaint
+  }, "QUELLE"), /*#__PURE__*/React.createElement("select", {
+    value: quelleId,
+    onChange: function onChange(e) {
+      setQuelleId(e.target.value);
+      setQuelleResult(null);
+    },
+    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border ' + T.input
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "\u2013 Format w\xE4hlen \u2013"), QUELLE_LIST.map(function (q) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: q.id,
+      value: q.id
+    }, q.cat + ' \xB7 ' + q.title);
+  }))), quelleId && /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-lg p-2 mb-3 text-xs ' + (dark ? 'bg-gray-950 border border-gray-800 text-gray-400' : 'bg-white border border-gray-200 text-gray-600')
+  }, (QUELLE_LIST.find(function (q) {
+    return q.id === quelleId;
+  }) || {}).ablauf || ''), /*#__PURE__*/React.createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs font-bold mb-1 ' + T.textFaint
+  }, "ZIEL-FORMAT"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-1 flex-wrap"
+  }, [{
+    k: 'snack',
+    l: 'Snack'
+  }, {
+    k: 'routine',
+    l: 'Routine'
+  }, {
+    k: 'statement',
+    l: 'Statement'
+  }, {
+    k: 'wow',
+    l: 'WOW'
+  }].map(function (z) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: z.k,
+      onClick: function onClick() {
+        return setQuelleZiel(z.k);
+      },
+      className: 'text-xs px-3 py-1.5 rounded-full border ' + (quelleZiel === z.k ? 'bg-cyan-950 text-cyan-300 border-cyan-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+    }, z.l);
+  }))), /*#__PURE__*/React.createElement("button", {
+    onClick: generateQuelle,
+    disabled: !quelleId || quelleStatus === 'wird generiert...',
+    className: 'w-full py-2.5 rounded-xl text-sm font-bold border ' + (!quelleId || quelleStatus === 'wird generiert...' ? 'bg-gray-800 text-gray-500 border-gray-700' : 'bg-cyan-950 text-cyan-400 border-cyan-800')
+  }, quelleStatus === 'wird generiert...' ? 'KI baut...' : 'Daraus generieren'), quelleResult && /*#__PURE__*/React.createElement("div", {
+    className: "mt-3"
+  }, quelleResult.fallback && /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-lg p-3 border mb-2 ' + (dark ? 'bg-gray-950 border-orange-900' : 'bg-orange-50 border-orange-200')
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-orange-400 mb-1"
+  }, "KI NICHT ERREICHBAR \u2013 PROMPT KOPIEREN"), /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs mb-2 ' + T.textSub,
+    style: {
+      whiteSpace: 'pre-wrap'
+    }
+  }, quelleResult.prompt), /*#__PURE__*/React.createElement("button", {
+    onClick: copyQuellePrompt,
+    className: "w-full py-2 rounded-lg bg-orange-950 text-orange-300 border border-orange-800 text-xs font-bold"
+  }, quelleCopied ? 'Kopiert' : 'Prompt kopieren')), quelleResult.claude && /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-lg p-3 border mb-2 ' + (dark ? 'bg-gray-950 border-blue-900 text-gray-300' : 'bg-blue-50 border-blue-200 text-gray-700')
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-blue-400 mb-1"
+  }, "CLAUDE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      whiteSpace: 'pre-wrap',
+      fontSize: '13px'
+    }
+  }, quelleResult.claude)), quelleResult.gpt && /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-lg p-3 border mb-2 ' + (dark ? 'bg-gray-950 border-green-900 text-gray-300' : 'bg-green-50 border-green-200 text-gray-700')
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-green-400 mb-1"
+  }, "GPT-4o"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      whiteSpace: 'pre-wrap',
+      fontSize: '13px'
+    }
+  }, quelleResult.gpt)), (quelleResult.claude || quelleResult.gpt) && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      var txt = (quelleResult.claude || quelleResult.gpt || '').split('\n').find(function (l) {
+        return l.trim();
+      }) || quelleResult.src.title;
+      addIdea(txt.slice(0, 80), quelleZiel, 'hoch', 'function');
+    },
+    className: "w-full py-2 rounded-lg bg-purple-950 text-purple-300 border border-purple-800 text-xs font-bold"
+  }, "In Ideen-Inbox"), (quelleResult.claudeError || quelleResult.gptError) && !quelleResult.fallback && /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-lg p-2 border text-xs text-red-400 border-red-900 bg-red-950 mt-2'
+  }, quelleResult.claudeError && 'Claude: ' + quelleResult.claudeError, quelleResult.gptError && ' | GPT: ' + quelleResult.gptError))), /*#__PURE__*/React.createElement("p", {
+    className: 'text-xs mb-2 ' + T.textFaint
+  }, "\u2014 oder frei aus Parametern \u2014"), /*#__PURE__*/React.createElement("div", {
     className: 'rounded-xl border p-4 mb-4 ' + T.card + ' ' + T.divider
   }, /*#__PURE__*/React.createElement("div", {
     className: "mb-4"
@@ -2946,7 +3199,43 @@ function App() {
         className: 'text-xs rounded-lg px-3 py-2 border ' + col.t + ' ' + col.br + (dark ? ' bg-gray-950' : ' bg-gray-50')
       }, item.caption)), item.tags && /*#__PURE__*/React.createElement("div", {
         className: 'mt-1.5 text-xs ' + T.textFaint
-      }, item.tags), /*#__PURE__*/React.createElement("div", {
+      }, item.tags), function () {
+        var im = meta[item.id] || {};
+        return /*#__PURE__*/React.createElement("div", {
+          className: 'mt-3 rounded-xl border p-3 ' + (dark ? 'bg-gray-950 border-cyan-900' : 'bg-cyan-50 border-cyan-200')
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "text-xs font-bold text-cyan-400 mb-2"
+        }, "PLANUNG"), /*#__PURE__*/React.createElement("div", {
+          className: 'text-xs mb-1 ' + T.textFaint
+        }, "TYP"), /*#__PURE__*/React.createElement("div", {
+          className: "flex gap-1 flex-wrap mb-2"
+        }, ['Snack', 'Routine', 'Statement', 'WOW', 'Persoenlichkeit'].map(function (t) {
+          return /*#__PURE__*/React.createElement("button", {
+            key: t,
+            onClick: function onClick() {
+              return setMetaField(item.id, 'typ', im.typ === t ? '' : t);
+            },
+            className: 'text-xs px-2.5 py-1 rounded-full border ' + (im.typ === t ? 'bg-cyan-950 text-cyan-300 border-cyan-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+          }, t);
+        })), /*#__PURE__*/React.createElement("div", {
+          className: 'text-xs mb-1 ' + T.textFaint
+        }, "ZIEL"), /*#__PURE__*/React.createElement("div", {
+          className: "flex gap-1 flex-wrap mb-2"
+        }, ['Reach', 'Saves', 'Shares', 'Follower', 'Vertrauen'].map(function (z) {
+          return /*#__PURE__*/React.createElement("button", {
+            key: z,
+            onClick: function onClick() {
+              return setMetaField(item.id, 'ziel', im.ziel === z ? '' : z);
+            },
+            className: 'text-xs px-2.5 py-1 rounded-full border ' + (im.ziel === z ? 'bg-cyan-950 text-cyan-300 border-cyan-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+          }, z);
+        })), /*#__PURE__*/React.createElement("button", {
+          onClick: function onClick() {
+            return setMetaField(item.id, 'appKandidat', !im.appKandidat);
+          },
+          className: 'text-xs px-3 py-1.5 rounded-full border font-bold ' + (im.appKandidat ? 'bg-green-950 text-green-400 border-green-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+        }, im.appKandidat ? '★ App-Kandidat' : '☆ App-Kandidat'));
+      }(), /*#__PURE__*/React.createElement("div", {
         className: "flex gap-2 mt-3"
       }, /*#__PURE__*/React.createElement("button", {
         onClick: function onClick() {
@@ -3000,7 +3289,37 @@ function App() {
         },
         placeholder: "Beobachtung, Lernpunkt...",
         className: 'w-full rounded-lg px-2 py-1 text-xs outline-none border ' + T.input
-      })))));
+      }), function () {
+        var v = parseFloat(itemAnalytics.views) || 0;
+        var s = parseFloat(itemAnalytics.saves) || 0;
+        var sh = parseFloat(itemAnalytics.shares) || 0;
+        var f = parseFloat(itemAnalytics.follower) || 0;
+        if (v <= 0) return null;
+        var saveRate = (s / v * 100).toFixed(1);
+        var shareRate = (sh / v * 100).toFixed(1);
+        var folPerK = (f / v * 1000).toFixed(1);
+        return /*#__PURE__*/React.createElement("div", {
+          className: 'mt-2 grid grid-cols-3 gap-2'
+        }, [{
+          l: 'Save-Rate',
+          v: saveRate + '%'
+        }, {
+          l: 'Share-Rate',
+          v: shareRate + '%'
+        }, {
+          l: 'Foll./1k',
+          v: folPerK
+        }].map(function (m, mi) {
+          return /*#__PURE__*/React.createElement("div", {
+            key: mi,
+            className: 'rounded-lg px-2 py-1.5 text-center ' + (dark ? 'bg-gray-900 border border-gray-800' : 'bg-white border border-gray-200')
+          }, /*#__PURE__*/React.createElement("div", {
+            className: 'text-xs ' + T.textFaint
+          }, m.l), /*#__PURE__*/React.createElement("div", {
+            className: 'text-sm font-bold ' + T.textMain
+          }, m.v));
+        }));
+      }()))));
     }));
   })), /*#__PURE__*/React.createElement("div", {
     className: 'fixed bottom-0 left-0 right-0 border-t px-3 py-2 ' + T.footer
