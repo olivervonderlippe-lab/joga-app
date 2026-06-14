@@ -1382,6 +1382,42 @@ function App() {
     if (h > 0) return h + ' Std. ' + min + ' Min.';
     return min + ' Min.';
   };
+  var WOCHENPLAN = [{
+    typ: 'Routine',
+    farbe: 'text-orange-400',
+    hinweis: 'Save-Motor. 17:30 raus.'
+  }, {
+    typ: 'Snack',
+    farbe: 'text-white',
+    hinweis: 'Witz-Hook, ein Move.'
+  }, {
+    typ: 'Snack',
+    farbe: 'text-white',
+    hinweis: 'Witz-Hook, ein Move.'
+  }, {
+    typ: 'Statement',
+    farbe: 'text-orange-400',
+    hinweis: 'Oliver direkt in die Kamera.'
+  }, {
+    typ: 'Snack',
+    farbe: 'text-white',
+    hinweis: 'Witz-Hook, ein Move.'
+  }, {
+    typ: 'Snack',
+    farbe: 'text-white',
+    hinweis: 'Witz-Hook, ein Move.'
+  }, {
+    typ: 'Snack',
+    farbe: 'text-white',
+    hinweis: 'Witz-Hook, ein Move.'
+  }];
+  var WOCHENTAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+  var heutePlan = function heutePlan() {
+    var d = new Date().getDay();
+    return _objectSpread({
+      tag: WOCHENTAGE[d]
+    }, WOCHENPLAN[d]);
+  };
   var togglePosted = function togglePosted(id) {
     var nowPosted = !posted[id];
     var n = _objectSpread(_objectSpread({}, posted), {}, _defineProperty({}, id, nowPosted));
@@ -1905,7 +1941,7 @@ function App() {
       }
     }, "Lade...");
   }
-  var tabList = ['heute', 'produktion', 'planung', 'dashboard', 'statement', 'creator', 'content'].concat(_toConsumableArray(Object.keys(D)));
+  var tabList = ['heute', 'dashboard', 'produktion', 'planung', 'statement', 'creator', 'content'].concat(_toConsumableArray(Object.keys(D)));
   var tabLabels = {
     heute: 'Heute',
     produktion: 'Produktion',
@@ -2010,7 +2046,18 @@ function App() {
   }, drehtag ? 'Drehtag' : 'Heute'), /*#__PURE__*/React.createElement("button", {
     onClick: clearHeute,
     className: 'text-xs border rounded-full px-3 py-1 ' + T.textFaint + ' ' + T.card + ' ' + T.divider
-  }, "Reset")), ['pflicht', 'test'].map(function (slot) {
+  }, "Reset")), !drehtag && function () {
+    var p = heutePlan();
+    return /*#__PURE__*/React.createElement("div", {
+      className: 'mb-4 rounded-2xl border p-4 ' + T.card + ' ' + T.divider
+    }, /*#__PURE__*/React.createElement("div", {
+      className: 'text-xs mb-1 ' + T.textFaint
+    }, p.tag + " \u2013 heute dran:"), /*#__PURE__*/React.createElement("div", {
+      className: 'joga-display text-3xl font-bold ' + p.farbe
+    }, p.typ), /*#__PURE__*/React.createElement("div", {
+      className: 'text-xs mt-1 ' + T.textSub
+    }, p.hinweis));
+  }(), ['pflicht', 'test'].map(function (slot) {
     var vid = heuteIds[slot] ? findItem(heuteIds[slot]) : null;
     var item = vid ? vid.item : null;
     var itemCol = vid ? vid.catColor : 'blue';
