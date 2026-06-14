@@ -1306,6 +1306,22 @@ function App() {
     _useStateTickB = _slicedToArray(_useStateTick, 2),
     nowTick = _useStateTickB[0],
     setNowTick = _useStateTickB[1];
+  var _useState4bT = useState(''),
+    _useState4bTb = _slicedToArray(_useState4bT, 2),
+    vbTrigger = _useState4bTb[0],
+    setVbTrigger = _useState4bTb[1];
+  var _useState4bR = useState(null),
+    _useState4bRb = _slicedToArray(_useState4bR, 2),
+    vbResult = _useState4bRb[0],
+    setVbResult = _useState4bRb[1];
+  var _useState4bS = useState(''),
+    _useState4bSb = _slicedToArray(_useState4bS, 2),
+    vbStatus = _useState4bSb[0],
+    setVbStatus = _useState4bSb[1];
+  var _useState4bC = useState(false),
+    _useState4bCb = _slicedToArray(_useState4bC, 2),
+    vbCopied = _useState4bCb[0],
+    setVbCopied = _useState4bCb[1];
   var T = makeT(dark);
   useEffect(function () {
     try {
@@ -1811,6 +1827,70 @@ function App() {
       }, 2000);
     }).catch(function () {});
   };
+  var VB_TRIGGER = [{
+    gruppe: 'Menschen',
+    items: ['Nerviger Kollege', 'Besserwisser', 'Ex', 'Nachbar', 'Chef']
+  }, {
+    gruppe: 'Gef\xFChle',
+    items: ['Genervt', '\xDCberfordert', 'Unruhig', 'M\xFCde', 'Lustlos']
+  }, {
+    gruppe: 'Situationen',
+    items: ['Montagmorgen', 'Homeoffice', 'Endlos-Meeting', 'Schlechter Schlaf', 'Zu viel Bildschirm']
+  }, {
+    gruppe: 'Gedanken',
+    items: ['Gr\xFCbeln', 'Overthinking', 'Selbstzweifel', 'Zu viele To-dos']
+  }];
+  var buildVierBeatPrompt = function buildVierBeatPrompt(trigger) {
+    return "Du schreibst Vier-Beat-Einstiege f\xFCr JOGA \u2013 eine anti-esoterische Bewegungsmarke.\n\n" + "ZIEL: Das Video wird zu 80-90% an Nicht-Follower ausgespielt, die KEINE Lust auf Bewegung haben. " + "Die ersten 4 Sekunden d\xFCrfen sich NICHT wie ein Bewegungsvideo anf\xFChlen. Steige mit einem universellen Alltagsproblem ein, " + "das nichts mit Bewegung zu tun zu haben scheint \u2013 und f\xFChre Bewegung als die unerwartete Antwort ein. Der Zuschauer soll gar nicht merken, " + "dass er in ein Bewegungsvideo gezogen wird, bis es zu sp\xE4t ist.\n\n" + "TRIGGER: " + trigger + "\n\n" + "PERSPEKTIVE: Sprich den Zuschauer direkt an (Du). Niemals von mir/Oliver reden.\n\n" + "STRUKTUR (Text-Overlay \xFCber laufender Bewegung, das BILD zeigt ab Sekunde 0 Bewegung \u2013 nur der TEXT tarnt):\n" + "BEAT 1 (Sek 0\u20132, max 6 W\xF6rter): Das universelle Problem, roh benannt.\n" + "BEAT 2 (Sek 2\u20134, max 6 W\xF6rter): Was es mit dir macht \u2013 die Versch\xE4rfung. Hier nickt der Zuschauer: 'ja, kenn ich'.\n" + "BEAT 3 (Sek 4\u20136, max 6 W\xF6rter): Die Wende \u2013 Bewegung als unerwartete L\xF6sung.\n" + "BEAT 4 (ab Sek 6, max 4 W\xF6rter): Der \xDCbergang in den Move.\n\n" + "BR\xDCCKE: Bewegung muss EHRLICH gegen das Problem helfen (Anspannung, Kopf, Schlaf, Energie, Runterkommen). Kein Bait-and-Switch \u2013 die Br\xFccke muss tragen.\n\n" + "HUMOR: JOGA macht keine Gags. JOGA macht Beobachtungen, die wehtun und lachen zugleich. Direkte Alltagssprache, leicht frech. Humor entsteht aus Wiedererkennung.\n" + "Vorbilder im Ton: 'Dein K\xF6rper ist kein Campingstuhl.' \xB7 'Fuck You M\xFCde.' \xB7 'Nicht pennen. Pendeln.' \xB7 'Teelicht reicht.'\n\n" + "VERBOTEN (sobald eins davon auftaucht \u2192 Variante verwerfen): Motivation, Mindset, Energielevel, Selbstoptimierung, 'deine beste Version', Coach-Sprache, Achtsamkeit, Balance, 'entfalte dein Potenzial', 'komm in deine Kraft', Sanskrit, Spiritualit\xE4t, Heilversprechen.\n\n" + "Liefere 3 deutlich verschiedene Varianten. Pro Variante die 4 Beats klar untereinander, kein Flie\xDFtext, keine Erkl\xE4rung.";
+  };
+  var generateVierBeat = function generateVierBeat() {
+    if (!vbTrigger) return;
+    var prompt = buildVierBeatPrompt(vbTrigger);
+    setVbResult(null);
+    setVbStatus('wird generiert...');
+    fetch('/.netlify/functions/joga', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        type: 'verpacken',
+        params: {
+          thema: vbTrigger + ' (Vier-Beat-Einstieg)',
+          ablauf: prompt
+        }
+      })
+    }).then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      if (data.error) throw new Error(data.error);
+      setVbResult({
+        claude: data.claude,
+        gpt: data.gpt,
+        claudeError: data.claudeError,
+        gptError: data.gptError,
+        prompt: prompt,
+        trigger: vbTrigger
+      });
+      setVbStatus('');
+    }).catch(function () {
+      setVbResult({
+        prompt: prompt,
+        trigger: vbTrigger,
+        fallback: true
+      });
+      setVbStatus('');
+    });
+  };
+  var copyVbPrompt = function copyVbPrompt() {
+    if (!vbResult || !vbResult.prompt) return;
+    navigator.clipboard.writeText(vbResult.prompt).then(function () {
+      setVbCopied(true);
+      setTimeout(function () {
+        return setVbCopied(false);
+      }, 2000);
+    }).catch(function () {});
+  };
   var handleLabGenerate = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
       var hasAblauf, type, params, res, data, _t;
@@ -1941,7 +2021,9 @@ function App() {
       }
     }, "Lade...");
   }
-  var tabList = ['heute', 'dashboard', 'produktion', 'planung', 'statement', 'creator', 'content'].concat(_toConsumableArray(Object.keys(D)));
+  var tabList = ['heute', 'dashboard', 'produktion', 'planung', 'statement', 'creator', 'content'].concat(_toConsumableArray(Object.keys(D).filter(function (k) {
+    return k !== 'urlaubsplan';
+  })));
   var tabLabels = {
     heute: 'Heute',
     produktion: 'Produktion',
@@ -2706,6 +2788,56 @@ function App() {
   }, "Video Creator"), /*#__PURE__*/React.createElement("p", {
     className: 'text-xs mb-4 ' + T.textFaint
   }, "Parameter waehlen \u2192 KI baut den Flow"), /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-xl border p-4 mb-4 ' + (dark ? 'bg-gray-900 border-orange-900' : 'bg-orange-50 border-orange-200')
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-orange-400 mb-1"
+  }, "VIER-BEAT-EINSTIEG"), /*#__PURE__*/React.createElement("p", {
+    className: 'text-xs mb-3 ' + T.textFaint
+  }, "Trigger w\xE4hlen \u2192 KI baut den Nicht-Bewegungs-Einstieg f\xFCr Nicht-Follower. Du verfeinerst."), /*#__PURE__*/React.createElement("div", {
+    className: "mb-3"
+  }, VB_TRIGGER.map(function (grp) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: grp.gruppe,
+      className: "mb-2"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: 'text-xs mb-1 ' + T.textFaint
+    }, grp.gruppe), /*#__PURE__*/React.createElement("div", {
+      className: "flex gap-1 flex-wrap"
+    }, grp.items.map(function (it) {
+      return /*#__PURE__*/React.createElement("button", {
+        key: it,
+        onClick: function onClick() {
+          return setVbTrigger(vbTrigger === it ? '' : it);
+        },
+        className: 'text-xs px-2.5 py-1 rounded-full border ' + (vbTrigger === it ? 'bg-orange-950 text-orange-400 border-orange-700' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+      }, it);
+    })));
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: generateVierBeat,
+    disabled: !vbTrigger || vbStatus,
+    className: 'w-full py-2.5 rounded-xl text-sm font-bold mb-1 ' + (!vbTrigger || vbStatus ? T.card + ' ' + T.textFaint + ' border ' + T.divider : 'bg-orange-500 text-white')
+  }, vbStatus ? vbStatus : '⚡ Vier-Beat generieren'), vbResult && /*#__PURE__*/React.createElement("div", {
+    className: "mt-3"
+  }, vbResult.fallback ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs mb-2 ' + T.textSub
+  }, "KI nicht erreichbar. Prompt kopieren und extern nutzen:"), /*#__PURE__*/React.createElement("button", {
+    onClick: copyVbPrompt,
+    className: 'w-full py-2 rounded-lg text-xs font-bold border ' + T.divider + ' ' + T.textSub
+  }, vbCopied ? '✓ Kopiert' : 'Prompt kopieren')) : /*#__PURE__*/React.createElement(React.Fragment, null, vbResult.claude && /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-lg border p-3 mb-2 ' + T.card + ' ' + T.divider
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-orange-400 mb-1"
+  }, "CLAUDE"), /*#__PURE__*/React.createElement("div", {
+    className: 'text-sm whitespace-pre-wrap ' + T.textMain
+  }, vbResult.claude)), vbResult.gpt && /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-lg border p-3 mb-2 ' + T.card + ' ' + T.divider
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-cyan-400 mb-1"
+  }, "GPT-4o"), /*#__PURE__*/React.createElement("div", {
+    className: 'text-sm whitespace-pre-wrap ' + T.textMain
+  }, vbResult.gpt)), (vbResult.claudeError || vbResult.gptError) && /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs ' + T.textFaint
+  }, vbResult.claudeError && 'Claude: ' + vbResult.claudeError, vbResult.claudeError && vbResult.gptError && ' | ', vbResult.gptError && 'GPT: ' + vbResult.gptError)))), /*#__PURE__*/React.createElement("div", {
     className: 'rounded-xl border p-4 mb-4 ' + (dark ? 'bg-gray-900 border-cyan-900' : 'bg-cyan-50 border-cyan-200')
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-xs font-bold text-cyan-400 mb-1"
