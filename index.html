@@ -1174,6 +1174,23 @@ function App() {
     _useState20 = _slicedToArray(_useState19, 2),
     ideas = _useState20[0],
     setIdeas = _useState20[1];
+  var _useStatePosts = useState([]),
+    _useStatePostsB = _slicedToArray(_useStatePosts, 2),
+    posts = _useStatePostsB[0],
+    setPosts = _useStatePostsB[1];
+  var _useStatePostForm = useState({
+      title: '',
+      typ: '',
+      ziel: '',
+      dt: ''
+    }),
+    _useStatePostFormB = _slicedToArray(_useStatePostForm, 2),
+    postForm = _useStatePostFormB[0],
+    setPostForm = _useStatePostFormB[1];
+  var _useStateOpenPost = useState(null),
+    _useStateOpenPostB = _slicedToArray(_useStateOpenPost, 2),
+    openPost = _useStateOpenPostB[0],
+    setOpenPost = _useStateOpenPostB[1];
   var _useState21 = useState(''),
     _useState22 = _slicedToArray(_useState21, 2),
     promptBrief = _useState22[0],
@@ -1336,6 +1353,7 @@ function App() {
       var ah = localStorage.getItem('joga-activehook');
       var qc = localStorage.getItem('joga-qcchecks');
       var mt = localStorage.getItem('joga-meta');
+      var ps = localStorage.getItem('joga-posts');
       if (p) setPosted(JSON.parse(p));
       if (h) setHeuteIds(JSON.parse(h));
       if (hs) setHeuteStatus(JSON.parse(hs));
@@ -1347,6 +1365,7 @@ function App() {
       if (ah) setActiveHookIdx(JSON.parse(ah));
       if (qc) setQcChecks(JSON.parse(qc));
       if (mt) setMeta(JSON.parse(mt));
+      if (ps) setPosts(JSON.parse(ps));
     } catch (e) {}
     setLoaded(true);
   }, []);
@@ -1526,6 +1545,42 @@ function App() {
     setAnalytics(n);
     sv('joga-analytics', n);
   };
+  var addPost = function addPost(form) {
+    var ts = form.dt ? new Date(form.dt).getTime() : Date.now();
+    var id = 'post_' + Date.now();
+    var np = [{
+      id: id,
+      title: form.title || 'Ohne Titel',
+      created: Date.now()
+    }].concat(_toConsumableArray(posts));
+    setPosts(np);
+    sv('joga-posts', np);
+    var nm = _objectSpread(_objectSpread({}, meta), {}, _defineProperty({}, id, {
+      typ: form.typ || '',
+      ziel: form.ziel || '',
+      postedAt: ts
+    }));
+    setMeta(nm);
+    sv('joga-meta', nm);
+    var npd = _objectSpread(_objectSpread({}, posted), {}, _defineProperty({}, id, true));
+    setPosted(npd);
+    sv('joga-posted', npd);
+    setPostForm({
+      title: '',
+      typ: '',
+      ziel: '',
+      dt: ''
+    });
+    setOpenPost(id);
+  };
+  var deletePost = function deletePost(id) {
+    var np = posts.filter(function (p) {
+      return p.id !== id;
+    });
+    setPosts(np);
+    sv('joga-posts', np);
+    if (openPost === id) setOpenPost(null);
+  };
   var exportData = function exportData() {
     var data = {
       posted: posted,
@@ -1538,6 +1593,7 @@ function App() {
       hookVariants: hookVariants,
       activeHookIdx: activeHookIdx,
       meta: meta,
+      posts: posts,
       dark: dark,
       ts: new Date().toISOString()
     };
@@ -1590,6 +1646,10 @@ function App() {
         if (d.meta) {
           setMeta(d.meta);
           sv('joga-meta', d.meta);
+        }
+        if (d.posts) {
+          setPosts(d.posts);
+          sv('joga-posts', d.posts);
         }
         alert('Import erfolgreich.');
       } catch (err) {
@@ -2021,11 +2081,12 @@ function App() {
       }
     }, "Lade...");
   }
-  var tabList = ['heute', 'dashboard', 'produktion', 'planung', 'statement', 'creator', 'content'].concat(_toConsumableArray(Object.keys(D).filter(function (k) {
+  var tabList = ['heute', 'erfasst', 'dashboard', 'produktion', 'planung', 'statement', 'creator', 'content'].concat(_toConsumableArray(Object.keys(D).filter(function (k) {
     return k !== 'urlaubsplan';
   })));
   var tabLabels = {
     heute: 'Heute',
+    erfasst: 'Gepostet',
     produktion: 'Produktion',
     planung: 'Planung',
     dashboard: 'Auswertung',
@@ -2035,6 +2096,7 @@ function App() {
   };
   var tabIcons = {
     heute: '🎯',
+    erfasst: '📥',
     produktion: '🎬',
     planung: '📋',
     dashboard: '📊',
@@ -2044,6 +2106,7 @@ function App() {
   };
   var tabColors = {
     heute: COL.gold,
+    erfasst: COL.orange,
     produktion: COL.orange,
     planung: COL.green,
     dashboard: COL.cyan,
@@ -2110,7 +2173,7 @@ function App() {
       },
       className: 'shrink-0 text-xs px-3 py-1.5 rounded-full border whitespace-nowrap ' + (active ? c.b + ' ' + c.t + ' ' + c.br : T.tabInactive)
     }, label);
-  })), !['heute', 'produktion', 'planung', 'dashboard', 'content'].includes(tab) && /*#__PURE__*/React.createElement("div", {
+  })), !['heute', 'erfasst', 'produktion', 'planung', 'dashboard', 'content'].includes(tab) && /*#__PURE__*/React.createElement("div", {
     className: "px-3 pb-2"
   }, /*#__PURE__*/React.createElement("input", {
     value: search,
@@ -2469,6 +2532,148 @@ function App() {
         className: 'text-xs px-2.5 py-1 rounded-full border ' + ((val.status || 'offen') === s ? dark ? 'bg-gray-800 border-gray-600 ' + stColors[s] : 'bg-gray-100 ' + stColors[s] : T.card + ' ' + T.textFaint + ' ' + T.divider)
       }, s);
     }))))));
+  })), tab === 'erfasst' && /*#__PURE__*/React.createElement("div", {
+    className: "px-3 py-4 pb-20"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "joga-display text-2xl font-bold text-orange-400 mb-1"
+  }, "Gepostet"), /*#__PURE__*/React.createElement("p", {
+    className: 'text-xs mb-4 ' + T.textFaint
+  }, "Jeden geposteten Beitrag erfassen \u2013 egal ob vorproduziert, aus dem Generator oder spontan. Von hier flie\xDFt alles ins Dashboard."), /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-2xl border p-4 mb-5 ' + (dark ? 'bg-gray-900 border-orange-900' : 'bg-orange-50 border-orange-200')
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-xs font-bold text-orange-400 mb-3"
+  }, "NEUER POST"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: postForm.title,
+    onChange: function onChange(e) {
+      return setPostForm(_objectSpread(_objectSpread({}, postForm), {}, {
+        title: e.target.value
+      }));
+    },
+    placeholder: "Titel (z.B. Wachmacher-Kick)",
+    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border mb-3 ' + T.input
+  }), /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs mb-1 ' + T.textFaint
+  }, "CONTENT-TYP"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-1 flex-wrap mb-3"
+  }, ['Snack', 'Routine', 'Statement', 'WOW'].map(function (t) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: t,
+      onClick: function onClick() {
+        return setPostForm(_objectSpread(_objectSpread({}, postForm), {}, {
+          typ: postForm.typ === t ? '' : t
+        }));
+      },
+      className: 'text-xs px-3 py-1.5 rounded-full border ' + (postForm.typ === t ? 'bg-orange-950 text-orange-400 border-orange-700' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+    }, t);
+  })), /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs mb-1 ' + T.textFaint
+  }, "ZIEL"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-1 flex-wrap mb-3"
+  }, ['Reach', 'Save', 'Share', 'Follower', 'Vertrauen'].map(function (z) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: z,
+      onClick: function onClick() {
+        return setPostForm(_objectSpread(_objectSpread({}, postForm), {}, {
+          ziel: postForm.ziel === z ? '' : z
+        }));
+      },
+      className: 'text-xs px-3 py-1.5 rounded-full border ' + (postForm.ziel === z ? 'bg-orange-950 text-orange-400 border-orange-700' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+    }, z);
+  })), /*#__PURE__*/React.createElement("div", {
+    className: 'text-xs mb-1 ' + T.textFaint
+  }, "GEPOSTET AM (leer = jetzt)"), /*#__PURE__*/React.createElement("input", {
+    type: "datetime-local",
+    value: postForm.dt,
+    onChange: function onChange(e) {
+      return setPostForm(_objectSpread(_objectSpread({}, postForm), {}, {
+        dt: e.target.value
+      }));
+    },
+    className: 'w-full rounded-lg px-3 py-2 text-sm outline-none border mb-3 ' + T.input
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return addPost(postForm);
+    },
+    disabled: !postForm.title.trim(),
+    className: 'w-full py-2.5 rounded-xl text-sm font-bold ' + (postForm.title.trim() ? 'bg-orange-500 text-white' : T.card + ' ' + T.textFaint + ' border ' + T.divider)
+  }, "+ Post erfassen")), posts.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    className: 'rounded-xl border p-6 text-center ' + T.card + ' ' + T.divider
+  }, /*#__PURE__*/React.createElement("div", {
+    className: 'text-sm ' + T.textSub
+  }, "Noch keine Posts erfasst.")) : posts.map(function (p) {
+    var m = meta[p.id] || {};
+    var a = analytics[p.id] || {};
+    var bs = breatheState(p.id);
+    var isOpen = openPost === p.id;
+    return /*#__PURE__*/React.createElement("div", {
+      key: p.id,
+      className: 'mb-3 rounded-2xl border overflow-hidden ' + T.card + ' ' + T.divider
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setOpenPost(isOpen ? null : p.id);
+      },
+      className: "w-full flex items-center justify-between px-4 py-3 text-left"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex-1 min-w-0"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: 'text-sm font-bold truncate ' + T.textMain
+    }, p.title), /*#__PURE__*/React.createElement("div", {
+      className: 'text-xs ' + T.textFaint
+    }, (m.typ || '–') + ' · ' + (m.ziel || '–') + (a.views ? ' · ' + a.views + ' Views' : ''))), /*#__PURE__*/React.createElement("span", {
+      className: 'text-xs ml-2 ' + T.textFaint
+    }, isOpen ? '▲' : '▼')), isOpen && /*#__PURE__*/React.createElement("div", {
+      className: 'px-4 pb-4 border-t ' + T.divider
+    }, /*#__PURE__*/React.createElement("div", {
+      className: 'text-xs font-bold mt-3 mb-2 ' + T.textFaint
+    }, "ANALYTICS"), bs.locked && /*#__PURE__*/React.createElement("div", {
+      className: 'rounded-xl border p-3 mb-2 ' + (dark ? 'bg-gray-950 border-cyan-900' : 'bg-cyan-50 border-cyan-200')
+    }, /*#__PURE__*/React.createElement("div", {
+      className: 'text-sm font-bold mb-1 text-cyan-400'
+    }, "Lass es atmen."), /*#__PURE__*/React.createElement("div", {
+      className: 'text-xs mb-2 ' + T.textSub
+    }, "Noch " + fmtRemain(bs.remainMs) + ", dann ist die 24h-Marke erreicht. Vorher sind die Zahlen kein Urteil \u2013 nur Rauschen."), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setMetaField(p.id, 'breatheOverride', true);
+      },
+      className: 'text-xs px-3 py-1 rounded-full border ' + T.card + ' ' + T.textFaint + ' ' + T.divider
+    }, "Trotzdem jetzt eintragen")), /*#__PURE__*/React.createElement("div", {
+      className: "grid grid-cols-3 gap-2"
+    }, ['views', 'likes', 'saves', 'shares', 'follower', 'comments'].map(function (field) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: field,
+        style: bs.locked ? {
+          opacity: 0.35,
+          pointerEvents: 'none'
+        } : {}
+      }, /*#__PURE__*/React.createElement("div", {
+        className: 'text-xs mb-0.5 capitalize ' + T.textFaint
+      }, field), /*#__PURE__*/React.createElement("input", {
+        type: "number",
+        disabled: bs.locked,
+        value: a[field] || '',
+        onChange: function onChange(e) {
+          return updateAnalytics(p.id, field, e.target.value);
+        },
+        placeholder: "0",
+        className: 'w-full rounded-lg px-2 py-1 text-xs outline-none border text-center ' + T.input
+      }));
+    })), /*#__PURE__*/React.createElement("div", {
+      className: 'text-xs mb-1 mt-3 ' + T.textFaint
+    }, "LEARNING \u2013 warum speichern / ignorieren Menschen das?"), /*#__PURE__*/React.createElement("textarea", {
+      value: m.learning || '',
+      onChange: function onChange(e) {
+        return setMetaField(p.id, 'learning', e.target.value);
+      },
+      placeholder: "Was lerne ich aus diesem Post f\xFCr JOGA?",
+      rows: 2,
+      className: 'w-full rounded-lg px-2 py-1.5 text-xs outline-none resize-none border ' + T.input
+    }), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        if (confirm('Diesen Post wirklich loeschen?')) deletePost(p.id);
+      },
+      className: 'text-xs mt-3 ' + T.textFaint
+    }, "Post loeschen")));
   })), tab === 'dashboard' && /*#__PURE__*/React.createElement("div", {
     className: "px-3 py-4 pb-20"
   }, function () {
@@ -2479,7 +2684,10 @@ function App() {
       if (v <= 0) return;
       var m = meta[id] || {};
       var fi = findItem(id);
-      var title = fi ? fi.item.title : id;
+      var cp = posts.find(function (p) {
+        return p.id === id;
+      });
+      var title = fi ? fi.item.title : cp ? cp.title : id;
       rows.push({
         id: id,
         title: title,
@@ -3436,7 +3644,7 @@ function App() {
     }, entry.hook), /*#__PURE__*/React.createElement("div", {
       className: 'text-xs mt-0.5 ' + T.textFaint
     }, entry.cat));
-  }))), !['heute', 'produktion', 'planung', 'dashboard', 'content'].includes(tab) && cur && /*#__PURE__*/React.createElement("div", {
+  }))), !['heute', 'erfasst', 'produktion', 'planung', 'dashboard', 'content'].includes(tab) && cur && /*#__PURE__*/React.createElement("div", {
     className: "px-3 py-3 pb-20"
   }, filtered.map(function (sec, si) {
     return /*#__PURE__*/React.createElement("div", {
