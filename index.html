@@ -1138,6 +1138,14 @@ function App() {
     _useState0 = _slicedToArray(_useState9, 2),
     ideaFilter = _useState0[0],
     setIdeaFilter = _useState0[1];
+  var _useStateIdeaType = useState('all'),
+    _useStateIdeaTypeArr = _slicedToArray(_useStateIdeaType, 2),
+    ideaTypeFilter = _useStateIdeaTypeArr[0],
+    setIdeaTypeFilter = _useStateIdeaTypeArr[1];
+  var _useStateNewType = useState('hook'),
+    _useStateNewTypeArr = _slicedToArray(_useStateNewType, 2),
+    newIdeaType = _useStateNewTypeArr[0],
+    setNewIdeaType = _useStateNewTypeArr[1];
   var _useState1 = useState(null),
     _useState10 = _slicedToArray(_useState1, 2),
     openContentItem = _useState10[0],
@@ -1510,6 +1518,79 @@ function App() {
     }].concat(_toConsumableArray(ideas));
     setIdeas(n);
     sv('joga-ideas', n);
+  };
+  var JOGA_STATEMENTS = [
+    { t: 'Mit 56 kann ich Handstand. Mit 36 konnte ich es nicht.', terr: 'T1 Handstand' },
+    { t: 'Älter werden ist nicht das Problem. Aufhören schon.', terr: 'T1 Handstand' },
+    { t: 'Ich trainiere nicht für den Handstand. Ich trainiere für mein Leben.', terr: 'T1 Handstand' },
+    { t: 'Mit 56 bewegt sich mein Körper besser als mit 46.', terr: 'T1 Handstand' },
+    { t: 'Der Handstand ist nicht das Ziel. Er ist das Nebenprodukt.', terr: 'T1 Handstand' },
+    { t: 'Ich bin kein Athlet. Ich bin konsequent.', terr: 'T1 Handstand' },
+    { t: 'Beweglichkeit verschwindet nicht. Sie wird vergessen.', terr: 'T1 Handstand' },
+    { t: 'Dein Körper hört dir zu. Jeden Tag.', terr: 'T1 Handstand' },
+    { t: 'Mit 56 geht mehr, als du denkst.', terr: 'T1 Handstand' },
+    { t: 'Das hier ist keine Talentfrage.', terr: 'T1 Handstand' },
+    { t: 'Ich habe spät angefangen. Genau deshalb rede ich darüber.', terr: 'T1 Handstand' },
+    { t: 'Die meisten geben zu früh auf.', terr: 'T1 Handstand' },
+    { t: 'Der Körper passt sich an. Auch mit 56.', terr: 'T1 Handstand' },
+    { t: 'Wer sich bewegt, bleibt in Bewegung.', terr: 'T1 Handstand' },
+    { t: 'Der Handstand ist nur der Beweis. Nicht die Botschaft.', terr: 'T1 Handstand' },
+    { t: 'Dein Körper verlangt keine Perfektion.', terr: 'T2 Nur bewegen' },
+    { t: 'Bewegung schlägt Motivation.', terr: 'T2 Nur bewegen' },
+    { t: 'Ein bisschen ist unendlich besser als nichts.', terr: 'T2 Nur bewegen' },
+    { t: 'Du brauchst keinen perfekten Plan.', terr: 'T2 Nur bewegen' },
+    { t: 'Fang da an, wo du gerade bist.', terr: 'T2 Nur bewegen' },
+    { t: 'Jeder Körper kann sich bewegen.', terr: 'T2 Nur bewegen' },
+    { t: 'Nicht elegant. Nicht perfekt. Einfach echt.', terr: 'T2 Nur bewegen' },
+    { t: 'Bewegung ist kein Wettbewerb.', terr: 'T2 Nur bewegen' },
+    { t: 'Der erste Schritt zählt mehr als die Technik.', terr: 'T2 Nur bewegen' },
+    { t: 'Beweg dich, wie du kannst.', terr: 'T2 Nur bewegen' },
+    { t: 'Dein Körper will keine Ausreden hören.', terr: 'T2 Nur bewegen' },
+    { t: 'Heute reicht völlig.', terr: 'T2 Nur bewegen' },
+    { t: 'Du musst niemanden beeindrucken.', terr: 'T2 Nur bewegen' },
+    { t: 'Bewegung beginnt vor Fitness.', terr: 'T2 Nur bewegen' },
+    { t: 'Erst bewegen. Dann verbessern.', terr: 'T2 Nur bewegen' },
+    { t: 'Ich verspreche dir keine Wunder. Nur weniger Aua.', terr: 'T3 Knacken' },
+    { t: 'Dein Körper ist kein Campingstuhl.', terr: 'T3 Knacken' },
+    { t: 'Wenn es überall knackt, wird es Zeit.', terr: 'T3 Knacken' },
+    { t: 'Bewegung ist WD-40 für Menschen.', terr: 'T3 Knacken' },
+    { t: 'Rost kommt von Stillstand.', terr: 'T3 Knacken' },
+    { t: 'Der Körper liebt Bewegung mehr als Schonung.', terr: 'T3 Knacken' },
+    { t: 'Sitzen ist keine Erholung.', terr: 'T3 Knacken' },
+    { t: 'Dein Rücken will benutzt werden.', terr: 'T3 Knacken' },
+    { t: 'Wer sich bewegt, schmiert die Gelenke.', terr: 'T3 Knacken' },
+    { t: 'Steif ist kein Schicksal.', terr: 'T3 Knacken' },
+    { t: 'Du bist nicht alt. Du bist eingerostet.', terr: 'T3 Knacken' },
+    { t: 'Der Körper wird nicht besser durchs Warten.', terr: 'T3 Knacken' },
+    { t: 'Bewegung repariert nicht alles. Aber erstaunlich viel.', terr: 'T3 Knacken' },
+    { t: 'Die meisten bewegen sich erst, wenn es weh tut.', terr: 'T3 Knacken' },
+    { t: 'Fang vorher an.', terr: 'T3 Knacken' }
+  ];
+  var importStatements = function importStatements() {
+    var existing = {};
+    ideas.forEach(function (i) { existing[(i.text || '').trim()] = true; });
+    var fresh = JOGA_STATEMENTS.filter(function (s) { return !existing[s.t.trim()]; });
+    if (fresh.length === 0) {
+      alert('Alle 45 Statements sind bereits in der Inbox.');
+      return;
+    }
+    var base = Date.now();
+    var toAdd = fresh.map(function (s, idx) {
+      return {
+        id: base + idx,
+        text: s.t,
+        type: 'statement',
+        status: 'roh',
+        potential: 'mittel',
+        saeule: 'oliver',
+        ts: new Date().toLocaleDateString('de'),
+        notes: s.terr
+      };
+    });
+    var n = toAdd.concat(_toConsumableArray(ideas));
+    setIdeas(n);
+    sv('joga-ideas', n);
+    alert(fresh.length + ' Statements importiert.');
   };
   var delIdea = function delIdea(id) {
     var n = ideas.filter(function (i) {
@@ -3396,14 +3477,27 @@ function App() {
     className: "text-xs font-bold text-purple-400"
   }, 'IDEEN-INBOX (' + ideas.length + ')'), /*#__PURE__*/React.createElement("div", {
     className: 'text-xs ' + T.textFaint
-  }, readyCount + ' drehbereit')), /*#__PURE__*/React.createElement("div", {
+  }, readyCount + ' drehbereit')), /*#__PURE__*/React.createElement("button", {
+    onClick: importStatements,
+    className: "w-full py-1.5 mb-3 rounded-lg text-xs font-bold bg-purple-950 text-purple-300 border border-purple-800"
+  }, "45 Oliver-Statements laden"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-1 mb-2"
+  }, [['hook', 'Hook'], ['flow', 'Flow'], ['format', 'Format'], ['statement', 'Statement']].map(function (t) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: t[0],
+      onClick: function onClick() {
+        return setNewIdeaType(t[0]);
+      },
+      className: 'text-xs px-3 py-1 rounded-full border font-bold ' + (newIdeaType === t[0] ? 'bg-purple-950 text-purple-300 border-purple-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+    }, t[1]);
+  })), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-2 mb-3"
   }, /*#__PURE__*/React.createElement("input", {
     id: "idea-in",
-    placeholder: "Idee, Hook, Ergebnis...",
+    placeholder: newIdeaType === 'hook' ? 'Hook-Idee...' : newIdeaType === 'flow' ? 'Flow-Idee...' : 'Format-Idee...',
     onKeyDown: function onKeyDown(e) {
       if (e.key === 'Enter') {
-        addIdea(e.target.value, 'hook', 'mittel', 'function');
+        addIdea(e.target.value, newIdeaType, 'mittel', 'function');
         e.target.value = '';
       }
     },
@@ -3412,12 +3506,22 @@ function App() {
     onClick: function onClick() {
       var el = document.getElementById('idea-in');
       if (el && el.value.trim()) {
-        addIdea(el.value, 'hook', 'mittel', 'function');
+        addIdea(el.value, newIdeaType, 'mittel', 'function');
         el.value = '';
       }
     },
     className: "px-3 py-2 rounded-lg bg-purple-950 text-purple-300 border border-purple-800 text-sm font-bold"
   }, "+")), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-1 mb-2 flex-wrap"
+  }, [['all', 'Alle Typen'], ['hook', 'Hooks'], ['flow', 'Flows'], ['format', 'Formate'], ['statement', 'Statements']].map(function (t) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: t[0],
+      onClick: function onClick() {
+        return setIdeaTypeFilter(t[0]);
+      },
+      className: 'text-xs px-2.5 py-1 rounded-full border font-bold ' + (ideaTypeFilter === t[0] ? 'bg-orange-950 text-orange-300 border-orange-800' : T.card + ' ' + T.textFaint + ' ' + T.divider)
+    }, t[1]);
+  })), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-1 mb-3 flex-wrap"
   }, ['all', 'roh', 'entwickelt', 'drehbereit', 'verworfen'].map(function (f) {
     return /*#__PURE__*/React.createElement("button", {
@@ -3430,7 +3534,9 @@ function App() {
   })), ideas.length === 0 && /*#__PURE__*/React.createElement("div", {
     className: 'text-sm ' + T.textFaint
   }, "Noch keine Ideen."), ideas.filter(function (idea) {
-    return ideaFilter === 'all' || idea.status === ideaFilter;
+    var statusOk = ideaFilter === 'all' || idea.status === ideaFilter;
+    var typeOk = ideaTypeFilter === 'all' || (idea.type || 'hook') === ideaTypeFilter;
+    return statusOk && typeOk;
   }).map(function (idea) {
     var sCOL = {
       roh: 'text-gray-400',
@@ -3459,8 +3565,12 @@ function App() {
     }, /*#__PURE__*/React.createElement("div", {
       className: 'text-sm ' + T.textMain
     }, idea.text), /*#__PURE__*/React.createElement("div", {
-      className: 'text-xs mt-0.5 ' + T.textFaint
-    }, idea.ts)), /*#__PURE__*/React.createElement("button", {
+      className: 'flex items-center gap-1.5 mt-0.5'
+    }, /*#__PURE__*/React.createElement("span", {
+      className: 'text-xs px-1.5 py-0.5 rounded font-bold ' + ({ hook: 'bg-blue-950 text-blue-300', flow: 'bg-green-950 text-green-300', format: 'bg-orange-950 text-orange-300', statement: 'bg-purple-950 text-purple-300' }[idea.type || 'hook'])
+    }, ({ hook: 'HOOK', flow: 'FLOW', format: 'FORMAT', statement: 'STATEMENT' }[idea.type || 'hook'])), /*#__PURE__*/React.createElement("span", {
+      className: 'text-xs ' + T.textFaint
+    }, idea.ts))), /*#__PURE__*/React.createElement("button", {
       onClick: function onClick() {
         return delIdea(idea.id);
       },
