@@ -84,7 +84,34 @@ ENDGEFUEHL: (1 Satz was der Zuschauer danach fuehlt)
 
 Den Ablauf NICHT veraendern. Nur verpacken. Kein Yoga-Vokabular.`;
   }
+if (type === 'woche_planen') {
+    return `Du planst die naechste Woche (7 Folgen) der JOGA-Serie "100 Tage gegen den Stillstand".
 
+Hier die Performance-Daten der laufenden Woche (pro Folge, oft mit TikTok- und YouTube-Werten):
+${params.performance}
+
+Aufgabe: Schlage 7 neue Folgen vor (eine pro Tag), die auf diesen Daten aufbauen.
+
+Regeln:
+- Was gut lief (hohe Watchtime, Saves, Abos – besonders auf YouTube), wird als Muster fortgefuehrt.
+- Wiederkehrende Serien-Motive nutzen: "Der Boden luegt nicht" und "Der Koerper ist kein Campingstuhl".
+- NICHT jede Folge gleich aufbauen. Mische: einige mit Mini-Konflikt (ich dachte / dann / heute), einige reine Beobachtung. Sonst wird es Formel.
+- Gegner ist der Stillstand, nie der faule Mensch. Verstaendnis statt Schuld.
+- Oliver ist der Beweis, nicht das Vorbild. Handstand nur als Beweis, nie Selbstzweck.
+- Hoffnung/Freiheit sind Ergebnisse beim Zuschauer, nie Olivers Vokabular. Keine Trauer als Leitgefuehl.
+- Bewegungsformat: Bewegung ab Sekunde 1, Hook als Text drueber, ca. 40-50 Sek.
+
+Liefere fuer jede der 7 Folgen:
+TAG:
+TITEL:
+HOOK: (1 Satz, Neugier in Sekunde 1)
+TYP: (Konflikt oder Beobachtung)
+MOVE: (kurz, nachmachbar)
+SCHLUSS: (1 Satz)
+YOUTUBE-TITEL: (konkret und suchbar, mit Nutzen – z.B. "Mach das fuer die Schultern")
+
+Direkt liefern, kein Vorwort.`;
+  }
   return `JOGA Content fuer: ${JSON.stringify(params)}. Direkt und praegnant.`;
 }
 
