@@ -528,7 +528,10 @@ function Header({ tag, theme, toggleTheme }) {
       )
     ),
     e('div', { style: { marginTop: 10, display: 'flex', alignItems: 'baseline', gap: 10 } },
-      e('div', { className: 'joga-display', style: { fontSize: 44, color: T.orange, lineHeight: 1 } }, 'TAG ' + tag),
+      e('div', { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
+        e('span', { className: 'joga-display', style: { fontSize: 44, color: T.orange, lineHeight: 1 } }, 'TAG'),
+        e('span', { style: { fontSize: 42, color: T.orange, lineHeight: 1, fontWeight: 800, letterSpacing: '0.01em' } }, tag)
+      ),
       e('div', { style: { fontSize: 12, color: T.textDim, lineHeight: 1.3 } }, 'Multi-Kanal:', e('br'), 'TikTok · Reels · Shorts')
     )
   );
