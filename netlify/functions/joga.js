@@ -99,14 +99,20 @@ Regeln:
 - Gegner ist der Stillstand, nie der faule Mensch. Verstaendnis statt Schuld.
 - Oliver ist der Beweis, nicht das Vorbild. Handstand nur als Beweis, nie Selbstzweck.
 - Hoffnung/Freiheit sind Ergebnisse beim Zuschauer, nie Olivers Vokabular. Keine Trauer als Leitgefuehl.
-- Bewegungsformat: Bewegung ab Sekunde 1, Hook als Text drueber, ca. 40-50 Sek.
+- Bewegungsformat fuer normale Tage (Montag bis Freitag): Bewegung ab Sekunde 1, Hook als Text drueber, ca. 40-50 Sek.
+- SAMSTAG ist Statement Tag: KEIN Move-Video. Direkt in die Kamera gesprochen, kein Teaser/Abend-Split,
+  eine persoenliche Haltung/Meinung von Oliver (Trust-Building fuer Bestandsaudience, nicht auf Reichweite optimiert).
+  MOVE-Feld bleibt in diesem Fall leer, dafuer STATEMENT-Feld fuellen.
+- SONNTAG ist Flow Tag: KEIN Teaser/Abend-Split, kein Dialog/Erklaerung. Eine ruhige, durchgehende
+  Bewegungssequenz, kein Konflikt, kein CTA-Druck. TYP ist in diesem Fall immer "flow", nicht Konflikt/Beobachtung.
 
 Liefere fuer jede der 7 Folgen:
 TAG:
 TITEL:
 HOOK: (1 Satz, Neugier in Sekunde 1)
-TYP: (Konflikt oder Beobachtung)
-MOVE: (kurz, nachmachbar)
+TYP: (Konflikt, Beobachtung, Statement oder Flow)
+MOVE: (kurz, nachmachbar – leer lassen bei Statement)
+STATEMENT: (nur bei Samstag: die Haltung/Meinung in 1-2 Saetzen, sonst leer lassen)
 SCHLUSS: (1 Satz)
 YOUTUBE-TITEL: (konkret und suchbar, mit Nutzen – z.B. "Mach das fuer die Schultern")
 
@@ -156,6 +162,27 @@ async function callGPT(prompt, apiKey) {
   return data.choices[0].message.content;
 }
 
+async function callPerplexity(prompt, apiKey) {
+  const response = await fetch('https://api.perplexity.ai/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiKey
+    },
+    body: JSON.stringify({
+      model: 'sonar-pro',
+      max_tokens: 1000,
+      messages: [
+        { role: 'system', content: JOGA_BRAIN + '\n\nDu hast zusaetzlich Web-Zugriff. Nutze ihn, um aktuelle TikTok-Trends, Formate oder Algorithmus-Aenderungen einzubeziehen, wenn das fuer die Aufgabe hilft.' },
+        { role: 'user', content: prompt }
+      ]
+    })
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error?.message || 'Perplexity API error');
+  return data.choices[0].message.content;
+}
+
 exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -176,12 +203,14 @@ exports.handler = async (event) => {
     const { type, params } = JSON.parse(event.body);
     const anthropicKey = process.env.ANTHROPIC_API_KEY;
     const openaiKey = process.env.OPENAI_API_KEY;
+    const perplexityKey = process.env.PERPLEXITY_API_KEY;
     const prompt = buildPrompt(type, params);
 
-    // Call both in parallel
-    const [claudeResult, gptResult] = await Promise.allSettled([
+    // Call all three in parallel
+    const [claudeResult, gptResult, perplexityResult] = await Promise.allSettled([
       anthropicKey ? callClaude(prompt, anthropicKey) : Promise.reject(new Error('No Anthropic key')),
-      openaiKey ? callGPT(prompt, openaiKey) : Promise.reject(new Error('No OpenAI key'))
+      openaiKey ? callGPT(prompt, openaiKey) : Promise.reject(new Error('No OpenAI key')),
+      perplexityKey ? callPerplexity(prompt, perplexityKey) : Promise.reject(new Error('No Perplexity key'))
     ]);
 
     return {
@@ -192,6 +221,8 @@ exports.handler = async (event) => {
         claudeError: claudeResult.status === 'rejected' ? claudeResult.reason.message : null,
         gpt: gptResult.status === 'fulfilled' ? gptResult.value : null,
         gptError: gptResult.status === 'rejected' ? gptResult.reason.message : null,
+        perplexity: perplexityResult.status === 'fulfilled' ? perplexityResult.value : null,
+        perplexityError: perplexityResult.status === 'rejected' ? perplexityResult.reason.message : null,
       })
     };
 
