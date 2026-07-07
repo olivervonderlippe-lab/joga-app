@@ -1062,7 +1062,9 @@ function KiTab() {
       ergebnis.claude ? e(ResultBox, { titel: 'Claude', text: ergebnis.claude }) : null,
       ergebnis.claudeError ? e(ResultBox, { titel: 'Claude – Fehler', text: ergebnis.claudeError, warn: true }) : null,
       ergebnis.gpt ? e(ResultBox, { titel: 'GPT', text: ergebnis.gpt }) : null,
-      ergebnis.gptError ? e(ResultBox, { titel: 'GPT – Fehler', text: ergebnis.gptError, warn: true }) : null
+      ergebnis.gptError ? e(ResultBox, { titel: 'GPT – Fehler', text: ergebnis.gptError, warn: true }) : null,
+      ergebnis.perplexity ? e(ResultBox, { titel: 'Perplexity', text: ergebnis.perplexity }) : null,
+      ergebnis.perplexityError ? e(ResultBox, { titel: 'Perplexity – Fehler', text: ergebnis.perplexityError, warn: true }) : null
     ) : null,
 
     e('div', { style: { marginTop: 20, borderTop: '1px solid ' + T.line, paddingTop: 14 } },
