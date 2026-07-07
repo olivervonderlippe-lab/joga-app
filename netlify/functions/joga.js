@@ -13,7 +13,15 @@ JOGA verkauft keine Perfektion. JOGA verkauft Zustandsveraenderung.
 
 Texte sollen sein: kurz, merkbar, sprechbar, menschlich, pointiert, alltagsnah.
 
-NIEMALS: Kalaendersprueche, Achtsamkeitsphrasen, Sanskrit, Fitnessstudio-Sprache, anatomische Fachbegriffe, KI-Text.
+NIEMALS: Kalaendersprueche, Achtsamkeitsphrasen, Sanskrit, Fitnessstudio-Sprache, KI-Text.
+
+Anatomische Fachbegriffe (z.B. Piriformis-Muskel, Ischiasnerv) sind ERLAUBT und erwuenscht –
+sie stiften Glaubwuerdigkeit. Regeln dafuer:
+- Maximal 1 Fachbegriff pro Skript.
+- Fachbegriff IMMER sofort in Alltagssprache uebersetzt (z.B. "Piriformis-Muskel, der Muskel tief im Po").
+- Klare Grenze zu medizinischem Content: KEINE Diagnosen, KEINE Symptom-Zuordnung ("das deutet auf X hin"),
+  KEINE Heilversprechen. Fachbegriff dient der Einordnung der Bewegung, nicht der medizinischen Aussage.
+- Im Zweifel: Begriff raus, Alltagssprache reicht.
 
 Humor ist erlaubt. Trockenheit ist erwuenscht.
 
