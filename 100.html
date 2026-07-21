@@ -442,6 +442,12 @@ window.JOGA_DATA = {
       titel: "Clip-Pool ohne Hund",
       taktAbend: "8 neue Skripte ohne Hund (Claude-Batch), 7 davon in Woche 17 verplant (Mo/Di/Mi-Statement/Do/Fr/Sa/So-Flow). Samstag bewusst NICHT frei diese Woche, weil genug frisches Material da war. 1 als Reserve nicht eingeplant: 'Best-of aus 4 Wochen' als Meilenstein-Content zurückgehalten.",
       taktMorgen: "Weiterhin pausiert."
+    },
+    {
+      nr: 18,
+      titel: "Morgen-Slot reaktiviert",
+      taktAbend: "Unverändert: Geilste-Routinen-Rotation läuft weiter wie bisher.",
+      taktMorgen: "Ab jetzt gemischter Rhythmus: morgens einfache Moves aus dem morning-Pool (zyklisch), abends weiterhin die geilste-Routinen-Rotation."
     }
   ],
   bibelKompakt: [
@@ -4289,9 +4295,11 @@ function HeuteTab({ state, setState }) {
   const planSlot = planFuerSlot(serie);
   const letzterEintrag = planSlot[planSlot.length - 1];
 
-  // Pause ergibt sich rein daraus, dass es jenseits des letzten geplanten Tags keine weiteren
-  // Plan-Einträge für diesen Slot gibt — kein separates Flag mehr nötig.
-  const pausiert = !letzterEintrag || tag > letzterEintrag.nr;
+  // Pause gilt ab jetzt nur noch für den Abend-Slot: dort ergibt sie sich daraus, dass es
+  // jenseits des letzten geplanten Tags keine weiteren Plan-Einträge gibt.
+  // Der Morgen-Slot läuft stattdessen dauerhaft zyklisch durch die 7 vorhandenen
+  // morning-Einträge (morning-001..007) — kein Pausieren mehr, kein separates Flag nötig.
+  const pausiert = serie === 'morgen' ? false : (!letzterEintrag || tag > letzterEintrag.nr);
 
   if (pausiert) {
     return e('div', { style: { padding: 16 } },
