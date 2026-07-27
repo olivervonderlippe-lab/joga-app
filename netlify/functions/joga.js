@@ -107,6 +107,16 @@ Regeln:
 - Gegner ist der Stillstand, nie der faule Mensch. Verstaendnis statt Schuld.
 - Oliver ist der Beweis, nicht das Vorbild. Handstand nur als Beweis, nie Selbstzweck.
 - Hoffnung/Freiheit sind Ergebnisse beim Zuschauer, nie Olivers Vokabular. Keine Trauer als Leitgefuehl.
+- HOOK-MECHANISMEN zur Auswahl, pro Folge EINEN passenden waehlen, nicht in jeder Folge denselben:
+  a) Mit-56-Formel: persoenlicher Altersanker + Kontrast oder direkte These.
+     Beispiele: "Mit 56 zaehlt Pause mehr als Puls." / "Mit 56 trainiere ich Balance statt Bizeps." / "Mit 56 ist Bewegung Koerperpflege."
+     WICHTIG: IMMER 56, nie ein anderes Alter (nicht 50, nicht 60 - das ist Olivers echtes Alter).
+     Nur einsetzen, wenn Move/Thema wirklich zum persoenlichen Beweis passt, nicht erzwingen.
+  b) Objekt-Metapher: "Dein Koerper ist kein Campingstuhl."
+  c) Personifizierung (Boden/Stillstand als Akteur): "Der Boden luegt nicht."
+  d) Ich-Beweis-Aussage ohne Zahl: "Ich bin kein Vorbild. Nur Beweis."
+  Diese vier sind gleichwertige Optionen, keine Rangfolge. Auswahl richtet sich nach Move und Wochentag,
+  nicht nach Vorliebe fuer eine Formel - sonst wird's wieder eine Schablone.
 - Bewegungsformat fuer normale Tage (Montag bis Freitag): Bewegung ab Sekunde 1, Hook als Text drueber, ca. 40-50 Sek.
 - SAMSTAG ist Statement Tag: KEIN Move-Video. Direkt in die Kamera gesprochen, kein Teaser/Abend-Split,
   eine persoenliche Haltung/Meinung von Oliver (Trust-Building fuer Bestandsaudience, nicht auf Reichweite optimiert).
