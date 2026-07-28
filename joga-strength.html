@@ -16,7 +16,7 @@
 <body>
 <div id="root"></div>
 
-<script type="text/babel" data-presets="react">
+<script type="text/plain" id="app-source">
 const { useState, useEffect } = React;
 
 // ---------- Icons ----------
@@ -197,6 +197,25 @@ function WeekRecommendation({ week }) {
 
 // ---------- UI bits ----------
 
+function buildSummary({ master, sets, reps, rir, hasLog, setVals }) {
+  if (master) {
+    var s = "3 × " + reps;
+    if (hasLog) {
+      s += " · " + (setVals.weight || setVals.reps) + " · Anstrengung " + setVals.effort + "/10";
+    }
+    return s;
+  }
+  var s2 = sets + " × " + reps + " · RIR " + rir;
+  if (hasLog) {
+    var extra = "";
+    if (setVals.weight) extra += setVals.weight + " · ";
+    if (setVals.reps) extra += setVals.reps + " Wdh · ";
+    extra += "Anstrengung " + setVals.effort + "/10";
+    s2 += " · " + extra;
+  }
+  return s2;
+}
+
 function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey }) {
   const [open, setOpen] = useState(false);
   const setDefaults = { weight: "", reps: "", effort: 5, note: "" };
@@ -223,9 +242,7 @@ function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey })
         <div>
           <div className="text-[#f2eee6] font-medium">{display.name}</div>
           <div className="text-[#a89f8f] text-sm mt-0.5">
-            {master
-              ? `3 × ${reps}${hasLog ? ` · ${setVals.weight || setVals.reps} · Anstrengung ${setVals.effort}/10` : ""}`
-              : `${sets} × ${reps} · RIR ${rir}${hasLog ? ` · ${setVals.weight ? setVals.weight + " · " : ""}${setVals.reps ? setVals.reps + " Wdh · " : ""}Anstrengung ${setVals.effort}/10` : ""}`}
+            {buildSummary({ master, sets, reps, rir, hasLog, setVals })}
           </div>
         </div>
         <span className="text-[#a89f8f] shrink-0">{open ? <IconChevronDown /> : <IconChevronRight />}</span>
@@ -491,6 +508,13 @@ function JogaStrength() {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<JogaStrength />);
+</script>
+<script>
+  var source = document.getElementById("app-source").textContent;
+  var compiled = Babel.transform(source, { presets: [["react", { runtime: "classic" }]] }).code;
+  var runScript = document.createElement("script");
+  runScript.text = compiled;
+  document.body.appendChild(runScript);
 </script>
 </body>
 </html>
