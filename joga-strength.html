@@ -9,7 +9,7 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  body { background:#171512; }
+  body { background:var(--bg); }
   input[type=range] { accent-color:#c1541f; }
 </style>
 </head>
@@ -176,8 +176,8 @@ function WeekRecommendation({ week }) {
   const prevLogs = allLogsForWeek(week - 1).filter((l) => l.kater !== null && l.kater !== undefined);
   if (prevLogs.length === 0) {
     return (
-      <div className="rounded-lg bg-[#1c1a17] border border-[#2a2622] px-3 py-2.5 mb-4">
-        <p className="text-[#a89f8f] text-xs leading-relaxed">
+      <div className="rounded-lg bg-[var(--card)] border border-[var(--border)] px-3 py-2.5 mb-4">
+        <p className="text-[var(--text-secondary)] text-xs leading-relaxed">
           Noch keine Folgetag-Daten aus Woche {week - 1}. Trag sie nach dem Training ein, dann bekommst du hier eine Empfehlung.
         </p>
       </div>
@@ -185,8 +185,8 @@ function WeekRecommendation({ week }) {
   }
   const ok = prevLogs.every((l) => l.kater <= 3 && l.gelenke === "nein" && (l.muedigkeit ?? 10) <= 5 && l.bereit === "ja");
   return (
-    <div className={`rounded-lg border px-3 py-2.5 mb-4 ${ok ? "bg-[#16221c] border-[#2c4636]" : "bg-[#241c14] border-[#3a2c1c]"}`}>
-      <p className={`text-xs leading-relaxed ${ok ? "text-[#8fc9a8]" : "text-[#c9a876]"}`}>
+    <div className={`rounded-lg border px-3 py-2.5 mb-4 ${ok ? "bg-[var(--success-bg)] border-[var(--success-border)]" : "bg-[var(--warning-bg)] border-[var(--warning-border)]"}`}>
+      <p className={`text-xs leading-relaxed ${ok ? "text-[var(--success-text)]" : "text-[var(--warning-text)]"}`}>
         {ok
           ? `Woche ${week - 1} war sauber (Muskelkater ≤3, keine Gelenkbeschwerden, bereit). Weiter zu Woche ${week} wie geplant.`
           : `Woche ${week - 1} war noch nicht sauber genug (Muskelkater, Gelenke, Müdigkeit oder Bereitschaft außerhalb des Zielbereichs). Empfehlung: Woche ${week - 1} noch einmal wiederholen statt zu Woche ${week} weiterzugehen.`}
@@ -237,52 +237,52 @@ function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey })
   const hasLog = setVals.weight || setVals.reps;
 
   return (
-    <div className="rounded-xl border border-[#2a2622] bg-[#1c1a17] overflow-hidden">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden">
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-4 py-3 text-left">
         <div>
-          <div className="text-[#f2eee6] font-medium">{display.name}</div>
-          <div className="text-[#a89f8f] text-sm mt-0.5">
+          <div className="text-[var(--text)] font-medium">{display.name}</div>
+          <div className="text-[var(--text-secondary)] text-sm mt-0.5">
             {buildSummary({ master, sets, reps, rir, hasLog, setVals })}
           </div>
         </div>
-        <span className="text-[#a89f8f] shrink-0">{open ? <IconChevronDown /> : <IconChevronRight />}</span>
+        <span className="text-[var(--text-secondary)] shrink-0">{open ? <IconChevronDown /> : <IconChevronRight />}</span>
       </button>
       {open && (
         <div className="px-4 pb-4 -mt-1 space-y-3">
-          <p className="text-[#c9c2b4] text-sm leading-relaxed">{display.cue}</p>
-          {ex.startHint && <p className="text-[#8a8070] text-xs italic leading-relaxed">{ex.startHint}</p>}
+          <p className="text-[var(--text-body)] text-sm leading-relaxed">{display.cue}</p>
+          {ex.startHint && <p className="text-[var(--text-hint)] text-xs italic leading-relaxed">{ex.startHint}</p>}
           {display.videoUrl && (
             <a href={display.videoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-[#c1541f] font-medium">
               <IconPlay /> Video ansehen
             </a>
           )}
 
-          <div className="pt-2 border-t border-[#2a2622] grid grid-cols-2 gap-2">
+          <div className="pt-2 border-t border-[var(--border)] grid grid-cols-2 gap-2">
             <div>
-              <label className="text-[#a89f8f] text-xs block mb-1">Gewicht/Variante</label>
+              <label className="text-[var(--text-secondary)] text-xs block mb-1">Gewicht/Variante</label>
               <input
                 type="text"
                 value={setVals.weight}
                 onChange={(e) => updateSet({ weight: e.target.value })}
                 placeholder="z.B. 16 kg"
-                className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
               />
             </div>
             <div>
-              <label className="text-[#a89f8f] text-xs block mb-1">Reale Wdh</label>
+              <label className="text-[var(--text-secondary)] text-xs block mb-1">Reale Wdh</label>
               <input
                 type="text"
                 value={setVals.reps}
                 onChange={(e) => updateSet({ reps: e.target.value })}
                 placeholder={`z.B. ${reps}`}
-                className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
               />
             </div>
           </div>
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-[#a89f8f] text-xs">Anstrengung</label>
-              <span className="text-[#f2eee6] text-xs font-medium">{setVals.effort}/10</span>
+              <label className="text-[var(--text-secondary)] text-xs">Anstrengung</label>
+              <span className="text-[var(--text)] text-xs font-medium">{setVals.effort}/10</span>
             </div>
             <input type="range" min="1" max="10" value={setVals.effort} onChange={(e) => updateSet({ effort: Number(e.target.value) })} className="w-full" />
           </div>
@@ -291,7 +291,7 @@ function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey })
             value={setVals.note}
             onChange={(e) => updateSet({ note: e.target.value })}
             placeholder="Notiz (optional)"
-            className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+            className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
           />
         </div>
       )}
@@ -322,8 +322,8 @@ function LogForm({ dateKey, week, day, location }) {
     return (
       <div className="mb-4">
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[#c9c2b4] text-sm flex items-center gap-1.5">{icon}{label}</span>
-          <span className={`text-sm font-medium ${isSet ? "text-[#f2eee6]" : "text-[#5c564c] italic"}`}>
+          <span className="text-[var(--text-body)] text-sm flex items-center gap-1.5">{icon}{label}</span>
+          <span className={`text-sm font-medium ${isSet ? "text-[var(--text)]" : "text-[var(--text-muted)] italic"}`}>
             {isSet ? vals[field] : "Noch nicht eingetragen"}
           </span>
         </div>
@@ -339,11 +339,11 @@ function LogForm({ dateKey, week, day, location }) {
 
   const YesNo = ({ label, field, note }) => (
     <div className="mb-4">
-      <span className="text-[#c9c2b4] text-sm mb-1.5 block">{label}</span>
+      <span className="text-[var(--text-body)] text-sm mb-1.5 block">{label}</span>
       <div className="flex gap-2">
         {["ja", "nein"].map((v) => (
           <button key={v} onClick={() => setVals({ ...vals, [field]: v })}
-            className={`flex-1 py-2 rounded-lg text-sm capitalize border ${vals[field] === v ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[#2a2622] text-[#a89f8f]"}`}>
+            className={`flex-1 py-2 rounded-lg text-sm capitalize border ${vals[field] === v ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>
             {v}
           </button>
         ))}
@@ -354,18 +354,18 @@ function LogForm({ dateKey, week, day, location }) {
           value={vals[note] || ""}
           onChange={(e) => setVals({ ...vals, [note]: e.target.value })}
           placeholder="Wo und wobei?"
-          className="w-full mt-2 bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+          className="w-full mt-2 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
         />
       )}
     </div>
   );
 
   return (
-    <div className="rounded-xl border border-[#2a2622] bg-[#1c1a17] p-4 mt-6">
-      <h3 className="text-[#f2eee6] font-medium mb-3">Log</h3>
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4 mt-6">
+      <h3 className="text-[var(--text)] font-medium mb-3">Log</h3>
       <div className="flex gap-2 mb-4">
-        <button onClick={() => setTab("nach")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "nach" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>☀️ Direkt danach</button>
-        <button onClick={() => setTab("morgen")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "morgen" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>🌙 Am nächsten Tag</button>
+        <button onClick={() => setTab("nach")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "nach" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>☀️ Direkt danach</button>
+        <button onClick={() => setTab("morgen")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "morgen" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>🌙 Am nächsten Tag</button>
       </div>
 
       {tab === "nach" ? (
@@ -375,9 +375,9 @@ function LogForm({ dateKey, week, day, location }) {
           <Slider label="Wahrgenommene Anstrengung" field="anstrengung" icon={<span>⚡</span>} />
           <YesNo label="Schmerzen oder Beschwerden während des Trainings?" field="beschwerden" note="beschwerdenNotiz" />
           <div className="mb-1">
-            <span className="text-[#c9c2b4] text-sm mb-1.5 block">Lieblingsbewegung</span>
+            <span className="text-[var(--text-body)] text-sm mb-1.5 block">Lieblingsbewegung</span>
             <input type="text" value={vals.lieblingsuebung} onChange={(e) => setVals({ ...vals, lieblingsuebung: e.target.value })} placeholder="z.B. Farmer Carry"
-              className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-3 py-2 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]" />
+              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]" />
           </div>
         </React.Fragment>
       ) : (
@@ -397,17 +397,36 @@ function LogForm({ dateKey, week, day, location }) {
   );
 }
 
+const THEMES = {
+  dark: {
+    "--bg": "#171512", "--card": "#1c1a17", "--border": "#2a2622",
+    "--text": "#f2eee6", "--text-secondary": "#a89f8f", "--text-body": "#c9c2b4",
+    "--text-muted": "#5c564c", "--text-hint": "#8a8070",
+    "--success-bg": "#16221c", "--success-border": "#2c4636", "--success-text": "#8fc9a8",
+    "--warning-bg": "#241c14", "--warning-border": "#3a2c1c", "--warning-text": "#c9a876",
+  },
+  light: {
+    "--bg": "#faf6f0", "--card": "#ffffff", "--border": "#e8ded0",
+    "--text": "#2a2420", "--text-secondary": "#7a7166", "--text-body": "#4a443c",
+    "--text-muted": "#a89486", "--text-hint": "#8a7f6a",
+    "--success-bg": "#eef7f1", "--success-border": "#bfe0cc", "--success-text": "#2f7a4d",
+    "--warning-bg": "#fbf1e4", "--warning-border": "#eed9b8", "--warning-text": "#8a6a2f",
+  },
+};
+
 function JogaStrength() {
   const [week, setWeek] = useState(() => loadJSON("joga-strength:week", 1));
   const [day, setDay] = useState(() => loadJSON("joga-strength:day", "A"));
   const [location, setLocation] = useState(() => loadJSON("joga-strength:location", "studio"));
   const [date, setDate] = useState(() => loadJSON("joga-strength:date", todayISO()));
+  const [theme, setTheme] = useState(() => loadJSON("joga-strength:theme", "dark"));
   const [moveOpen, setMoveOpen] = useState(false);
 
   useEffect(() => { saveJSON("joga-strength:week", week); }, [week]);
   useEffect(() => { saveJSON("joga-strength:day", day); }, [day]);
   useEffect(() => { saveJSON("joga-strength:location", location); }, [location]);
   useEffect(() => { saveJSON("joga-strength:date", date); }, [date]);
+  useEffect(() => { saveJSON("joga-strength:theme", theme); }, [theme]);
 
   const weekData = WEEKS[week - 1];
   const exList = day === "A" ? BUILD_A : BUILD_B;
@@ -415,22 +434,30 @@ function JogaStrength() {
   const dateKey = date;
 
   return (
-    <div className="min-h-screen bg-[#171512]" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+    <div className="min-h-screen bg-[var(--bg)]" style={{ fontFamily: "'Inter', system-ui, sans-serif", ...THEMES[theme] }}>
       <div className="max-w-md mx-auto px-4 pt-8 pb-16">
         <div className="mb-6">
-          <div className="text-[#c1541f] text-xs font-semibold tracking-widest uppercase mb-1">JOGA Strength · Einstieg (Wochen 1–4)</div>
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-[#c1541f] text-xs font-semibold tracking-widest uppercase">JOGA Strength · Einstieg (Wochen 1–4)</div>
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="text-[var(--text-secondary)] text-xs border border-[var(--border)] rounded-full px-2.5 py-1 shrink-0"
+            >
+              {theme === "dark" ? "☀️ Hell" : "🌙 Dunkel"}
+            </button>
+          </div>
           <div className="flex items-center justify-between gap-2">
-            <h1 className="text-[#f2eee6] text-xl font-semibold">{formatDateDE(date)} · Build {day}</h1>
+            <h1 className="text-[var(--text)] text-xl font-semibold">{formatDateDE(date)} · Build {day}</h1>
           </div>
           <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
-            className="bg-transparent text-[#a89f8f] text-xs mt-1 border border-[#2a2622] rounded px-2 py-1" />
-          <p className="text-[#a89f8f] text-sm mt-2">Woche {week} · {weekData.note}</p>
+            className="bg-transparent text-[var(--text-secondary)] text-xs mt-1 border border-[var(--border)] rounded px-2 py-1" />
+          <p className="text-[var(--text-secondary)] text-sm mt-2">Woche {week} · {weekData.note}</p>
         </div>
 
         <div className="flex gap-2 mb-4">
           {WEEKS.map((w) => (
             <button key={w.week} onClick={() => setWeek(w.week)}
-              className={`flex-1 py-2 rounded-lg text-sm font-medium border ${week === w.week ? "bg-[#c1541f] border-[#c1541f] text-[#171512]" : "border-[#2a2622] text-[#a89f8f]"}`}>
+              className={`flex-1 py-2 rounded-lg text-sm font-medium border ${week === w.week ? "bg-[#c1541f] border-[#c1541f] text-[#171512]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>
               W{w.week}
             </button>
           ))}
@@ -439,40 +466,40 @@ function JogaStrength() {
         <WeekRecommendation week={week} />
 
         {week === 3 && (
-          <div className="rounded-lg bg-[#241c14] border border-[#3a2c1c] px-3 py-2.5 mb-4">
-            <p className="text-[#c9a876] text-xs leading-relaxed">
+          <div className="rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-3 py-2.5 mb-4">
+            <p className="text-[var(--warning-text)] text-xs leading-relaxed">
               Nur erhöhen, wenn: alle Wiederholungen sauber waren, RIR mind. 4 blieb und der Muskelkater am Folgetag ≤3 war. Sonst gleiches Gewicht wiederholen. Kein Satz soll sich schwerer als 6/10 anfühlen. Bei einseitigen Übungen: 1–2 Arbeitssätze pro Seite.
             </p>
           </div>
         )}
 
         <div className="flex gap-2 mb-3">
-          <button onClick={() => setDay("A")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "A" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>Montag · Build A</button>
-          <button onClick={() => setDay("B")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "B" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>Donnerstag · Build B</button>
+          <button onClick={() => setDay("A")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "A" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Montag · Build A</button>
+          <button onClick={() => setDay("B")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "B" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Donnerstag · Build B</button>
         </div>
 
         <div className="flex gap-2 mb-6">
-          <button onClick={() => setLocation("studio")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "studio" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[#2a2622] text-[#a89f8f]"}`}>Studio</button>
-          <button onClick={() => setLocation("home")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "home" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[#2a2622] text-[#a89f8f]"}`}>Home</button>
+          <button onClick={() => setLocation("studio")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "studio" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Studio</button>
+          <button onClick={() => setLocation("home")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "home" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Home</button>
         </div>
 
-        <div className="rounded-xl border border-[#2a2622] bg-[#1c1a17] overflow-hidden mb-3">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden mb-3">
           <button onClick={() => setMoveOpen(!moveOpen)} className="w-full flex items-center justify-between px-4 py-3">
             <div className="text-left">
-              <div className="text-[#f2eee6] font-medium">MOVE</div>
-              <div className="text-[#a89f8f] text-sm">8–10 Minuten · immer gleich</div>
+              <div className="text-[var(--text)] font-medium">MOVE</div>
+              <div className="text-[var(--text-secondary)] text-sm">8–10 Minuten · immer gleich</div>
             </div>
-            <span className="text-[#a89f8f]">{moveOpen ? <IconChevronDown /> : <IconChevronRight />}</span>
+            <span className="text-[var(--text-secondary)]">{moveOpen ? <IconChevronDown /> : <IconChevronRight />}</span>
           </button>
           {moveOpen && (
             <div className="px-4 pb-4 space-y-3">
               {MOVE_FLOW.map((m, i) => (
-                <div key={i} className="border-t border-[#2a2622] pt-3 first:border-0 first:pt-0">
+                <div key={i} className="border-t border-[var(--border)] pt-3 first:border-0 first:pt-0">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[#f2eee6] text-sm font-medium">{m.name}</span>
-                    <span className="text-[#a89f8f] text-xs">{m.dur}</span>
+                    <span className="text-[var(--text)] text-sm font-medium">{m.name}</span>
+                    <span className="text-[var(--text-secondary)] text-xs">{m.dur}</span>
                   </div>
-                  <p className="text-[#c9c2b4] text-sm mt-0.5">{m.cue}</p>
+                  <p className="text-[var(--text-body)] text-sm mt-0.5">{m.cue}</p>
                 </div>
               ))}
             </div>
@@ -480,8 +507,8 @@ function JogaStrength() {
         </div>
 
         <div className="mb-1 mt-6">
-          <div className="text-[#f2eee6] font-medium">BUILD</div>
-          <div className="text-[#a89f8f] text-sm mb-3">30–40 Minuten · {weekData.sets} Sätze · RIR {weekData.rir}</div>
+          <div className="text-[var(--text)] font-medium">BUILD</div>
+          <div className="text-[var(--text-secondary)] text-sm mb-3">30–40 Minuten · {weekData.sets} Sätze · RIR {weekData.rir}</div>
         </div>
         <div className="space-y-2">
           {exList.map((key) => (
@@ -490,16 +517,16 @@ function JogaStrength() {
         </div>
 
         <div className="mb-1 mt-6">
-          <div className="text-[#f2eee6] font-medium">MASTER</div>
-          <div className="text-[#a89f8f] text-sm mb-3">5–8 Minuten · 3 Sätze · Skill, nicht Ermüdung</div>
+          <div className="text-[var(--text)] font-medium">MASTER</div>
+          <div className="text-[var(--text-secondary)] text-sm mb-3">5–8 Minuten · 3 Sätze · Skill, nicht Ermüdung</div>
         </div>
         <ExerciseCard exKey={masterKey} ex={EXERCISES[masterKey]} reps="20 Sek" master location={location} dateKey={dateKey} />
 
-        <p className="text-[#5c564c] text-xs text-center mt-4">Gesamtdauer realistisch: ca. 55–60 Minuten.</p>
+        <p className="text-[var(--text-muted)] text-xs text-center mt-4">Gesamtdauer realistisch: ca. 55–60 Minuten.</p>
 
         <LogForm dateKey={dateKey} week={week} day={day} location={location} />
 
-        <p className="text-[#5c564c] text-xs text-center mt-8 leading-relaxed">
+        <p className="text-[var(--text-muted)] text-xs text-center mt-8 leading-relaxed">
           Regel: Du verlässt das Training mit Energie, nicht platt.<br />Muskelkater &gt; 4? Nächstes Mal Gewicht runter.
         </p>
       </div>
