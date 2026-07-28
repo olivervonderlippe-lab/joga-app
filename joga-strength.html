@@ -129,6 +129,13 @@ const EXERCISES = {
     videoUrl: "https://www.youtube.com/watch?v=2vspW4N4BMs",
     home: { name: "Ringe-Hang", cue: "An sicher und hoch genug befestigten Ringen hängen. Kannst du nicht frei hängen: Füße leicht am Boden lassen, Knie beugen, nur einen Teil des Körpergewichts übernehmen. Keine improvisierte Türlösung ohne Vertrauen in die Konstruktion." },
   },
+  step_down: {
+    name: "Box Step-down",
+    cue: "Auf eine stabile Erhöhung (Kastenstufe, feste Bank) stellen. Ein Bein langsam und kontrolliert nach unten senken, bis die Ferse fast den Boden berührt, dann aus dem stehenden Bein zurück nach oben drücken. Kein Abfedern, keine Schwungbewegung, Knie bleibt in Fluchtlinie mit dem Fuß. Erster kleiner Baustein Richtung Pistol Squat \u2013 Balance und exzentrische Kontrolle vor Kraft.",
+    startHint: "W\u00e4hle eine Stufenh\u00f6he, bei der 6 Wiederholungen pro Seite sauber und ohne Wackeln m\u00f6glich sind. Lieber niedrige Stufe und sauber, als hohe Stufe und wackelig.",
+    videoUrl: "https://www.youtube.com/watch?v=SZXOPRVP1Oc",
+    home: { name: "Treppenstufe / Ring-unterst\u00fctzt", cue: "Unterste Treppenstufe oder stabiler Hocker. Alternativ an den Ringen festhalten: langsam ablassen, mit beiden Beinen wieder hoch. Gleiche Regel wie im Studio \u2013 lieber niedriger und sauber." },
+  },
   hollow_hold: {
     name: "Hollow Hold",
     cue: "Rückenlage, unterer Rücken drückt in den Boden, Arme und Beine leicht angehoben, Spannung im ganzen Rumpf. Löst sich der Rücken vom Boden: Beine näher heranziehen oder Kopf ablegen. Baustein Richtung L-Sit – als Nächstes folgt Hollow Tuck, dann Compression Lift.",
@@ -138,7 +145,7 @@ const EXERCISES = {
 };
 
 const BUILD_A = ["goblet_squat", "rdl", "pushup", "row", "farmer"];
-const BUILD_B = ["split_squat", "hip_thrust", "shoulder_press", "lat_pulldown", "suitcase"];
+const BUILD_B = ["split_squat", "hip_thrust", "shoulder_press", "lat_pulldown", "suitcase", "step_down"];
 
 const WEEKS = [
   { week: 1, sets: 2, rir: 4, note: "So leicht, dass es fast lächerlich wirkt. Das ist richtig so." },
@@ -147,7 +154,7 @@ const WEEKS = [
   { week: 4, sets: 2, rir: 4, note: "Deload. Zurück auf Woche-1-Gewicht, weniger Sätze." },
 ];
 
-const REPS = { goblet_squat: 8, rdl: 8, pushup: 8, row: 10, farmer: "25m", split_squat: 8, hip_thrust: 10, shoulder_press: 8, lat_pulldown: 10, suitcase: "20m/Seite" };
+const REPS = { goblet_squat: 8, rdl: 8, pushup: 8, row: 10, farmer: "25m", split_squat: 8, hip_thrust: 10, shoulder_press: 8, lat_pulldown: 10, suitcase: "20m/Seite", step_down: "6/Seite" };
 
 // ---------- Storage helpers ----------
 function loadJSON(key, fallback) {
