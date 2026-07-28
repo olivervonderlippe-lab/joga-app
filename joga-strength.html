@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>JOGA Strength · Einstieg</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background:#171512; }
+  input[type=range] { accent-color:#c1541f; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect } = React;
+
+// ---------- Icons ----------
+const IconChevronDown = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>);
+const IconChevronRight = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>);
+const IconPlay = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>);
+const IconCheck = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>);
+
+// ---------- Date helpers ----------
+const WEEKDAYS_DE = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+const MONTHS_DE = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+function todayISO() {
+  const d = new Date();
+  const off = d.getTimezoneOffset();
+  return new Date(d.getTime() - off * 60000).toISOString().slice(0, 10);
+}
+function formatDateDE(iso) {
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d)) return iso;
+  return `${WEEKDAYS_DE[d.getDay()]}, ${d.getDate()}. ${MONTHS_DE[d.getMonth()]}`;
+}
+
+// ---------- Data ----------
+
+const MOVE_FLOW = [
+  { name: "Box Breathing", dur: "1 Min", cue: "4 Sek ein, 4 halten, 4 aus, 4 halten. Ankommen, nicht performen." },
+  { name: "Cat-Cow", dur: "8 Wdh", cue: "Wirbel für Wirbel. Langsam, nicht durchhängen." },
+  { name: "World's Greatest Stretch", dur: "2–4 pro Seite", cue: "Tiefer Ausfallschritt, Hand innen am Boden, Rotation zur Decke. Lieber 2 kontrollierte als 4 hastige Wiederholungen." },
+  { name: "Deep Squat Hold", dur: "30–60 Sek", cue: "Fersen bleiben unten. Ellbogen drücken die Knie sanft nach außen. Bei Bedarf zwischendurch kurz aufrichten – nicht dogmatisch durchhalten." },
+  { name: "Schulter-Armkreise", dur: "10 + 10 + 10", cue: "10× vorwärts, 10× rückwärts, 10× große Swings." },
+  { name: "Hip Hinge Drill", dur: "10 Wdh", cue: "Mit Besenstiel am Rücken. Hüfte nach hinten, Stiel bleibt an 3 Punkten." },
+  { name: "Schulterblatt-Aktivierung", dur: "10 Wdh", cue: "An der Stange oder an hoch eingestellten Ringen die Schulterblätter nach unten ziehen, ohne die Arme zu beugen. Ohne passende Aufhängung: im Vierfüßlerstand die Schulterblätter kontrolliert auseinander- und zusammenbewegen (Scapular Push-ups). Kein Volumen, nur Aktivierung – das eigentliche Hängen kommt im MASTER-Block." },
+];
+
+const EXERCISES = {
+  goblet_squat: {
+    name: "Goblet Squat",
+    cue: "Kurzhantel senkrecht vor der Brust. Fersen bleiben am Boden, Knie zeigen Richtung Zehen. So tief wie kontrolliert möglich, während Füße stabil bleiben und Becken sowie Rücken nicht ausweichen.",
+    startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 8.",
+    videoUrl: "https://www.youtube.com/watch?v=JO7D6GJ98wY",
+    home: { name: "Rucksack Squat", cue: "Rucksack mit Büchern/Wasserflaschen beladen, eng vor der Brust halten. Füße schulterbreit, kontrolliert hinunter, aus dem ganzen Fuß hochdrücken. Alternative ohne Gewicht: langsame Kniebeuge, 3 Sek Absenken." },
+  },
+  rdl: {
+    name: "Rumänisches Kreuzheben (Kurzhanteln)",
+    cue: "Hanteln vor den Oberschenkeln. Knie leicht gebeugt, Hüfte weit nach hinten schieben, Rücken lang. Senke die Hanteln nur so weit ab, wie du die Hüfte nach hinten führen und die Wirbelsäule stabil halten kannst – entscheidend ist die spürbare Spannung in der Oberschenkelrückseite, nicht eine feste Kniehöhe.",
+    startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 8.",
+    videoUrl: "https://www.youtube.com/watch?v=aa57T45iFSE",
+    home: { name: "Rucksack RDL", cue: "Rucksack an den oberen Griffen halten oder zwei Taschen. Gleiche Ausführung wie im Studio. Zu leicht? Einbeiniges RDL mit Festhalten, langsamer absenken, kurze Pause unten." },
+  },
+  pushup: {
+    name: "Liegestütze",
+    cue: "Kopf bis Ferse eine gerade Linie. Ellbogen ca. 45° zum Körper.",
+    startHint: "Wähle die Höhe (Wand, Tisch, Sofa, Boden) so, dass 8 Wiederholungen ruhig bleiben und noch etwa 4 möglich wären.",
+    videoUrl: "https://www.youtube.com/watch?v=WDIpL0pjun0",
+  },
+  row: {
+    name: "Kabelrudern (sitzend)",
+    cue: "Rücken aufrecht, kein Schwung aus dem Oberkörper. Griff zum Bauch ziehen, am Ende Schulterblätter zusammenziehen.",
+    startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 10.",
+    videoUrl: "https://www.youtube.com/watch?v=EU7bOadUsNI",
+    home: { name: "Ring Row", cue: "Ringe auf Brusthöhe. Körper gespannt zurücklehnen, Brust zu den Ringen ziehen. Leichter: aufrechter stehen. Schwerer: Füße weiter nach vorne.", videoUrl: "https://www.youtube.com/watch?v=VQn3aGSUorc" },
+  },
+  farmer: {
+    name: "Farmer Carry",
+    cue: "Kurzhanteln seitlich tragen, Schultern unten. Rumpf fest, kleine kontrollierte Schritte.",
+    startHint: "Das Gewicht soll spürbar sein, aber Haltung und Schritte dürfen sich nicht verändern.",
+    videoUrl: "https://www.youtube.com/watch?v=VBobkldqqvk",
+    home: { name: "Taschen Carry", cue: "Zwei schwere Taschen gleichmäßig beladen, seitlich greifen, langsam durch Wohnung/Flur gehen. Wenig Platz? 30–45 Sek auf der Stelle marschieren." },
+  },
+  split_squat: {
+    name: "Split Squat",
+    cue: "Beide Füße am Boden, ein Bein vorne, eins hinten. Gerade nach unten absenken, Rumpf aufrecht. Bewusst noch kein Bulgarian Split Squat (hinterer Fuß erhöht) – der erzeugt bei Wiedereinsteigern erfahrungsgemäß unnötig starken Muskelkater. Das kommt später.",
+    startHint: "Nutze zunächst nur Körpergewicht. Wird es zu leicht, kannst du ab Woche 3/4 Kurzhanteln ergänzen.",
+    videoUrl: "https://www.youtube.com/watch?v=VPhhE6bBzZE",
+    home: { name: "Unterstützter Split Squat", cue: "Ein Fuß vorne, einer hinten. Mit einer Hand an Wand, Stuhl oder Türrahmen festhalten. Gerade nach unten, nicht nach vorne fallen." },
+  },
+  hip_thrust: {
+    name: "Hip Thrust",
+    cue: "Oberer Rücken auf einer Bank, Gewicht auf der Hüfte. Hüfte hochdrücken bis Körperlinie gerade ist, oben kurz halten.",
+    startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 10.",
+    videoUrl: "https://www.youtube.com/watch?v=z8WwUC_UA4w",
+    home: { name: "Glute Bridge / Sofa Hip Thrust", cue: "Rücken auf dem Boden, Füße aufstellen, Hüfte hochdrücken, oben 2 Sek Gesäß anspannen. Schwerer: Rucksack auf die Hüfte, Schulterblätter auf die Sofakante, einbeinig." },
+  },
+  shoulder_press: {
+    name: "Kurzhantel Schulterdrücken",
+    cue: "Hanteln auf Schulterhöhe, kontrolliert nach oben drücken. Ein sauberer Lockout ist okay – entscheidend ist, dass Rippen und Becken dabei stabil bleiben.",
+    startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 8.",
+    videoUrl: "https://www.youtube.com/watch?v=guW_ENwLOMI",
+    home: { name: "Rucksack-Schulterdrücken", cue: "Rucksack mit beiden Händen vor der Brust greifen, kontrolliert über Kopf drücken. Rippen unten halten. Alternative: zwei Wasserflaschen/Taschen, oder erhöhter Pike Push-up." },
+  },
+  lat_pulldown: {
+    name: "Latzug",
+    cue: "Etwa schulterbreiter Griff bis leicht weiter. Brustbein anheben, Ellbogen Richtung Hosentaschen führen, kein Schwung.",
+    startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 10.",
+    videoUrl: "https://www.youtube.com/watch?v=j9jtjL8FhPI",
+    home: { name: "Ring Row (hoher Zugwinkel) / Knieender Ring Lat Pull", cue: "Ellbogen eng am Körper, Brust zu den Ringen ziehen, Ellbogen Richtung Hüfte. Alternative: Ringe hoch einstellen, davor knien, Ringe zur Brust ziehen, Oberkörper relativ aufrecht." },
+  },
+  suitcase: {
+    name: "Suitcase Carry",
+    cue: "Eine Kurzhantel einseitig tragen. Rumpf bleibt gerade, nicht zur belasteten Seite neigen.",
+    startHint: "Das Gewicht soll spürbar sein, aber Haltung und Schritte dürfen sich nicht verändern.",
+    videoUrl: "https://www.youtube.com/watch?v=ur4ou6mX7sw",
+    home: { name: "Einhändige Taschen-/Rucksack-Carry", cue: "Eine schwere Tasche oder ein Rucksack in einer Hand, 20–30 Sek gehen oder auf der Stelle marschieren. Nicht zur belasteten Seite kippen, danach Seite wechseln." },
+  },
+  dead_hang: {
+    name: "Dead Hang",
+    cue: "An der Stange hängen und die Zeit aushalten. Aktives Hängen: Schulterblätter leicht anspannen statt komplett passiv einsinken zu lassen. Nächster Schritt danach: Active Hang mit Zug-Impuls, dann Scapular Pull-up.",
+    startHint: "Halte nur so lange, wie Griff und Schulterposition sauber bleiben – kein Kampf bis zum Abrutschen.",
+    videoUrl: "https://www.youtube.com/watch?v=2vspW4N4BMs",
+    home: { name: "Ringe-Hang", cue: "An sicher und hoch genug befestigten Ringen hängen. Kannst du nicht frei hängen: Füße leicht am Boden lassen, Knie beugen, nur einen Teil des Körpergewichts übernehmen. Keine improvisierte Türlösung ohne Vertrauen in die Konstruktion." },
+  },
+  hollow_hold: {
+    name: "Hollow Hold",
+    cue: "Rückenlage, unterer Rücken drückt in den Boden, Arme und Beine leicht angehoben, Spannung im ganzen Rumpf. Löst sich der Rücken vom Boden: Beine näher heranziehen oder Kopf ablegen. Baustein Richtung L-Sit – als Nächstes folgt Hollow Tuck, dann Compression Lift.",
+    startHint: "Halte nur so lange, wie der untere Rücken sauber am Boden bleibt – kein Zittern erzwingen.",
+    videoUrl: "https://www.youtube.com/watch?v=0yPin8hSc8o",
+  },
+};
+
+const BUILD_A = ["goblet_squat", "rdl", "pushup", "row", "farmer"];
+const BUILD_B = ["split_squat", "hip_thrust", "shoulder_press", "lat_pulldown", "suitcase"];
+
+const WEEKS = [
+  { week: 1, sets: 2, rir: 4, note: "So leicht, dass es fast lächerlich wirkt. Das ist richtig so." },
+  { week: 2, sets: 3, rir: 4, note: "Nur mehr Sätze, wenn Woche 1 sauber war (siehe Empfehlung unten)." },
+  { week: 3, sets: 3, rir: 3, note: "Nur erhöhen, wenn die Kriterien unten erfüllt sind." },
+  { week: 4, sets: 2, rir: 4, note: "Deload. Zurück auf Woche-1-Gewicht, weniger Sätze." },
+];
+
+const REPS = { goblet_squat: 8, rdl: 8, pushup: 8, row: 10, farmer: "25m", split_squat: 8, hip_thrust: 10, shoulder_press: 8, lat_pulldown: 10, suitcase: "20m/Seite" };
+
+// ---------- Storage helpers ----------
+function loadJSON(key, fallback) {
+  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
+  catch (e) { return fallback; }
+}
+function saveJSON(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+  catch (e) { console.error("Speichern fehlgeschlagen", e); return false; }
+}
+function allLogsForWeek(weekNum) {
+  const out = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith("log:")) {
+      const v = loadJSON(k, null);
+      if (v && v.week === weekNum) out.push(v);
+    }
+  }
+  return out;
+}
+
+// ---------- Week recommendation ----------
+function WeekRecommendation({ week }) {
+  if (week === 1) return null;
+  const prevLogs = allLogsForWeek(week - 1).filter((l) => l.kater !== null && l.kater !== undefined);
+  if (prevLogs.length === 0) {
+    return (
+      <div className="rounded-lg bg-[#1c1a17] border border-[#2a2622] px-3 py-2.5 mb-4">
+        <p className="text-[#a89f8f] text-xs leading-relaxed">
+          Noch keine Folgetag-Daten aus Woche {week - 1}. Trag sie nach dem Training ein, dann bekommst du hier eine Empfehlung.
+        </p>
+      </div>
+    );
+  }
+  const ok = prevLogs.every((l) => l.kater <= 3 && l.gelenke === "nein" && (l.muedigkeit ?? 10) <= 5 && l.bereit === "ja");
+  return (
+    <div className={`rounded-lg border px-3 py-2.5 mb-4 ${ok ? "bg-[#16221c] border-[#2c4636]" : "bg-[#241c14] border-[#3a2c1c]"}`}>
+      <p className={`text-xs leading-relaxed ${ok ? "text-[#8fc9a8]" : "text-[#c9a876]"}`}>
+        {ok
+          ? `Woche ${week - 1} war sauber (Muskelkater ≤3, keine Gelenkbeschwerden, bereit). Weiter zu Woche ${week} wie geplant.`
+          : `Woche ${week - 1} war noch nicht sauber genug (Muskelkater, Gelenke, Müdigkeit oder Bereitschaft außerhalb des Zielbereichs). Empfehlung: Woche ${week - 1} noch einmal wiederholen statt zu Woche ${week} weiterzugehen.`}
+      </p>
+    </div>
+  );
+}
+
+// ---------- UI bits ----------
+
+function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey }) {
+  const [open, setOpen] = useState(false);
+  const setDefaults = { weight: "", reps: "", effort: 5, note: "" };
+  const setKey = `set:${dateKey}:${exKey}`;
+  const [setVals, setSetVals] = useState(() => ({ ...setDefaults, ...loadJSON(setKey, {}) }));
+
+  useEffect(() => {
+    setSetVals({ ...setDefaults, ...loadJSON(setKey, {}) });
+  }, [dateKey, exKey]);
+
+  const updateSet = (patch) => {
+    const next = { ...setVals, ...patch };
+    setSetVals(next);
+    saveJSON(setKey, next);
+  };
+
+  const useHome = location === "home" && ex.home;
+  const display = useHome ? { ...ex, ...ex.home } : ex;
+  const hasLog = setVals.weight || setVals.reps;
+
+  return (
+    <div className="rounded-xl border border-[#2a2622] bg-[#1c1a17] overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-4 py-3 text-left">
+        <div>
+          <div className="text-[#f2eee6] font-medium">{display.name}</div>
+          <div className="text-[#a89f8f] text-sm mt-0.5">
+            {master
+              ? `3 × ${reps}${hasLog ? ` · ${setVals.weight || setVals.reps} · Anstrengung ${setVals.effort}/10` : ""}`
+              : `${sets} × ${reps} · RIR ${rir}${hasLog ? ` · ${setVals.weight ? setVals.weight + " · " : ""}${setVals.reps ? setVals.reps + " Wdh · " : ""}Anstrengung ${setVals.effort}/10` : ""}`}
+          </div>
+        </div>
+        <span className="text-[#a89f8f] shrink-0">{open ? <IconChevronDown /> : <IconChevronRight />}</span>
+      </button>
+      {open && (
+        <div className="px-4 pb-4 -mt-1 space-y-3">
+          <p className="text-[#c9c2b4] text-sm leading-relaxed">{display.cue}</p>
+          {ex.startHint && <p className="text-[#8a8070] text-xs italic leading-relaxed">{ex.startHint}</p>}
+          {display.videoUrl && (
+            <a href={display.videoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-[#c1541f] font-medium">
+              <IconPlay /> Video ansehen
+            </a>
+          )}
+
+          <div className="pt-2 border-t border-[#2a2622] grid grid-cols-2 gap-2">
+            <div>
+              <label className="text-[#a89f8f] text-xs block mb-1">Gewicht/Variante</label>
+              <input
+                type="text"
+                value={setVals.weight}
+                onChange={(e) => updateSet({ weight: e.target.value })}
+                placeholder="z.B. 16 kg"
+                className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+              />
+            </div>
+            <div>
+              <label className="text-[#a89f8f] text-xs block mb-1">Reale Wdh</label>
+              <input
+                type="text"
+                value={setVals.reps}
+                onChange={(e) => updateSet({ reps: e.target.value })}
+                placeholder={`z.B. ${reps}`}
+                className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+              />
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-[#a89f8f] text-xs">Anstrengung</label>
+              <span className="text-[#f2eee6] text-xs font-medium">{setVals.effort}/10</span>
+            </div>
+            <input type="range" min="1" max="10" value={setVals.effort} onChange={(e) => updateSet({ effort: Number(e.target.value) })} className="w-full" />
+          </div>
+          <input
+            type="text"
+            value={setVals.note}
+            onChange={(e) => updateSet({ note: e.target.value })}
+            placeholder="Notiz (optional)"
+            className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LogForm({ dateKey, week, day, location }) {
+  const defaults = {
+    week, day, location,
+    spass: 5, energie: 5, anstrengung: 5, beschwerden: "nein", beschwerdenNotiz: "", lieblingsuebung: "",
+    kater: null, muedigkeit: null, gelenke: "nein", bereit: null, schlaf: null,
+  };
+  const loadLog = () => ({ ...defaults, ...loadJSON(`log:${dateKey}`, {}) });
+  const [vals, setVals] = useState(loadLog);
+  const [saved, setSaved] = useState(false);
+  const [tab, setTab] = useState("nach");
+
+  useEffect(() => { setVals(loadLog()); setTab("nach"); }, [dateKey]);
+
+  const save = () => {
+    const ok = saveJSON(`log:${dateKey}`, { ...vals, week, day, location });
+    if (ok) { setSaved(true); setTimeout(() => setSaved(false), 1800); }
+  };
+
+  const Slider = ({ label, field, icon }) => {
+    const isSet = vals[field] !== null && vals[field] !== undefined;
+    return (
+      <div className="mb-4">
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[#c9c2b4] text-sm flex items-center gap-1.5">{icon}{label}</span>
+          <span className={`text-sm font-medium ${isSet ? "text-[#f2eee6]" : "text-[#5c564c] italic"}`}>
+            {isSet ? vals[field] : "Noch nicht eingetragen"}
+          </span>
+        </div>
+        <input
+          type="range" min="1" max="10"
+          value={isSet ? vals[field] : 5}
+          onChange={(e) => setVals({ ...vals, [field]: Number(e.target.value) })}
+          className="w-full"
+        />
+      </div>
+    );
+  };
+
+  const YesNo = ({ label, field, note }) => (
+    <div className="mb-4">
+      <span className="text-[#c9c2b4] text-sm mb-1.5 block">{label}</span>
+      <div className="flex gap-2">
+        {["ja", "nein"].map((v) => (
+          <button key={v} onClick={() => setVals({ ...vals, [field]: v })}
+            className={`flex-1 py-2 rounded-lg text-sm capitalize border ${vals[field] === v ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[#2a2622] text-[#a89f8f]"}`}>
+            {v}
+          </button>
+        ))}
+      </div>
+      {note && vals[field] === "ja" && (
+        <input
+          type="text"
+          value={vals[note] || ""}
+          onChange={(e) => setVals({ ...vals, [note]: e.target.value })}
+          placeholder="Wo und wobei?"
+          className="w-full mt-2 bg-[#171512] border border-[#2a2622] rounded-lg px-2.5 py-1.5 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]"
+        />
+      )}
+    </div>
+  );
+
+  return (
+    <div className="rounded-xl border border-[#2a2622] bg-[#1c1a17] p-4 mt-6">
+      <h3 className="text-[#f2eee6] font-medium mb-3">Log</h3>
+      <div className="flex gap-2 mb-4">
+        <button onClick={() => setTab("nach")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "nach" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>☀️ Direkt danach</button>
+        <button onClick={() => setTab("morgen")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "morgen" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>🌙 Am nächsten Tag</button>
+      </div>
+
+      {tab === "nach" ? (
+        <React.Fragment>
+          <Slider label="Spaß" field="spass" icon={<span>😊</span>} />
+          <Slider label="Energie danach" field="energie" icon={<span>🔋</span>} />
+          <Slider label="Wahrgenommene Anstrengung" field="anstrengung" icon={<span>⚡</span>} />
+          <YesNo label="Schmerzen oder Beschwerden während des Trainings?" field="beschwerden" note="beschwerdenNotiz" />
+          <div className="mb-1">
+            <span className="text-[#c9c2b4] text-sm mb-1.5 block">Lieblingsbewegung</span>
+            <input type="text" value={vals.lieblingsuebung} onChange={(e) => setVals({ ...vals, lieblingsuebung: e.target.value })} placeholder="z.B. Farmer Carry"
+              className="w-full bg-[#171512] border border-[#2a2622] rounded-lg px-3 py-2 text-[#f2eee6] text-sm placeholder-[#5c564c] focus:outline-none focus:border-[#c1541f]" />
+          </div>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <Slider label="Muskelkater" field="kater" icon={<span>🔥</span>} />
+          <Slider label="Müdigkeit" field="muedigkeit" icon={<span>🥱</span>} />
+          <Slider label="Schlafqualität" field="schlaf" icon={<span>💤</span>} />
+          <YesNo label="Gelenkbeschwerden?" field="gelenke" note="gelenkeNotiz" />
+          <YesNo label="Bereit fürs nächste Training?" field="bereit" />
+        </React.Fragment>
+      )}
+
+      <button onClick={save} className="w-full py-2.5 rounded-lg bg-[#c1541f] text-[#171512] font-medium text-sm flex items-center justify-center gap-1.5 mt-3">
+        {saved ? <React.Fragment><IconCheck /> Gespeichert</React.Fragment> : "Speichern"}
+      </button>
+    </div>
+  );
+}
+
+function JogaStrength() {
+  const [week, setWeek] = useState(() => loadJSON("joga-strength:week", 1));
+  const [day, setDay] = useState(() => loadJSON("joga-strength:day", "A"));
+  const [location, setLocation] = useState(() => loadJSON("joga-strength:location", "studio"));
+  const [date, setDate] = useState(() => loadJSON("joga-strength:date", todayISO()));
+  const [moveOpen, setMoveOpen] = useState(false);
+
+  useEffect(() => { saveJSON("joga-strength:week", week); }, [week]);
+  useEffect(() => { saveJSON("joga-strength:day", day); }, [day]);
+  useEffect(() => { saveJSON("joga-strength:location", location); }, [location]);
+  useEffect(() => { saveJSON("joga-strength:date", date); }, [date]);
+
+  const weekData = WEEKS[week - 1];
+  const exList = day === "A" ? BUILD_A : BUILD_B;
+  const masterKey = day === "A" ? "dead_hang" : "hollow_hold";
+  const dateKey = date;
+
+  return (
+    <div className="min-h-screen bg-[#171512]" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+      <div className="max-w-md mx-auto px-4 pt-8 pb-16">
+        <div className="mb-6">
+          <div className="text-[#c1541f] text-xs font-semibold tracking-widest uppercase mb-1">JOGA Strength · Einstieg (Wochen 1–4)</div>
+          <div className="flex items-center justify-between gap-2">
+            <h1 className="text-[#f2eee6] text-xl font-semibold">{formatDateDE(date)} · Build {day}</h1>
+          </div>
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
+            className="bg-transparent text-[#a89f8f] text-xs mt-1 border border-[#2a2622] rounded px-2 py-1" />
+          <p className="text-[#a89f8f] text-sm mt-2">Woche {week} · {weekData.note}</p>
+        </div>
+
+        <div className="flex gap-2 mb-4">
+          {WEEKS.map((w) => (
+            <button key={w.week} onClick={() => setWeek(w.week)}
+              className={`flex-1 py-2 rounded-lg text-sm font-medium border ${week === w.week ? "bg-[#c1541f] border-[#c1541f] text-[#171512]" : "border-[#2a2622] text-[#a89f8f]"}`}>
+              W{w.week}
+            </button>
+          ))}
+        </div>
+
+        <WeekRecommendation week={week} />
+
+        {week === 3 && (
+          <div className="rounded-lg bg-[#241c14] border border-[#3a2c1c] px-3 py-2.5 mb-4">
+            <p className="text-[#c9a876] text-xs leading-relaxed">
+              Nur erhöhen, wenn: alle Wiederholungen sauber waren, RIR mind. 4 blieb und der Muskelkater am Folgetag ≤3 war. Sonst gleiches Gewicht wiederholen. Kein Satz soll sich schwerer als 6/10 anfühlen. Bei einseitigen Übungen: 1–2 Arbeitssätze pro Seite.
+            </p>
+          </div>
+        )}
+
+        <div className="flex gap-2 mb-3">
+          <button onClick={() => setDay("A")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "A" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>Montag · Build A</button>
+          <button onClick={() => setDay("B")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "B" ? "bg-[#2a2622] border-[#c1541f] text-[#f2eee6]" : "border-[#2a2622] text-[#a89f8f]"}`}>Donnerstag · Build B</button>
+        </div>
+
+        <div className="flex gap-2 mb-6">
+          <button onClick={() => setLocation("studio")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "studio" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[#2a2622] text-[#a89f8f]"}`}>Studio</button>
+          <button onClick={() => setLocation("home")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "home" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[#2a2622] text-[#a89f8f]"}`}>Home</button>
+        </div>
+
+        <div className="rounded-xl border border-[#2a2622] bg-[#1c1a17] overflow-hidden mb-3">
+          <button onClick={() => setMoveOpen(!moveOpen)} className="w-full flex items-center justify-between px-4 py-3">
+            <div className="text-left">
+              <div className="text-[#f2eee6] font-medium">MOVE</div>
+              <div className="text-[#a89f8f] text-sm">8–10 Minuten · immer gleich</div>
+            </div>
+            <span className="text-[#a89f8f]">{moveOpen ? <IconChevronDown /> : <IconChevronRight />}</span>
+          </button>
+          {moveOpen && (
+            <div className="px-4 pb-4 space-y-3">
+              {MOVE_FLOW.map((m, i) => (
+                <div key={i} className="border-t border-[#2a2622] pt-3 first:border-0 first:pt-0">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-[#f2eee6] text-sm font-medium">{m.name}</span>
+                    <span className="text-[#a89f8f] text-xs">{m.dur}</span>
+                  </div>
+                  <p className="text-[#c9c2b4] text-sm mt-0.5">{m.cue}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="mb-1 mt-6">
+          <div className="text-[#f2eee6] font-medium">BUILD</div>
+          <div className="text-[#a89f8f] text-sm mb-3">30–40 Minuten · {weekData.sets} Sätze · RIR {weekData.rir}</div>
+        </div>
+        <div className="space-y-2">
+          {exList.map((key) => (
+            <ExerciseCard key={key} exKey={key} ex={EXERCISES[key]} sets={weekData.sets} reps={REPS[key]} rir={weekData.rir} location={location} dateKey={dateKey} />
+          ))}
+        </div>
+
+        <div className="mb-1 mt-6">
+          <div className="text-[#f2eee6] font-medium">MASTER</div>
+          <div className="text-[#a89f8f] text-sm mb-3">5–8 Minuten · 3 Sätze · Skill, nicht Ermüdung</div>
+        </div>
+        <ExerciseCard exKey={masterKey} ex={EXERCISES[masterKey]} reps="20 Sek" master location={location} dateKey={dateKey} />
+
+        <p className="text-[#5c564c] text-xs text-center mt-4">Gesamtdauer realistisch: ca. 55–60 Minuten.</p>
+
+        <LogForm dateKey={dateKey} week={week} day={day} location={location} />
+
+        <p className="text-[#5c564c] text-xs text-center mt-8 leading-relaxed">
+          Regel: Du verlässt das Training mit Energie, nicht platt.<br />Muskelkater &gt; 4? Nächstes Mal Gewicht runter.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<JogaStrength />);
+</script>
+</body>
+</html>
