@@ -223,8 +223,15 @@ function buildSummary({ master, sets, reps, rir, hasLog, setVals }) {
   return s2;
 }
 
+function embedUrl(watchUrl) {
+  const match = watchUrl.match(/[?&]v=([^&]+)/);
+  const id = match ? match[1] : "";
+  return `https://www.youtube.com/embed/${id}?rel=0`;
+}
+
 function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey }) {
   const [open, setOpen] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const setDefaults = { weight: "", reps: "", effort: 5, note: "" };
   const setKey = `set:${dateKey}:${exKey}`;
   const [setVals, setSetVals] = useState(() => ({ ...setDefaults, ...loadJSON(setKey, {}) }));
@@ -259,9 +266,25 @@ function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey })
           <p className="text-[var(--text-body)] text-sm leading-relaxed">{display.cue}</p>
           {ex.startHint && <p className="text-[var(--text-hint)] text-xs italic leading-relaxed">{ex.startHint}</p>}
           {display.videoUrl && (
-            <a href={display.videoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-[#c1541f] font-medium">
-              <IconPlay /> Video ansehen
-            </a>
+            <div>
+              <button
+                onClick={() => setShowVideo(!showVideo)}
+                className="inline-flex items-center gap-1.5 text-sm text-[#c1541f] font-medium"
+              >
+                <IconPlay /> {showVideo ? "Video ausblenden" : "Video ansehen"}
+              </button>
+              {showVideo && (
+                <div className="mt-2 rounded-lg overflow-hidden" style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                  <iframe
+                    src={embedUrl(display.videoUrl)}
+                    title={display.name}
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              )}
+            </div>
           )}
 
           <div className="pt-2 border-t border-[var(--border)] grid grid-cols-2 gap-2">
