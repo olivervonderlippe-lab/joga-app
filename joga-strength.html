@@ -204,6 +204,40 @@ function WeekRecommendation({ week }) {
 
 // ---------- UI bits ----------
 
+function RirInfo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mb-3">
+      <button onClick={() => setOpen(!open)} className="text-xs text-[var(--text-hint)] italic underline">
+        {open ? "Was ist RIR? ausblenden" : "Was ist RIR?"}
+      </button>
+      {open && (
+        <p className="text-[var(--text-hint)] text-xs italic leading-relaxed mt-1.5">
+          RIR = "Reps in Reserve", also Wiederholungen, die du nach dem Satz noch geschafft hättest. RIR 4 heißt: nach der letzten Wiederholung wären noch etwa 4 weitere sauber möglich gewesen – du trainierst bewusst mit Reserve, nicht bis zur Erschöpfung.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function StartWeightGuide() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setOpen(!open)} className="text-xs text-[var(--text-hint)] italic underline">
+        {open ? "Anleitung ausblenden" : "Erstes Mal bei dieser Übung? So findest du dein Startgewicht"}
+      </button>
+      {open && (
+        <p className="text-[var(--text-hint)] text-xs italic leading-relaxed mt-1.5">
+          Starte mit dem leichtesten Gewicht, das du hast (oder ganz ohne Gewicht). Mach 2–3 Testwiederholungen.
+          Fühlt sich das mühelos an, als könntest du noch 8 oder mehr schaffen? Nimm die nächste Gewichtsstufe und teste erneut.
+          Sobald du nach der letzten Wiederholung das Gefühl hast, noch etwa 4 weitere saubere Wiederholungen zu schaffen (das ist RIR 4) – das ist dein Startgewicht für heute.
+        </p>
+      )}
+    </div>
+  );
+}
+
 function buildSummary({ master, sets, reps, rir, hasLog, setVals }) {
   if (master) {
     var s = "3 × " + reps;
@@ -287,26 +321,29 @@ function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey })
             </div>
           )}
 
-          <div className="pt-2 border-t border-[var(--border)] grid grid-cols-2 gap-2">
-            <div>
-              <label className="text-[var(--text-secondary)] text-xs block mb-1">Gewicht/Variante</label>
-              <input
-                type="text"
-                value={setVals.weight}
-                onChange={(e) => updateSet({ weight: e.target.value })}
-                placeholder="z.B. 16 kg"
-                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
-              />
-            </div>
-            <div>
-              <label className="text-[var(--text-secondary)] text-xs block mb-1">Reale Wdh</label>
-              <input
-                type="text"
-                value={setVals.reps}
-                onChange={(e) => updateSet({ reps: e.target.value })}
-                placeholder={`z.B. ${reps}`}
-                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
-              />
+          <div className="pt-2 border-t border-[var(--border)]">
+            <StartWeightGuide />
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div>
+                <label className="text-[var(--text-secondary)] text-xs block mb-1">Gewicht/Variante</label>
+                <input
+                  type="text"
+                  value={setVals.weight}
+                  onChange={(e) => updateSet({ weight: e.target.value })}
+                  placeholder="Gewicht eintragen"
+                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+                />
+              </div>
+              <div>
+                <label className="text-[var(--text-secondary)] text-xs block mb-1">Reale Wdh</label>
+                <input
+                  type="text"
+                  value={setVals.reps}
+                  onChange={(e) => updateSet({ reps: e.target.value })}
+                  placeholder={`z.B. ${reps}`}
+                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+                />
+              </div>
             </div>
           </div>
           <div>
@@ -538,8 +575,10 @@ function JogaStrength() {
 
         <div className="mb-1 mt-6">
           <div className="text-[var(--text)] font-medium">BUILD</div>
-          <div className="text-[var(--text-secondary)] text-sm mb-3">30–40 Minuten · {weekData.sets} Sätze · RIR {weekData.rir}</div>
+          <div className="text-[var(--text-secondary)] text-sm mb-1">30–40 Minuten · {weekData.sets} Sätze · RIR {weekData.rir}</div>
+          <RirInfo />
         </div>
+        <div className="mb-3"></div>
         <div className="space-y-2">
           {exList.map((key) => (
             <ExerciseCard key={key} exKey={key} ex={EXERCISES[key]} sets={weekData.sets} reps={REPS[key]} rir={weekData.rir} location={location} dateKey={dateKey} />
