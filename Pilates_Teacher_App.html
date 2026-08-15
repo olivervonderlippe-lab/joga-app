@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilates Teachermanuskript – Foam-Roller-Class</title>
+<style>
+  :root {
+    --accent: #6B4F3B;
+    --accent-light: #8a6a52;
+    --bg: #FBF8F4;
+    --card: #FFFFFF;
+    --light: #F2ECE4;
+    --mid: #D9CFC1;
+    --border: #E4DACB;
+    --text: #1A1A1A;
+    --muted: #77706A;
+    --good: #4C7A4E;
+    --warn: #B4592F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 18px 20px 14px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 4px; font-size: 1.3rem; letter-spacing: 0.02em; }
+  header p { margin: 0; font-size: 0.82rem; opacity: 0.85; }
+
+  nav.tabs {
+    display: flex;
+    background: var(--light);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav.tabs button {
+    flex: 1;
+    padding: 12px 8px;
+    border: none;
+    background: transparent;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+  }
+  nav.tabs button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--card);
+  }
+
+  main { max-width: 760px; margin: 0 auto; padding: 16px; padding-bottom: 60px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* LIVE VIEW */
+  .progress-top {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .bar-outer {
+    height: 6px;
+    background: var(--mid);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .bar-inner {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.3s;
+  }
+  .exercise-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .exercise-card .num { color: var(--muted); font-size: 0.85rem; font-weight: 600; }
+  .exercise-card h2 { margin: 4px 0 10px; font-size: 1.5rem; color: var(--accent); }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .chip {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+  .section-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin: 14px 0 6px;
+    font-weight: 700;
+  }
+  ul.cues { margin: 0; padding-left: 18px; }
+  ul.cues li { margin-bottom: 6px; line-height: 1.4; }
+
+  .timer-box {
+    margin-top: 18px;
+    background: var(--light);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+  .timer-display { font-size: 2.2rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .timer-target { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
+  .timer-buttons { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+  .timer-buttons button {
+    border: 1px solid var(--accent);
+    background: #fff;
+    color: var(--accent);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .timer-buttons button.primary { background: var(--accent); color: #fff; }
+
+  .nav-buttons { display: flex; gap: 10px; margin-top: 18px; }
+  .nav-buttons button {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .nav-buttons button:disabled { background: var(--mid); color: var(--muted); cursor: default; }
+  .nav-buttons button.secondary { background: var(--card); color: var(--accent); border: 1px solid var(--accent); }
+
+  /* LIST VIEW */
+  input.search {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+    background: var(--card);
+  }
+  .list-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .list-item:active { background: var(--light); }
+  .list-item .top { display: flex; justify-content: space-between; align-items: baseline; }
+  .list-item .top .title { font-weight: 700; color: var(--accent); font-size: 1rem; }
+  .list-item .top .time { font-size: 0.78rem; color: var(--muted); }
+  .list-item .pos { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
+  .no-results { text-align: center; color: var(--muted); padding: 30px 0; }
+
+  /* CHECKLIST VIEW */
+  .check-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .check-progress button {
+    background: none;
+    border: 1px solid var(--mid);
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .check-item input[type=checkbox] { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0; }
+  .check-item .body { flex: 1; }
+  .check-item .title { font-weight: 600; font-size: 0.92rem; }
+  .check-item.checked .title { text-decoration: line-through; color: var(--muted); }
+  .check-item textarea {
+    width: 100%;
+    margin-top: 6px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    padding: 6px 8px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 30px;
+    background: var(--bg);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Foam-Roller-Pilates – Teachermanuskript</h1>
+  <p>Ausbildungsstunde · 58:01 Min. · 24 Übungen</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="live">Live</button>
+  <button class="tab-btn" data-tab="list">Liste</button>
+  <button class="tab-btn" data-tab="check">Checkliste</button>
+</nav>
+
+<main>
+
+  <!-- LIVE VIEW -->
+  <section id="view-live" class="view active">
+    <div class="progress-top">
+      <span id="live-position">Übung 1 / 24</span>
+      <span id="live-classtime">00:06 – 00:39</span>
+    </div>
+    <div class="bar-outer"><div class="bar-inner" id="class-bar"></div></div>
+
+    <div class="exercise-card">
+      <div class="num" id="ex-num">#1</div>
+      <h2 id="ex-title">Setup Rückenlage</h2>
+      <div class="meta-row">
+        <span class="chip" id="ex-position">Position</span>
+        <span class="chip" id="ex-reps">Reps</span>
+      </div>
+      <div class="section-label">Cues</div>
+      <ul class="cues" id="ex-cues"></ul>
+
+      <div class="timer-box">
+        <div class="timer-display" id="timer-display">00:00</div>
+        <div class="timer-target" id="timer-target">Richtwert: 33s</div>
+        <div class="timer-buttons">
+          <button id="timer-start" class="primary">Start</button>
+          <button id="timer-pause">Pause</button>
+          <button id="timer-reset">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button id="btn-prev" class="secondary">◀ Zurück</button>
+      <button id="btn-next">Weiter ▶</button>
+    </div>
+  </section>
+
+  <!-- LIST VIEW -->
+  <section id="view-list" class="view">
+    <input type="text" class="search" id="search-input" placeholder="Übung, Cue oder Position suchen …">
+    <div id="list-container"></div>
+    <div class="no-results" id="no-results" style="display:none;">Keine Treffer.</div>
+  </section>
+
+  <!-- CHECKLIST VIEW -->
+  <section id="view-check" class="view">
+    <div class="check-progress">
+      <span id="check-count">0 / 24 vorbereitet</span>
+      <button id="check-reset">Alles zurücksetzen</button>
+    </div>
+    <div id="check-container"></div>
+  </section>
+
+</main>
+
+<script>
+const EXERCISES = [
+  {nr:1, start:6, end:39, uebung:"Setup Rückenlage", position:"Rückenlage, Füße auf Faszienrolle, Arme neben dem Körper", reps:"–",
+    cues:["„Legt euch auf den Rücken“","„Füße auf die Faszienrolle“","„Füße nach oben“","„Arme neben den Körper“"]},
+  {nr:2, start:39, end:129, uebung:"Pilates-Atmung + Beine strecken", position:"Rückenlage, Beine gestreckt über der Rolle, Füße abwechselnd flexen/pointen", reps:"mehrere Atemzüge",
+    cues:["„Einatmen durch die Nase, ausatmen durch den Mund“","„Beim Ausatmen Bauch nach oben und innen“","„Rippen wie eine Schiebetür nach innen ziehen“"]},
+  {nr:3, start:129, end:265, uebung:"Single Leg Circle – rechts", position:"Rückenlage, linker Fuß auf Rolle, rechtes Bein gestreckt nach oben", reps:"Kreise beide Richtungen",
+    cues:["„Mit dem Fuß die Uhr zeigen“","„Richtung wechseln“","„Fuß langsam wieder zurückfahren“"]},
+  {nr:4, start:393, end:497, uebung:"Single Leg Circle – links", position:"Seitenwechsel, sonst wie oben", reps:"Kreise beide Richtungen",
+    cues:["„Bauch geht nach oben und innen“","„Ballerina-Spitzenfuß“","„Korb (Rippenbogen) festhalten“","Zum Schluss: „Fuß ausschütteln“"]},
+  {nr:5, start:497, end:634, uebung:"Stehende Standbein-Übung am Roller", position:"Stand vor der Rolle, Standbein-Fuß möglichst weit gepointet", reps:"–",
+    cues:["„Der andere Fuß zeigt gerade nach vorne, nicht nach außen“","„Hüfte zeigt nach vorne“","„Arme immer gestreckt“","„Kinn heben“","„Bewegung kommt aus dem Powerhouse, nicht aus dem unteren Rücken“"]},
+  {nr:6, start:634, end:744, uebung:"Spine Twist mit Faszienrolle", position:"Stand/Sitz, Rolle mit beiden Händen fest zusammengedrückt", reps:"mehrere Wdh. je Seite",
+    cues:["„Arme nach vorne strecken, Rolle fest zusammendrücken“","„Einatmen, Arme nach oben“","„Ausatmen, nach rechts/links drehen“","„Nur der Oberkörper dreht, die Hüfte bleibt stehen“"]},
+  {nr:7, start:744, end:865, uebung:"Kontrollierte Rollbewegung (Core)", position:"Position im O-Ton nicht eindeutig – bitte Video an dieser Stelle prüfen", reps:"–",
+    cues:["„Stabil aus dem Po/Powerhouse“","„Bauch pressen, als würdet ihr etwas zerhacken“","„Einatmen – ausatmen – rollen“"]},
+  {nr:8, start:865, end:992, uebung:"Plank halten (Timer angesagt: 5 Min.)", position:"Unterarm-/Handstütz, Knie können jederzeit abgesetzt werden", reps:"Timer 5 Min. angesagt",
+    cues:["„Po auf Höhe der Schulter“","„Handflächen zusammen“","„Ein Bein zurück“","„Knie und Schultern locker lassen“"]},
+  {nr:9, start:992, end:1226, uebung:"Plank-Walkout mit Rolle", position:"Nacken nach unten, Rolle wird herangeholt, Arme strecken sich nach vorn", reps:"–",
+    cues:["„Nicht hochschauen“","„Krabbelt am Untergrund“"]},
+  {nr:10, start:1226, end:1286, uebung:"Seitstütz Unterarm (Side Plank)", position:"Seitlich, Unterarm- oder Handstütz; Modifikation mit Klotz möglich", reps:"ca. 1 Min.",
+    cues:["„Schaut mal auf die Unterarme“","„Wer variieren möchte, kann mit Klötzen arbeiten“","„Beides – Hand oder Unterarm – passt“"]},
+  {nr:11, start:1286, end:1368, uebung:"Seitstütz mit Knie-Ellbogen (Obliques)", position:"wie oben, dynamische Variante", reps:"ca. 1 Min., wechselseitig",
+    cues:["„Rechtes Knie zum rechten Ellbogen, zurück“","„Linkes Knie zum linken Ellbogen, zurück“","„Zusammen“"]},
+  {nr:12, start:1368, end:1461, uebung:"Vierfüßler-Rollout (Rücken-/Achseldehnung)", position:"Vierfüßlerstand, Rolle unter den Händen, vor/zurück rollen, Kopf hängt", reps:"Countdown 4…2, „geschafft“",
+    cues:["„Knie direkt unter der Hüfte“","„Rücken darf sich lösen“","„Achseln werden gedehnt“","„In die Länge bewegen, nicht kompakt werden“"]},
+  {nr:13, start:1461, end:1629, uebung:"Scissors (Beinschere)", position:"Rückenlage, Faszienrolle unter dem Kreuzbein, Beine nach oben", reps:"wechselseitig",
+    cues:["„Ein Bein gestreckt nach unten, das andere bleibt oben“","„Füße gepointet“","„Bein schwebt über der Matte, nicht ablegen“","Dehnt Hüftbeuger/Iliopsoas"]},
+  {nr:14, start:1629, end:1728, uebung:"Scissors mit Armvariante", position:"wie oben, Hände lösen sich von der Rolle", reps:"wechselseitig",
+    cues:["„Arme nach vorne, dann Bein runter, wieder hoch“","„Ohne von der Rolle zu rollen“","„Arme parallel zum Körper, nicht ablegen“"]},
+  {nr:15, start:1728, end:2009, uebung:"Grätsche (Straddle) auf 45°", position:"Rückenlage, Rolle gehalten, Beine öffnen/schließen", reps:"Countdown 10 → 1",
+    cues:["„In der Ausatmung in die Grätsche“","„Beine auf 45° absenken, dann schließen“","„Mit den Zehen ein großes Herz malen“","Vorsicht bei Rücken/Bandscheibe/Ischias: Hände von der Rolle lösen = mehr Core-Kontrolle"]},
+  {nr:16, start:2009, end:2235, uebung:"Grätsche-Variante, schnell („Klappmesser“)", position:"wie oben, höheres Tempo", reps:"mehrere Sätze à 8 Wdh.",
+    cues:["„Füße in der Luft, vorderen und hinteren Fuß tauschen“","„Variation 2: Beine parallel zum Boden absenken und hoch“","Gezählt „1 und 2 und 3…“"]},
+  {nr:17, start:2235, end:2347, uebung:"Single Leg Stretch", position:"Rückenlage, Oberkörper eingerollt, Hand am gegenüberliegenden Schienbein, anderes Bein gepointet gestreckt", reps:"wechselseitig",
+    cues:["„Erst ohne Rolle“","„Kopf zum Knie bringen“","„Ausatmen beim Wechsel“","Bei Nackenproblemen: Kopf auf der Faszienrolle ablegen"]},
+  {nr:18, start:2347, end:2403, uebung:"Windshield Wipers", position:"Rückenlage, Knie aufgestellt", reps:"wechselseitig re/li",
+    cues:["„Knie abwechselnd locker nach rechts und links pendeln“"]},
+  {nr:19, start:2403, end:2695, uebung:"Wandgestützte Pike-Übung (Partnerübung)", position:"An der Wand, Schienbein/Fuß gegen die Wand, Partner hält am Becken, Modifikation mit Klötzen", reps:"mehrere Wdh.",
+    cues:["„Stell dich in den X rein, Beine strecken“","„Ich halte dich am Beckenknochen“","„Kein Handstand nötig“","„Super anstrengend – festhalten“"]},
+  {nr:20, start:2735, end:2951, uebung:"Mermaid (seitliche Dehnung)", position:"Sitzen seitlich, ein Bein angewinkelt, Rolle über Kopf gehalten; Po am Boden verankert (ggf. Klotz drunter)", reps:"je Seite",
+    cues:["„Po bleibt fest am Boden, die Bewegung kommt nur aus dem Oberkörper“","Seitneigung, dann Dehnung „genießen“","Variante: Vorwärtsbeuge/Twist möglich","Danach Seitenwechsel"]},
+  {nr:21, start:2951, end:3088, uebung:"Rückbeuge / Dehnung (Richtung Upward Facing Dog)", position:"Aus der Bauchlage in die Streckung", reps:"–",
+    cues:["„Beim Runtergehen die Wirbelsäule in die Länge ziehen“","„Die unteren Rippenbögen in die Matte drücken“"]},
+  {nr:22, start:3088, end:3362, uebung:"Endentspannung", position:"Rückenlage, ganz entspannt", reps:"Ansage „15 Minuten“ (im Video kürzer)",
+    cues:["„Kopf sanft nach rechts und links rollen“","„Augen schließen“","„Nacken- und Kiefermuskulatur loslassen“"]},
+  {nr:23, start:3362, end:3441, uebung:"Abschluss-Dehnsequenz", position:"Sitzen, Rolle über Kopf bzw. vor dem Körper", reps:"je 1× re/li + Vorbeuge",
+    cues:["„Einatmen, Arme nach oben“","„Ausatmen, zur Seite neigen“ (re, Mitte, li, Mitte)","„Rolle vor den Körper, Stirn auf die Rolle, Kiefer loslassen“"]},
+  {nr:24, start:3441, end:3481, uebung:"Abschlussworte", position:"–", reps:"–",
+    cues:["Dank an die Klasse","Hinweis: nächste Reformer-Ausbildung startet im September","Ausbildungsteilnehmende bleiben noch kurz für eine Zusatzaufgabe"]},
+];
+
+const TOTAL_DURATION = 3481; // 58:01
+
+function fmtTime(totalSeconds) {
+  const m = Math.floor(totalSeconds / 60);
+  const s = Math.floor(totalSeconds % 60);
+  return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+/* ---------- TAB SWITCHING ---------- */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'check') renderChecklist();
+  });
+});
+
+/* ---------- LIVE VIEW ---------- */
+let currentIndex = 0;
+let timerSeconds = 0;
+let timerInterval = null;
+
+function renderExercise() {
+  const ex = EXERCISES[currentIndex];
+  document.getElementById('live-position').textContent = `Übung ${currentIndex+1} / ${EXERCISES.length}`;
+  document.getElementById('live-classtime').textContent = `${fmtTime(ex.start)} – ${fmtTime(ex.end)}`;
+  document.getElementById('class-bar').style.width = (ex.start / TOTAL_DURATION * 100) + '%';
+  document.getElementById('ex-num').textContent = '#' + ex.nr;
+  document.getElementById('ex-title').textContent = ex.uebung;
+  document.getElementById('ex-position').textContent = ex.position;
+  document.getElementById('ex-reps').textContent = ex.reps;
+  const cuesEl = document.getElementById('ex-cues');
+  cuesEl.innerHTML = '';
+  ex.cues.forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = c;
+    cuesEl.appendChild(li);
+  });
+  document.getElementById('timer-target').textContent = 'Richtwert: ' + fmtTime(ex.end - ex.start);
+  document.getElementById('btn-prev').disabled = currentIndex === 0;
+  document.getElementById('btn-next').disabled = currentIndex === EXERCISES.length - 1;
+  document.getElementById('btn-next').textContent = currentIndex === EXERCISES.length - 1 ? 'Ende' : 'Weiter ▶';
+  resetTimer();
+}
+
+function updateTimerDisplay() {
+  document.getElementById('timer-display').textContent = fmtTime(timerSeconds);
+  const ex = EXERCISES[currentIndex];
+  const target = ex.end - ex.start;
+  document.getElementById('timer-display').style.color = (timerSeconds >= target) ? 'var(--good)' : 'var(--accent)';
+}
+
+function startTimer() {
+  if (timerInterval) return;
+  timerInterval = setInterval(() => { timerSeconds++; updateTimerDisplay(); }, 1000);
+}
+function pauseTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+function resetTimer() {
+  pauseTimer();
+  timerSeconds = 0;
+  updateTimerDisplay();
+}
+
+document.getElementById('timer-start').addEventListener('click', startTimer);
+document.getElementById('timer-pause').addEventListener('click', pauseTimer);
+document.getElementById('timer-reset').addEventListener('click', resetTimer);
+
+document.getElementById('btn-prev').addEventListener('click', () => {
+  if (currentIndex > 0) { currentIndex--; renderExercise(); }
+});
+document.getElementById('btn-next').addEventListener('click', () => {
+  if (currentIndex < EXERCISES.length - 1) { currentIndex++; renderExercise(); }
+});
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('view-live').classList.contains('active')) return;
+  if (e.key === 'ArrowRight') document.getElementById('btn-next').click();
+  if (e.key === 'ArrowLeft') document.getElementById('btn-prev').click();
+});
+
+function jumpToExercise(nr) {
+  currentIndex = EXERCISES.findIndex(e => e.nr === nr);
+  renderExercise();
+  document.querySelector('.tab-btn[data-tab="live"]').click();
+}
+
+/* ---------- LIST VIEW ---------- */
+function renderList(filter) {
+  const container = document.getElementById('list-container');
+  container.innerHTML = '';
+  const q = (filter || '').toLowerCase().trim();
+  let matches = 0;
+  EXERCISES.forEach(ex => {
+    const haystack = (ex.uebung + ' ' + ex.position + ' ' + ex.reps + ' ' + ex.cues.join(' ')).toLowerCase();
+    if (q && !haystack.includes(q)) return;
+    matches++;
+    const div = document.createElement('div');
+    div.className = 'list-item';
+    div.innerHTML = `
+      <div class="top">
+        <span class="title">#${ex.nr} ${ex.uebung}</span>
+        <span class="time">${fmtTime(ex.start)}–${fmtTime(ex.end)}</span>
+      </div>
+      <div class="pos">${ex.position}</div>
+    `;
+    div.addEventListener('click', () => jumpToExercise(ex.nr));
+    container.appendChild(div);
+  });
+  document.getElementById('no-results').style.display = matches === 0 ? 'block' : 'none';
+}
+document.getElementById('search-input').addEventListener('input', (e) => renderList(e.target.value));
+
+/* ---------- CHECKLIST VIEW ---------- */
+function getCheckState() {
+  try {
+    return JSON.parse(localStorage.getItem('pilates_checklist') || '{}');
+  } catch(e) { return {}; }
+}
+function saveCheckState(state) {
+  localStorage.setItem('pilates_checklist', JSON.stringify(state));
+}
+function renderChecklist() {
+  const state = getCheckState();
+  const container = document.getElementById('check-container');
+  container.innerHTML = '';
+  let checkedCount = 0;
+  EXERCISES.forEach(ex => {
+    const entry = state[ex.nr] || { checked: false, note: '' };
+    if (entry.checked) checkedCount++;
+    const div = document.createElement('div');
+    div.className = 'check-item' + (entry.checked ? ' checked' : '');
+    div.innerHTML = `
+      <input type="checkbox" ${entry.checked ? 'checked' : ''} data-nr="${ex.nr}">
+      <div class="body">
+        <div class="title">#${ex.nr} ${ex.uebung} <span style="color:var(--muted); font-weight:400;">(${fmtTime(ex.start)})</span></div>
+        <textarea placeholder="Notiz …" data-nr="${ex.nr}">${entry.note}</textarea>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+  document.getElementById('check-count').textContent = `${checkedCount} / ${EXERCISES.length} vorbereitet`;
+
+  container.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const s = getCheckState();
+      const nr = cb.dataset.nr;
+      s[nr] = s[nr] || { checked: false, note: '' };
+      s[nr].checked = cb.checked;
+      saveCheckState(s);
+      renderChecklist();
+    });
+  });
+  container.querySelectorAll('textarea').forEach(ta => {
+    ta.addEventListener('input', () => {
+      const s = getCheckState();
+      const nr = ta.dataset.nr;
+      s[nr] = s[nr] || { checked: false, note: '' };
+      s[nr].note = ta.value;
+      saveCheckState(s);
+    });
+  });
+}
+document.getElementById('check-reset').addEventListener('click', () => {
+  if (confirm('Wirklich alle Haken und Notizen zurücksetzen?')) {
+    localStorage.removeItem('pilates_checklist');
+    renderChecklist();
+  }
+});
+
+/* ---------- INIT ---------- */
+renderExercise();
+renderList('');
+</script>
+
+</body>
+</html>
