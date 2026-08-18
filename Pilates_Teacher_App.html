@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pilates Teachermanuskript – Foam-Roller-Class</title>
+<title>Pilates Teachermanuskript</title>
 <style>
   :root {
     --accent: #6B4F3B;
@@ -28,11 +28,28 @@
   header {
     background: var(--accent);
     color: #fff;
-    padding: 18px 20px 14px;
+    padding: 16px 20px 12px;
     text-align: center;
   }
-  header h1 { margin: 0 0 4px; font-size: 1.3rem; letter-spacing: 0.02em; }
-  header p { margin: 0; font-size: 0.82rem; opacity: 0.85; }
+  header h1 { margin: 0 0 4px; font-size: 1.2rem; letter-spacing: 0.02em; }
+  header p { margin: 0 0 12px; font-size: 0.8rem; opacity: 0.85; }
+
+  select.class-select {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    -webkit-appearance: none;
+    appearance: none;
+    text-align: center;
+    text-align-last: center;
+  }
+  select.class-select option { color: var(--text); }
 
   nav.tabs {
     display: flex;
@@ -102,6 +119,23 @@
     font-size: 0.8rem;
     color: var(--text);
   }
+  .chip.cut {
+    background: #FBEDE6;
+    border-color: var(--warn);
+    color: var(--warn);
+    font-weight: 700;
+  }
+  .list-item .cut-badge {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--warn);
+    background: #FBEDE6;
+    border: 1px solid var(--warn);
+    border-radius: 999px;
+    padding: 1px 8px;
+  }
   .section-label {
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -149,6 +183,15 @@
   .nav-buttons button:disabled { background: var(--mid); color: var(--muted); cursor: default; }
   .nav-buttons button.secondary { background: var(--card); color: var(--accent); border: 1px solid var(--accent); }
 
+  .block-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
   /* LIST VIEW */
   input.search {
     width: 100%;
@@ -172,6 +215,7 @@
   .list-item .top .title { font-weight: 700; color: var(--accent); font-size: 1rem; }
   .list-item .top .time { font-size: 0.78rem; color: var(--muted); }
   .list-item .pos { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
+  .list-item .blk { font-size: 0.72rem; color: var(--accent-light); font-weight: 600; margin-bottom: 2px; }
   .no-results { text-align: center; color: var(--muted); padding: 30px 0; }
 
   /* CHECKLIST VIEW */
@@ -221,8 +265,9 @@
 <body>
 
 <header>
-  <h1>Foam-Roller-Pilates – Teachermanuskript</h1>
-  <p>Ausbildungsstunde · 58:01 Min. · 24 Übungen</p>
+  <h1 id="header-title">Pilates Teachermanuskript</h1>
+  <p id="header-subtitle">Klasse wählen …</p>
+  <select class="class-select" id="class-select"></select>
 </header>
 
 <nav class="tabs">
@@ -237,13 +282,14 @@
   <section id="view-live" class="view active">
     <div class="progress-top">
       <span id="live-position">Übung 1 / 24</span>
-      <span id="live-classtime">00:06 – 00:39</span>
+      <span id="live-classtime">00:00 – 00:00</span>
     </div>
     <div class="bar-outer"><div class="bar-inner" id="class-bar"></div></div>
 
     <div class="exercise-card">
       <div class="num" id="ex-num">#1</div>
-      <h2 id="ex-title">Setup Rückenlage</h2>
+      <div class="block-label" id="ex-block"></div>
+      <h2 id="ex-title">…</h2>
       <div class="meta-row">
         <span class="chip" id="ex-position">Position</span>
         <span class="chip" id="ex-reps">Reps</span>
@@ -253,7 +299,7 @@
 
       <div class="timer-box">
         <div class="timer-display" id="timer-display">00:00</div>
-        <div class="timer-target" id="timer-target">Richtwert: 33s</div>
+        <div class="timer-target" id="timer-target">Richtwert: 0s</div>
         <div class="timer-buttons">
           <button id="timer-start" class="primary">Start</button>
           <button id="timer-pause">Pause</button>
@@ -287,63 +333,170 @@
 </main>
 
 <script>
-const EXERCISES = [
-  {nr:1, start:6, end:39, uebung:"Setup Rückenlage", position:"Rückenlage, Füße auf Faszienrolle, Arme neben dem Körper", reps:"–",
+/* =========================================================
+   CLASS 1: Foam-Roller-Pilates (Ausbildungsstunde, 58:01 Min.)
+   ========================================================= */
+const FOAM_ROLLER_EXERCISES = [
+  {nr:1, start:6, end:39, block:"Ankommen & Atmung", uebung:"Setup Rückenlage", position:"Rückenlage, Füße auf Faszienrolle, Arme neben dem Körper", reps:"–",
     cues:["„Legt euch auf den Rücken“","„Füße auf die Faszienrolle“","„Füße nach oben“","„Arme neben den Körper“"]},
-  {nr:2, start:39, end:129, uebung:"Pilates-Atmung + Beine strecken", position:"Rückenlage, Beine gestreckt über der Rolle, Füße abwechselnd flexen/pointen", reps:"mehrere Atemzüge",
+  {nr:2, start:39, end:129, block:"Ankommen & Atmung", uebung:"Pilates-Atmung + Beine strecken", position:"Rückenlage, Beine gestreckt über der Rolle, Füße abwechselnd flexen/pointen", reps:"mehrere Atemzüge",
     cues:["„Einatmen durch die Nase, ausatmen durch den Mund“","„Beim Ausatmen Bauch nach oben und innen“","„Rippen wie eine Schiebetür nach innen ziehen“"]},
-  {nr:3, start:129, end:265, uebung:"Single Leg Circle – rechts", position:"Rückenlage, linker Fuß auf Rolle, rechtes Bein gestreckt nach oben", reps:"Kreise beide Richtungen",
+  {nr:3, start:129, end:265, block:"Single Leg Circle", uebung:"Single Leg Circle – rechts", position:"Rückenlage, linker Fuß auf Rolle, rechtes Bein gestreckt nach oben", reps:"Kreise beide Richtungen",
     cues:["„Mit dem Fuß die Uhr zeigen“","„Richtung wechseln“","„Fuß langsam wieder zurückfahren“"]},
-  {nr:4, start:393, end:497, uebung:"Single Leg Circle – links", position:"Seitenwechsel, sonst wie oben", reps:"Kreise beide Richtungen",
+  {nr:4, start:393, end:497, block:"Single Leg Circle", uebung:"Single Leg Circle – links", position:"Seitenwechsel, sonst wie oben", reps:"Kreise beide Richtungen",
     cues:["„Bauch geht nach oben und innen“","„Ballerina-Spitzenfuß“","„Korb (Rippenbogen) festhalten“","Zum Schluss: „Fuß ausschütteln“"]},
-  {nr:5, start:497, end:634, uebung:"Stehende Standbein-Übung am Roller", position:"Stand vor der Rolle, Standbein-Fuß möglichst weit gepointet", reps:"–",
+  {nr:5, start:497, end:634, block:"Standing Work", uebung:"Stehende Standbein-Übung am Roller", position:"Stand vor der Rolle, Standbein-Fuß möglichst weit gepointet", reps:"–",
     cues:["„Der andere Fuß zeigt gerade nach vorne, nicht nach außen“","„Hüfte zeigt nach vorne“","„Arme immer gestreckt“","„Kinn heben“","„Bewegung kommt aus dem Powerhouse, nicht aus dem unteren Rücken“"]},
-  {nr:6, start:634, end:744, uebung:"Spine Twist mit Faszienrolle", position:"Stand/Sitz, Rolle mit beiden Händen fest zusammengedrückt", reps:"mehrere Wdh. je Seite",
+  {nr:6, start:634, end:744, block:"Standing Work", uebung:"Spine Twist mit Faszienrolle", position:"Stand/Sitz, Rolle mit beiden Händen fest zusammengedrückt", reps:"mehrere Wdh. je Seite",
     cues:["„Arme nach vorne strecken, Rolle fest zusammendrücken“","„Einatmen, Arme nach oben“","„Ausatmen, nach rechts/links drehen“","„Nur der Oberkörper dreht, die Hüfte bleibt stehen“"]},
-  {nr:7, start:744, end:865, uebung:"Kontrollierte Rollbewegung (Core)", position:"Position im O-Ton nicht eindeutig – bitte Video an dieser Stelle prüfen", reps:"–",
+  {nr:7, start:744, end:865, block:"Core", uebung:"Kontrollierte Rollbewegung (Core)", position:"Position im O-Ton nicht eindeutig – bitte Video an dieser Stelle prüfen", reps:"–",
     cues:["„Stabil aus dem Po/Powerhouse“","„Bauch pressen, als würdet ihr etwas zerhacken“","„Einatmen – ausatmen – rollen“"]},
-  {nr:8, start:865, end:992, uebung:"Plank halten (Timer angesagt: 5 Min.)", position:"Unterarm-/Handstütz, Knie können jederzeit abgesetzt werden", reps:"Timer 5 Min. angesagt",
+  {nr:8, start:865, end:992, block:"Plank Series", uebung:"Plank halten (Timer angesagt: 5 Min.)", position:"Unterarm-/Handstütz, Knie können jederzeit abgesetzt werden", reps:"Timer 5 Min. angesagt",
     cues:["„Po auf Höhe der Schulter“","„Handflächen zusammen“","„Ein Bein zurück“","„Knie und Schultern locker lassen“"]},
-  {nr:9, start:992, end:1226, uebung:"Plank-Walkout mit Rolle", position:"Nacken nach unten, Rolle wird herangeholt, Arme strecken sich nach vorn", reps:"–",
+  {nr:9, start:992, end:1226, block:"Plank Series", uebung:"Plank-Walkout mit Rolle", position:"Nacken nach unten, Rolle wird herangeholt, Arme strecken sich nach vorn", reps:"–",
     cues:["„Nicht hochschauen“","„Krabbelt am Untergrund“"]},
-  {nr:10, start:1226, end:1286, uebung:"Seitstütz Unterarm (Side Plank)", position:"Seitlich, Unterarm- oder Handstütz; Modifikation mit Klotz möglich", reps:"ca. 1 Min.",
+  {nr:10, start:1226, end:1286, block:"Plank Series", uebung:"Seitstütz Unterarm (Side Plank)", position:"Seitlich, Unterarm- oder Handstütz; Modifikation mit Klotz möglich", reps:"ca. 1 Min.",
     cues:["„Schaut mal auf die Unterarme“","„Wer variieren möchte, kann mit Klötzen arbeiten“","„Beides – Hand oder Unterarm – passt“"]},
-  {nr:11, start:1286, end:1368, uebung:"Seitstütz mit Knie-Ellbogen (Obliques)", position:"wie oben, dynamische Variante", reps:"ca. 1 Min., wechselseitig",
+  {nr:11, start:1286, end:1368, block:"Plank Series", uebung:"Seitstütz mit Knie-Ellbogen (Obliques)", position:"wie oben, dynamische Variante", reps:"ca. 1 Min., wechselseitig",
     cues:["„Rechtes Knie zum rechten Ellbogen, zurück“","„Linkes Knie zum linken Ellbogen, zurück“","„Zusammen“"]},
-  {nr:12, start:1368, end:1461, uebung:"Vierfüßler-Rollout (Rücken-/Achseldehnung)", position:"Vierfüßlerstand, Rolle unter den Händen, vor/zurück rollen, Kopf hängt", reps:"Countdown 4…2, „geschafft“",
+  {nr:12, start:1368, end:1461, block:"Plank Series", uebung:"Vierfüßler-Rollout (Rücken-/Achseldehnung)", position:"Vierfüßlerstand, Rolle unter den Händen, vor/zurück rollen, Kopf hängt", reps:"Countdown 4…2, „geschafft“",
     cues:["„Knie direkt unter der Hüfte“","„Rücken darf sich lösen“","„Achseln werden gedehnt“","„In die Länge bewegen, nicht kompakt werden“"]},
-  {nr:13, start:1461, end:1629, uebung:"Scissors (Beinschere)", position:"Rückenlage, Faszienrolle unter dem Kreuzbein, Beine nach oben", reps:"wechselseitig",
+  {nr:13, start:1461, end:1629, block:"Scissors", uebung:"Scissors (Beinschere)", position:"Rückenlage, Faszienrolle unter dem Kreuzbein, Beine nach oben", reps:"wechselseitig",
     cues:["„Ein Bein gestreckt nach unten, das andere bleibt oben“","„Füße gepointet“","„Bein schwebt über der Matte, nicht ablegen“","Dehnt Hüftbeuger/Iliopsoas"]},
-  {nr:14, start:1629, end:1728, uebung:"Scissors mit Armvariante", position:"wie oben, Hände lösen sich von der Rolle", reps:"wechselseitig",
+  {nr:14, start:1629, end:1728, block:"Scissors", uebung:"Scissors mit Armvariante", position:"wie oben, Hände lösen sich von der Rolle", reps:"wechselseitig",
     cues:["„Arme nach vorne, dann Bein runter, wieder hoch“","„Ohne von der Rolle zu rollen“","„Arme parallel zum Körper, nicht ablegen“"]},
-  {nr:15, start:1728, end:2009, uebung:"Grätsche (Straddle) auf 45°", position:"Rückenlage, Rolle gehalten, Beine öffnen/schließen", reps:"Countdown 10 → 1",
+  {nr:15, start:1728, end:2009, block:"Grätsche", uebung:"Grätsche (Straddle) auf 45°", position:"Rückenlage, Rolle gehalten, Beine öffnen/schließen", reps:"Countdown 10 → 1",
     cues:["„In der Ausatmung in die Grätsche“","„Beine auf 45° absenken, dann schließen“","„Mit den Zehen ein großes Herz malen“","Vorsicht bei Rücken/Bandscheibe/Ischias: Hände von der Rolle lösen = mehr Core-Kontrolle"]},
-  {nr:16, start:2009, end:2235, uebung:"Grätsche-Variante, schnell („Klappmesser“)", position:"wie oben, höheres Tempo", reps:"mehrere Sätze à 8 Wdh.",
+  {nr:16, start:2009, end:2235, block:"Grätsche", uebung:"Grätsche-Variante, schnell („Klappmesser“)", position:"wie oben, höheres Tempo", reps:"mehrere Sätze à 8 Wdh.",
     cues:["„Füße in der Luft, vorderen und hinteren Fuß tauschen“","„Variation 2: Beine parallel zum Boden absenken und hoch“","Gezählt „1 und 2 und 3…“"]},
-  {nr:17, start:2235, end:2347, uebung:"Single Leg Stretch", position:"Rückenlage, Oberkörper eingerollt, Hand am gegenüberliegenden Schienbein, anderes Bein gepointet gestreckt", reps:"wechselseitig",
+  {nr:17, start:2235, end:2347, block:"Single Leg Stretch", uebung:"Single Leg Stretch", position:"Rückenlage, Oberkörper eingerollt, Hand am gegenüberliegenden Schienbein, anderes Bein gepointet gestreckt", reps:"wechselseitig",
     cues:["„Erst ohne Rolle“","„Kopf zum Knie bringen“","„Ausatmen beim Wechsel“","Bei Nackenproblemen: Kopf auf der Faszienrolle ablegen"]},
-  {nr:18, start:2347, end:2403, uebung:"Windshield Wipers", position:"Rückenlage, Knie aufgestellt", reps:"wechselseitig re/li",
+  {nr:18, start:2347, end:2403, block:"Single Leg Stretch", uebung:"Windshield Wipers", position:"Rückenlage, Knie aufgestellt", reps:"wechselseitig re/li",
     cues:["„Knie abwechselnd locker nach rechts und links pendeln“"]},
-  {nr:19, start:2403, end:2695, uebung:"Wandgestützte Pike-Übung (Partnerübung)", position:"An der Wand, Schienbein/Fuß gegen die Wand, Partner hält am Becken, Modifikation mit Klötzen", reps:"mehrere Wdh.",
+  {nr:19, start:2403, end:2695, block:"Wand-Partnerübung", uebung:"Wandgestützte Pike-Übung (Partnerübung)", position:"An der Wand, Schienbein/Fuß gegen die Wand, Partner hält am Becken, Modifikation mit Klötzen", reps:"mehrere Wdh.",
     cues:["„Stell dich in den X rein, Beine strecken“","„Ich halte dich am Beckenknochen“","„Kein Handstand nötig“","„Super anstrengend – festhalten“"]},
-  {nr:20, start:2735, end:2951, uebung:"Mermaid (seitliche Dehnung)", position:"Sitzen seitlich, ein Bein angewinkelt, Rolle über Kopf gehalten; Po am Boden verankert (ggf. Klotz drunter)", reps:"je Seite",
+  {nr:20, start:2735, end:2951, block:"Mermaid", uebung:"Mermaid (seitliche Dehnung)", position:"Sitzen seitlich, ein Bein angewinkelt, Rolle über Kopf gehalten; Po am Boden verankert (ggf. Klotz drunter)", reps:"je Seite",
     cues:["„Po bleibt fest am Boden, die Bewegung kommt nur aus dem Oberkörper“","Seitneigung, dann Dehnung „genießen“","Variante: Vorwärtsbeuge/Twist möglich","Danach Seitenwechsel"]},
-  {nr:21, start:2951, end:3088, uebung:"Rückbeuge / Dehnung (Richtung Upward Facing Dog)", position:"Aus der Bauchlage in die Streckung", reps:"–",
+  {nr:21, start:2951, end:3088, block:"Cool-down", uebung:"Rückbeuge / Dehnung (Richtung Upward Facing Dog)", position:"Aus der Bauchlage in die Streckung", reps:"–",
     cues:["„Beim Runtergehen die Wirbelsäule in die Länge ziehen“","„Die unteren Rippenbögen in die Matte drücken“"]},
-  {nr:22, start:3088, end:3362, uebung:"Endentspannung", position:"Rückenlage, ganz entspannt", reps:"Ansage „15 Minuten“ (im Video kürzer)",
+  {nr:22, start:3088, end:3362, block:"Cool-down", uebung:"Endentspannung", position:"Rückenlage, ganz entspannt", reps:"Ansage „15 Minuten“ (im Video kürzer)",
     cues:["„Kopf sanft nach rechts und links rollen“","„Augen schließen“","„Nacken- und Kiefermuskulatur loslassen“"]},
-  {nr:23, start:3362, end:3441, uebung:"Abschluss-Dehnsequenz", position:"Sitzen, Rolle über Kopf bzw. vor dem Körper", reps:"je 1× re/li + Vorbeuge",
+  {nr:23, start:3362, end:3441, block:"Cool-down", uebung:"Abschluss-Dehnsequenz", position:"Sitzen, Rolle über Kopf bzw. vor dem Körper", reps:"je 1× re/li + Vorbeuge",
     cues:["„Einatmen, Arme nach oben“","„Ausatmen, zur Seite neigen“ (re, Mitte, li, Mitte)","„Rolle vor den Körper, Stirn auf die Rolle, Kiefer loslassen“"]},
-  {nr:24, start:3441, end:3481, uebung:"Abschlussworte", position:"–", reps:"–",
+  {nr:24, start:3441, end:3481, block:"Cool-down", uebung:"Abschlussworte", position:"–", reps:"–",
     cues:["Dank an die Klasse","Hinweis: nächste Reformer-Ausbildung startet im September","Ausbildungsteilnehmende bleiben noch kurz für eine Zusatzaufgabe"]},
 ];
 
-const TOTAL_DURATION = 3481; // 58:01
+/* =========================================================
+   CLASS 2: Mat Pilates – Foundation Flow (Level 1–2, 60 Min.)
+   Quelle: Mat_Pilates_Foundation_Flow_TeacherScript.docx
+   Zeiten pro Übung sind innerhalb der im Skript angegebenen
+   Zeitblöcke gleichmäßig verteilt (nur Blockgrenzen sind exakt).
+   ========================================================= */
+const MAT_FLOW_EXERCISES = [
+  {nr:1, start:0, end:100, block:"Ankommen & Atmung", uebung:"Supine Breathing", position:"Rückenlage, Knie gebeugt, Füße hüftbreit & parallel, Arme neben dem Körper, Becken neutral", reps:"4–5 Atemzüge",
+    cues:["„Schließ für einen Moment die Augen. Spür drei Kontaktpunkte: Hinterkopf, Brustkorb, Becken.“","„Atme durch die Nase ein – lass den Atem weit in die Seiten und den Rücken des Brustkorbs gehen.“","„Mit der Ausatmung werden die Rippen wieder schmaler, der Bauch sanft flacher – nicht maximal einziehen.“","Wichtig: noch kein „Bauchnabel zur Wirbelsäule“ – erst die Atmung etablieren"]},
+  {nr:2, start:100, end:200, block:"Ankommen & Atmung", uebung:"Pelvic Tilt / Imprint & Release", position:"Rückenlage, Becken neutral", reps:"6–8 Wiederholungen",
+    cues:["„Stell dir dein Becken wie eine Schale mit Wasser vor.“","„Ausatmen – die Schale kippt ein kleines Stück zu dir. Einatmen – zurück zur Mitte.“","Kleine Bewegung, Gesäß bleibt entspannt"]},
+  {nr:3, start:200, end:300, block:"Ankommen & Atmung", uebung:"Knee Sways", position:"Rückenlage, Knie gebeugt", reps:"6× rechts/links, beide Knie zusammen",
+    cues:["„Einatmen – beide Knie nach rechts sinken lassen, nur so weit, wie die linke Schulter schwer bleiben kann.“","„Ausatmen – aus der Körpermitte zurückholen. Andere Seite.“","Früh Rotation, ohne kompliziert zu werden"]},
+  {nr:4, start:300, end:440, block:"Wirbelsäule mobilisieren", uebung:"Cat–Cow", position:"Vierfüßler, Hände unter Schultern, Knie unter Hüften", reps:"6–8 Wiederholungen",
+    cues:["Cat: Ausatmen → Steißbein einrollen → Wirbelsäule rund → Kopf folgt","Cow: Einatmen → Becken kippt → Brustbein nach vorne → sanfte Extension","„Bewegung beginnt am Becken. Lass die Bewegung wie eine Welle durch deine Wirbelsäule laufen.“"]},
+  {nr:5, start:440, end:580, block:"Wirbelsäule mobilisieren", uebung:"Thread the Needle", position:"Vierfüßler", reps:"4× je Seite",
+    cues:["Rechter Arm einatmend zur Decke, ausatmend unter dem linken Arm hindurch","„Öffne dich aus der Brustwirbelsäule. Das Becken bleibt möglichst ruhig.“","Letzte Wiederholung optional kurz halten"]},
+  {nr:6, start:580, end:720, block:"Wirbelsäule mobilisieren", uebung:"Bird Dog Prep", position:"Vierfüßler", reps:"6× je Seite (erst Bein, dann Arm+Bein)",
+    cues:["Zunächst nur Bein: rechtes Bein gleitet am Boden zurück, hebt max. auf Beckenhöhe, zurück – dann links","Danach Arm + gegenüberliegendes Bein","„Stell dir ein Glas Wasser auf deinem Kreuzbein vor. Länge ist wichtiger als Höhe.“","Regression: nur Arm oder nur Bein · Progression: Arm + Bein 2 Atemzüge halten"]},
+  {nr:7, start:720, end:930, block:"Bridge & Posterior Chain", uebung:"Articulated Shoulder Bridge", position:"Rückenlage, Füße hüftbreit, Fersen etwa unter den Knien", reps:"8 Wiederholungen",
+    cues:["Ausatmen: Becken kippen → Steißbein hebt → LWS hebt → BWS folgt; oben Schulter–Hüfte–Knie etwa eine Linie","Einatmen halten, ausatmen Wirbel für Wirbel abrollen","„Das ist kein Hüftstoß. Roll dich Wirbel für Wirbel von der Matte.“"]},
+  {nr:8, start:930, end:1140, block:"Bridge & Posterior Chain", uebung:"Bridge March", position:"Rückenlage, Bridge-Position halten", reps:"4–6 je Seite (nur wenn Gruppe stabil)", cut:1,
+    cues:["Bridge halten, ein Bein wenige Zentimeter lösen, zurück","„Dein Becken ist ein Tablett. Lass das Tablett waagerecht.“","Regression: abwechselnd nur Ferse anheben"]},
+  {nr:9, start:1140, end:1272, block:"Core Series", uebung:"Tabletop → Toe Taps", position:"Rückenlage, Beine im Tabletop", reps:"3–4 Atemzüge halten, dann 6–8 Toe Taps pro Seite",
+    cues:["„Rippen schwer. Nacken lang. Becken ruhig.“","Übergang: ein Fuß Richtung Boden, zurück","„Das Bein bewegt sich. Dein Rumpf nicht.“","Je weiter der Fuß vom Körper entfernt aufsetzt, desto größer der Hebel – bei Spannungsverlust: ein Fuß bleibt am Boden"]},
+  {nr:10, start:1272, end:1404, block:"Core Series", uebung:"Single Leg Stretch – Prep", position:"Rückenlage, Kopf zunächst am Boden", reps:"6–8 pro Seite",
+    cues:["Ein Bein Richtung 45° strecken, anderes bleibt Tabletop, Wechsel","Danach optional Kopf und Schulterblätter anheben","„Heb dich aus dem Brustkorb – nicht aus dem Hals.“"]},
+  {nr:11, start:1404, end:1536, block:"Core Series", uebung:"Hundred Prep", position:"Rückenlage; Beine als Option: Füße am Boden/Tabletop/diagonal gestreckt; Arme wenige cm über der Matte", reps:"5 Pumps ein, 5 aus – 5 Atemzyklen = 50 Pumps",
+    cues:["Kopf darf unten bleiben, Arme klein pumpen","„Die Arme pumpen – der Körper bleibt ruhig. Atme trotzdem.“","Fortgeschrittene können auf 100 erweitern"]},
+  {nr:12, start:1536, end:1668, block:"Core Series", uebung:"Half Roll Back", position:"Sitzen, Knie gebeugt, Füße aufgestellt, Hände hinter Oberschenkeln oder nach vorne", reps:"6 Wiederholungen",
+    cues:["Ausatmen → Becken unterrollen → C-Kurve → halb zurück; einatmen halten; ausatmen wieder aufrichten","„Nicht nach hinten fallen. Dein Becken rollt unter dich und erzeugt die Bewegung.“"]},
+  {nr:13, start:1668, end:1800, block:"Core Series", uebung:"Spine Stretch Forward", position:"Sitzen, Beine etwa mattenbreit, Knie bei Bedarf leicht gebeugt", reps:"4–5 Wiederholungen",
+    cues:["Einatmen aufrichten, ausatmen Kopf → BWS → nach vorne runden","„Stell dir vor, du rollst dich über einen großen Ball.“","Einatmen unten, ausatmen wieder stapeln"]},
+  {nr:14, start:1800, end:1960, block:"Side-Lying Leg Series", uebung:"Side Leg Lift", position:"Rechte Seitlage, Kopf auf Arm/Hand, Beine leicht nach vorne", reps:"8–10 Wiederholungen",
+    cues:["Oberes Bein auf Hüfthöhe","„Bein lang machen, dann heben. Hüfte bleibt gestapelt.“","„Stell dir zwei Scheinwerfer an deinen Beckenknochen vor – beide zeigen nach vorne.“"]},
+  {nr:15, start:1960, end:2120, block:"Side-Lying Leg Series", uebung:"Small Circles", position:"Seitlage, wie oben", reps:"5–6 Kreise je Richtung", cut:2,
+    cues:["„Klein und sauber schlägt groß und wackelig.“"]},
+  {nr:16, start:2120, end:2280, block:"Side-Lying Leg Series", uebung:"Inner Thigh Lift", position:"Seitlage, oberes Bein vor dem unteren Fuß aufgestellt", reps:"8 Wiederholungen, danach Seitenwechsel & ganze Serie wiederholen", cut:2,
+    cues:["Unteres Bein gestreckt anheben","Teacher-Hinweis: hier nicht hetzen – in Level 2 verlieren Teilnehmende sonst die Beckenposition, nicht die Kraft"]},
+  {nr:17, start:2280, end:2460, block:"Prone – Rückseite & Schultergürtel", uebung:"Swan Prep", position:"Bauchlage, Hände neben Brustkorb, Ellenbogen zeigen nach hinten, Beine lang", reps:"6 Wiederholungen",
+    cues:["Einatmen → Kopf und Brustbein verlängern, leicht anheben; ausatmen → zurück","„Zieh dein Brustbein nach vorne – nicht einfach nach oben.“","Hände sollen nicht stark drücken, Gesäß aktiv aber nicht maximal zusammenkneifen"]},
+  {nr:18, start:2460, end:2640, block:"Prone – Rückseite & Schultergürtel", uebung:"Swimming Prep / Swimming", position:"Bauchlage, Arme nach vorne", reps:"6 pro Seite, optional Swimming 20–30 Sek. alternierend",
+    cues:["Rechter Arm + linkes Bein heben, absetzen, Wechsel","„Länge vor Höhe.“","„Kleine schnelle Wechsel. Brustbein bleibt lang. Nacken bleibt Verlängerung der Wirbelsäule.“"]},
+  {nr:19, start:2640, end:2700, block:"Child's Pose (Übergang)", uebung:"Child's Pose", position:"Aus Bauchlage in Vierfüßler, Gesäß Richtung Fersen, Arme lang nach vorne oder locker neben dem Körper, Stirn sinkt", reps:"30–45 Sekunden, 3–4 Atemzüge",
+    cues:["„Lass die Streckung von eben los. Atme bewusst in den unteren Rücken – reines Gegenprogramm, kein Ehrgeiz hier.“","Teacher-Logik: bewusste Dekompression zwischen Bauchlagenarbeit und Stützarbeit – nicht überspringen, auch wenn die Zeit knapp wird"]},
+  {nr:20, start:2700, end:2820, block:"Integration & Stütz", uebung:"Knee Hover", position:"Vierfüßler, Zehen aufgestellt", reps:"10–15 Sekunden, 2 Durchgänge",
+    cues:["Ausatmen → Knie 2–3 cm vom Boden lösen","„Der Rücken verändert sich nicht. Stell dir vor, die Matte wird zwischen Händen und Füßen auseinandergezogen.“","Regression: Knie bleiben unten, nur Spannung aufbauen"]},
+  {nr:21, start:2820, end:2940, block:"Integration & Stütz", uebung:"Plank Preparation", position:"Aus Vierfüßler, ein Bein zurück, zweites Bein zurück", reps:"20 Sekunden halten",
+    cues:["„Drück den Boden weg. Kopf, Brustkorb, Becken und Beine bilden eine lange Linie.“","Regression: Knie absetzen. Keine Shoulder Taps in der Basisversion"]},
+  {nr:22, start:2940, end:3060, block:"Integration & Stütz", uebung:"Plank → Pike → Plank", position:"Plank-Position", reps:"4–6 Wiederholungen",
+    cues:["Aus Plank Becken nach hinten/oben, zurück in Plank – darf fließender werden","„Ausatmen – Becken zurück und hoch. Einatmen – Körper wieder als lange Linie nach vorne.“","Danach Knie ablegen"]},
+  {nr:23, start:3060, end:3180, block:"Pilatesrolle / Release", uebung:"Thoracic Extension", position:"Rückenlage, Pilatesrolle quer unter der BWS, Hände unterstützen Hinterkopf, Becken bleibt am Boden", reps:"3–4 Positionen entlang der BWS",
+    cues:["Langsam über die Rolle öffnen","„Die Bewegung kommt aus deiner Brustwirbelsäule. Nicht den Kopf nach hinten hängen lassen.“","Nicht: Rolle in der Lendenwirbelsäule platzieren"]},
+  {nr:24, start:3180, end:3300, block:"Pilatesrolle / Release", uebung:"Chest Opening", position:"Rückenlage, Rolle längs unter der Wirbelsäule (nur wenn lang genug für Kopf & Becken)", reps:"30 Sek. halten, dann 6 Wiederholungen Arme Decke↔Seite",
+    cues:["Arme zur Seite, dann Richtung Decke → öffnen → zurück","„Lass die Vorderseite weit werden, ohne die Rippen nach oben zu drücken.“","Falls Rolle zu kurz: Übung weglassen"]},
+  {nr:25, start:3300, end:3360, block:"Downregulation", uebung:"Figure Four", position:"Rückenlage, rechter Knöchel auf linkem Oberschenkel", reps:"30 Sekunden, dann Wechsel",
+    cues:["Linkes Bein heranziehen"]},
+  {nr:26, start:3360, end:3420, block:"Downregulation", uebung:"Supine Twist", position:"Rückenlage, Knie zur Brust", reps:"2–3 Atemzüge, dann Wechsel",
+    cues:["Beide Knie nach rechts, Arme seitlich"]},
+  {nr:27, start:3420, end:3480, block:"Downregulation", uebung:"Final Breathing", position:"Rückenlage, Füße wieder aufstellen oder Beine lang", reps:"–",
+    cues:["„Lass den Boden jetzt wieder dein Gewicht übernehmen. Atme noch einmal weit in deinen Brustkorb.“","„Spür, ob sich dein Körper jetzt anders auf der Matte anfühlt als vor einer Stunde.“","Einatmen. Lang ausatmen. Dann über die Seite zum Sitzen."]},
+];
+
+const CLASSES = {
+  foam: {
+    id: "foam",
+    name: "Foam-Roller-Pilates",
+    subtitle: "Ausbildungsstunde · 58:01 Min. · 24 Übungen",
+    totalDuration: 3481,
+    exercises: FOAM_ROLLER_EXERCISES,
+  },
+  mat: {
+    id: "mat",
+    name: "Mat Pilates – Foundation Flow",
+    subtitle: "Level 1–2 · 58:00 Min. · 27 Übungen · Side-Lying gekürzt (8 statt 10 Min.)",
+    totalDuration: 3480,
+    exercises: MAT_FLOW_EXERCISES,
+  },
+};
+
+let currentClassId = "foam";
+function getClass() { return CLASSES[currentClassId]; }
+function getExercises() { return getClass().exercises; }
 
 function fmtTime(totalSeconds) {
   const m = Math.floor(totalSeconds / 60);
   const s = Math.floor(totalSeconds % 60);
   return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+/* ---------- CLASS SELECT ---------- */
+const classSelectEl = document.getElementById('class-select');
+Object.values(CLASSES).forEach(c => {
+  const opt = document.createElement('option');
+  opt.value = c.id;
+  opt.textContent = c.name;
+  classSelectEl.appendChild(opt);
+});
+classSelectEl.value = currentClassId;
+classSelectEl.addEventListener('change', () => {
+  currentClassId = classSelectEl.value;
+  currentIndex = 0;
+  updateHeader();
+  renderExercise();
+  renderList(document.getElementById('search-input').value);
+  if (document.getElementById('view-check').classList.contains('active')) renderChecklist();
+});
+
+function updateHeader() {
+  document.getElementById('header-subtitle').textContent = getClass().subtitle;
 }
 
 /* ---------- TAB SWITCHING ---------- */
@@ -363,14 +516,25 @@ let timerSeconds = 0;
 let timerInterval = null;
 
 function renderExercise() {
-  const ex = EXERCISES[currentIndex];
-  document.getElementById('live-position').textContent = `Übung ${currentIndex+1} / ${EXERCISES.length}`;
+  const exercises = getExercises();
+  const ex = exercises[currentIndex];
+  document.getElementById('live-position').textContent = `Übung ${currentIndex+1} / ${exercises.length}`;
   document.getElementById('live-classtime').textContent = `${fmtTime(ex.start)} – ${fmtTime(ex.end)}`;
-  document.getElementById('class-bar').style.width = (ex.start / TOTAL_DURATION * 100) + '%';
+  document.getElementById('class-bar').style.width = (ex.start / getClass().totalDuration * 100) + '%';
   document.getElementById('ex-num').textContent = '#' + ex.nr;
+  document.getElementById('ex-block').textContent = ex.block || '';
   document.getElementById('ex-title').textContent = ex.uebung;
   document.getElementById('ex-position').textContent = ex.position;
   document.getElementById('ex-reps').textContent = ex.reps;
+  const cutChip = document.getElementById('ex-cut');
+  if (cutChip) cutChip.remove();
+  if (ex.cut) {
+    const chip = document.createElement('span');
+    chip.className = 'chip cut';
+    chip.id = 'ex-cut';
+    chip.textContent = '✂ Cut-Kandidat #' + ex.cut;
+    document.querySelector('.meta-row').appendChild(chip);
+  }
   const cuesEl = document.getElementById('ex-cues');
   cuesEl.innerHTML = '';
   ex.cues.forEach(c => {
@@ -380,14 +544,14 @@ function renderExercise() {
   });
   document.getElementById('timer-target').textContent = 'Richtwert: ' + fmtTime(ex.end - ex.start);
   document.getElementById('btn-prev').disabled = currentIndex === 0;
-  document.getElementById('btn-next').disabled = currentIndex === EXERCISES.length - 1;
-  document.getElementById('btn-next').textContent = currentIndex === EXERCISES.length - 1 ? 'Ende' : 'Weiter ▶';
+  document.getElementById('btn-next').disabled = currentIndex === exercises.length - 1;
+  document.getElementById('btn-next').textContent = currentIndex === exercises.length - 1 ? 'Ende' : 'Weiter ▶';
   resetTimer();
 }
 
 function updateTimerDisplay() {
   document.getElementById('timer-display').textContent = fmtTime(timerSeconds);
-  const ex = EXERCISES[currentIndex];
+  const ex = getExercises()[currentIndex];
   const target = ex.end - ex.start;
   document.getElementById('timer-display').style.color = (timerSeconds >= target) ? 'var(--good)' : 'var(--accent)';
 }
@@ -414,7 +578,7 @@ document.getElementById('btn-prev').addEventListener('click', () => {
   if (currentIndex > 0) { currentIndex--; renderExercise(); }
 });
 document.getElementById('btn-next').addEventListener('click', () => {
-  if (currentIndex < EXERCISES.length - 1) { currentIndex++; renderExercise(); }
+  if (currentIndex < getExercises().length - 1) { currentIndex++; renderExercise(); }
 });
 document.addEventListener('keydown', (e) => {
   if (!document.getElementById('view-live').classList.contains('active')) return;
@@ -423,7 +587,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 function jumpToExercise(nr) {
-  currentIndex = EXERCISES.findIndex(e => e.nr === nr);
+  currentIndex = getExercises().findIndex(e => e.nr === nr);
   renderExercise();
   document.querySelector('.tab-btn[data-tab="live"]').click();
 }
@@ -434,15 +598,16 @@ function renderList(filter) {
   container.innerHTML = '';
   const q = (filter || '').toLowerCase().trim();
   let matches = 0;
-  EXERCISES.forEach(ex => {
-    const haystack = (ex.uebung + ' ' + ex.position + ' ' + ex.reps + ' ' + ex.cues.join(' ')).toLowerCase();
+  getExercises().forEach(ex => {
+    const haystack = (ex.uebung + ' ' + ex.position + ' ' + ex.reps + ' ' + (ex.block||'') + ' ' + ex.cues.join(' ')).toLowerCase();
     if (q && !haystack.includes(q)) return;
     matches++;
     const div = document.createElement('div');
     div.className = 'list-item';
     div.innerHTML = `
+      <div class="blk">${ex.block || ''}</div>
       <div class="top">
-        <span class="title">#${ex.nr} ${ex.uebung}</span>
+        <span class="title">#${ex.nr} ${ex.uebung}${ex.cut ? `<span class="cut-badge">✂ #${ex.cut}</span>` : ''}</span>
         <span class="time">${fmtTime(ex.start)}–${fmtTime(ex.end)}</span>
       </div>
       <div class="pos">${ex.position}</div>
@@ -455,20 +620,22 @@ function renderList(filter) {
 document.getElementById('search-input').addEventListener('input', (e) => renderList(e.target.value));
 
 /* ---------- CHECKLIST VIEW ---------- */
+function checkStorageKey() { return 'pilates_checklist_' + currentClassId; }
 function getCheckState() {
   try {
-    return JSON.parse(localStorage.getItem('pilates_checklist') || '{}');
+    return JSON.parse(localStorage.getItem(checkStorageKey()) || '{}');
   } catch(e) { return {}; }
 }
 function saveCheckState(state) {
-  localStorage.setItem('pilates_checklist', JSON.stringify(state));
+  localStorage.setItem(checkStorageKey(), JSON.stringify(state));
 }
 function renderChecklist() {
+  const exercises = getExercises();
   const state = getCheckState();
   const container = document.getElementById('check-container');
   container.innerHTML = '';
   let checkedCount = 0;
-  EXERCISES.forEach(ex => {
+  exercises.forEach(ex => {
     const entry = state[ex.nr] || { checked: false, note: '' };
     if (entry.checked) checkedCount++;
     const div = document.createElement('div');
@@ -482,7 +649,7 @@ function renderChecklist() {
     `;
     container.appendChild(div);
   });
-  document.getElementById('check-count').textContent = `${checkedCount} / ${EXERCISES.length} vorbereitet`;
+  document.getElementById('check-count').textContent = `${checkedCount} / ${exercises.length} vorbereitet`;
 
   container.querySelectorAll('input[type=checkbox]').forEach(cb => {
     cb.addEventListener('change', () => {
@@ -505,13 +672,14 @@ function renderChecklist() {
   });
 }
 document.getElementById('check-reset').addEventListener('click', () => {
-  if (confirm('Wirklich alle Haken und Notizen zurücksetzen?')) {
-    localStorage.removeItem('pilates_checklist');
+  if (confirm('Wirklich alle Haken und Notizen für diese Klasse zurücksetzen?')) {
+    localStorage.removeItem(checkStorageKey());
     renderChecklist();
   }
 });
 
 /* ---------- INIT ---------- */
+updateHeader();
 renderExercise();
 renderList('');
 </script>
