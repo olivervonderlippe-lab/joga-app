@@ -96,6 +96,20 @@
   .ytlink{display:inline-block; margin-top:10px; font-size:12px; font-weight:600; color:var(--accent); text-decoration:none;}
   .block.active{border-color:var(--accent); box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);}
 
+  /* music */
+  .musicnote{font-size:13px; color:var(--text-2); line-height:1.55; background:var(--card);
+    border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:16px;}
+  .musictrack{display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:10px 14px; margin-bottom:8px;}
+  .musictrack .mt{display:flex; flex-direction:column; gap:2px;}
+  .musictrack .martist{font-size:11px; color:var(--text-3); font-weight:700; letter-spacing:0.3px;}
+  .musictrack .mtitle{font-size:14px; font-weight:500; color:var(--text);}
+  .musiclink{flex-shrink:0; font-size:11px; font-weight:600; color:var(--accent); text-decoration:none;
+    border:1px solid var(--accent); border-radius:20px; padding:6px 10px; white-space:nowrap;}
+  .musicimport{display:block; text-align:center; margin:4px 0 20px; font-size:13px; font-weight:600;
+    color:var(--accent-ink); background:var(--accent); border-radius:12px; padding:12px 0; text-decoration:none;}
+
   /* flashcards */
   .cardstage{padding:10px 0 6px; text-align:center;}
   .progress{font-size:12px; color:var(--text-3); margin-bottom:10px;}
@@ -237,6 +251,7 @@
   <button class="modebtn" data-mode="study">Lernen</button>
   <button class="modebtn" data-mode="cards">Karten</button>
   <button class="modebtn" data-mode="practice">Übung</button>
+  <button class="modebtn" data-mode="music">Musik</button>
 </div>
 
 <main id="main"></main>
@@ -654,6 +669,7 @@ function render(){
   if(state.mode==="study") renderStudy(main, j);
   if(state.mode==="cards") renderCards(main, j);
   if(state.mode==="practice") renderPractice(main, j);
+  if(state.mode==="music") renderMusic(main, j);
 }
 
 function cleanMoveName(title){
@@ -779,6 +795,171 @@ function ytLink(title){
   if(VIDEO_MAP[title]) return VIDEO_MAP[title];
   const q = encodeURIComponent("joganichtyoga " + cleanMoveName(title));
   return `https://www.youtube.com/results?search_query=${q}`;
+}
+
+// Setlists pro Journey — an die Bewegungsqualitätskurve angepasst.
+// Genres: Morning = modern, Energy = rockig, Evening = ambient, Yin = typische Yin-Ambient-Musik, QIJIN = traditionell chinesisch (durchgehendes Album statt Songwechsel im Phasentakt).
+const PLAYLISTS = {
+  morning: { type:"tracks", groups:[
+    { phase:"AWAKEN", tracks:[
+      {artist:"Bon Iver", title:"Holocene"},
+      {artist:"Novo Amor", title:"Anti-Matter"},
+      {artist:"ODESZA", title:"Late Night"},
+    ]},
+    { phase:"FLOW", tracks:[
+      {artist:"Glass Animals", title:"Heat Waves"},
+      {artist:"Khalid", title:"Better"},
+      {artist:"Rhye", title:"Open"},
+      {artist:"Bonobo", title:"Cirrus"},
+    ]},
+    { phase:"EXPLORE", tracks:[
+      {artist:"Bonobo", title:"Kerala"},
+      {artist:"ODESZA", title:"A Moment Apart"},
+      {artist:"Jamie xx", title:"Gosh"},
+      {artist:"Rhye", title:"The Fall"},
+    ]},
+    { phase:"MELT", tracks:[
+      {artist:"Novo Amor", title:"Repeat Until Death"},
+      {artist:"Bon Iver", title:"Skinny Love"},
+      {artist:"James Blake", title:"Retrograde"},
+      {artist:"Phoebe Bridgers", title:"Moon Song"},
+    ]},
+    { phase:"REST", tracks:[
+      {artist:"Ólafur Arnalds", title:"Near Light"},
+    ]},
+  ]},
+  energy: { type:"tracks", groups:[
+    { phase:"AWAKEN", tracks:[
+      {artist:"Kaleo", title:"Way Down We Go"},
+      {artist:"The Black Keys", title:"Lonely Boy"},
+      {artist:"Muse", title:"Starlight"},
+    ]},
+    { phase:"FLOW", tracks:[
+      {artist:"Foo Fighters", title:"The Pretender"},
+      {artist:"Muse", title:"Uprising"},
+      {artist:"Royal Blood", title:"Figure It Out"},
+      {artist:"The White Stripes", title:"Seven Nation Army"},
+    ]},
+    { phase:"EXPLORE", tracks:[
+      {artist:"Kaleo", title:"All the Pretty Girls"},
+      {artist:"Imagine Dragons", title:"Believer"},
+      {artist:"Cage the Elephant", title:"Come a Little Closer"},
+      {artist:"Wolfmother", title:"Joker & the Thief"},
+    ]},
+    { phase:"MELT", tracks:[
+      {artist:"Kaleo", title:"Vor í Vaglaskógi"},
+      {artist:"Ben Howard", title:"Keep Your Head Up"},
+      {artist:"The Black Keys", title:"Everlasting Light"},
+      {artist:"Fleet Foxes", title:"White Winter Hymnal"},
+    ]},
+    { phase:"REST", tracks:[
+      {artist:"Ben Howard", title:"Depth Over Distance"},
+    ]},
+  ]},
+  evening: { type:"tracks", groups:[
+    { phase:"AWAKEN", tracks:[
+      {artist:"Ólafur Arnalds", title:"Near Light"},
+      {artist:"Nils Frahm", title:"Says"},
+    ]},
+    { phase:"FLOW", tracks:[
+      {artist:"Kiasmos", title:"Blurred"},
+      {artist:"Jon Hopkins", title:"Emerald Rush"},
+    ]},
+    { phase:"EXPLORE", tracks:[
+      {artist:"Nils Frahm", title:"Human Range"},
+      {artist:"Ólafur Arnalds", title:"Only the Winds"},
+      {artist:"Max Richter", title:"On the Nature of Daylight"},
+    ]},
+    { phase:"MELT", tracks:[
+      {artist:"Ólafur Arnalds", title:"Tomorrow's Song"},
+      {artist:"Nils Frahm", title:"Ambre"},
+      {artist:"Kiasmos", title:"Looped"},
+    ]},
+    { phase:"REST", tracks:[
+      {artist:"Max Richter", title:"Dream 1 (before the wind blows it all away)"},
+    ]},
+  ]},
+  qigongyin: { type:"tracks",
+    note:"QIJIN wechselt zyklisch zwischen Bewegung und Nachhall statt eine Kurve aufzubauen — deshalb kein Songwechsel im starren Phasentakt, sondern ein durchgehendes modernes Instrumental-Set (Downtempo/Ambient-Electronic statt traditioneller Guzheng-Musik), das die Wechsel aus Bewegung und Stille trägt.",
+    groups:[
+      { phase:"Setlist", tracks:[
+        {artist:"Emancipator", title:"Greenland"},
+        {artist:"Nujabes", title:"Aruarian Dance"},
+        {artist:"Emancipator", title:"Kamakura"},
+        {artist:"Tycho", title:"Montana"},
+        {artist:"Nujabes", title:"Feather (Instrumental)"},
+        {artist:"Emancipator", title:"Jetstream"},
+        {artist:"Khruangbin", title:"Maria También"},
+        {artist:"Tycho", title:"Dye"},
+        {artist:"Nujabes", title:"Kumomi"},
+        {artist:"Emancipator", title:"Nevergreen"},
+        {artist:"Khruangbin", title:"August 10"},
+        {artist:"Emancipator", title:"Vines"},
+        {artist:"Tycho", title:"Awake"},
+        {artist:"Nujabes", title:"Reflection Eternal"},
+        {artist:"Emancipator", title:"Safe In the Steep Cliffs"},
+      ]},
+    ]},
+  yin: { type:"tracks", groups:[
+    { phase:"AWAKEN", tracks:[
+      {artist:"Nils Frahm", title:"Says"},
+      {artist:"Ólafur Arnalds", title:"Near Light"},
+    ]},
+    { phase:"MELT", tracks:[
+      {artist:"Ólafur Arnalds", title:"Tomorrow's Song"},
+      {artist:"Nils Frahm", title:"Ambre"},
+      {artist:"Kiasmos", title:"Looped"},
+      {artist:"Max Richter", title:"On the Nature of Daylight"},
+      {artist:"Nils Frahm", title:"Human Range"},
+      {artist:"Ólafur Arnalds", title:"Only the Winds"},
+      {artist:"Kiasmos", title:"Blurred"},
+    ]},
+    { phase:"REST", tracks:[
+      {artist:"Max Richter", title:"Dream 1 (before the wind blows it all away)"},
+    ]},
+  ]},
+};
+function amLink(artist, title){
+  return `https://music.apple.com/de/search?term=${encodeURIComponent(artist + " " + title)}`;
+}
+function renderMusic(main, j){
+  const pl = PLAYLISTS[state.journey];
+  if(!pl){ main.innerHTML = `<div class="musicnote">Für diese Journey gibt es noch keine Setlist.</div>`; return; }
+
+  if(pl.type==="album"){
+    const note = document.createElement("div"); note.className="musicnote";
+    note.textContent = pl.note;
+    main.appendChild(note);
+    pl.albums.forEach(al=>{
+      const row = document.createElement("div"); row.className="musictrack";
+      row.innerHTML = `
+        <div class="mt"><span class="martist">${al.artist}</span><span class="mtitle">${al.title}</span></div>
+        <a class="musiclink" href="${amLink(al.artist, al.title)}" target="_blank" rel="noopener">Suchen ›</a>`;
+      main.appendChild(row);
+    });
+    return;
+  }
+
+  if(pl.note){
+    const note = document.createElement("div"); note.className="musicnote";
+    note.textContent = pl.note;
+    main.appendChild(note);
+  }
+
+  pl.groups.forEach(g=>{
+    const sec = document.createElement("div"); sec.className="phase";
+    sec.innerHTML = `<div class="phasehead"><h2>${g.phase}</h2></div>`;
+    const list = document.createElement("div");
+    g.tracks.forEach(tr=>{
+      const row = document.createElement("div"); row.className="musictrack";
+      row.innerHTML = `
+        <div class="mt"><span class="martist">${tr.artist}</span><span class="mtitle">${tr.title}</span></div>
+        <a class="musiclink" href="${amLink(tr.artist, tr.title)}" target="_blank" rel="noopener">Suchen ›</a>`;
+      list.appendChild(row);
+    });
+    sec.appendChild(list);
+    main.appendChild(sec);
+  });
 }
 
 function renderStudy(main, j){
