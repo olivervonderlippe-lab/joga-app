@@ -481,6 +481,137 @@ const THEMES = {
   },
 };
 
+const SKILLS = {
+  pistol_squat: {
+    name: "Pistol Squat",
+    kategorie: "Squat · MASTER-Endstufe",
+    aufgabe: "Freier einbeiniger Squat: kontrolliert ab- und aufsteigend, das freie Bein bleibt gestreckt in der Luft, ohne Festhalten.",
+    hilfsmittel: "Box/Bank in abnehmender Höhe, Ring oder Türrahmen zum Festhalten, optional Buch/Gewichtsscheibe unter die Ferse.",
+    gateCheck: "Goblet Squat sauber bei RIR 4 + Split Squat sauber + Einbeinstand 30 Sek. Wenn nicht erfüllt: kein Zeitverlust hier – erst Squat- und Balance-Stufenleiter weiterverfolgen.",
+    move: [
+      { text: "Deep Squat Hold, 30–60 Sek." },
+      { text: "Einbeinstand mit Blickfixierung, 20–30 Sek. pro Bein" },
+      { text: "Cue: \"Ferse bleibt unten, auch wenn's zieht.\"" },
+    ],
+    build: [
+      { text: "Box Squat einbeinig auf hoher Box, freies Bein gestreckt in der Luft", video: "https://www.youtube.com/watch?v=D1IEI-lfLxU" },
+      { text: "Box schrittweise niedriger, sobald 2 saubere Sessions in Folge" },
+      { text: "Assisted Pistol an Ring/Türrahmen mit Festhalten" },
+      { text: "Cue: \"Knie bleibt über dem Fuß, kippt nicht nach innen.\"" },
+      { text: "Cue: \"Arme nach vorne als Gegengewicht.\"" },
+    ],
+    master: [
+      { text: "Negative: kontrolliert ganz runter, mit beiden Beinen wieder hoch" },
+      { text: "Voller Pistol Squat ohne Hilfsmittel", video: "https://www.youtube.com/watch?v=T74bU2vNWG4" },
+      { text: "Cue: \"Langsam runter, wie in Zeitlupe.\"" },
+    ],
+    fehler: [
+      { fehler: "Fällt nach hinten", ursache: "Ferse hebt ab (Sprunggelenk zu steif)", fix: "Deep Squat Hold intensivieren, Ferse übergangsweise erhöhen" },
+      { fehler: "Knie kippt nach innen", ursache: "Hüftstabilität fehlt", fix: "Assisted-Stufe verlängern, Cue \"Knie über Fuß\" bewusst einbauen" },
+      { fehler: "Freies Bein sinkt ab", ursache: "Hüftbeuger-Kraft/Mobilität fehlt", fix: "Freies Bein bewusst höher halten, separat dehnen" },
+      { fehler: "Kommt nicht hoch ohne Schwung", ursache: "Kraft in der Tiefe fehlt noch", fix: "Eine Box-Stufe zurück, dort RIR 4 stabilisieren" },
+    ],
+    dosierung: "2×/Woche, integriert nach Split Squat/Hip Thrust, 3–5 Wdh. pro Seite. Qualität vor Menge, nie bis zur Erschöpfung.",
+    lifeWin: "\"Erste Box-Stufe geschafft\" zählt schon als Fortschritt, nicht erst der freie Pistol.",
+  },
+  klimmzug: {
+    name: "Klimmzug",
+    kategorie: "Pull · MASTER-Endstufe",
+    aufgabe: "Freier Klimmzug: Kinn über die Stange, danach kontrolliert ablassen bis zum vollen Hang, ohne Schwung.",
+    hilfsmittel: "Klimmzugstange oder Ringe, Widerstandsband zur Unterstützung, Kasten/Stuhl für den Negative-Einstieg.",
+    gateCheck: "Dead Hang 20–30 Sek. sauber + Active Hang mit Schulterblatt-Kontrolle + Ring Row/Latzug Stufe 2 sauber. Wenn nicht erfüllt: erst Pull- und Hang-Stufenleiter weiterverfolgen.",
+    move: [
+      { text: "Schulterblatt-Aktivierung, 10 Wdh." },
+      { text: "Dead Hang, 15–20 Sek." },
+      { text: "Cue: \"Schultern weg von den Ohren, auch im Hang.\"" },
+    ],
+    build: [
+      { text: "Scapular Pull-up: nur Schulterblätter aktiv nach unten ziehen, kein Ellbogenbeugen", video: "https://www.youtube.com/watch?v=qsR-yjXSikQ" },
+      { text: "Negative: oben starten, so langsam wie möglich runterlassen (Ziel 5+ Sek.)" },
+      { text: "Band-unterstützter Klimmzug, Band schrittweise dünner sobald 2 saubere Sessions in Folge" },
+      { text: "Cue: \"Ellbogen zur Hüfte ziehen, nicht nur die Hände näher zur Stange.\"" },
+      { text: "Cue: \"Kein Schwung aus den Beinen.\"" },
+    ],
+    master: [
+      { text: "Voller Klimmzug ohne Band", video: "https://www.youtube.com/watch?v=6zyx46Vpato" },
+      { text: "Kontrolliertes Ablassen bis zum vollen Hang am Ende jeder Wiederholung" },
+      { text: "Cue: \"Kinn über die Stange, nicht nur die Nase.\"" },
+    ],
+    fehler: [
+      { fehler: "Schultern ziehen zu den Ohren hoch", ursache: "Fehlende Schulterblatt-Kontrolle", fix: "Mehr Scapular Pull-ups, MOVE-Baustein intensivieren" },
+      { fehler: "Schwung aus Beinen/Hüfte", ursache: "Zugkraft noch nicht ausreichend", fix: "Eine Stufe zurück (dickeres Band/höhere Box), dort stabilisieren" },
+      { fehler: "Nur halber Bewegungsumfang", ursache: "Angst vorm vollen Hang unten / Kraft fehlt oben", fix: "Negative bewusst bis zum vollen Hang trainieren" },
+      { fehler: "Ein Arm zieht mehr", ursache: "Einseitige Schwäche", fix: "Langsamer, Fokus auf symmetrisches Ziehen, ggf. filmen" },
+    ],
+    dosierung: "2×/Woche, integriert nach Kabelrudern/Ring Row, 3–5 Wdh. oder Negative-Wiederholungen. Qualität vor Menge.",
+    lifeWin: "\"Erste 5-Sekunden-Negative geschafft\" zählt schon als Fortschritt, nicht erst der freie Klimmzug.",
+  },
+};
+
+function SkillCard({ skill }) {
+  const [open, setOpen] = useState(false);
+  const Step = ({ item }) => (
+    <li className="text-[var(--text-body)] text-sm leading-relaxed">
+      {item.text}
+      {item.video && (
+        <a href={item.video} target="_blank" rel="noopener noreferrer" className="ml-1.5 text-[#c1541f] font-medium">
+          ▸ Video
+        </a>
+      )}
+    </li>
+  );
+  return (
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-4 py-3 text-left">
+        <div>
+          <div className="text-[var(--text)] font-medium">{skill.name}</div>
+          <div className="text-[var(--text-secondary)] text-xs mt-0.5">{skill.kategorie}</div>
+        </div>
+        {open ? <IconChevronDown /> : <IconChevronRight />}
+      </button>
+      {open && (
+        <div className="px-4 pb-4 space-y-3">
+          <p className="text-[var(--text-body)] text-sm leading-relaxed">{skill.aufgabe}</p>
+          <p className="text-[var(--text-secondary)] text-xs"><strong className="text-[var(--text)]">Hilfsmittel:</strong> {skill.hilfsmittel}</p>
+
+          <div className="rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-3 py-2.5">
+            <p className="text-[var(--warning-text)] text-xs leading-relaxed"><strong>Voraussetzung:</strong> {skill.gateCheck}</p>
+          </div>
+
+          <div>
+            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1">MOVE</div>
+            <ul className="space-y-1 list-disc pl-4">{skill.move.map((it, i) => <Step key={i} item={it} />)}</ul>
+          </div>
+          <div>
+            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1">BUILD</div>
+            <ul className="space-y-1 list-disc pl-4">{skill.build.map((it, i) => <Step key={i} item={it} />)}</ul>
+          </div>
+          <div>
+            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1">MASTER</div>
+            <ul className="space-y-1 list-disc pl-4">{skill.master.map((it, i) => <Step key={i} item={it} />)}</ul>
+          </div>
+
+          <div>
+            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1.5">Häufige Fehler</div>
+            <div className="space-y-2">
+              {skill.fehler.map((f, i) => (
+                <div key={i} className="rounded-lg bg-[var(--bg)] border border-[var(--border)] px-3 py-2">
+                  <div className="text-[var(--text)] text-sm font-medium">{f.fehler}</div>
+                  <div className="text-[var(--text-secondary)] text-xs mt-0.5">Ursache: {f.ursache}</div>
+                  <div className="text-[var(--text-body)] text-xs mt-0.5">Fix: {f.fix}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="text-[var(--text-secondary)] text-xs"><strong className="text-[var(--text)]">Dosierung:</strong> {skill.dosierung}</p>
+          <p className="text-[var(--text-hint)] text-xs italic"><strong>Life Win:</strong> {skill.lifeWin}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function JogaStrength() {
   const [week, setWeek] = useState(() => loadJSON("joga-strength:week", 1));
   const [day, setDay] = useState(() => loadJSON("joga-strength:day", "A"));
@@ -592,6 +723,15 @@ function JogaStrength() {
         <ExerciseCard exKey={masterKey} ex={EXERCISES[masterKey]} reps="20 Sek" master location={location} dateKey={dateKey} />
 
         <p className="text-[var(--text-muted)] text-xs text-center mt-4">Gesamtdauer realistisch: ca. 55–60 Minuten.</p>
+
+        <div className="mb-1 mt-8">
+          <div className="text-[var(--text)] font-medium">Skills</div>
+          <div className="text-[var(--text-secondary)] text-sm mb-3">Wenn Foundation sitzt – der nächste Schritt, aufklappbar zum Nachlesen</div>
+        </div>
+        <div className="space-y-2">
+          <SkillCard skill={SKILLS.pistol_squat} />
+          <SkillCard skill={SKILLS.klimmzug} />
+        </div>
 
         <LogForm dateKey={dateKey} week={week} day={day} location={location} />
 
