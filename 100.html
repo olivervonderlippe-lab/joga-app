@@ -4152,7 +4152,7 @@ function Header({ tag, theme, toggleTheme }) {
 }
 
 function Nav({ tab, setTab }) {
-  const tabs = [['heute', 'Heute'], ['produktion', 'Produktion'], ['sammlung', 'Sammlung'], ['bibel', 'Bibel'], ['ki', 'KI-Planer']];
+  const tabs = [['heute', 'Heute'], ['formate', 'Formate'], ['oli', 'Oli'], ['produktion', 'Produktion'], ['sammlung', 'Sammlung'], ['bibel', 'Bibel'], ['ki', 'KI-Planer']];
   return e('div', { style: { display: 'flex', borderBottom: '1px solid ' + T.line, position: 'sticky', top: 0, background: T.bg, zIndex: 10 } },
     tabs.map(([id, label]) =>
       e('button', {
@@ -4190,7 +4190,9 @@ function FolgeKarte({ f, status, onStatus, offen, onToggle, performance, onPerfo
           : { className: 'joga-display', style: { fontSize: 19, color: T.text, marginTop: 6, lineHeight: 1.15 } },
           f.titel);
       })(),
-      e('div', { style: { fontSize: 15, color: T.orange, marginTop: 8, fontWeight: 600, lineHeight: 1.35 } }, f.hook),
+      f.formatTyp
+        ? e('div', { style: { fontSize: 13, color: T.orangeHell, marginTop: 6, fontWeight: 700, letterSpacing: '0.03em' } }, FORMAT_LABEL[f.formatTyp] || f.formatTyp)
+        : e('div', { style: { fontSize: 15, color: T.orange, marginTop: 8, fontWeight: 600, lineHeight: 1.35 } }, f.hook),
       f.hookInstagram ? e('div', { style: { marginTop: 6 } },
         e('span', { style: { fontSize: 10, color: T.textDim, textTransform: 'uppercase', letterSpacing: '0.05em', marginRight: 6 } }, 'Instagram-Hook'),
         e('span', { style: { fontSize: 13, color: T.textDim, fontStyle: 'italic' } }, f.hookInstagram)
@@ -4198,14 +4200,16 @@ function FolgeKarte({ f, status, onStatus, offen, onToggle, performance, onPerfo
       f.serie ? e('div', { style: { fontSize: 11, color: T.orangeHell, marginTop: 8 } }, '↻ ' + f.serie) : null
     ),
     offen ? e('div', { style: { padding: '0 16px 16px', borderTop: '1px solid ' + T.line } },
-      e(Feld, { label: f.dramaturgie === 'konflikt' ? 'Mini-Konflikt' : 'Beobachtung', text: f.konflikt }),
-      f.alt && f.alt.length ? e('div', { style: { marginTop: 10 } },
-        e('div', { style: lbl }, 'Alternativ-Hooks'),
-        f.alt.map((a, i) => e('div', { key: i, style: { fontSize: 13, color: T.textDim, fontStyle: 'italic', marginTop: 3 } }, '› ' + a))
-      ) : null,
-      e(Feld, { label: 'Move', text: f.move }),
-      e(Feld, { label: 'Schluss', text: f.schluss }),
-      e(Feld, { label: 'Notiz', text: f.note, dim: true }),
+      f.formatTyp ? e(FormatKartenInhalt, { f }) : e(React.Fragment, null,
+        e(Feld, { label: f.dramaturgie === 'konflikt' ? 'Mini-Konflikt' : 'Beobachtung', text: f.konflikt }),
+        f.alt && f.alt.length ? e('div', { style: { marginTop: 10 } },
+          e('div', { style: lbl }, 'Alternativ-Hooks'),
+          f.alt.map((a, i) => e('div', { key: i, style: { fontSize: 13, color: T.textDim, fontStyle: 'italic', marginTop: 3 } }, '› ' + a))
+        ) : null,
+        e(Feld, { label: 'Move', text: f.move }),
+        e(Feld, { label: 'Schluss', text: f.schluss }),
+        e(Feld, { label: 'Notiz', text: f.note, dim: true })
+      ),
       e('div', { style: { display: 'flex', gap: 8, marginTop: 14 } },
         ['offen', 'gedreht', 'gepostet'].map(s =>
           e('button', { key: s, onClick: () => onStatus(s),
@@ -4223,6 +4227,28 @@ function FolgeKarte({ f, status, onStatus, offen, onToggle, performance, onPerfo
         perfOffen ? e(PerformanceBereich, { perf: performance, onChange: onPerformanceChange }) : null
       ) : null
     ) : null
+  );
+}
+
+const FORMAT_LABEL = {
+  '5-move-challenge': '5-MOVE-CHALLENGE',
+  '1-move-zukunft': '1-MOVE / ZUKUNFTSNUTZEN',
+  'mobility-check': 'MOBILITY CHECK',
+  'progression': 'PERSÖNLICHE PROGRESSION',
+  'flow': '1 MINUTE JOGA / FLOW',
+};
+
+function FormatKartenInhalt({ f }) {
+  return e('div', null,
+    e('div', { style: { marginTop: 10, background: '#000', color: '#fff', borderRadius: 10, padding: '10px 14px',
+      fontSize: 14, fontWeight: 800, textAlign: 'center', lineHeight: 1.3, whiteSpace: 'pre-line' } }, f.textOben),
+    e('div', { style: { marginTop: 12 } },
+      e('div', { style: lbl }, f.formatTyp === 'progression' ? 'Progressions-Schritte' : f.formatTyp === 'flow' ? 'Flow / Begleittexte' : 'Moves'),
+      (f.moves || []).map((m, i) => e('div', { key: i, style: { fontSize: 13, color: T.text, marginTop: 4 } }, (i + 1) + '. ' + m))
+    ),
+    f.textUnten ? e('div', { style: { marginTop: 12, background: '#000', color: '#fff', borderRadius: 10, padding: '10px 14px',
+      fontSize: 14, fontWeight: 800, textAlign: 'center', lineHeight: 1.3, whiteSpace: 'pre-line' } }, f.textUnten) : null,
+    f.note ? e(Feld, { label: 'Notiz', text: f.note, dim: true }) : null
   );
 }
 
@@ -4620,6 +4646,340 @@ function erzeugePerformanceVorlage(state) {
   return zeilen.join('\n');
 }
 
+const OLI_KATEGORIEN = [
+  'Selbstbild & Widerspruch', 'Anfänger sein (nicht Lehrer)', 'Klischee, das nicht stimmt',
+  'Ambivalenz zur eigenen Praxis', 'Nachlassende Fremderwartung', 'Scheitern & Humor',
+  'Vergangenes Ich', 'Vergleich & Neid, ehrlich', 'Zukunftsbild statt Ziel-Liste',
+  'Alltag, Job, Ausbildung', 'Dinge ohne Bewegungs-Pointe', 'Geschmack/Musik/Kultur',
+];
+
+function parseOliVorschlaege(text) {
+  if (!text) return [];
+  const bloecke = text.split(/\n(?=\s*\d+\.\s)/).map(b => b.trim()).filter(Boolean);
+  return bloecke.map(block => {
+    const sit = block.match(/Situation:\s*(.+)/i);
+    const ton = block.match(/O-Ton:\s*([\s\S]+)/i);
+    return {
+      situation: sit ? sit[1].trim() : '',
+      oTon: ton ? ton[1].trim().replace(/\s*\n\s*/g, ' ') : ''
+    };
+  }).filter(x => x.situation || x.oTon);
+}
+
+function OliTab({ state, setState }) {
+  const [situation, setSituation] = useState('');
+  const [oTon, setOTon] = useState('');
+  const [kontext, setKontext] = useState('');
+  const [lädt, setLädt] = useState(false);
+  const [fehlerHinweis, setFehlerHinweis] = useState(null);
+
+  const ideen = Object.values(state.oliContent || {}).sort((a, b) => b.id.localeCompare(a.id));
+
+  function hinzufuegen() {
+    if (!situation.trim() && !oTon.trim()) return;
+    const id = 'oli-' + Date.now();
+    const neu = { id, situation: situation.trim(), oTon: oTon.trim(), status: 'idee', herkunft: 'manuell' };
+    setState({ ...state, oliContent: { ...(state.oliContent || {}), [id]: neu } });
+    setSituation(''); setOTon('');
+  }
+  function status(id, s) {
+    setState({ ...state, oliContent: { ...(state.oliContent || {}), [id]: { ...(state.oliContent[id]), status: s } } });
+  }
+  function feldAendern(id, feld, wert) {
+    setState({ ...state, oliContent: { ...(state.oliContent || {}), [id]: { ...(state.oliContent[id]), [feld]: wert } } });
+  }
+  function löschen(id) {
+    const rest = { ...(state.oliContent || {}) };
+    delete rest[id];
+    setState({ ...state, oliContent: rest });
+  }
+
+  async function holeVorschlag() {
+    setLädt(true); setFehlerHinweis(null);
+    const res = await callKI('oliIdeen', { kategorien: OLI_KATEGORIEN, anzahl: 5, kontext });
+    setLädt(false);
+
+    if (res.platzhalter) { setFehlerHinweis(res.hinweis); return; }
+    if (res.fehler) { setFehlerHinweis(res.fehler); return; }
+
+    let neue = {};
+    let anzahlNeu = 0;
+    [['claude', res.claude], ['gpt', res.gpt]].forEach(([herkunft, text]) => {
+      parseOliVorschlaege(text).forEach(v => {
+        const id = 'oli-' + herkunft + '-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6);
+        neue[id] = { id, situation: v.situation, oTon: v.oTon, status: 'ki-entwurf', herkunft };
+        anzahlNeu++;
+      });
+    });
+
+    if (anzahlNeu === 0) {
+      // Parsing hat nichts gefunden – Rohtext nicht verwerfen, als Hinweis zeigen
+      setFehlerHinweis('Antwort kam an, aber ließ sich nicht in einzelne Ansätze zerlegen. Rohtext: ' +
+        (res.claude || res.gpt || '').slice(0, 400));
+      return;
+    }
+    setState({ ...state, oliContent: { ...(state.oliContent || {}), ...neue } });
+  }
+
+  const STATUS_LABEL = { 'ki-entwurf': 'KI-Entwurf', idee: 'idee', gedreht: 'gedreht', gepostet: 'gepostet' };
+  const STATUS_FARBE_OLI = { 'ki-entwurf': T.orangeHell, idee: T.textDim, gedreht: T.orangeHell, gepostet: '#6ba368' };
+
+  return e('div', { style: { padding: 16 } },
+    e('div', { style: { fontSize: 13, color: T.text, lineHeight: 1.5, marginBottom: 6 } },
+      'Kein fester Hook, keine Vorlage. Die einzige Regel: Nach dem Post sollte jemand eine Kleinigkeit über Oli wissen, die er vorher nicht wusste.'),
+    e('div', { style: { fontSize: 12, color: T.textDim, lineHeight: 1.5, marginBottom: 16 } },
+      'Situation + O-Ton reichen. Kein Move, kein Setting-Zwang, keine Formel.'),
+
+    e('div', { style: { marginBottom: 8 } },
+      e('div', { style: lbl }, 'Situation'),
+      e('input', { value: situation, onChange: ev => setSituation(ev.target.value), placeholder: 'z.B. Ich ziehe mich fürs Training um', style: { ...eingabeStil, marginTop: 4 } })
+    ),
+    e('div', { style: { marginBottom: 8 } },
+      e('div', { style: lbl }, 'O-Ton'),
+      e('textarea', { value: oTon, onChange: ev => setOTon(ev.target.value), placeholder: 'Was du dazu sagst …', style: { ...eingabeStil, marginTop: 4, minHeight: 60, resize: 'vertical' } })
+    ),
+    e('button', { onClick: hinzufuegen,
+      style: { width: '100%', padding: '11px', borderRadius: 9, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+        background: T.orange, color: '#fff', fontSize: 14, fontWeight: 700 } },
+      '+ Zur Reserve hinzufügen'),
+
+    e('div', { style: { marginTop: 22, borderTop: '1px solid ' + T.line, paddingTop: 14 } },
+      e('div', { style: lbl }, 'KI-Ansätze als Basis (du personalisierst)'),
+      e('div', { style: { fontSize: 11, color: T.textDim, marginTop: 2, marginBottom: 6 } },
+        'Landen direkt einzeln unten in der Reserve, markiert als »KI-Entwurf« – kein Copy-Paste nötig, du bearbeitest sie dort direkt oder löschst sie.'),
+      e('textarea', { value: kontext, onChange: ev => setKontext(ev.target.value),
+        placeholder: 'Optional: Zusatzwunsch, z.B. "Fokus auf Job/flexi" oder "eher albern"',
+        style: { ...eingabeStil, minHeight: 46, marginTop: 6, resize: 'vertical' } }),
+      e('button', { onClick: holeVorschlag, disabled: lädt,
+        style: { width: '100%', marginTop: 8, padding: '11px', borderRadius: 9, border: '1px solid ' + T.line, cursor: 'pointer', fontFamily: 'inherit',
+          background: 'transparent', color: T.orangeHell, fontSize: 13, fontWeight: 700, opacity: lädt ? 0.6 : 1 } },
+        lädt ? 'Claude und GPT denken …' : '✨ 5 Ansätze in die Reserve holen'),
+      !KI_AKTIV ? e('div', { style: { marginTop: 10, padding: 10, background: T.soft, border: '1px dashed ' + T.line, borderRadius: 9, fontSize: 12, color: T.textDim } },
+        'Noch nicht scharf: Die Function muss den Typ »oliIdeen« kennen und KI_AKTIV auf true stehen.') : null,
+      fehlerHinweis ? e(ResultBox, { titel: 'Hinweis', text: fehlerHinweis, warn: true }) : null
+    ),
+
+    ideen.length ? e('div', { style: { marginTop: 24, borderTop: '1px solid ' + T.line, paddingTop: 16 } },
+      e('div', { style: lbl }, 'Oli-Reserve (' + ideen.length + ')'),
+      ideen.map(idee => e('div', { key: idee.id, style: { background: T.card, border: '1px solid ' + T.line, borderRadius: 12, padding: 14, marginTop: 10 } },
+        e('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 } },
+          e('span', { style: { fontSize: 10, color: T.textDim, textTransform: 'uppercase', letterSpacing: '0.05em' } },
+            idee.herkunft === 'claude' ? 'KI: Claude' : idee.herkunft === 'gpt' ? 'KI: GPT' : 'Manuell'),
+          e('button', { onClick: () => löschen(idee.id), style: { background: 'none', border: 'none', color: T.textDim, cursor: 'pointer', fontSize: 13 } }, '✕')
+        ),
+        e('input', {
+          value: idee.situation || '', onChange: ev => feldAendern(idee.id, 'situation', ev.target.value),
+          placeholder: 'Situation', style: { ...eingabeStil, fontSize: 13, color: T.textDim, marginBottom: 6 }
+        }),
+        e('textarea', {
+          value: idee.oTon || '', onChange: ev => feldAendern(idee.id, 'oTon', ev.target.value),
+          placeholder: 'O-Ton', style: { ...eingabeStil, fontSize: 14, fontStyle: 'italic', minHeight: 50, resize: 'vertical' }
+        }),
+        e('div', { style: { display: 'flex', gap: 6, marginTop: 10 } },
+          ['idee', 'gedreht', 'gepostet'].map(s => e('button', { key: s, onClick: () => status(idee.id, s),
+            style: { flex: 1, padding: '6px 4px', borderRadius: 7, fontSize: 11, cursor: 'pointer', fontFamily: 'inherit',
+              border: '1px solid ' + (idee.status === s ? T.orange : T.line),
+              background: idee.status === s ? T.orange : 'transparent', color: idee.status === s ? '#fff' : T.textDim } }, s))
+        ),
+        idee.status === 'ki-entwurf' ? e('div', { style: { fontSize: 10, color: T.orangeHell, marginTop: 6 } }, '● Noch ungeprüfter KI-Entwurf') : null
+      ))
+    ) : null
+  );
+}
+
+const FORMAT_DEFS = {
+  '5-move-challenge': {
+    label: '5-Move-Challenge',
+    felder: [{ key: 'alter', label: 'Alter', default: '56' }],
+    textObenTpl: (v) => 'ICH BIN ' + v.alter + '.\nSO TRAINIERE ICH HEUTE.',
+    textUntenDefault: 'KÖNNT IHR DIESE 5 AUCH?',
+    moveAnzahl: 5,
+    moveLabel: 'Move',
+  },
+  '1-move-zukunft': {
+    label: '1-Move / Zukunftsnutzen',
+    felder: [
+      { key: 'zielalter', label: 'Zielalter', default: '70' },
+      { key: 'faehigkeit', label: 'Fähigkeit (2 Zeilen möglich)', default: 'OHNE FREMDE HILFE\nAUFSTEHEN' },
+      { key: 'dosierung', label: 'Dosierung', default: '1 MIN.' },
+    ],
+    textObenTpl: (v) => 'WENN DU AUCH MIT ' + v.zielalter + ' NOCH\n' + v.faehigkeit + '\nKÖNNEN WILLST:',
+    textUntenTpl: (v) => v.dosierung + ' TÄGLICH',
+    moveAnzahl: 1,
+    moveLabel: 'Move',
+  },
+  'mobility-check': {
+    label: 'Mobility Check',
+    felder: [{ key: 'n', label: 'Nr.', default: '1' }, { key: 'gesamt', label: 'Gesamt', default: '13' }],
+    textObenTpl: (v) => 'MOBILITY CHECK ' + v.n + '/' + v.gesamt,
+    textUntenDefault: '',
+    moveAnzahl: 1,
+    moveLabel: 'Fähigkeit',
+  },
+  'progression': {
+    label: 'Persönliche Progression',
+    felder: [{ key: 'alter', label: 'Alter', default: '56' }, { key: 'ziel', label: 'Ziel', default: 'MEINEN SQUAT WIEDERBEKOMMEN' }],
+    textObenTpl: (v) => 'ICH BIN ' + v.alter + '.\nSO HABE ICH\n' + v.ziel + '.',
+    textUntenDefault: 'PROBIERST DU ES AUCH?',
+    moveAnzahl: 4,
+    moveLabel: 'Schritt',
+  },
+  'flow': {
+    label: '1 Minute JOGA / Flow',
+    felder: [{ key: 'dauer', label: 'Dauer', default: '1 MINUTE' }],
+    textObenTpl: (v) => v.dauer + ' JOGA.\nFOLLOW ME',
+    textUntenDefault: '',
+    moveAnzahl: 3,
+    moveLabel: 'Begleittext',
+  },
+};
+
+function defaultFelder(def) {
+  const o = {};
+  def.felder.forEach(fd => { o[fd.key] = fd.default; });
+  return o;
+}
+
+const eingabeStil = { width: '100%', background: T.soft, border: '1px solid ' + T.line, borderRadius: 8, color: T.text, padding: '8px 10px', fontSize: 13, fontFamily: 'inherit' };
+const kleinerBtn = { padding: '6px 10px', borderRadius: 7, fontSize: 11, cursor: 'pointer', fontFamily: 'inherit', border: '1px solid ' + T.line, background: 'transparent', color: T.textDim };
+
+function FormateTab({ state, setState }) {
+  const [formatTyp, setFormatTyp] = useState('5-move-challenge');
+  const def = FORMAT_DEFS[formatTyp];
+  const [felder, setFelder] = useState(() => defaultFelder(def));
+  const [moves, setMoves] = useState(() => Array(def.moveAnzahl).fill(''));
+  const [titel, setTitel] = useState('');
+  const [kontext, setKontext] = useState('');
+  const [lädt, setLädt] = useState(false);
+  const [vorschlag, setVorschlag] = useState(null);
+  const [gespeichertHinweis, setGespeichertHinweis] = useState(false);
+
+  function waehleFormat(neu) {
+    const d = FORMAT_DEFS[neu];
+    setFormatTyp(neu);
+    setFelder(defaultFelder(d));
+    setMoves(Array(d.moveAnzahl).fill(''));
+    setVorschlag(null);
+    setGespeichertHinweis(false);
+  }
+  function setFeld(key, wert) { setFelder({ ...felder, [key]: wert }); }
+  function setMove(i, wert) { const neu = moves.slice(); neu[i] = wert; setMoves(neu); }
+  function addMove() { setMoves([...moves, '']); }
+  function removeMove(i) { setMoves(moves.filter((_, idx) => idx !== i)); }
+
+  const textOben = def.textObenTpl(felder);
+  const textUnten = def.textUntenTpl ? def.textUntenTpl(felder) : def.textUntenDefault;
+
+  async function holeVorschlag() {
+    setLädt(true); setVorschlag(null);
+    const bestehendeTitel = D.clips.slice(0, 60).map(c => c.titel).join(', ');
+    const res = await callKI('formatFuellen', {
+      formatTyp, felder, anzahl: moves.length,
+      kontext: 'Bereits vorhandene Clips (zum Mischen/Vermeiden von Dopplung): ' + bestehendeTitel + (kontext ? ' | Zusatzwunsch: ' + kontext : '')
+    });
+    setVorschlag(res);
+    setLädt(false);
+  }
+
+  function speichern() {
+    const id = 'format-' + Date.now();
+    const neuerClip = {
+      id, titel: titel || (def.label + ' – ' + new Date().toLocaleDateString('de-DE')),
+      formatTyp, textOben, textUnten,
+      moves: moves.map(m => m.trim()).filter(Boolean),
+      quelle: 'Format-Generator', status: 'verfuegbar', note: ''
+    };
+    setState({ ...state, customClips: { ...(state.customClips || {}), [id]: neuerClip } });
+    setGespeichertHinweis(true);
+  }
+
+  return e('div', { style: { padding: 16 } },
+    e('div', { style: { fontSize: 13, color: T.text, lineHeight: 1.5, marginBottom: 14 } },
+      'Aus dem Zwischenfazit: Kopf- und Fußtext bleiben permanent im Bild, nur die Mitte wechselt. Kopf/Fuß sind feste Vorlagen mit Lücken, die Moves kannst du frei eintragen oder dir vorschlagen lassen.'),
+    e('div', { style: { display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 16 } },
+      Object.entries(FORMAT_DEFS).map(([key, d]) => e('button', {
+        key, onClick: () => waehleFormat(key),
+        style: { padding: '6px 10px', borderRadius: 8, fontSize: 11, cursor: 'pointer', fontFamily: 'inherit',
+          border: '1px solid ' + (formatTyp === key ? T.orange : T.line),
+          background: formatTyp === key ? T.orange : 'transparent', color: formatTyp === key ? '#fff' : T.textDim }
+      }, d.label))
+    ),
+    e('div', { style: { marginBottom: 10 } },
+      e('div', { style: lbl }, 'Titel (intern, nicht im Video)'),
+      e('input', { value: titel, onChange: ev => setTitel(ev.target.value), placeholder: def.label, style: { ...eingabeStil, marginTop: 4 } })
+    ),
+    def.felder.map(fd => e('div', { key: fd.key, style: { marginBottom: 10 } },
+      e('div', { style: lbl }, fd.label),
+      e('input', { value: felder[fd.key] || '', onChange: ev => setFeld(fd.key, ev.target.value), style: { ...eingabeStil, marginTop: 4 } })
+    )),
+
+    e('div', { style: { background: '#000', color: '#fff', borderRadius: 10, padding: '10px 14px', fontSize: 14, fontWeight: 800, textAlign: 'center', lineHeight: 1.3, whiteSpace: 'pre-line', marginTop: 6 } }, textOben),
+
+    e('div', { style: { marginTop: 14 } },
+      e('div', { style: lbl }, def.moveLabel + '-Liste'),
+      moves.map((m, i) => e('div', { key: i, style: { display: 'flex', gap: 6, marginTop: 5 } },
+        e('input', { value: m, onChange: ev => setMove(i, ev.target.value), placeholder: def.moveLabel + ' ' + (i + 1), style: { ...eingabeStil, flex: 1 } }),
+        e('button', { onClick: () => removeMove(i), style: { ...kleinerBtn, padding: '6px 10px' } }, '✕')
+      )),
+      e('button', { onClick: addMove, style: { ...kleinerBtn, marginTop: 8 } }, '+ ' + def.moveLabel)
+    ),
+
+    textUnten ? e('div', { style: { background: '#000', color: '#fff', borderRadius: 10, padding: '10px 14px', fontSize: 14, fontWeight: 800, textAlign: 'center', lineHeight: 1.3, whiteSpace: 'pre-line', marginTop: 14 } }, textUnten) : null,
+
+    e('div', { style: { marginTop: 20, borderTop: '1px solid ' + T.line, paddingTop: 14 } },
+      e('div', { style: lbl }, 'KI-Vorschlag für ' + def.moveLabel + 's (optional)'),
+      e('textarea', { value: kontext, onChange: ev => setKontext(ev.target.value),
+        placeholder: 'Zusatzwunsch, z.B. "Fokus Hüfte" oder "aus bestehendem Material mischen"',
+        style: { ...eingabeStil, minHeight: 50, marginTop: 6, resize: 'vertical' } }),
+      e('button', { onClick: holeVorschlag, disabled: lädt,
+        style: { width: '100%', marginTop: 8, padding: '11px', borderRadius: 9, border: '1px solid ' + T.line, cursor: 'pointer', fontFamily: 'inherit',
+          background: 'transparent', color: T.orangeHell, fontSize: 13, fontWeight: 700, opacity: lädt ? 0.6 : 1 } },
+        lädt ? 'Claude und GPT denken …' : '✨ Vorschläge holen'),
+      !KI_AKTIV ? e('div', { style: { marginTop: 10, padding: 10, background: T.soft, border: '1px dashed ' + T.line, borderRadius: 9, fontSize: 12, color: T.textDim } },
+        'Noch nicht scharf: Die Function muss den Typ »formatFuellen« kennen und KI_AKTIV auf true stehen.') : null,
+      vorschlag ? e('div', { style: { marginTop: 10 } },
+        vorschlag.platzhalter ? e(ResultBox, { titel: 'Vorschau', text: vorschlag.hinweis, dim: true }) : null,
+        vorschlag.fehler ? e(ResultBox, { titel: 'Fehler', text: vorschlag.fehler, warn: true }) : null,
+        vorschlag.claude ? e(ResultBox, { titel: 'Claude', text: vorschlag.claude }) : null,
+        vorschlag.claudeError ? e(ResultBox, { titel: 'Claude – Fehler', text: vorschlag.claudeError, warn: true }) : null,
+        vorschlag.gpt ? e(ResultBox, { titel: 'GPT', text: vorschlag.gpt }) : null,
+        vorschlag.gptError ? e(ResultBox, { titel: 'GPT – Fehler', text: vorschlag.gptError, warn: true }) : null
+      ) : null
+    ),
+
+    e('button', { onClick: speichern,
+      style: { width: '100%', marginTop: 18, padding: '13px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+        background: T.orange, color: '#fff', fontSize: 15, fontWeight: 700 } },
+      '✓ Als Clip speichern (lokal, im Browser)'),
+    gespeichertHinweis ? e('div', { style: { fontSize: 12, color: '#6ba368', marginTop: 8, textAlign: 'center' } }, 'Gespeichert. Erscheint unten in der Liste.') : null,
+    e('div', { style: { fontSize: 11, color: T.textDim, marginTop: 8, lineHeight: 1.5 } },
+      'Hinweis: Landet erstmal lokal im Browser, nicht automatisch im Wochenplan. Für einen festen Sende-Termin sag mir, welcher Clip in welche Woche soll, dann trag ich ihn fest ein.'),
+
+    e(GespeicherteFormatClips, { state, setState })
+  );
+}
+
+function GespeicherteFormatClips({ state, setState }) {
+  const [offenId, setOffenId] = useState(null);
+  const clips = Object.values(state.customClips || {}).sort((a, b) => b.id.localeCompare(a.id));
+  if (!clips.length) return null;
+  function löschen(id) {
+    const rest = { ...(state.customClips || {}) };
+    delete rest[id];
+    setState({ ...state, customClips: rest });
+  }
+  return e('div', { style: { marginTop: 24, borderTop: '1px solid ' + T.line, paddingTop: 16 } },
+    e('div', { style: lbl }, 'Gespeicherte Format-Clips (' + clips.length + ')'),
+    clips.map(c => e('div', { key: c.id, style: { marginTop: 10 } },
+      e(FolgeKarte, {
+        f: { ...c, tag: FORMAT_LABEL[c.formatTyp] || '', nr: '' },
+        status: 'offen', onStatus: () => {}, offen: offenId === c.id, onToggle: () => setOffenId(offenId === c.id ? null : c.id)
+      }),
+      e('button', { onClick: () => löschen(c.id), style: { ...kleinerBtn, marginTop: -6, marginBottom: 6 } }, '✕ Löschen')
+    ))
+  );
+}
+
 function KiTab({ state }) {
   const [daten, setDaten] = useState(() => erzeugePerformanceVorlage(state));
   const [lädt, setLädt] = useState(false);
@@ -4746,6 +5106,8 @@ function App() {
     tab === 'heute' ? e(HeuteTab, { state, setState }) : null,
     tab === 'produktion' ? e(ProduktionTab, { state, setState }) : null,
     tab === 'sammlung' ? e(SammlungTab) : null,
+    tab === 'formate' ? e(FormateTab, { state, setState }) : null,
+    tab === 'oli' ? e(OliTab, { state, setState }) : null,
     tab === 'bibel' ? e(BibelTab) : null,
     tab === 'ki' ? e(KiTab, { state }) : null,
     (tab === 'heute' || tab === 'produktion') ? e(Werkzeuge, { state, setState }) : null
