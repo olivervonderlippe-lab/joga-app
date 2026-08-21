@@ -110,6 +110,7 @@
   }
   .exercise-card .num { color: var(--muted); font-size: 0.85rem; font-weight: 600; }
   .exercise-card h2 { margin: 4px 0 10px; font-size: 1.5rem; color: var(--accent); }
+  .ex-summary { font-size: 0.88rem; color: var(--muted); margin: -4px 0 14px; line-height: 1.4; }
   .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
   .chip {
     background: var(--light);
@@ -290,6 +291,7 @@
       <div class="num" id="ex-num">#1</div>
       <div class="block-label" id="ex-block"></div>
       <h2 id="ex-title">…</h2>
+      <div class="ex-summary" id="ex-summary"></div>
       <div class="meta-row">
         <span class="chip" id="ex-position">Position</span>
         <span class="chip" id="ex-reps">Reps</span>
@@ -388,65 +390,66 @@ const FOAM_ROLLER_EXERCISES = [
 ];
 
 /* =========================================================
-   CLASS 2: Mat Pilates – Foundation Flow (Level 1–2, 60 Min.)
-   Quelle: Mat_Pilates_Foundation_Flow_TeacherScript.docx
+   CLASS 2: Mat Pilates – Foundation Flow (Level 1–2, 58 Min.)
+   Quelle: Mat_Pilates_Foundation_Flow_TeacherScript.docx +
+   Mat_Pilates_Foundation_Flow_OnePager_v2.docx (Kurzbeschreibungen)
    Zeiten pro Übung sind innerhalb der im Skript angegebenen
    Zeitblöcke gleichmäßig verteilt (nur Blockgrenzen sind exakt).
    ========================================================= */
 const MAT_FLOW_EXERCISES = [
-  {nr:1, start:0, end:100, block:"Ankommen & Atmung", uebung:"Supine Breathing", position:"Rückenlage, Knie gebeugt, Füße hüftbreit & parallel, Arme neben dem Körper, Becken neutral", reps:"4–5 Atemzüge",
+  {nr:1, start:0, end:100, block:"Ankommen & Atmung", uebung:"Supine Breathing", kurz:"Rückenlage, Knie gebeugt; Atem bewusst in die Rippen lenken", position:"Rückenlage, Knie gebeugt, Füße hüftbreit & parallel, Arme neben dem Körper, Becken neutral", reps:"4–5 Atemzüge",
     cues:["„Schließ für einen Moment die Augen. Spür drei Kontaktpunkte: Hinterkopf, Brustkorb, Becken.“","„Atme durch die Nase ein – lass den Atem weit in die Seiten und den Rücken des Brustkorbs gehen.“","„Mit der Ausatmung werden die Rippen wieder schmaler, der Bauch sanft flacher – nicht maximal einziehen.“","Wichtig: noch kein „Bauchnabel zur Wirbelsäule“ – erst die Atmung etablieren"]},
-  {nr:2, start:100, end:200, block:"Ankommen & Atmung", uebung:"Pelvic Tilt / Imprint & Release", position:"Rückenlage, Becken neutral", reps:"6–8 Wiederholungen",
+  {nr:2, start:100, end:200, block:"Ankommen & Atmung", uebung:"Pelvic Tilt / Imprint & Release", kurz:"Becken beim Ausatmen leicht nach hinten kippen, einatmend zurück zur Mitte", position:"Rückenlage, Becken neutral", reps:"6–8 Wiederholungen",
     cues:["„Stell dir dein Becken wie eine Schale mit Wasser vor.“","„Ausatmen – die Schale kippt ein kleines Stück zu dir. Einatmen – zurück zur Mitte.“","Kleine Bewegung, Gesäß bleibt entspannt"]},
-  {nr:3, start:200, end:300, block:"Ankommen & Atmung", uebung:"Knee Sways", position:"Rückenlage, Knie gebeugt", reps:"6× rechts/links, beide Knie zusammen",
+  {nr:3, start:200, end:300, block:"Ankommen & Atmung", uebung:"Knee Sways", kurz:"Beide Knie im Wechsel seitlich absinken lassen, Gegenschulter bleibt unten", position:"Rückenlage, Knie gebeugt", reps:"6× rechts/links, beide Knie zusammen",
     cues:["„Einatmen – beide Knie nach rechts sinken lassen, nur so weit, wie die linke Schulter schwer bleiben kann.“","„Ausatmen – aus der Körpermitte zurückholen. Andere Seite.“","Früh Rotation, ohne kompliziert zu werden"]},
-  {nr:4, start:300, end:440, block:"Wirbelsäule mobilisieren", uebung:"Cat–Cow", position:"Vierfüßler, Hände unter Schultern, Knie unter Hüften", reps:"6–8 Wiederholungen",
+  {nr:4, start:300, end:440, block:"Wirbelsäule mobilisieren", uebung:"Cat–Cow", kurz:"Vierfüßler; Wirbelsäule abwechselnd runden (Cat) und strecken (Cow)", position:"Vierfüßler, Hände unter Schultern, Knie unter Hüften", reps:"6–8 Wiederholungen",
     cues:["Cat: Ausatmen → Steißbein einrollen → Wirbelsäule rund → Kopf folgt","Cow: Einatmen → Becken kippt → Brustbein nach vorne → sanfte Extension","„Bewegung beginnt am Becken. Lass die Bewegung wie eine Welle durch deine Wirbelsäule laufen.“"]},
-  {nr:5, start:440, end:580, block:"Wirbelsäule mobilisieren", uebung:"Thread the Needle", position:"Vierfüßler", reps:"4× je Seite",
+  {nr:5, start:440, end:580, block:"Wirbelsäule mobilisieren", uebung:"Thread the Needle", kurz:"Vierfüßler; Arm zur Decke öffnen, dann unter dem anderen Arm hindurchführen", position:"Vierfüßler", reps:"4× je Seite",
     cues:["Rechter Arm einatmend zur Decke, ausatmend unter dem linken Arm hindurch","„Öffne dich aus der Brustwirbelsäule. Das Becken bleibt möglichst ruhig.“","Letzte Wiederholung optional kurz halten"]},
-  {nr:6, start:580, end:720, block:"Wirbelsäule mobilisieren", uebung:"Bird Dog Prep", position:"Vierfüßler", reps:"6× je Seite (erst Bein, dann Arm+Bein)",
+  {nr:6, start:580, end:720, block:"Wirbelsäule mobilisieren", uebung:"Bird Dog Prep", kurz:"Vierfüßler; Bein nach hinten strecken, später Arm + Gegenbein gleichzeitig", position:"Vierfüßler", reps:"6× je Seite (erst Bein, dann Arm+Bein)",
     cues:["Zunächst nur Bein: rechtes Bein gleitet am Boden zurück, hebt max. auf Beckenhöhe, zurück – dann links","Danach Arm + gegenüberliegendes Bein","„Stell dir ein Glas Wasser auf deinem Kreuzbein vor. Länge ist wichtiger als Höhe.“","Regression: nur Arm oder nur Bein · Progression: Arm + Bein 2 Atemzüge halten"]},
-  {nr:7, start:720, end:930, block:"Bridge & Posterior Chain", uebung:"Articulated Shoulder Bridge", position:"Rückenlage, Füße hüftbreit, Fersen etwa unter den Knien", reps:"8 Wiederholungen",
+  {nr:7, start:720, end:930, block:"Bridge & Posterior Chain", uebung:"Articulated Shoulder Bridge", kurz:"Rückenlage; Becken Wirbel für Wirbel heben, dann wieder ablegen", position:"Rückenlage, Füße hüftbreit, Fersen etwa unter den Knien", reps:"8 Wiederholungen",
     cues:["Ausatmen: Becken kippen → Steißbein hebt → LWS hebt → BWS folgt; oben Schulter–Hüfte–Knie etwa eine Linie","Einatmen halten, ausatmen Wirbel für Wirbel abrollen","„Das ist kein Hüftstoß. Roll dich Wirbel für Wirbel von der Matte.“"]},
-  {nr:8, start:930, end:1140, block:"Bridge & Posterior Chain", uebung:"Bridge March", position:"Rückenlage, Bridge-Position halten", reps:"4–6 je Seite (nur wenn Gruppe stabil)", cut:1,
+  {nr:8, start:930, end:1140, block:"Bridge & Posterior Chain", uebung:"Bridge March", kurz:"In der Bridge-Position ein Bein abwechselnd wenige cm anheben", position:"Rückenlage, Bridge-Position halten", reps:"4–6 je Seite (nur wenn Gruppe stabil)", cut:1,
     cues:["Bridge halten, ein Bein wenige Zentimeter lösen, zurück","„Dein Becken ist ein Tablett. Lass das Tablett waagerecht.“","Regression: abwechselnd nur Ferse anheben"]},
-  {nr:9, start:1140, end:1272, block:"Core Series", uebung:"Tabletop → Toe Taps", position:"Rückenlage, Beine im Tabletop", reps:"3–4 Atemzüge halten, dann 6–8 Toe Taps pro Seite",
+  {nr:9, start:1140, end:1272, block:"Core Series", uebung:"Tabletop → Toe Taps", kurz:"Beine im Tabletop halten, dann Fuß abwechselnd Richtung Boden tippen", position:"Rückenlage, Beine im Tabletop", reps:"3–4 Atemzüge halten, dann 6–8 Toe Taps pro Seite",
     cues:["„Rippen schwer. Nacken lang. Becken ruhig.“","Übergang: ein Fuß Richtung Boden, zurück","„Das Bein bewegt sich. Dein Rumpf nicht.“","Je weiter der Fuß vom Körper entfernt aufsetzt, desto größer der Hebel – bei Spannungsverlust: ein Fuß bleibt am Boden"]},
-  {nr:10, start:1272, end:1404, block:"Core Series", uebung:"Single Leg Stretch – Prep", position:"Rückenlage, Kopf zunächst am Boden", reps:"6–8 pro Seite",
+  {nr:10, start:1272, end:1404, block:"Core Series", uebung:"Single Leg Stretch – Prep", kurz:"Ein Bein zur Diagonale strecken, anderes bleibt im Tabletop, Wechsel", position:"Rückenlage, Kopf zunächst am Boden", reps:"6–8 pro Seite",
     cues:["Ein Bein Richtung 45° strecken, anderes bleibt Tabletop, Wechsel","Danach optional Kopf und Schulterblätter anheben","„Heb dich aus dem Brustkorb – nicht aus dem Hals.“"]},
-  {nr:11, start:1404, end:1536, block:"Core Series", uebung:"Hundred Prep", position:"Rückenlage; Beine als Option: Füße am Boden/Tabletop/diagonal gestreckt; Arme wenige cm über der Matte", reps:"5 Pumps ein, 5 aus – 5 Atemzyklen = 50 Pumps",
+  {nr:11, start:1404, end:1536, block:"Core Series", uebung:"Hundred Prep", kurz:"Rückenlage, Arme knapp über der Matte pumpen im Atemrhythmus 5 ein/5 aus", position:"Rückenlage; Beine als Option: Füße am Boden/Tabletop/diagonal gestreckt; Arme wenige cm über der Matte", reps:"5 Pumps ein, 5 aus – 5 Atemzyklen = 50 Pumps",
     cues:["Kopf darf unten bleiben, Arme klein pumpen","„Die Arme pumpen – der Körper bleibt ruhig. Atme trotzdem.“","Fortgeschrittene können auf 100 erweitern"]},
-  {nr:12, start:1536, end:1668, block:"Core Series", uebung:"Half Roll Back", position:"Sitzen, Knie gebeugt, Füße aufgestellt, Hände hinter Oberschenkeln oder nach vorne", reps:"6 Wiederholungen",
+  {nr:12, start:1536, end:1668, block:"Core Series", uebung:"Half Roll Back", kurz:"Aus dem Sitz Becken unterrollen zur C-Kurve, halb zurück, wieder aufrichten", position:"Sitzen, Knie gebeugt, Füße aufgestellt, Hände hinter Oberschenkeln oder nach vorne", reps:"6 Wiederholungen",
     cues:["Ausatmen → Becken unterrollen → C-Kurve → halb zurück; einatmen halten; ausatmen wieder aufrichten","„Nicht nach hinten fallen. Dein Becken rollt unter dich und erzeugt die Bewegung.“"]},
-  {nr:13, start:1668, end:1800, block:"Core Series", uebung:"Spine Stretch Forward", position:"Sitzen, Beine etwa mattenbreit, Knie bei Bedarf leicht gebeugt", reps:"4–5 Wiederholungen",
+  {nr:13, start:1668, end:1800, block:"Core Series", uebung:"Spine Stretch Forward", kurz:"Aufrecht sitzen, Wirbelsäule nach vorne über die Beine runden", position:"Sitzen, Beine etwa mattenbreit, Knie bei Bedarf leicht gebeugt", reps:"4–5 Wiederholungen",
     cues:["Einatmen aufrichten, ausatmen Kopf → BWS → nach vorne runden","„Stell dir vor, du rollst dich über einen großen Ball.“","Einatmen unten, ausatmen wieder stapeln"]},
-  {nr:14, start:1800, end:1960, block:"Side-Lying Leg Series", uebung:"Side Leg Lift", position:"Rechte Seitlage, Kopf auf Arm/Hand, Beine leicht nach vorne", reps:"8–10 Wiederholungen",
+  {nr:14, start:1800, end:1960, block:"Side-Lying Leg Series", uebung:"Side Leg Lift", kurz:"Seitlage; oberes Bein auf Hüfthöhe heben und senken", position:"Rechte Seitlage, Kopf auf Arm/Hand, Beine leicht nach vorne", reps:"8–10 Wiederholungen",
     cues:["Oberes Bein auf Hüfthöhe","„Bein lang machen, dann heben. Hüfte bleibt gestapelt.“","„Stell dir zwei Scheinwerfer an deinen Beckenknochen vor – beide zeigen nach vorne.“"]},
-  {nr:15, start:1960, end:2120, block:"Side-Lying Leg Series", uebung:"Small Circles", position:"Seitlage, wie oben", reps:"5–6 Kreise je Richtung", cut:2,
+  {nr:15, start:1960, end:2120, block:"Side-Lying Leg Series", uebung:"Small Circles", kurz:"Seitlage; oberes Bein zeichnet kleine Kreise in der Luft", position:"Seitlage, wie oben", reps:"5–6 Kreise je Richtung", cut:2,
     cues:["„Klein und sauber schlägt groß und wackelig.“"]},
-  {nr:16, start:2120, end:2280, block:"Side-Lying Leg Series", uebung:"Inner Thigh Lift", position:"Seitlage, oberes Bein vor dem unteren Fuß aufgestellt", reps:"8 Wiederholungen, danach Seitenwechsel & ganze Serie wiederholen", cut:2,
+  {nr:16, start:2120, end:2280, block:"Side-Lying Leg Series", uebung:"Inner Thigh Lift", kurz:"Seitlage; unteres Bein gestreckt anheben, oberes Bein aufgestellt", position:"Seitlage, oberes Bein vor dem unteren Fuß aufgestellt", reps:"8 Wiederholungen, danach Seitenwechsel & ganze Serie wiederholen", cut:2,
     cues:["Unteres Bein gestreckt anheben","Teacher-Hinweis: hier nicht hetzen – in Level 2 verlieren Teilnehmende sonst die Beckenposition, nicht die Kraft"]},
-  {nr:17, start:2280, end:2460, block:"Prone – Rückseite & Schultergürtel", uebung:"Swan Prep", position:"Bauchlage, Hände neben Brustkorb, Ellenbogen zeigen nach hinten, Beine lang", reps:"6 Wiederholungen",
+  {nr:17, start:2280, end:2460, block:"Prone – Rückseite & Schultergürtel", uebung:"Swan Prep", kurz:"Bauchlage; Kopf und Brustbein leicht nach vorne-oben heben und senken", position:"Bauchlage, Hände neben Brustkorb, Ellenbogen zeigen nach hinten, Beine lang", reps:"6 Wiederholungen",
     cues:["Einatmen → Kopf und Brustbein verlängern, leicht anheben; ausatmen → zurück","„Zieh dein Brustbein nach vorne – nicht einfach nach oben.“","Hände sollen nicht stark drücken, Gesäß aktiv aber nicht maximal zusammenkneifen"]},
-  {nr:18, start:2460, end:2640, block:"Prone – Rückseite & Schultergürtel", uebung:"Swimming Prep / Swimming", position:"Bauchlage, Arme nach vorne", reps:"6 pro Seite, optional Swimming 20–30 Sek. alternierend",
+  {nr:18, start:2460, end:2640, block:"Prone – Rückseite & Schultergürtel", uebung:"Swimming Prep / Swimming", kurz:"Bauchlage; Arm und Gegenbein gleichzeitig heben, optional im schnellen Wechsel", position:"Bauchlage, Arme nach vorne", reps:"6 pro Seite, optional Swimming 20–30 Sek. alternierend",
     cues:["Rechter Arm + linkes Bein heben, absetzen, Wechsel","„Länge vor Höhe.“","„Kleine schnelle Wechsel. Brustbein bleibt lang. Nacken bleibt Verlängerung der Wirbelsäule.“"]},
-  {nr:19, start:2640, end:2700, block:"Child's Pose (Übergang)", uebung:"Child's Pose", position:"Aus Bauchlage in Vierfüßler, Gesäß Richtung Fersen, Arme lang nach vorne oder locker neben dem Körper, Stirn sinkt", reps:"30–45 Sekunden, 3–4 Atemzüge",
+  {nr:19, start:2640, end:2700, block:"Child's Pose (Übergang)", uebung:"Child's Pose", kurz:"Gesäß Richtung Fersen, Arme lang nach vorne, Rücken passiv entspannen", position:"Aus Bauchlage in Vierfüßler, Gesäß Richtung Fersen, Arme lang nach vorne oder locker neben dem Körper, Stirn sinkt", reps:"30–45 Sekunden, 3–4 Atemzüge",
     cues:["„Lass die Streckung von eben los. Atme bewusst in den unteren Rücken – reines Gegenprogramm, kein Ehrgeiz hier.“","Teacher-Logik: bewusste Dekompression zwischen Bauchlagenarbeit und Stützarbeit – nicht überspringen, auch wenn die Zeit knapp wird"]},
-  {nr:20, start:2700, end:2820, block:"Integration & Stütz", uebung:"Knee Hover", position:"Vierfüßler, Zehen aufgestellt", reps:"10–15 Sekunden, 2 Durchgänge",
+  {nr:20, start:2700, end:2820, block:"Integration & Stütz", uebung:"Knee Hover", kurz:"Vierfüßler; Knie wenige cm vom Boden lösen, Rücken bleibt stabil", position:"Vierfüßler, Zehen aufgestellt", reps:"10–15 Sekunden, 2 Durchgänge",
     cues:["Ausatmen → Knie 2–3 cm vom Boden lösen","„Der Rücken verändert sich nicht. Stell dir vor, die Matte wird zwischen Händen und Füßen auseinandergezogen.“","Regression: Knie bleiben unten, nur Spannung aufbauen"]},
-  {nr:21, start:2820, end:2940, block:"Integration & Stütz", uebung:"Plank Preparation", position:"Aus Vierfüßler, ein Bein zurück, zweites Bein zurück", reps:"20 Sekunden halten",
+  {nr:21, start:2820, end:2940, block:"Integration & Stütz", uebung:"Plank Preparation", kurz:"Aus Vierfüßler Beine nach hinten strecken, Körper als lange Linie halten", position:"Aus Vierfüßler, ein Bein zurück, zweites Bein zurück", reps:"20 Sekunden halten",
     cues:["„Drück den Boden weg. Kopf, Brustkorb, Becken und Beine bilden eine lange Linie.“","Regression: Knie absetzen. Keine Shoulder Taps in der Basisversion"]},
-  {nr:22, start:2940, end:3060, block:"Integration & Stütz", uebung:"Plank → Pike → Plank", position:"Plank-Position", reps:"4–6 Wiederholungen",
+  {nr:22, start:2940, end:3060, block:"Integration & Stütz", uebung:"Plank → Pike → Plank", kurz:"Aus der Plank Becken nach oben ziehen (Pike), zurück in die Plank", position:"Plank-Position", reps:"4–6 Wiederholungen",
     cues:["Aus Plank Becken nach hinten/oben, zurück in Plank – darf fließender werden","„Ausatmen – Becken zurück und hoch. Einatmen – Körper wieder als lange Linie nach vorne.“","Danach Knie ablegen"]},
-  {nr:23, start:3060, end:3180, block:"Pilatesrolle / Release", uebung:"Thoracic Extension", position:"Rückenlage, Pilatesrolle quer unter der BWS, Hände unterstützen Hinterkopf, Becken bleibt am Boden", reps:"3–4 Positionen entlang der BWS",
+  {nr:23, start:3060, end:3180, block:"Pilatesrolle / Release", uebung:"Thoracic Extension", kurz:"Rolle quer unter der Brustwirbelsäule, langsam darüber nach hinten öffnen", position:"Rückenlage, Pilatesrolle quer unter der BWS, Hände unterstützen Hinterkopf, Becken bleibt am Boden", reps:"3–4 Positionen entlang der BWS",
     cues:["Langsam über die Rolle öffnen","„Die Bewegung kommt aus deiner Brustwirbelsäule. Nicht den Kopf nach hinten hängen lassen.“","Nicht: Rolle in der Lendenwirbelsäule platzieren"]},
-  {nr:24, start:3180, end:3300, block:"Pilatesrolle / Release", uebung:"Chest Opening", position:"Rückenlage, Rolle längs unter der Wirbelsäule (nur wenn lang genug für Kopf & Becken)", reps:"30 Sek. halten, dann 6 Wiederholungen Arme Decke↔Seite",
+  {nr:24, start:3180, end:3300, block:"Pilatesrolle / Release", uebung:"Chest Opening", kurz:"Rolle längs unter der Wirbelsäule, Arme über Kopf öffnen und schließen", position:"Rückenlage, Rolle längs unter der Wirbelsäule (nur wenn lang genug für Kopf & Becken)", reps:"30 Sek. halten, dann 6 Wiederholungen Arme Decke↔Seite",
     cues:["Arme zur Seite, dann Richtung Decke → öffnen → zurück","„Lass die Vorderseite weit werden, ohne die Rippen nach oben zu drücken.“","Falls Rolle zu kurz: Übung weglassen"]},
-  {nr:25, start:3300, end:3360, block:"Downregulation", uebung:"Figure Four", position:"Rückenlage, rechter Knöchel auf linkem Oberschenkel", reps:"30 Sekunden, dann Wechsel",
-    cues:["Linkes Bein heranziehen"]},
-  {nr:26, start:3360, end:3420, block:"Downregulation", uebung:"Supine Twist", position:"Rückenlage, Knie zur Brust", reps:"2–3 Atemzüge, dann Wechsel",
-    cues:["Beide Knie nach rechts, Arme seitlich"]},
-  {nr:27, start:3420, end:3480, block:"Downregulation", uebung:"Final Breathing", position:"Rückenlage, Füße wieder aufstellen oder Beine lang", reps:"–",
+  {nr:25, start:3300, end:3360, block:"Downregulation", uebung:"Figure Four", kurz:"Rückenlage; Knöchel aufs andere Knie, Bein zur Hüftdehnung heranziehen", position:"Rückenlage, rechter Knöchel auf linkem Oberschenkel", reps:"30 Sekunden, dann Wechsel",
+    cues:["„Rechten Knöchel oberhalb des linken Knies ablegen.“","„Linkes Bein sanft zu dir heranziehen, bis du eine Dehnung im rechten Gesäß spürst.“","„Atme in die Dehnung hinein – der untere Rücken bleibt entspannt auf der Matte.“"]},
+  {nr:26, start:3360, end:3420, block:"Downregulation", uebung:"Supine Twist", kurz:"Rückenlage; Knie angewinkelt zur Seite kippen, Oberkörper bleibt liegen", position:"Rückenlage, Knie zur Brust", reps:"2–3 Atemzüge, dann Wechsel",
+    cues:["„Beide Knie gemeinsam sanft nach rechts sinken lassen, Schultern bleiben am Boden.“","„Wenn es sich gut anfühlt, darf der Kopf sanft zur Gegenseite drehen.“","„Kein Ziehen, kein Drücken – nur Gewicht sinken lassen.“"]},
+  {nr:27, start:3420, end:3480, block:"Downregulation", uebung:"Final Breathing", kurz:"Rückenlage entspannt, tief in den Brustkorb ein- und ausatmen", position:"Rückenlage, Füße wieder aufstellen oder Beine lang", reps:"–",
     cues:["„Lass den Boden jetzt wieder dein Gewicht übernehmen. Atme noch einmal weit in deinen Brustkorb.“","„Spür, ob sich dein Körper jetzt anders auf der Matte anfühlt als vor einer Stunde.“","Einatmen. Lang ausatmen. Dann über die Seite zum Sitzen."]},
 ];
 
@@ -524,6 +527,9 @@ function renderExercise() {
   document.getElementById('ex-num').textContent = '#' + ex.nr;
   document.getElementById('ex-block').textContent = ex.block || '';
   document.getElementById('ex-title').textContent = ex.uebung;
+  const summaryEl = document.getElementById('ex-summary');
+  summaryEl.textContent = ex.kurz || '';
+  summaryEl.style.display = ex.kurz ? 'block' : 'none';
   document.getElementById('ex-position').textContent = ex.position;
   document.getElementById('ex-reps').textContent = ex.reps;
   const cutChip = document.getElementById('ex-cut');
@@ -599,7 +605,7 @@ function renderList(filter) {
   const q = (filter || '').toLowerCase().trim();
   let matches = 0;
   getExercises().forEach(ex => {
-    const haystack = (ex.uebung + ' ' + ex.position + ' ' + ex.reps + ' ' + (ex.block||'') + ' ' + ex.cues.join(' ')).toLowerCase();
+    const haystack = (ex.uebung + ' ' + ex.position + ' ' + (ex.kurz||'') + ' ' + ex.reps + ' ' + (ex.block||'') + ' ' + ex.cues.join(' ')).toLowerCase();
     if (q && !haystack.includes(q)) return;
     matches++;
     const div = document.createElement('div');
@@ -610,7 +616,7 @@ function renderList(filter) {
         <span class="title">#${ex.nr} ${ex.uebung}${ex.cut ? `<span class="cut-badge">✂ #${ex.cut}</span>` : ''}</span>
         <span class="time">${fmtTime(ex.start)}–${fmtTime(ex.end)}</span>
       </div>
-      <div class="pos">${ex.position}</div>
+      <div class="pos">${ex.kurz || ex.position}</div>
     `;
     div.addEventListener('click', () => jumpToExercise(ex.nr));
     container.appendChild(div);
