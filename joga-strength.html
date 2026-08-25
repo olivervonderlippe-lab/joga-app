@@ -6,7 +6,6 @@
 <title>JOGA Strength · Einstieg</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body { background:var(--bg); }
@@ -16,19 +15,55 @@
 <body>
 <div id="root"></div>
 
-<script type="text/plain" id="app-source">
-const { useState, useEffect } = React;
+<script>
+const {
+  useState,
+  useEffect
+} = React;
 
 // ---------- Icons ----------
-const IconChevronDown = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>);
-const IconChevronRight = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>);
-const IconPlay = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>);
-const IconCheck = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>);
+const IconChevronDown = () => /*#__PURE__*/React.createElement("svg", {
+  width: "18",
+  height: "18",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: "2"
+}, /*#__PURE__*/React.createElement("polyline", {
+  points: "6 9 12 15 18 9"
+}));
+const IconChevronRight = () => /*#__PURE__*/React.createElement("svg", {
+  width: "18",
+  height: "18",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: "2"
+}, /*#__PURE__*/React.createElement("polyline", {
+  points: "9 18 15 12 9 6"
+}));
+const IconPlay = () => /*#__PURE__*/React.createElement("svg", {
+  width: "14",
+  height: "14",
+  viewBox: "0 0 24 24",
+  fill: "currentColor"
+}, /*#__PURE__*/React.createElement("polygon", {
+  points: "5 3 19 12 5 21 5 3"
+}));
+const IconCheck = () => /*#__PURE__*/React.createElement("svg", {
+  width: "16",
+  height: "16",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: "2"
+}, /*#__PURE__*/React.createElement("polyline", {
+  points: "20 6 9 17 4 12"
+}));
 
 // ---------- Date helpers ----------
-const WEEKDAYS_DE = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
-const MONTHS_DE = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-
+const WEEKDAYS_DE = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+const MONTHS_DE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 function todayISO() {
   const d = new Date();
   const off = d.getTimezoneOffset();
@@ -42,128 +77,291 @@ function formatDateDE(iso) {
 
 // ---------- Data ----------
 
-const MOVE_FLOW = [
-  { name: "Box Breathing", dur: "1 Min", cue: "4 Sek ein, 4 halten, 4 aus, 4 halten. Ankommen, nicht performen." },
-  { name: "Cat-Cow", dur: "8 Wdh", cue: "Wirbel für Wirbel. Langsam, nicht durchhängen." },
-  { name: "World's Greatest Stretch", dur: "2–4 pro Seite", cue: "Tiefer Ausfallschritt, Hand innen am Boden, Rotation zur Decke. Lieber 2 kontrollierte als 4 hastige Wiederholungen." },
-  { name: "Deep Squat Hold", dur: "30–60 Sek", cue: "Fersen bleiben unten. Ellbogen drücken die Knie sanft nach außen. Bei Bedarf zwischendurch kurz aufrichten – nicht dogmatisch durchhalten." },
-  { name: "Schulter-Armkreise", dur: "10 + 10 + 10", cue: "10× vorwärts, 10× rückwärts, 10× große Swings." },
-  { name: "Hip Hinge Drill", dur: "10 Wdh", cue: "Mit Besenstiel am Rücken. Hüfte nach hinten, Stiel bleibt an 3 Punkten." },
-  { name: "Schulterblatt-Aktivierung", dur: "10 Wdh", cue: "An der Stange oder an hoch eingestellten Ringen die Schulterblätter nach unten ziehen, ohne die Arme zu beugen. Ohne passende Aufhängung: im Vierfüßlerstand die Schulterblätter kontrolliert auseinander- und zusammenbewegen (Scapular Push-ups). Kein Volumen, nur Aktivierung – das eigentliche Hängen kommt im MASTER-Block." },
-];
-
+// MOVE ist nach Build A/B differenziert: A bereitet Hinge/Schulterblatt/Push vor
+// (RDL, Row, Pushup folgen), B bereitet Sprunggelenk/Hüfte/Overhead/einbeinige
+// Stabilität vor (Split Squat, Hip Thrust, Shoulder Press, Step-down folgen).
+// Box Breathing, Cat-Cow und Schulter-Armkreise sind an beiden Tagen sinnvoll
+// (allgemeine Aktivierung, keine Build-spezifische Vorbereitung) und bleiben gleich.
+const MOVE_FLOW_COMMON_START = [{
+  name: "Box Breathing",
+  dur: "1 Min",
+  cue: "4 Sek ein, 4 halten, 4 aus, 4 halten. Ankommen, nicht performen."
+}, {
+  name: "Cat-Cow",
+  dur: "8 Wdh",
+  cue: "Wirbel für Wirbel. Langsam, nicht durchhängen."
+}];
+const MOVE_FLOW_A = [...MOVE_FLOW_COMMON_START, {
+  name: "Hip Hinge Drill",
+  dur: "10 Wdh",
+  cue: "Mit Besenstiel am Rücken. Hüfte nach hinten, Stiel bleibt an 3 Punkten. Bereitet RDL vor."
+}, {
+  name: "Schulterblatt-Aktivierung",
+  dur: "10 Wdh",
+  cue: "An der Stange oder an hoch eingestellten Ringen die Schulterblätter nach unten ziehen, ohne die Arme zu beugen. Ohne passende Aufhängung: im Vierfüßlerstand die Schulterblätter kontrolliert auseinander- und zusammenbewegen (Scapular Push-ups). Kein Volumen, nur Aktivierung – das eigentliche Hängen kommt im MASTER-Block. Bereitet Kabelrudern vor."
+}, {
+  name: "Schulter-Armkreise",
+  dur: "10 + 10 + 10",
+  cue: "10× vorwärts, 10× rückwärts, 10× große Swings. Bereitet Liegestütze vor."
+}];
+const MOVE_FLOW_B = [...MOVE_FLOW_COMMON_START, {
+  name: "World's Greatest Stretch",
+  dur: "2–4 pro Seite",
+  cue: "Tiefer Ausfallschritt, Hand innen am Boden, Rotation zur Decke. Lieber 2 kontrollierte als 4 hastige Wiederholungen. Bereitet Split Squat vor."
+}, {
+  name: "Deep Squat Hold",
+  dur: "30–60 Sek",
+  cue: "Fersen bleiben unten. Ellbogen drücken die Knie sanft nach außen. Bei Bedarf zwischendurch kurz aufrichten – nicht dogmatisch durchhalten. Bereitet Hip Thrust und Step-down vor."
+}, {
+  name: "Schulter-Armkreise",
+  dur: "10 + 10 + 10",
+  cue: "10× vorwärts, 10× rückwärts, 10× große Swings. Bereitet Schulterdrücken (Overhead) vor."
+}];
 const EXERCISES = {
   goblet_squat: {
     name: "Goblet Squat",
     cue: "Kurzhantel senkrecht vor der Brust. Fersen bleiben am Boden, Knie zeigen Richtung Zehen. So tief wie kontrolliert möglich, während Füße stabil bleiben und Becken sowie Rücken nicht ausweichen.",
     startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 8.",
     videoUrl: "https://www.youtube.com/watch?v=JO7D6GJ98wY",
-    home: { name: "Rucksack Squat", cue: "Rucksack mit Büchern/Wasserflaschen beladen, eng vor der Brust halten. Füße schulterbreit, kontrolliert hinunter, aus dem ganzen Fuß hochdrücken. Alternative ohne Gewicht: langsame Kniebeuge, 3 Sek Absenken." },
+    home: {
+      name: "Rucksack Squat",
+      cue: "Rucksack mit Büchern/Wasserflaschen beladen, eng vor der Brust halten. Füße schulterbreit, kontrolliert hinunter, aus dem ganzen Fuß hochdrücken. Alternative ohne Gewicht: langsame Kniebeuge, 3 Sek Absenken."
+    }
   },
   rdl: {
     name: "Rumänisches Kreuzheben (Kurzhanteln)",
     cue: "Hanteln vor den Oberschenkeln. Knie leicht gebeugt, Hüfte weit nach hinten schieben, Rücken lang. Senke die Hanteln nur so weit ab, wie du die Hüfte nach hinten führen und die Wirbelsäule stabil halten kannst – entscheidend ist die spürbare Spannung in der Oberschenkelrückseite, nicht eine feste Kniehöhe.",
     startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 8.",
     videoUrl: "https://www.youtube.com/watch?v=aa57T45iFSE",
-    home: { name: "Rucksack RDL", cue: "Rucksack an den oberen Griffen halten oder zwei Taschen. Gleiche Ausführung wie im Studio. Zu leicht? Einbeiniges RDL mit Festhalten, langsamer absenken, kurze Pause unten." },
+    home: {
+      name: "Rucksack RDL",
+      cue: "Rucksack an den oberen Griffen halten oder zwei Taschen. Gleiche Ausführung wie im Studio. Zu leicht? Einbeiniges RDL mit Festhalten, langsamer absenken, kurze Pause unten."
+    }
   },
   pushup: {
     name: "Liegestütze",
     cue: "Kopf bis Ferse eine gerade Linie. Ellbogen ca. 45° zum Körper.",
     startHint: "Wähle die Höhe (Wand, Tisch, Sofa, Boden) so, dass 8 Wiederholungen ruhig bleiben und noch etwa 4 möglich wären.",
-    videoUrl: "https://www.youtube.com/watch?v=WDIpL0pjun0",
+    videoUrl: "https://www.youtube.com/watch?v=WDIpL0pjun0"
   },
   row: {
     name: "Kabelrudern (sitzend)",
     cue: "Rücken aufrecht, kein Schwung aus dem Oberkörper. Griff zum Bauch ziehen, am Ende Schulterblätter zusammenziehen.",
     startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 10.",
     videoUrl: "https://www.youtube.com/watch?v=EU7bOadUsNI",
-    home: { name: "Ring Row", cue: "Ringe auf Brusthöhe. Körper gespannt zurücklehnen, Brust zu den Ringen ziehen. Leichter: aufrechter stehen. Schwerer: Füße weiter nach vorne.", videoUrl: "https://www.youtube.com/watch?v=VQn3aGSUorc" },
+    home: {
+      name: "Ring Row",
+      cue: "Ringe auf Brusthöhe. Körper gespannt zurücklehnen, Brust zu den Ringen ziehen. Leichter: aufrechter stehen. Schwerer: Füße weiter nach vorne.",
+      videoUrl: "https://www.youtube.com/watch?v=VQn3aGSUorc"
+    }
   },
   farmer: {
     name: "Farmer Carry",
     cue: "Kurzhanteln seitlich tragen, Schultern unten. Rumpf fest, kleine kontrollierte Schritte.",
     startHint: "Das Gewicht soll spürbar sein, aber Haltung und Schritte dürfen sich nicht verändern.",
     videoUrl: "https://www.youtube.com/watch?v=VBobkldqqvk",
-    home: { name: "Taschen Carry", cue: "Zwei schwere Taschen gleichmäßig beladen, seitlich greifen, langsam durch Wohnung/Flur gehen. Wenig Platz? 30–45 Sek auf der Stelle marschieren." },
+    home: {
+      name: "Taschen Carry",
+      cue: "Zwei schwere Taschen gleichmäßig beladen, seitlich greifen, langsam durch Wohnung/Flur gehen. Wenig Platz? 30–45 Sek auf der Stelle marschieren."
+    }
   },
   split_squat: {
     name: "Split Squat",
     cue: "Beide Füße am Boden, ein Bein vorne, eins hinten. Gerade nach unten absenken, Rumpf aufrecht. Bewusst noch kein Bulgarian Split Squat (hinterer Fuß erhöht) – der erzeugt bei Wiedereinsteigern erfahrungsgemäß unnötig starken Muskelkater. Das kommt später.",
     startHint: "Nutze zunächst nur Körpergewicht. Wird es zu leicht, kannst du ab Woche 3/4 Kurzhanteln ergänzen.",
     videoUrl: "https://www.youtube.com/watch?v=zCsZwLeXrCg",
-    home: { name: "Unterstützter Split Squat", cue: "Ein Fuß vorne, einer hinten. Mit einer Hand an Wand, Stuhl oder Türrahmen festhalten. Gerade nach unten, nicht nach vorne fallen." },
+    home: {
+      name: "Unterstützter Split Squat",
+      cue: "Ein Fuß vorne, einer hinten. Mit einer Hand an Wand, Stuhl oder Türrahmen festhalten. Gerade nach unten, nicht nach vorne fallen."
+    }
   },
   hip_thrust: {
     name: "Hip Thrust",
     cue: "Oberer Rücken auf einer Bank, Gewicht auf der Hüfte. Hüfte hochdrücken bis Körperlinie gerade ist, oben kurz halten.",
     startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 10.",
     videoUrl: "https://www.youtube.com/watch?v=z8WwUC_UA4w",
-    home: { name: "Glute Bridge / Sofa Hip Thrust", cue: "Rücken auf dem Boden, Füße aufstellen, Hüfte hochdrücken, oben 2 Sek Gesäß anspannen. Schwerer: Rucksack auf die Hüfte, Schulterblätter auf die Sofakante, einbeinig." },
+    home: {
+      name: "Glute Bridge / Sofa Hip Thrust",
+      cue: "Rücken auf dem Boden, Füße aufstellen, Hüfte hochdrücken, oben 2 Sek Gesäß anspannen. Schwerer: Rucksack auf die Hüfte, Schulterblätter auf die Sofakante, einbeinig."
+    }
   },
   shoulder_press: {
     name: "Kurzhantel Schulterdrücken",
     cue: "Hanteln auf Schulterhöhe, kontrolliert nach oben drücken. Ein sauberer Lockout ist okay – entscheidend ist, dass Rippen und Becken dabei stabil bleiben.",
     startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 8.",
     videoUrl: "https://www.youtube.com/watch?v=guW_ENwLOMI",
-    home: { name: "Rucksack-Schulterdrücken", cue: "Rucksack mit beiden Händen vor der Brust greifen, kontrolliert über Kopf drücken. Rippen unten halten. Alternative: zwei Wasserflaschen/Taschen, oder erhöhter Pike Push-up." },
+    home: {
+      name: "Rucksack-Schulterdrücken",
+      cue: "Rucksack mit beiden Händen vor der Brust greifen, kontrolliert über Kopf drücken. Rippen unten halten. Alternative: zwei Wasserflaschen/Taschen, oder erhöhter Pike Push-up."
+    }
   },
   lat_pulldown: {
     name: "Latzug",
     cue: "Etwa schulterbreiter Griff bis leicht weiter. Brustbein anheben, Ellbogen Richtung Hosentaschen führen, kein Schwung.",
     startHint: "Wähle ein Gewicht, mit dem du vermutlich 12 saubere Wiederholungen schaffen könntest – heute machst du nur 10.",
     videoUrl: "https://www.youtube.com/watch?v=j9jtjL8FhPI",
-    home: { name: "Ring Row (hoher Zugwinkel) / Knieender Ring Lat Pull", cue: "Ellbogen eng am Körper, Brust zu den Ringen ziehen, Ellbogen Richtung Hüfte. Alternative: Ringe hoch einstellen, davor knien, Ringe zur Brust ziehen, Oberkörper relativ aufrecht." },
+    home: {
+      name: "Ring Row (hoher Zugwinkel) / Knieender Ring Lat Pull",
+      cue: "Ellbogen eng am Körper, Brust zu den Ringen ziehen, Ellbogen Richtung Hüfte. Alternative: Ringe hoch einstellen, davor knien, Ringe zur Brust ziehen, Oberkörper relativ aufrecht."
+    }
   },
   suitcase: {
     name: "Suitcase Carry",
     cue: "Eine Kurzhantel einseitig tragen. Rumpf bleibt gerade, nicht zur belasteten Seite neigen.",
     startHint: "Das Gewicht soll spürbar sein, aber Haltung und Schritte dürfen sich nicht verändern.",
     videoUrl: "https://www.youtube.com/watch?v=ur4ou6mX7sw",
-    home: { name: "Einhändige Taschen-/Rucksack-Carry", cue: "Eine schwere Tasche oder ein Rucksack in einer Hand, 20–30 Sek gehen oder auf der Stelle marschieren. Nicht zur belasteten Seite kippen, danach Seite wechseln." },
+    home: {
+      name: "Einhändige Taschen-/Rucksack-Carry",
+      cue: "Eine schwere Tasche oder ein Rucksack in einer Hand, 20–30 Sek gehen oder auf der Stelle marschieren. Nicht zur belasteten Seite kippen, danach Seite wechseln."
+    }
   },
   dead_hang: {
     name: "Dead Hang",
     cue: "An der Stange hängen und die Zeit aushalten. Aktives Hängen: Schulterblätter leicht anspannen statt komplett passiv einsinken zu lassen. Nächster Schritt danach: Active Hang mit Zug-Impuls, dann Scapular Pull-up.",
     startHint: "Halte nur so lange, wie Griff und Schulterposition sauber bleiben – kein Kampf bis zum Abrutschen.",
     videoUrl: "https://www.youtube.com/watch?v=2vspW4N4BMs",
-    home: { name: "Ringe-Hang", cue: "An sicher und hoch genug befestigten Ringen hängen. Kannst du nicht frei hängen: Füße leicht am Boden lassen, Knie beugen, nur einen Teil des Körpergewichts übernehmen. Keine improvisierte Türlösung ohne Vertrauen in die Konstruktion." },
+    home: {
+      name: "Ringe-Hang",
+      cue: "An sicher und hoch genug befestigten Ringen hängen. Kannst du nicht frei hängen: Füße leicht am Boden lassen, Knie beugen, nur einen Teil des Körpergewichts übernehmen. Keine improvisierte Türlösung ohne Vertrauen in die Konstruktion."
+    }
   },
   step_down: {
     name: "Box Step-down",
-    cue: "Auf eine stabile Erhöhung (Kastenstufe, feste Bank) stellen. Ein Bein langsam und kontrolliert nach unten senken, bis die Ferse fast den Boden berührt, dann aus dem stehenden Bein zurück nach oben drücken. Kein Abfedern, keine Schwungbewegung, Knie bleibt in Fluchtlinie mit dem Fuß. Erster kleiner Baustein Richtung Pistol Squat \u2013 Balance und exzentrische Kontrolle vor Kraft.",
-    startHint: "W\u00e4hle eine Stufenh\u00f6he, bei der 6 Wiederholungen pro Seite sauber und ohne Wackeln m\u00f6glich sind. Lieber niedrige Stufe und sauber, als hohe Stufe und wackelig.",
+    cue: "Auf eine stabile Erhöhung (Kastenstufe, feste Bank) stellen. Ein Bein langsam und kontrolliert nach unten senken, bis die Ferse fast den Boden berührt, dann aus dem stehenden Bein zurück nach oben drücken. Kein Abfedern, keine Schwungbewegung, Knie bleibt in Fluchtlinie mit dem Fuß. Erster kleiner Baustein Richtung Pistol Squat – Balance und exzentrische Kontrolle vor Kraft.",
+    startHint: "Wähle eine Stufenhöhe, bei der 6 Wiederholungen pro Seite sauber und ohne Wackeln möglich sind. Lieber niedrige Stufe und sauber, als hohe Stufe und wackelig.",
     videoUrl: "https://www.youtube.com/watch?v=SZXOPRVP1Oc",
-    home: { name: "Treppenstufe / Ring-unterst\u00fctzt", cue: "Unterste Treppenstufe oder stabiler Hocker. Alternativ an den Ringen festhalten: langsam ablassen, mit beiden Beinen wieder hoch. Gleiche Regel wie im Studio \u2013 lieber niedriger und sauber." },
+    home: {
+      name: "Treppenstufe / Ring-unterstützt",
+      cue: "Unterste Treppenstufe oder stabiler Hocker. Alternativ an den Ringen festhalten: langsam ablassen, mit beiden Beinen wieder hoch. Gleiche Regel wie im Studio – lieber niedriger und sauber."
+    }
   },
   hollow_hold: {
     name: "Hollow Hold",
     cue: "Rückenlage, unterer Rücken drückt in den Boden, Arme und Beine leicht angehoben, Spannung im ganzen Rumpf. Löst sich der Rücken vom Boden: Beine näher heranziehen oder Kopf ablegen. Baustein Richtung L-Sit – als Nächstes folgt Hollow Tuck, dann Compression Lift.",
     startHint: "Halte nur so lange, wie der untere Rücken sauber am Boden bleibt – kein Zittern erzwingen.",
-    videoUrl: "https://www.youtube.com/watch?v=0yPin8hSc8o",
-  },
+    videoUrl: "https://www.youtube.com/watch?v=0yPin8hSc8o"
+  }
 };
-
 const BUILD_A = ["goblet_squat", "rdl", "pushup", "row", "farmer"];
 const BUILD_B = ["split_squat", "hip_thrust", "shoulder_press", "lat_pulldown", "suitcase", "step_down"];
+const WEEKS = [{
+  week: 1,
+  sets: 2,
+  rir: 4,
+  note: "So leicht, dass es fast lächerlich wirkt. Das ist richtig so."
+}, {
+  week: 2,
+  sets: 3,
+  rir: 4,
+  note: "Nur mehr Sätze, wenn Woche 1 sauber war (siehe Empfehlung unten)."
+}, {
+  week: 3,
+  sets: 3,
+  rir: 3,
+  note: "Nur erhöhen, wenn die Kriterien unten erfüllt sind."
+}, {
+  week: 4,
+  sets: 2,
+  rir: 4,
+  note: "Deload. Zurück auf Woche-1-Gewicht, weniger Sätze."
+}];
+const REPS = {
+  goblet_squat: 8,
+  rdl: 8,
+  pushup: 8,
+  row: 10,
+  farmer: "25m",
+  split_squat: 8,
+  hip_thrust: 10,
+  shoulder_press: 8,
+  lat_pulldown: 10,
+  suitcase: "20m/Seite",
+  step_down: "6/Seite"
+};
 
-const WEEKS = [
-  { week: 1, sets: 2, rir: 4, note: "So leicht, dass es fast lächerlich wirkt. Das ist richtig so." },
-  { week: 2, sets: 3, rir: 4, note: "Nur mehr Sätze, wenn Woche 1 sauber war (siehe Empfehlung unten)." },
-  { week: 3, sets: 3, rir: 3, note: "Nur erhöhen, wenn die Kriterien unten erfüllt sind." },
-  { week: 4, sets: 2, rir: 4, note: "Deload. Zurück auf Woche-1-Gewicht, weniger Sätze." },
-];
-
-const REPS = { goblet_squat: 8, rdl: 8, pushup: 8, row: 10, farmer: "25m", split_squat: 8, hip_thrust: 10, shoulder_press: 8, lat_pulldown: 10, suitcase: "20m/Seite", step_down: "6/Seite" };
+// ---------- GET UP ----------
+// Eigener Block zwischen MOVE und BUILD: Gleichgewicht, Timing und Koordination
+// werden frisch trainiert, bevor die Kraftarbeit in BUILD beginnt. Nutzt dieselbe
+// 4-Wochen-Struktur wie WEEKS/BUILD (gleicher globaler week-State), aber mit
+// eigener Fortschritts-Logik (Erfolge/Hilfe/Seite/Beschwerden statt RIR/Sätze).
+const GET_UP = {
+  A: {
+    name: "Rock and Roll Get-up",
+    seitenwechsel: false,
+    weeks: [{
+      titel: "Bewegung verstehen",
+      saetze: "3 Sätze",
+      ablauf: "5 enge Rock-and-Rolls, danach 3 Aufstehversuche mit beiden Händen. Füße gleichzeitig nah am Po aufsetzen.",
+      cue: "Enge Kugel. Füße nah ran. Brust nach vorn.",
+      ziel: "Kontrolliert über den oberen Rücken rollen und stabil in der Hocke landen."
+    }, {
+      titel: "Hände reduzieren",
+      saetze: "3 × 3–5 Wdh.",
+      ablauf: "Nur mit Fingerspitzen abdrücken (alternativ 1–3 kg Gegengewicht vor der Brust). Zunächst nur in der tiefen Hocke landen.",
+      cue: "Nase über die Zehen, bevor der Po hochkommt.",
+      ziel: "Mindestens drei kontrollierte Landungen ohne Zurückfallen."
+    }, {
+      titel: "Ohne Hände in die Hocke",
+      saetze: "3 × 3 Wdh.",
+      ablauf: "Ohne Hände rollen, beide Füße gleichzeitig aufsetzen, zwei Sekunden stabil in der Hocke bleiben, anschließend normal aufstehen.",
+      cue: "Erst landen. Dann aufstehen.",
+      ziel: "Drei von fünf Versuchen ohne Hände stabilisieren."
+    }, {
+      titel: "Durchgehend in den Stand",
+      saetze: "3 × 3 Wdh.",
+      ablauf: "Rock and Roll, ohne Pause in die Hocke, Oberkörper nach vorn, Hüfte und Knie vollständig strecken.",
+      cue: "Schwung mitnehmen. Brust vor. Ganz hoch.",
+      ziel: "Mindestens zwei saubere Wiederholungen hintereinander."
+    }]
+  },
+  B: {
+    name: "Schneidersitz Get-up",
+    seitenwechsel: true,
+    weeks: [{
+      titel: "Position finden",
+      saetze: "3 Sätze pro Beinposition",
+      ablauf: "Füße eng zum Becken, Oberkörper weit nach vorn, mit einer Hand oder an einem Ring aufstehen, langsam wieder absetzen. 3 Wdh. pro Seite.",
+      cue: "Brust nach vorn. Druck über die Füße.",
+      ziel: "Ohne Verdrehen oder Schmerzen aus beiden Beinpositionen aufstehen."
+    }, {
+      titel: "Unterstützung reduzieren",
+      saetze: "3 × 3 Wdh.",
+      ablauf: "Nur Fingerspitzen verwenden (alternativ 1–3 kg Gegengewicht vor der Brust). Beine dürfen sich beim Hochkommen entkreuzen.",
+      cue: "Erst den Po lösen, dann die Beine entfalten.",
+      ziel: "Möglichst wenig Druck über die Finger."
+    }, {
+      titel: "Ohne Hände",
+      saetze: "3 × 2–3 Wdh. pro Beinposition",
+      ablauf: "Arme nach vorn, Oberkörper deutlich über die Füße bringen, ohne Hände aufstehen, Beine beim Hochkommen entkreuzen.",
+      cue: "Nase vor die Knie. Po hoch. Beine öffnen.",
+      ziel: "Mindestens eine Wiederholung aus jeder Beinposition."
+    }, {
+      titel: "Kontrolle statt Schwung",
+      saetze: "3 × 2 Wdh. pro Beinposition",
+      ablauf: "Ohne Hände aufstehen, oben vollständig stabilisieren, kontrolliert wieder in den Schneidersitz absetzen. Kein Fallenlassen auf den Boden.",
+      cue: "Hoch ist die halbe Übung. Runter gehört dazu.",
+      ziel: "Aufstehen und Hinsetzen aus beiden Beinpositionen ohne Handkontakt."
+    }]
+  }
+};
 
 // ---------- Storage helpers ----------
 function loadJSON(key, fallback) {
-  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
-  catch (e) { return fallback; }
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    return fallback;
+  }
 }
 function saveJSON(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); return true; }
-  catch (e) { console.error("Speichern fehlgeschlagen", e); return false; }
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (e) {
+    console.error("Speichern fehlgeschlagen", e);
+    return false;
+  }
 }
 function allLogsForWeek(weekNum) {
   const out = [];
@@ -178,309 +376,625 @@ function allLogsForWeek(weekNum) {
 }
 
 // ---------- Week recommendation ----------
-function WeekRecommendation({ week }) {
+function WeekRecommendation({
+  week
+}) {
   if (week === 1) return null;
-  const prevLogs = allLogsForWeek(week - 1).filter((l) => l.kater !== null && l.kater !== undefined);
+  const prevLogs = allLogsForWeek(week - 1).filter(l => l.kater !== null && l.kater !== undefined);
   if (prevLogs.length === 0) {
-    return (
-      <div className="rounded-lg bg-[var(--card)] border border-[var(--border)] px-3 py-2.5 mb-4">
-        <p className="text-[var(--text-secondary)] text-xs leading-relaxed">
-          Noch keine Folgetag-Daten aus Woche {week - 1}. Trag sie nach dem Training ein, dann bekommst du hier eine Empfehlung.
-        </p>
-      </div>
-    );
+    return /*#__PURE__*/React.createElement("div", {
+      className: "rounded-lg bg-[var(--card)] border border-[var(--border)] px-3 py-2.5 mb-4"
+    }, /*#__PURE__*/React.createElement("p", {
+      className: "text-[var(--text-secondary)] text-xs leading-relaxed"
+    }, "Noch keine Folgetag-Daten aus Woche ", week - 1, ". Trag sie nach dem Training ein, dann bekommst du hier eine Empfehlung."));
   }
-  const ok = prevLogs.every((l) => l.kater <= 3 && l.gelenke === "nein" && (l.muedigkeit ?? 10) <= 5 && l.bereit === "ja");
-  return (
-    <div className={`rounded-lg border px-3 py-2.5 mb-4 ${ok ? "bg-[var(--success-bg)] border-[var(--success-border)]" : "bg-[var(--warning-bg)] border-[var(--warning-border)]"}`}>
-      <p className={`text-xs leading-relaxed ${ok ? "text-[var(--success-text)]" : "text-[var(--warning-text)]"}`}>
-        {ok
-          ? `Woche ${week - 1} war sauber (Muskelkater ≤3, keine Gelenkbeschwerden, bereit). Weiter zu Woche ${week} wie geplant.`
-          : `Woche ${week - 1} war noch nicht sauber genug (Muskelkater, Gelenke, Müdigkeit oder Bereitschaft außerhalb des Zielbereichs). Empfehlung: Woche ${week - 1} noch einmal wiederholen statt zu Woche ${week} weiterzugehen.`}
-      </p>
-    </div>
-  );
+  const ok = prevLogs.every(l => l.kater <= 3 && l.gelenke === "nein" && (l.muedigkeit ?? 10) <= 5 && l.bereit === "ja");
+  return /*#__PURE__*/React.createElement("div", {
+    className: `rounded-lg border px-3 py-2.5 mb-4 ${ok ? "bg-[var(--success-bg)] border-[var(--success-border)]" : "bg-[var(--warning-bg)] border-[var(--warning-border)]"}`
+  }, /*#__PURE__*/React.createElement("p", {
+    className: `text-xs leading-relaxed ${ok ? "text-[var(--success-text)]" : "text-[var(--warning-text)]"}`
+  }, ok ? `Woche ${week - 1} war sauber (Muskelkater ≤3, keine Gelenkbeschwerden, bereit). Weiter zu Woche ${week} wie geplant.` : `Woche ${week - 1} war noch nicht sauber genug (Muskelkater, Gelenke, Müdigkeit oder Bereitschaft außerhalb des Zielbereichs). Empfehlung: Woche ${week - 1} noch einmal wiederholen statt zu Woche ${week} weiterzugehen.`));
+}
+
+// ---------- GET UP Komponente ----------
+
+function getUpEmpfehlung(log) {
+  if (!log) return null;
+  if (log.beschwerden && log.beschwerden !== "nein") {
+    return {
+      typ: "zurueck",
+      text: `Beschwerden gemeldet (${log.beschwerden}). Empfehlung: eine Stufe zurück, nicht weiter steigern.`
+    };
+  }
+  const erfolge = Number(log.erfolge) || 0;
+  const versuche = Number(log.versuche) || 0;
+  if (versuche === 0) return null;
+  const quote = erfolge / versuche;
+  if (quote >= 0.6) {
+    return {
+      typ: "weiter",
+      text: `${erfolge} von ${versuche} sauber, keine Beschwerden. Empfehlung: nächste Stufe.`
+    };
+  }
+  return {
+    typ: "wiederholen",
+    text: `${erfolge} von ${versuche} sauber – unter der Zielmarke. Empfehlung: diese Stufe noch einmal.`
+  };
+}
+function GetUpBlock({
+  day,
+  week,
+  dateKey
+}) {
+  const [open, setOpen] = useState(false);
+  const build = GET_UP[day];
+  const wocheDaten = build.weeks[week - 1];
+  const logKey = `getup:${dateKey}:${day}:${week}`;
+  const defaults = {
+    erfolge: "",
+    versuche: "",
+    hilfe: "keine",
+    seite: "beide",
+    beschwerden: "nein",
+    beschwerdenNotiz: ""
+  };
+  const [vals, setVals] = useState(() => ({
+    ...defaults,
+    ...loadJSON(logKey, {})
+  }));
+  const [saved, setSaved] = useState(false);
+  useEffect(() => {
+    setVals({
+      ...defaults,
+      ...loadJSON(logKey, {})
+    });
+  }, [dateKey, day, week]);
+  const update = patch => {
+    const next = {
+      ...vals,
+      ...patch
+    };
+    setVals(next);
+    saveJSON(logKey, next);
+    setSaved(true);
+    clearTimeout(update._t);
+    update._t = setTimeout(() => setSaved(false), 1200);
+  };
+  const empfehlung = getUpEmpfehlung(vals);
+  const HILFE_OPTIONEN = ["Hände", "Finger", "Gewicht", "keine"];
+  const BESCHWERDEN_OPTIONEN = ["nein", "Knie", "Hüfte", "Nacken"];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden mb-3"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(!open),
+    className: "w-full flex items-center justify-between px-4 py-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-left"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, "GET UP"), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-sm"
+  }, "6–8 Minuten · ", build.name, " · Woche ", week, ": ", wocheDaten.titel)), /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text-secondary)]"
+  }, open ? /*#__PURE__*/React.createElement(IconChevronDown, null) : /*#__PURE__*/React.createElement(IconChevronRight, null))), open && /*#__PURE__*/React.createElement("div", {
+    className: "px-4 pb-4 space-y-3"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-secondary)] text-xs"
+  }, wocheDaten.saetze), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-body)] text-sm leading-relaxed"
+  }, wocheDaten.ablauf), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-hint)] text-xs italic"
+  }, "Cue: \"", wocheDaten.cue, "\""), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-secondary)] text-xs"
+  }, /*#__PURE__*/React.createElement("strong", {
+    className: "text-[var(--text)]"
+  }, "Ziel:"), " ", wocheDaten.ziel), /*#__PURE__*/React.createElement("div", {
+    className: "rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-3 py-2.5"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--warning-text)] text-xs leading-relaxed"
+  }, "Pause 45–60 Sek. Nie bis zur Ermüdung. Abbruch bei Knie-, Nacken- oder stechenden Hüftschmerzen.", build.seitenwechsel ? " Beinposition pro Satz wechseln: einmal rechtes Bein vorne, einmal linkes." : "")), /*#__PURE__*/React.createElement("div", {
+    className: "pt-2 border-t border-[var(--border)] space-y-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-2 gap-2"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs block mb-1"
+  }, "Erfolgreiche Versuche"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    value: vals.erfolge,
+    onChange: e => update({
+      erfolge: e.target.value
+    }),
+    placeholder: "z.B. 3",
+    className: "w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs block mb-1"
+  }, "von wie vielen Versuchen"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    value: vals.versuche,
+    onChange: e => update({
+      versuche: e.target.value
+    }),
+    placeholder: "z.B. 5",
+    className: "w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs block mb-1.5"
+  }, "Benötigte Hilfe"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2 flex-wrap"
+  }, HILFE_OPTIONEN.map(h => /*#__PURE__*/React.createElement("button", {
+    key: h,
+    onClick: () => update({
+      hilfe: h
+    }),
+    className: `px-3 py-1.5 rounded-lg text-xs border ${vals.hilfe === h ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, h)))), build.seitenwechsel && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs block mb-1.5"
+  }, "Kontrollierte Seite"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2"
+  }, ["rechts", "links", "beide"].map(s => /*#__PURE__*/React.createElement("button", {
+    key: s,
+    onClick: () => update({
+      seite: s
+    }),
+    className: `flex-1 py-1.5 rounded-lg text-xs border capitalize ${vals.seite === s ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, s)))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs block mb-1.5"
+  }, "Beschwerden"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2 flex-wrap"
+  }, BESCHWERDEN_OPTIONEN.map(b => /*#__PURE__*/React.createElement("button", {
+    key: b,
+    onClick: () => update({
+      beschwerden: b
+    }),
+    className: `px-3 py-1.5 rounded-lg text-xs border capitalize ${vals.beschwerden === b ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, b)))), saved && /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--success-text)] text-xs"
+  }, "Gespeichert."), empfehlung && /*#__PURE__*/React.createElement("div", {
+    className: `rounded-lg border px-3 py-2.5 ${empfehlung.typ === "zurueck" ? "bg-[var(--warning-bg)] border-[var(--warning-border)]" : empfehlung.typ === "weiter" ? "bg-[var(--success-bg)] border-[var(--success-border)]" : "bg-[var(--card)] border-[var(--border)]"}`
+  }, /*#__PURE__*/React.createElement("p", {
+    className: `text-xs leading-relaxed ${empfehlung.typ === "zurueck" ? "text-[var(--warning-text)]" : empfehlung.typ === "weiter" ? "text-[var(--success-text)]" : "text-[var(--text-secondary)]"}`
+  }, empfehlung.text)))));
 }
 
 // ---------- UI bits ----------
 
 function RirInfo() {
   const [open, setOpen] = useState(false);
-  return (
-    <div className="mb-3">
-      <button onClick={() => setOpen(!open)} className="text-xs text-[var(--text-hint)] italic underline">
-        {open ? "Was ist RIR? ausblenden" : "Was ist RIR?"}
-      </button>
-      {open && (
-        <p className="text-[var(--text-hint)] text-xs italic leading-relaxed mt-1.5">
-          RIR = "Reps in Reserve", also Wiederholungen, die du nach dem Satz noch geschafft hättest. RIR 4 heißt: nach der letzten Wiederholung wären noch etwa 4 weitere sauber möglich gewesen – du trainierst bewusst mit Reserve, nicht bis zur Erschöpfung.
-        </p>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(!open),
+    className: "text-xs text-[var(--text-hint)] italic underline"
+  }, open ? "Was ist RIR? ausblenden" : "Was ist RIR?"), open && /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-hint)] text-xs italic leading-relaxed mt-1.5"
+  }, "RIR = \"Reps in Reserve\", also Wiederholungen, die du nach dem Satz noch geschafft hättest. RIR 4 heißt: nach der letzten Wiederholung wären noch etwa 4 weitere sauber möglich gewesen – du trainierst bewusst mit Reserve, nicht bis zur Erschöpfung."));
 }
-
 function StartWeightGuide() {
   const [open, setOpen] = useState(false);
-  return (
-    <div>
-      <button onClick={() => setOpen(!open)} className="text-xs text-[var(--text-hint)] italic underline">
-        {open ? "Anleitung ausblenden" : "Erstes Mal bei dieser Übung? So findest du dein Startgewicht"}
-      </button>
-      {open && (
-        <p className="text-[var(--text-hint)] text-xs italic leading-relaxed mt-1.5">
-          Starte mit dem leichtesten Gewicht, das du hast (oder ganz ohne Gewicht). Mach 2–3 Testwiederholungen.
-          Fühlt sich das mühelos an, als könntest du noch 8 oder mehr schaffen? Nimm die nächste Gewichtsstufe und teste erneut.
-          Sobald du nach der letzten Wiederholung das Gefühl hast, noch etwa 4 weitere saubere Wiederholungen zu schaffen (das ist RIR 4) – das ist dein Startgewicht für heute.
-        </p>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(!open),
+    className: "text-xs text-[var(--text-hint)] italic underline"
+  }, open ? "Anleitung ausblenden" : "Erstes Mal bei dieser Übung? So findest du dein Startgewicht"), open && /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-hint)] text-xs italic leading-relaxed mt-1.5"
+  }, "Starte mit dem leichtesten Gewicht, das du hast (oder ganz ohne Gewicht). Mach 2–3 Testwiederholungen. Fühlt sich das mühelos an, als könntest du noch 8 oder mehr schaffen? Nimm die nächste Gewichtsstufe und teste erneut. Sobald du nach der letzten Wiederholung das Gefühl hast, noch etwa 4 weitere saubere Wiederholungen zu schaffen (das ist RIR 4) – das ist dein Startgewicht für heute."));
 }
-
-function buildSummary({ master, sets, reps, rir, hasLog, setVals }) {
-  if (master) {
-    var s = "3 × " + reps;
-    if (hasLog) {
-      s += " · " + (setVals.weight || setVals.reps) + " · Anstrengung " + setVals.effort + "/10";
-    }
-    return s;
-  }
-  var s2 = sets + " × " + reps + " · RIR " + rir;
-  if (hasLog) {
-    var extra = "";
-    if (setVals.weight) extra += setVals.weight + " · ";
-    if (setVals.reps) extra += setVals.reps + " Wdh · ";
-    extra += "Anstrengung " + setVals.effort + "/10";
-    s2 += " · " + extra;
-  }
-  return s2;
-}
-
 function embedUrl(watchUrl) {
   const match = watchUrl.match(/[?&]v=([^&]+)/);
   const id = match ? match[1] : "";
   return `https://www.youtube.com/embed/${id}?rel=0`;
 }
 
-function ExerciseCard({ ex, exKey, sets, reps, rir, master, location, dateKey }) {
+// RIR und Anstrengung sind zwei unabhängige Angaben, die sich widersprechen können
+// (z.B. RIR 4 vorgegeben, aber 9/10 Anstrengung protokolliert). Groblogik als
+// Daumenregel: RIR 4 => ungefähr Anstrengung 5-6/10 erwartet, RIR 3 => ~6-7/10,
+// RIR 0 => 10/10. Formel: erwartete Anstrengung ≈ 10 - (RIR × 1). Bei größerer
+// Abweichung (> 2 Punkte) wird gewarnt, nicht blockiert - die Einschätzung des
+// Nutzers hat immer Vorrang, die App macht nur auf den Widerspruch aufmerksam.
+function rirWiderspruch(rir, effort) {
+  if (rir === undefined || rir === null || !effort) return null;
+  const erwartet = 10 - rir;
+  const diff = effort - erwartet;
+  if (diff >= 3) {
+    return `Anstrengung ${effort}/10 wirkt hoch für RIR ${rir} (erwartet eher ~${erwartet}/10). Kurz prüfen: War der Satz härter als geplant, oder ist RIR ${rir} zu ambitioniert für heute?`;
+  }
+  if (diff <= -3) {
+    return `Anstrengung ${effort}/10 wirkt niedrig für RIR ${rir} (erwartet eher ~${erwartet}/10). Falls das stimmt: nächstes Mal eventuell mehr Gewicht.`;
+  }
+  return null;
+}
+function SatzZeile({
+  satzNr,
+  vals,
+  onChange,
+  repsZiel,
+  rir,
+  master
+}) {
+  const warnung = !master ? rirWiderspruch(rir, vals.effort) : null;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rounded-lg bg-[var(--bg)] border border-[var(--border)] px-3 py-2.5"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-xs font-medium mb-2"
+  }, "Satz ", satzNr), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-2 gap-2"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs block mb-1"
+  }, "Gewicht/Variante"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: vals.weight,
+    onChange: e => onChange({
+      weight: e.target.value
+    }),
+    placeholder: "Gewicht eintragen",
+    className: "w-full bg-[var(--card)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs block mb-1"
+  }, "Reale Wdh"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: vals.reps,
+    onChange: e => onChange({
+      reps: e.target.value
+    }),
+    placeholder: `z.B. ${repsZiel}`,
+    className: "w-full bg-[var(--card)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-2"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between mb-1"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "text-[var(--text-secondary)] text-xs"
+  }, "Anstrengung"), /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text)] text-xs font-medium"
+  }, vals.effort, "/10")), /*#__PURE__*/React.createElement("input", {
+    type: "range",
+    min: "1",
+    max: "10",
+    value: vals.effort,
+    onChange: e => onChange({
+      effort: Number(e.target.value)
+    }),
+    className: "w-full"
+  })), warnung && /*#__PURE__*/React.createElement("div", {
+    className: "mt-2 rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-2.5 py-2"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--warning-text)] text-xs leading-relaxed"
+  }, "⚠ ", warnung)));
+}
+function ExerciseCard({
+  ex,
+  exKey,
+  sets,
+  reps,
+  rir,
+  master,
+  location,
+  dateKey
+}) {
   const [open, setOpen] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
-  const setDefaults = { weight: "", reps: "", effort: 5, note: "" };
+  const anzahlSaetze = master ? 3 : sets;
+  const satzDefaults = () => ({
+    weight: "",
+    reps: "",
+    effort: 5
+  });
   const setKey = `set:${dateKey}:${exKey}`;
-  const [setVals, setSetVals] = useState(() => ({ ...setDefaults, ...loadJSON(setKey, {}) }));
-
+  const ladeSaetze = () => {
+    const gespeichert = loadJSON(setKey, null);
+    // Migration: altes Format war ein einzelnes Objekt {weight,reps,effort,note}
+    // statt eines Arrays. Wird beim ersten Laden automatisch in Satz 1 übernommen,
+    // damit alte Logs nicht verloren gehen.
+    if (gespeichert && !Array.isArray(gespeichert)) {
+      const migriert = Array.from({
+        length: anzahlSaetze
+      }, (_, i) => i === 0 ? {
+        weight: gespeichert.weight || "",
+        reps: gespeichert.reps || "",
+        effort: gespeichert.effort || 5
+      } : satzDefaults());
+      return migriert;
+    }
+    if (Array.isArray(gespeichert)) {
+      const angepasst = Array.from({
+        length: anzahlSaetze
+      }, (_, i) => gespeichert[i] || satzDefaults());
+      return angepasst;
+    }
+    return Array.from({
+      length: anzahlSaetze
+    }, () => satzDefaults());
+  };
+  const [saetze, setSaetze] = useState(ladeSaetze);
+  const [notiz, setNotiz] = useState(() => loadJSON(setKey + ":notiz", ""));
   useEffect(() => {
-    setSetVals({ ...setDefaults, ...loadJSON(setKey, {}) });
-  }, [dateKey, exKey]);
-
-  const updateSet = (patch) => {
-    const next = { ...setVals, ...patch };
-    setSetVals(next);
+    setSaetze(ladeSaetze());
+    setNotiz(loadJSON(setKey + ":notiz", ""));
+    // anzahlSaetze bewusst mit in den Abhaengigkeiten: aendert sich die Wochenauswahl
+    // (2 vs. 3 Saetze je nach WEEKS), muss die Satz-Liste neu berechnet werden - sonst
+    // bleibt sie auf der zuerst geladenen Laenge stehen, auch wenn die Woche wechselt.
+  }, [dateKey, exKey, anzahlSaetze]);
+  const updateSatz = (idx, patch) => {
+    const next = saetze.map((s, i) => i === idx ? {
+      ...s,
+      ...patch
+    } : s);
+    setSaetze(next);
     saveJSON(setKey, next);
   };
-
-  const useHome = location === "home" && ex.home;
-  const display = useHome ? { ...ex, ...ex.home } : ex;
-  const hasLog = setVals.weight || setVals.reps;
-
-  return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-4 py-3 text-left">
-        <div>
-          <div className="text-[var(--text)] font-medium">{display.name}</div>
-          <div className="text-[var(--text-secondary)] text-sm mt-0.5">
-            {buildSummary({ master, sets, reps, rir, hasLog, setVals })}
-          </div>
-        </div>
-        <span className="text-[var(--text-secondary)] shrink-0">{open ? <IconChevronDown /> : <IconChevronRight />}</span>
-      </button>
-      {open && (
-        <div className="px-4 pb-4 -mt-1 space-y-3">
-          <p className="text-[var(--text-body)] text-sm leading-relaxed">{display.cue}</p>
-          {ex.startHint && <p className="text-[var(--text-hint)] text-xs italic leading-relaxed">{ex.startHint}</p>}
-          {display.videoUrl && (
-            <div>
-              <button
-                onClick={() => setShowVideo(!showVideo)}
-                className="inline-flex items-center gap-1.5 text-sm text-[#c1541f] font-medium"
-              >
-                <IconPlay /> {showVideo ? "Video ausblenden" : "Video ansehen"}
-              </button>
-              {showVideo && (
-                <div className="mt-2 rounded-lg overflow-hidden" style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
-                  <iframe
-                    src={embedUrl(display.videoUrl)}
-                    title={display.name}
-                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              )}
-            </div>
-          )}
-
-          <div className="pt-2 border-t border-[var(--border)]">
-            <StartWeightGuide />
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              <div>
-                <label className="text-[var(--text-secondary)] text-xs block mb-1">Gewicht/Variante</label>
-                <input
-                  type="text"
-                  value={setVals.weight}
-                  onChange={(e) => updateSet({ weight: e.target.value })}
-                  placeholder="Gewicht eintragen"
-                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
-                />
-              </div>
-              <div>
-                <label className="text-[var(--text-secondary)] text-xs block mb-1">Reale Wdh</label>
-                <input
-                  type="text"
-                  value={setVals.reps}
-                  onChange={(e) => updateSet({ reps: e.target.value })}
-                  placeholder={`z.B. ${reps}`}
-                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="text-[var(--text-secondary)] text-xs">Anstrengung</label>
-              <span className="text-[var(--text)] text-xs font-medium">{setVals.effort}/10</span>
-            </div>
-            <input type="range" min="1" max="10" value={setVals.effort} onChange={(e) => updateSet({ effort: Number(e.target.value) })} className="w-full" />
-          </div>
-          <input
-            type="text"
-            value={setVals.note}
-            onChange={(e) => updateSet({ note: e.target.value })}
-            placeholder="Notiz (optional)"
-            className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
-          />
-        </div>
-      )}
-    </div>
-  );
-}
-
-function LogForm({ dateKey, week, day, location }) {
-  const defaults = {
-    week, day, location,
-    spass: 5, energie: 5, anstrengung: 5, beschwerden: "nein", beschwerdenNotiz: "", lieblingsuebung: "",
-    kater: null, muedigkeit: null, gelenke: "nein", bereit: null, schlaf: null,
+  const updateNotiz = val => {
+    setNotiz(val);
+    saveJSON(setKey + ":notiz", val);
   };
-  const loadLog = () => ({ ...defaults, ...loadJSON(`log:${dateKey}`, {}) });
+  const useHome = location === "home" && ex.home;
+  const display = useHome ? {
+    ...ex,
+    ...ex.home
+  } : ex;
+  const hasLog = saetze.some(s => s.weight || s.reps);
+  const summary = (() => {
+    const basis = master ? `3 × ${reps}` : `${sets} × ${reps} · RIR ${rir}`;
+    if (!hasLog) return basis;
+    const geloggt = saetze.filter(s => s.weight || s.reps).length;
+    return `${basis} · ${geloggt}/${anzahlSaetze} Sätze erfasst`;
+  })();
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(!open),
+    className: "w-full flex items-center justify-between px-4 py-3 text-left"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, display.name), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-sm mt-0.5"
+  }, summary)), /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text-secondary)] shrink-0"
+  }, open ? /*#__PURE__*/React.createElement(IconChevronDown, null) : /*#__PURE__*/React.createElement(IconChevronRight, null))), open && /*#__PURE__*/React.createElement("div", {
+    className: "px-4 pb-4 -mt-1 space-y-3"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-body)] text-sm leading-relaxed"
+  }, display.cue), ex.startHint && /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-hint)] text-xs italic leading-relaxed"
+  }, ex.startHint), display.videoUrl && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowVideo(!showVideo),
+    className: "inline-flex items-center gap-1.5 text-sm text-[#c1541f] font-medium"
+  }, /*#__PURE__*/React.createElement(IconPlay, null), " ", showVideo ? "Video ausblenden" : "Video ansehen"), showVideo && /*#__PURE__*/React.createElement("div", {
+    className: "mt-2 rounded-lg overflow-hidden",
+    style: {
+      position: "relative",
+      paddingBottom: "56.25%",
+      height: 0
+    }
+  }, /*#__PURE__*/React.createElement("iframe", {
+    src: embedUrl(display.videoUrl),
+    title: display.name,
+    style: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      border: 0
+    },
+    allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+    allowFullScreen: true
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pt-2 border-t border-[var(--border)]"
+  }, /*#__PURE__*/React.createElement(StartWeightGuide, null)), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-2"
+  }, saetze.map((s, i) => /*#__PURE__*/React.createElement(SatzZeile, {
+    key: i,
+    satzNr: i + 1,
+    vals: s,
+    onChange: patch => updateSatz(i, patch),
+    repsZiel: reps,
+    rir: rir,
+    master: master
+  }))), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: notiz,
+    onChange: e => updateNotiz(e.target.value),
+    placeholder: "Notiz zur Übung (optional, gilt für alle Sätze)",
+    className: "w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+  })));
+}
+function LogForm({
+  dateKey,
+  week,
+  day,
+  location
+}) {
+  const defaults = {
+    week,
+    day,
+    location,
+    spass: 5,
+    energie: 5,
+    anstrengung: 5,
+    beschwerden: "nein",
+    beschwerdenNotiz: "",
+    lieblingsuebung: "",
+    kater: null,
+    muedigkeit: null,
+    gelenke: "nein",
+    bereit: null,
+    schlaf: null
+  };
+  const loadLog = () => ({
+    ...defaults,
+    ...loadJSON(`log:${dateKey}`, {})
+  });
   const [vals, setVals] = useState(loadLog);
   const [saved, setSaved] = useState(false);
   const [tab, setTab] = useState("nach");
-
-  useEffect(() => { setVals(loadLog()); setTab("nach"); }, [dateKey]);
-
+  useEffect(() => {
+    setVals(loadLog());
+    setTab("nach");
+  }, [dateKey]);
   const save = () => {
-    const ok = saveJSON(`log:${dateKey}`, { ...vals, week, day, location });
-    if (ok) { setSaved(true); setTimeout(() => setSaved(false), 1800); }
+    const ok = saveJSON(`log:${dateKey}`, {
+      ...vals,
+      week,
+      day,
+      location
+    });
+    if (ok) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 1800);
+    }
   };
-
-  const Slider = ({ label, field, icon }) => {
+  const Slider = ({
+    label,
+    field,
+    icon
+  }) => {
     const isSet = vals[field] !== null && vals[field] !== undefined;
-    return (
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[var(--text-body)] text-sm flex items-center gap-1.5">{icon}{label}</span>
-          <span className={`text-sm font-medium ${isSet ? "text-[var(--text)]" : "text-[var(--text-muted)] italic"}`}>
-            {isSet ? vals[field] : "Noch nicht eingetragen"}
-          </span>
-        </div>
-        <input
-          type="range" min="1" max="10"
-          value={isSet ? vals[field] : 5}
-          onChange={(e) => setVals({ ...vals, [field]: Number(e.target.value) })}
-          className="w-full"
-        />
-      </div>
-    );
+    return /*#__PURE__*/React.createElement("div", {
+      className: "mb-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center justify-between mb-1.5"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "text-[var(--text-body)] text-sm flex items-center gap-1.5"
+    }, icon, label), /*#__PURE__*/React.createElement("span", {
+      className: `text-sm font-medium ${isSet ? "text-[var(--text)]" : "text-[var(--text-muted)] italic"}`
+    }, isSet ? vals[field] : "Noch nicht eingetragen")), /*#__PURE__*/React.createElement("input", {
+      type: "range",
+      min: "1",
+      max: "10",
+      value: isSet ? vals[field] : 5,
+      onChange: e => setVals({
+        ...vals,
+        [field]: Number(e.target.value)
+      }),
+      className: "w-full"
+    }));
   };
-
-  const YesNo = ({ label, field, note }) => (
-    <div className="mb-4">
-      <span className="text-[var(--text-body)] text-sm mb-1.5 block">{label}</span>
-      <div className="flex gap-2">
-        {["ja", "nein"].map((v) => (
-          <button key={v} onClick={() => setVals({ ...vals, [field]: v })}
-            className={`flex-1 py-2 rounded-lg text-sm capitalize border ${vals[field] === v ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>
-            {v}
-          </button>
-        ))}
-      </div>
-      {note && vals[field] === "ja" && (
-        <input
-          type="text"
-          value={vals[note] || ""}
-          onChange={(e) => setVals({ ...vals, [note]: e.target.value })}
-          placeholder="Wo und wobei?"
-          className="w-full mt-2 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
-        />
-      )}
-    </div>
-  );
-
-  return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4 mt-6">
-      <h3 className="text-[var(--text)] font-medium mb-3">Log</h3>
-      <div className="flex gap-2 mb-4">
-        <button onClick={() => setTab("nach")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "nach" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>☀️ Direkt danach</button>
-        <button onClick={() => setTab("morgen")} className={`flex-1 py-2 rounded-lg text-sm border ${tab === "morgen" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>🌙 Am nächsten Tag</button>
-      </div>
-
-      {tab === "nach" ? (
-        <React.Fragment>
-          <Slider label="Spaß" field="spass" icon={<span>😊</span>} />
-          <Slider label="Energie danach" field="energie" icon={<span>🔋</span>} />
-          <Slider label="Wahrgenommene Anstrengung" field="anstrengung" icon={<span>⚡</span>} />
-          <YesNo label="Schmerzen oder Beschwerden während des Trainings?" field="beschwerden" note="beschwerdenNotiz" />
-          <div className="mb-1">
-            <span className="text-[var(--text-body)] text-sm mb-1.5 block">Lieblingsbewegung</span>
-            <input type="text" value={vals.lieblingsuebung} onChange={(e) => setVals({ ...vals, lieblingsuebung: e.target.value })} placeholder="z.B. Farmer Carry"
-              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]" />
-          </div>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Slider label="Muskelkater" field="kater" icon={<span>🔥</span>} />
-          <Slider label="Müdigkeit" field="muedigkeit" icon={<span>🥱</span>} />
-          <Slider label="Schlafqualität" field="schlaf" icon={<span>💤</span>} />
-          <YesNo label="Gelenkbeschwerden?" field="gelenke" note="gelenkeNotiz" />
-          <YesNo label="Bereit fürs nächste Training?" field="bereit" />
-        </React.Fragment>
-      )}
-
-      <button onClick={save} className="w-full py-2.5 rounded-lg bg-[#c1541f] text-[#171512] font-medium text-sm flex items-center justify-center gap-1.5 mt-3">
-        {saved ? <React.Fragment><IconCheck /> Gespeichert</React.Fragment> : "Speichern"}
-      </button>
-    </div>
-  );
+  const YesNo = ({
+    label,
+    field,
+    note
+  }) => /*#__PURE__*/React.createElement("div", {
+    className: "mb-4"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text-body)] text-sm mb-1.5 block"
+  }, label), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2"
+  }, ["ja", "nein"].map(v => /*#__PURE__*/React.createElement("button", {
+    key: v,
+    onClick: () => setVals({
+      ...vals,
+      [field]: v
+    }),
+    className: `flex-1 py-2 rounded-lg text-sm capitalize border ${vals[field] === v ? "bg-[#c1541f] border-[#c1541f] text-[#171512] font-medium" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, v))), note && vals[field] === "ja" && /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: vals[note] || "",
+    onChange: e => setVals({
+      ...vals,
+      [note]: e.target.value
+    }),
+    placeholder: "Wo und wobei?",
+    className: "w-full mt-2 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-2.5 py-1.5 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+  }));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rounded-xl border border-[var(--border)] bg-[var(--card)] p-4 mt-6"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-[var(--text)] font-medium mb-3"
+  }, "Log"), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2 mb-4"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setTab("nach"),
+    className: `flex-1 py-2 rounded-lg text-sm border ${tab === "nach" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, "☀️ Direkt danach"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setTab("morgen"),
+    className: `flex-1 py-2 rounded-lg text-sm border ${tab === "morgen" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, "🌙 Am nächsten Tag")), tab === "nach" ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Slider, {
+    label: "Spaß",
+    field: "spass",
+    icon: /*#__PURE__*/React.createElement("span", null, "😊")
+  }), /*#__PURE__*/React.createElement(Slider, {
+    label: "Energie danach",
+    field: "energie",
+    icon: /*#__PURE__*/React.createElement("span", null, "🔋")
+  }), /*#__PURE__*/React.createElement(Slider, {
+    label: "Wahrgenommene Anstrengung",
+    field: "anstrengung",
+    icon: /*#__PURE__*/React.createElement("span", null, "⚡")
+  }), /*#__PURE__*/React.createElement(YesNo, {
+    label: "Schmerzen oder Beschwerden während des Trainings?",
+    field: "beschwerden",
+    note: "beschwerdenNotiz"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "mb-1"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text-body)] text-sm mb-1.5 block"
+  }, "Lieblingsbewegung"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: vals.lieblingsuebung,
+    onChange: e => setVals({
+      ...vals,
+      lieblingsuebung: e.target.value
+    }),
+    placeholder: "z.B. Farmer Carry",
+    className: "w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 text-[var(--text)] text-sm placeholder-[var(--text-muted)] focus:outline-none focus:border-[#c1541f]"
+  }))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Slider, {
+    label: "Muskelkater",
+    field: "kater",
+    icon: /*#__PURE__*/React.createElement("span", null, "🔥")
+  }), /*#__PURE__*/React.createElement(Slider, {
+    label: "Müdigkeit",
+    field: "muedigkeit",
+    icon: /*#__PURE__*/React.createElement("span", null, "🥱")
+  }), /*#__PURE__*/React.createElement(Slider, {
+    label: "Schlafqualität",
+    field: "schlaf",
+    icon: /*#__PURE__*/React.createElement("span", null, "💤")
+  }), /*#__PURE__*/React.createElement(YesNo, {
+    label: "Gelenkbeschwerden?",
+    field: "gelenke",
+    note: "gelenkeNotiz"
+  }), /*#__PURE__*/React.createElement(YesNo, {
+    label: "Bereit fürs nächste Training?",
+    field: "bereit"
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: save,
+    className: "w-full py-2.5 rounded-lg bg-[#c1541f] text-[#171512] font-medium text-sm flex items-center justify-center gap-1.5 mt-3"
+  }, saved ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(IconCheck, null), " Gespeichert") : "Speichern"));
 }
-
 const THEMES = {
   dark: {
-    "--bg": "#171512", "--card": "#1c1a17", "--border": "#2a2622",
-    "--text": "#f2eee6", "--text-secondary": "#a89f8f", "--text-body": "#c9c2b4",
-    "--text-muted": "#5c564c", "--text-hint": "#8a8070",
-    "--success-bg": "#16221c", "--success-border": "#2c4636", "--success-text": "#8fc9a8",
-    "--warning-bg": "#241c14", "--warning-border": "#3a2c1c", "--warning-text": "#c9a876",
+    "--bg": "#171512",
+    "--card": "#1c1a17",
+    "--border": "#2a2622",
+    "--text": "#f2eee6",
+    "--text-secondary": "#a89f8f",
+    "--text-body": "#c9c2b4",
+    "--text-muted": "#5c564c",
+    "--text-hint": "#8a8070",
+    "--success-bg": "#16221c",
+    "--success-border": "#2c4636",
+    "--success-text": "#8fc9a8",
+    "--warning-bg": "#241c14",
+    "--warning-border": "#3a2c1c",
+    "--warning-text": "#c9a876"
   },
   light: {
-    "--bg": "#faf6f0", "--card": "#ffffff", "--border": "#e8ded0",
-    "--text": "#2a2420", "--text-secondary": "#7a7166", "--text-body": "#4a443c",
-    "--text-muted": "#a89486", "--text-hint": "#8a7f6a",
-    "--success-bg": "#eef7f1", "--success-border": "#bfe0cc", "--success-text": "#2f7a4d",
-    "--warning-bg": "#fbf1e4", "--warning-border": "#eed9b8", "--warning-text": "#8a6a2f",
-  },
+    "--bg": "#faf6f0",
+    "--card": "#ffffff",
+    "--border": "#e8ded0",
+    "--text": "#2a2420",
+    "--text-secondary": "#7a7166",
+    "--text-body": "#4a443c",
+    "--text-muted": "#a89486",
+    "--text-hint": "#8a7f6a",
+    "--success-bg": "#eef7f1",
+    "--success-border": "#bfe0cc",
+    "--success-text": "#2f7a4d",
+    "--warning-bg": "#fbf1e4",
+    "--warning-border": "#eed9b8",
+    "--warning-text": "#8a6a2f"
+  }
 };
-
 const SKILLS = {
   pistol_squat: {
     name: "Pistol Squat",
@@ -488,31 +1002,53 @@ const SKILLS = {
     aufgabe: "Freier einbeiniger Squat: kontrolliert ab- und aufsteigend, das freie Bein bleibt gestreckt in der Luft, ohne Festhalten.",
     hilfsmittel: "Box/Bank in abnehmender Höhe, Ring oder Türrahmen zum Festhalten, optional Buch/Gewichtsscheibe unter die Ferse.",
     gateCheck: "Goblet Squat sauber bei RIR 4 + Split Squat sauber + Einbeinstand 30 Sek. Wenn nicht erfüllt: kein Zeitverlust hier – erst Squat- und Balance-Stufenleiter weiterverfolgen.",
-    move: [
-      { text: "Deep Squat Hold, 30–60 Sek." },
-      { text: "Einbeinstand mit Blickfixierung, 20–30 Sek. pro Bein" },
-      { text: "Cue: \"Ferse bleibt unten, auch wenn's zieht.\"" },
-    ],
-    build: [
-      { text: "Box Squat einbeinig auf hoher Box, freies Bein gestreckt in der Luft", video: "https://www.youtube.com/watch?v=D1IEI-lfLxU" },
-      { text: "Box schrittweise niedriger, sobald 2 saubere Sessions in Folge" },
-      { text: "Assisted Pistol an Ring/Türrahmen mit Festhalten" },
-      { text: "Cue: \"Knie bleibt über dem Fuß, kippt nicht nach innen.\"" },
-      { text: "Cue: \"Arme nach vorne als Gegengewicht.\"" },
-    ],
-    master: [
-      { text: "Negative: kontrolliert ganz runter, mit beiden Beinen wieder hoch" },
-      { text: "Voller Pistol Squat ohne Hilfsmittel", video: "https://www.youtube.com/watch?v=T74bU2vNWG4" },
-      { text: "Cue: \"Langsam runter, wie in Zeitlupe.\"" },
-    ],
-    fehler: [
-      { fehler: "Fällt nach hinten", ursache: "Ferse hebt ab (Sprunggelenk zu steif)", fix: "Deep Squat Hold intensivieren, Ferse übergangsweise erhöhen" },
-      { fehler: "Knie kippt nach innen", ursache: "Hüftstabilität fehlt", fix: "Assisted-Stufe verlängern, Cue \"Knie über Fuß\" bewusst einbauen" },
-      { fehler: "Freies Bein sinkt ab", ursache: "Hüftbeuger-Kraft/Mobilität fehlt", fix: "Freies Bein bewusst höher halten, separat dehnen" },
-      { fehler: "Kommt nicht hoch ohne Schwung", ursache: "Kraft in der Tiefe fehlt noch", fix: "Eine Box-Stufe zurück, dort RIR 4 stabilisieren" },
-    ],
+    move: [{
+      text: "Deep Squat Hold, 30–60 Sek."
+    }, {
+      text: "Einbeinstand mit Blickfixierung, 20–30 Sek. pro Bein"
+    }, {
+      text: "Cue: \"Ferse bleibt unten, auch wenn's zieht.\""
+    }],
+    build: [{
+      text: "Box Squat einbeinig auf hoher Box, freies Bein gestreckt in der Luft",
+      video: "https://www.youtube.com/watch?v=D1IEI-lfLxU"
+    }, {
+      text: "Box schrittweise niedriger, sobald 2 saubere Sessions in Folge"
+    }, {
+      text: "Assisted Pistol an Ring/Türrahmen mit Festhalten"
+    }, {
+      text: "Cue: \"Knie bleibt über dem Fuß, kippt nicht nach innen.\""
+    }, {
+      text: "Cue: \"Arme nach vorne als Gegengewicht.\""
+    }],
+    master: [{
+      text: "Negative: kontrolliert ganz runter, mit beiden Beinen wieder hoch"
+    }, {
+      text: "Voller Pistol Squat ohne Hilfsmittel",
+      video: "https://www.youtube.com/watch?v=T74bU2vNWG4"
+    }, {
+      text: "Cue: \"Langsam runter, wie in Zeitlupe.\""
+    }],
+    fehler: [{
+      fehler: "Fällt nach hinten",
+      ursache: "Ferse hebt ab (Sprunggelenk zu steif)",
+      fix: "Deep Squat Hold intensivieren, Ferse übergangsweise erhöhen"
+    }, {
+      fehler: "Knie kippt nach innen",
+      ursache: "Hüftstabilität fehlt",
+      fix: "Assisted-Stufe verlängern, Cue \"Knie über Fuß\" bewusst einbauen"
+    }, {
+      fehler: "Freies Bein sinkt ab",
+      ursache: "Hüftbeuger-Kraft/Mobilität fehlt",
+      fix: "Freies Bein bewusst höher halten, separat dehnen"
+    }, {
+      fehler: "Kommt nicht hoch ohne Schwung",
+      ursache: "Kraft in der Tiefe fehlt noch",
+      fix: "Eine Box-Stufe zurück, dort RIR 4 stabilisieren"
+    }],
     dosierung: "2×/Woche, integriert nach Split Squat/Hip Thrust, 3–5 Wdh. pro Seite. Qualität vor Menge, nie bis zur Erschöpfung.",
     lifeWin: "\"Erste Box-Stufe geschafft\" zählt schon als Fortschritt, nicht erst der freie Pistol.",
+    days: ["B"]
   },
   squat_roll: {
     name: "Squat Roll",
@@ -520,30 +1056,50 @@ const SKILLS = {
     aufgabe: "Aus tiefer Hocke rückwärts auf den oberen Rücken rollen, Schwung nutzen, mit beiden Füßen gleichzeitig wieder in den Stand/die Hocke kommen – ohne Hände.",
     hilfsmittel: "Weiche Matte oder Teppich (Sturz-/Rutschsicherheit). Optional: Wand oder Sofa in Reichweite als Rückversicherung.",
     gateCheck: "Deep Squat, Fersen bleiben am Boden, 60–90 Sek. haltbar. Wenn nicht erfüllt: kein Zeitverlust hier – erst Sprunggelenk-/Hüftmobilität über Deep Squat Hold (Kapitel 11) aufbauen.",
-    move: [
-      { text: "Rock & Roll in Ballposition (Knie an Brust, Kinn eingezogen, Schienbeine umgreifen), 10–15 Wdh. vor/zurück" },
-      { text: "Rollen ausschließlich auf Schulter/oberen Rücken – nie auf den Nacken" },
-      { text: "Cue: \"Enge Kugel, runder Rücken.\"" },
-    ],
-    build: [
-      { text: "Roll zurück → mit Handunterstützung wieder hoch (Hände dürfen abstoßen)" },
-      { text: "Danach: gleiche Bewegung ohne Hände, aber mit Wand/Sofa in Reichweite" },
-      { text: "Cue: \"Nicht hochdrücken – im Rückschwung-Ende nach vorne kippen lassen.\"" },
-      { text: "Cue: \"Beide Füße klatschen gleichzeitig.\"" },
-    ],
-    master: [
-      { text: "Volle Wiederholung ohne Hilfsmittel", video: "https://www.youtube.com/watch?v=6pjcrluYW8k" },
-      { text: "Hüftstreckung explosiv im letzten Drittel der Bewegung" },
-      { text: "Cue: \"Kleiner Sprung aus der Hocke, nicht aus der Rolle raus kriechen.\"" },
-    ],
-    fehler: [
-      { fehler: "Fällt nach hinten zurück", ursache: "Zu wenig Schwung / Ballform zu offen", fix: "Enger tucken, mehr Rock-Wiederholungen vor dem Stand-Versuch" },
-      { fehler: "Ein Fuß zuerst am Boden", ursache: "Asymmetrischer Rückschwung", fix: "Bewusst langsam filmen, auf \"gleichzeitig\" trainieren" },
-      { fehler: "Landet in Hocke statt Stand", ursache: "Hüfte streckt nicht durch", fix: "Cue \"kleiner Sprung\" verstärken, RIR niedrig halten (frisch üben)" },
-      { fehler: "Nacken-Belastung beim Rollen", ursache: "Rollt zu mittig statt auf Schulter", fix: "Diagonaler Ansatz, Kinn fest eingezogen" },
-    ],
-    dosierung: "3×/Woche, 5–8 Wdh./Session. Timing-/Koordinationsskill – kein Volumenaufbau, Qualität vor Menge.",
+    move: [{
+      text: "Rock & Roll in Ballposition (Knie an Brust, Kinn eingezogen, Schienbeine umgreifen), 10–15 Wdh. vor/zurück"
+    }, {
+      text: "Rollen ausschließlich auf Schulter/oberen Rücken – nie auf den Nacken"
+    }, {
+      text: "Cue: \"Enge Kugel, runder Rücken.\""
+    }],
+    build: [{
+      text: "Roll zurück → mit Handunterstützung wieder hoch (Hände dürfen abstoßen)"
+    }, {
+      text: "Danach: gleiche Bewegung ohne Hände, aber mit Wand/Sofa in Reichweite"
+    }, {
+      text: "Cue: \"Nicht hochdrücken – im Rückschwung-Ende nach vorne kippen lassen.\""
+    }, {
+      text: "Cue: \"Beide Füße klatschen gleichzeitig.\""
+    }],
+    master: [{
+      text: "Volle Wiederholung ohne Hilfsmittel",
+      video: "https://www.youtube.com/watch?v=6pjcrluYW8k"
+    }, {
+      text: "Hüftstreckung explosiv im letzten Drittel der Bewegung"
+    }, {
+      text: "Cue: \"Kleiner Sprung aus der Hocke, nicht aus der Rolle raus kriechen.\""
+    }],
+    fehler: [{
+      fehler: "Fällt nach hinten zurück",
+      ursache: "Zu wenig Schwung / Ballform zu offen",
+      fix: "Enger tucken, mehr Rock-Wiederholungen vor dem Stand-Versuch"
+    }, {
+      fehler: "Ein Fuß zuerst am Boden",
+      ursache: "Asymmetrischer Rückschwung",
+      fix: "Bewusst langsam filmen, auf \"gleichzeitig\" trainieren"
+    }, {
+      fehler: "Landet in Hocke statt Stand",
+      ursache: "Hüfte streckt nicht durch",
+      fix: "Cue \"kleiner Sprung\" verstärken, RIR niedrig halten (frisch üben)"
+    }, {
+      fehler: "Nacken-Belastung beim Rollen",
+      ursache: "Rollt zu mittig statt auf Schulter/oberen Rücken",
+      fix: "Symmetrisch über Schulterblätter rollen, Kinn fest eingezogen. Kein diagonaler Ansatz – der passt zu seitlichen Rollen, macht die Landung hier aber asymmetrisch."
+    }],
+    dosierung: "3×/Woche, 5–8 Wdh./Session. Timing-/Koordinationsskill – kein Volumenaufbau, Qualität vor Menge. Bei nur 2 fixen Trainingstagen (A/B): an beiden Tagen einplanen, für die dritte Einheit den optionalen dritten Tag aus GET UP nutzen.",
     lifeWin: "\"Heute ohne Hände gestanden\" zählt schon als Fortschritt, auch bei 1/5 sauberen Wdh.",
+    days: ["A", "B"]
   },
   klimmzug: {
     name: "Klimmzug",
@@ -551,98 +1107,168 @@ const SKILLS = {
     aufgabe: "Freier Klimmzug: Kinn über die Stange, danach kontrolliert ablassen bis zum vollen Hang, ohne Schwung.",
     hilfsmittel: "Klimmzugstange oder Ringe, Widerstandsband zur Unterstützung, Kasten/Stuhl für den Negative-Einstieg.",
     gateCheck: "Dead Hang 20–30 Sek. sauber + Active Hang mit Schulterblatt-Kontrolle + Ring Row/Latzug Stufe 2 sauber. Wenn nicht erfüllt: erst Pull- und Hang-Stufenleiter weiterverfolgen.",
-    move: [
-      { text: "Schulterblatt-Aktivierung, 10 Wdh." },
-      { text: "Dead Hang, 15–20 Sek." },
-      { text: "Cue: \"Schultern weg von den Ohren, auch im Hang.\"" },
-    ],
-    build: [
-      { text: "Scapular Pull-up: nur Schulterblätter aktiv nach unten ziehen, kein Ellbogenbeugen", video: "https://www.youtube.com/watch?v=qsR-yjXSikQ" },
-      { text: "Negative: oben starten, so langsam wie möglich runterlassen (Ziel 5+ Sek.)" },
-      { text: "Band-unterstützter Klimmzug, Band schrittweise dünner sobald 2 saubere Sessions in Folge" },
-      { text: "Cue: \"Ellbogen zur Hüfte ziehen, nicht nur die Hände näher zur Stange.\"" },
-      { text: "Cue: \"Kein Schwung aus den Beinen.\"" },
-    ],
-    master: [
-      { text: "Voller Klimmzug ohne Band", video: "https://www.youtube.com/watch?v=6zyx46Vpato" },
-      { text: "Kontrolliertes Ablassen bis zum vollen Hang am Ende jeder Wiederholung" },
-      { text: "Cue: \"Kinn über die Stange, nicht nur die Nase.\"" },
-    ],
-    fehler: [
-      { fehler: "Schultern ziehen zu den Ohren hoch", ursache: "Fehlende Schulterblatt-Kontrolle", fix: "Mehr Scapular Pull-ups, MOVE-Baustein intensivieren" },
-      { fehler: "Schwung aus Beinen/Hüfte", ursache: "Zugkraft noch nicht ausreichend", fix: "Eine Stufe zurück (dickeres Band/höhere Box), dort stabilisieren" },
-      { fehler: "Nur halber Bewegungsumfang", ursache: "Angst vorm vollen Hang unten / Kraft fehlt oben", fix: "Negative bewusst bis zum vollen Hang trainieren" },
-      { fehler: "Ein Arm zieht mehr", ursache: "Einseitige Schwäche", fix: "Langsamer, Fokus auf symmetrisches Ziehen, ggf. filmen" },
-    ],
+    move: [{
+      text: "Schulterblatt-Aktivierung, 10 Wdh."
+    }, {
+      text: "Dead Hang, 15–20 Sek."
+    }, {
+      text: "Cue: \"Schultern weg von den Ohren, auch im Hang.\""
+    }],
+    build: [{
+      text: "Scapular Pull-up: nur Schulterblätter aktiv nach unten ziehen, kein Ellbogenbeugen",
+      video: "https://www.youtube.com/watch?v=qsR-yjXSikQ"
+    }, {
+      text: "Negative: oben starten, so langsam wie möglich runterlassen (Ziel 5+ Sek.)"
+    }, {
+      text: "Band-unterstützter Klimmzug, Band schrittweise dünner sobald 2 saubere Sessions in Folge"
+    }, {
+      text: "Cue: \"Ellbogen zur Hüfte ziehen, nicht nur die Hände näher zur Stange.\""
+    }, {
+      text: "Cue: \"Kein Schwung aus den Beinen.\""
+    }],
+    master: [{
+      text: "Voller Klimmzug ohne Band",
+      video: "https://www.youtube.com/watch?v=6zyx46Vpato"
+    }, {
+      text: "Kontrolliertes Ablassen bis zum vollen Hang am Ende jeder Wiederholung"
+    }, {
+      text: "Cue: \"Kinn über die Stange, nicht nur die Nase.\""
+    }],
+    fehler: [{
+      fehler: "Schultern ziehen zu den Ohren hoch",
+      ursache: "Fehlende Schulterblatt-Kontrolle",
+      fix: "Mehr Scapular Pull-ups, MOVE-Baustein intensivieren"
+    }, {
+      fehler: "Schwung aus Beinen/Hüfte",
+      ursache: "Zugkraft noch nicht ausreichend",
+      fix: "Eine Stufe zurück (dickeres Band/höhere Box), dort stabilisieren"
+    }, {
+      fehler: "Nur halber Bewegungsumfang",
+      ursache: "Angst vorm vollen Hang unten / Kraft fehlt oben",
+      fix: "Negative bewusst bis zum vollen Hang trainieren"
+    }, {
+      fehler: "Ein Arm zieht mehr",
+      ursache: "Einseitige Schwäche",
+      fix: "Langsamer, Fokus auf symmetrisches Ziehen, ggf. filmen"
+    }],
     dosierung: "2×/Woche, integriert nach Kabelrudern/Ring Row, 3–5 Wdh. oder Negative-Wiederholungen. Qualität vor Menge.",
     lifeWin: "\"Erste 5-Sekunden-Negative geschafft\" zählt schon als Fortschritt, nicht erst der freie Klimmzug.",
-  },
+    days: ["A"]
+  }
 };
-
-function SkillCard({ skill }) {
+function SkillCard({
+  skill
+}) {
   const [open, setOpen] = useState(false);
-  const Step = ({ item }) => (
-    <li className="text-[var(--text-body)] text-sm leading-relaxed">
-      {item.text}
-      {item.video && (
-        <a href={item.video} target="_blank" rel="noopener noreferrer" className="ml-1.5 text-[#c1541f] font-medium">
-          ▸ Video
-        </a>
-      )}
-    </li>
-  );
-  return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-4 py-3 text-left">
-        <div>
-          <div className="text-[var(--text)] font-medium">{skill.name}</div>
-          <div className="text-[var(--text-secondary)] text-xs mt-0.5">{skill.kategorie}</div>
-        </div>
-        {open ? <IconChevronDown /> : <IconChevronRight />}
-      </button>
-      {open && (
-        <div className="px-4 pb-4 space-y-3">
-          <p className="text-[var(--text-body)] text-sm leading-relaxed">{skill.aufgabe}</p>
-          <p className="text-[var(--text-secondary)] text-xs"><strong className="text-[var(--text)]">Hilfsmittel:</strong> {skill.hilfsmittel}</p>
-
-          <div className="rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-3 py-2.5">
-            <p className="text-[var(--warning-text)] text-xs leading-relaxed"><strong>Voraussetzung:</strong> {skill.gateCheck}</p>
-          </div>
-
-          <div>
-            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1">MOVE</div>
-            <ul className="space-y-1 list-disc pl-4">{skill.move.map((it, i) => <Step key={i} item={it} />)}</ul>
-          </div>
-          <div>
-            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1">BUILD</div>
-            <ul className="space-y-1 list-disc pl-4">{skill.build.map((it, i) => <Step key={i} item={it} />)}</ul>
-          </div>
-          <div>
-            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1">MASTER</div>
-            <ul className="space-y-1 list-disc pl-4">{skill.master.map((it, i) => <Step key={i} item={it} />)}</ul>
-          </div>
-
-          <div>
-            <div className="text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1.5">Häufige Fehler</div>
-            <div className="space-y-2">
-              {skill.fehler.map((f, i) => (
-                <div key={i} className="rounded-lg bg-[var(--bg)] border border-[var(--border)] px-3 py-2">
-                  <div className="text-[var(--text)] text-sm font-medium">{f.fehler}</div>
-                  <div className="text-[var(--text-secondary)] text-xs mt-0.5">Ursache: {f.ursache}</div>
-                  <div className="text-[var(--text-body)] text-xs mt-0.5">Fix: {f.fix}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <p className="text-[var(--text-secondary)] text-xs"><strong className="text-[var(--text)]">Dosierung:</strong> {skill.dosierung}</p>
-          <p className="text-[var(--text-hint)] text-xs italic"><strong>Life Win:</strong> {skill.lifeWin}</p>
-        </div>
-      )}
-    </div>
-  );
+  const Step = ({
+    item
+  }) => /*#__PURE__*/React.createElement("li", {
+    className: "text-[var(--text-body)] text-sm leading-relaxed"
+  }, item.text, item.video && /*#__PURE__*/React.createElement("a", {
+    href: item.video,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: "ml-1.5 text-[#c1541f] font-medium"
+  }, "▸ Video"));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(!open),
+    className: "w-full flex items-center justify-between px-4 py-3 text-left"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, skill.name), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-xs mt-0.5"
+  }, skill.kategorie)), open ? /*#__PURE__*/React.createElement(IconChevronDown, null) : /*#__PURE__*/React.createElement(IconChevronRight, null)), open && /*#__PURE__*/React.createElement("div", {
+    className: "px-4 pb-4 space-y-3"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-body)] text-sm leading-relaxed"
+  }, skill.aufgabe), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-secondary)] text-xs"
+  }, /*#__PURE__*/React.createElement("strong", {
+    className: "text-[var(--text)]"
+  }, "Hilfsmittel:"), " ", skill.hilfsmittel), /*#__PURE__*/React.createElement("div", {
+    className: "rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-3 py-2.5"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--warning-text)] text-xs leading-relaxed"
+  }, /*#__PURE__*/React.createElement("strong", null, "Voraussetzung:"), " ", skill.gateCheck)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1"
+  }, "MOVE"), /*#__PURE__*/React.createElement("ul", {
+    className: "space-y-1 list-disc pl-4"
+  }, skill.move.map((it, i) => /*#__PURE__*/React.createElement(Step, {
+    key: i,
+    item: it
+  })))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1"
+  }, "BUILD"), /*#__PURE__*/React.createElement("ul", {
+    className: "space-y-1 list-disc pl-4"
+  }, skill.build.map((it, i) => /*#__PURE__*/React.createElement(Step, {
+    key: i,
+    item: it
+  })))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1"
+  }, "MASTER"), /*#__PURE__*/React.createElement("ul", {
+    className: "space-y-1 list-disc pl-4"
+  }, skill.master.map((it, i) => /*#__PURE__*/React.createElement(Step, {
+    key: i,
+    item: it
+  })))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] text-xs font-semibold uppercase tracking-wide mb-1.5"
+  }, "Häufige Fehler"), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-2"
+  }, skill.fehler.map((f, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "rounded-lg bg-[var(--bg)] border border-[var(--border)] px-3 py-2"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] text-sm font-medium"
+  }, f.fehler), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-xs mt-0.5"
+  }, "Ursache: ", f.ursache), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-body)] text-xs mt-0.5"
+  }, "Fix: ", f.fix))))), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-secondary)] text-xs"
+  }, /*#__PURE__*/React.createElement("strong", {
+    className: "text-[var(--text)]"
+  }, "Dosierung:"), " ", skill.dosierung), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-hint)] text-xs italic"
+  }, /*#__PURE__*/React.createElement("strong", null, "Life Win:"), " ", skill.lifeWin)));
 }
-
+function LosgeloestUeben({
+  week,
+  dateKey
+}) {
+  const [open, setOpen] = useState(false);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden mt-6"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(!open),
+    className: "w-full flex items-center justify-between px-4 py-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-left"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, "Losgelöst üben"), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-sm"
+  }, "GET UP, Pistol Squat, Klimmzug – unabhängig vom heutigen Build-Tag")), /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text-secondary)]"
+  }, open ? /*#__PURE__*/React.createElement(IconChevronDown, null) : /*#__PURE__*/React.createElement(IconChevronRight, null))), open && /*#__PURE__*/React.createElement("div", {
+    className: "px-4 pb-4 space-y-2"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-hint)] text-xs italic leading-relaxed mb-2"
+  }, "Gleiche Fortschrittsdaten wie oben – übst du hier GET UP Build A, während dein heutiger Tag ebenfalls Build A ist, ist das derselbe Log, kein zweiter."), /*#__PURE__*/React.createElement(GetUpBlock, {
+    day: "A",
+    week: week,
+    dateKey: dateKey
+  }), /*#__PURE__*/React.createElement(GetUpBlock, {
+    day: "B",
+    week: week,
+    dateKey: dateKey
+  }), /*#__PURE__*/React.createElement(SkillCard, {
+    skill: SKILLS.pistol_squat
+  }), /*#__PURE__*/React.createElement(SkillCard, {
+    skill: SKILLS.klimmzug
+  })));
+}
 function JogaStrength() {
   const [week, setWeek] = useState(() => loadJSON("joga-strength:week", 1));
   const [day, setDay] = useState(() => loadJSON("joga-strength:day", "A"));
@@ -650,140 +1276,185 @@ function JogaStrength() {
   const [date, setDate] = useState(() => loadJSON("joga-strength:date", todayISO()));
   const [theme, setTheme] = useState(() => loadJSON("joga-strength:theme", "dark"));
   const [moveOpen, setMoveOpen] = useState(false);
-
-  useEffect(() => { saveJSON("joga-strength:week", week); }, [week]);
-  useEffect(() => { saveJSON("joga-strength:day", day); }, [day]);
-  useEffect(() => { saveJSON("joga-strength:location", location); }, [location]);
-  useEffect(() => { saveJSON("joga-strength:date", date); }, [date]);
-  useEffect(() => { saveJSON("joga-strength:theme", theme); }, [theme]);
-
+  useEffect(() => {
+    saveJSON("joga-strength:week", week);
+  }, [week]);
+  useEffect(() => {
+    saveJSON("joga-strength:day", day);
+  }, [day]);
+  useEffect(() => {
+    saveJSON("joga-strength:location", location);
+  }, [location]);
+  useEffect(() => {
+    saveJSON("joga-strength:date", date);
+  }, [date]);
+  useEffect(() => {
+    saveJSON("joga-strength:theme", theme);
+  }, [theme]);
   const weekData = WEEKS[week - 1];
   const exList = day === "A" ? BUILD_A : BUILD_B;
   const masterKey = day === "A" ? "dead_hang" : "hollow_hold";
   const dateKey = date;
 
-  return (
-    <div className="min-h-screen bg-[var(--bg)]" style={{ fontFamily: "'Inter', system-ui, sans-serif", ...THEMES[theme] }}>
-      <div className="max-w-md mx-auto px-4 pt-8 pb-16">
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-1">
-            <div className="text-[#c1541f] text-xs font-semibold tracking-widest uppercase">JOGA Strength · Einstieg (Wochen 1–4)</div>
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="text-[var(--text-secondary)] text-xs border border-[var(--border)] rounded-full px-2.5 py-1 shrink-0"
-            >
-              {theme === "dark" ? "☀️ Hell" : "🌙 Dunkel"}
-            </button>
-          </div>
-          <div className="flex items-center justify-between gap-2">
-            <h1 className="text-[var(--text)] text-xl font-semibold">{formatDateDE(date)} · Build {day}</h1>
-          </div>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
-            className="bg-transparent text-[var(--text-secondary)] text-xs mt-1 border border-[var(--border)] rounded px-2 py-1" />
-          <p className="text-[var(--text-secondary)] text-sm mt-2">Woche {week} · {weekData.note}</p>
-        </div>
-
-        <div className="flex gap-2 mb-4">
-          {WEEKS.map((w) => (
-            <button key={w.week} onClick={() => setWeek(w.week)}
-              className={`flex-1 py-2 rounded-lg text-sm font-medium border ${week === w.week ? "bg-[#c1541f] border-[#c1541f] text-[#171512]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>
-              W{w.week}
-            </button>
-          ))}
-        </div>
-
-        <WeekRecommendation week={week} />
-
-        {week === 3 && (
-          <div className="rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-3 py-2.5 mb-4">
-            <p className="text-[var(--warning-text)] text-xs leading-relaxed">
-              Nur erhöhen, wenn: alle Wiederholungen sauber waren, RIR mind. 4 blieb und der Muskelkater am Folgetag ≤3 war. Sonst gleiches Gewicht wiederholen. Kein Satz soll sich schwerer als 6/10 anfühlen. Bei einseitigen Übungen: 1–2 Arbeitssätze pro Seite.
-            </p>
-          </div>
-        )}
-
-        <div className="flex gap-2 mb-3">
-          <button onClick={() => setDay("A")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "A" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Montag · Build A</button>
-          <button onClick={() => setDay("B")} className={`flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "B" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Donnerstag · Build B</button>
-        </div>
-
-        <div className="flex gap-2 mb-6">
-          <button onClick={() => setLocation("studio")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "studio" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Studio</button>
-          <button onClick={() => setLocation("home")} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${location === "home" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[var(--border)] text-[var(--text-secondary)]"}`}>Home</button>
-        </div>
-
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden mb-3">
-          <button onClick={() => setMoveOpen(!moveOpen)} className="w-full flex items-center justify-between px-4 py-3">
-            <div className="text-left">
-              <div className="text-[var(--text)] font-medium">MOVE</div>
-              <div className="text-[var(--text-secondary)] text-sm">8–10 Minuten · immer gleich</div>
-            </div>
-            <span className="text-[var(--text-secondary)]">{moveOpen ? <IconChevronDown /> : <IconChevronRight />}</span>
-          </button>
-          {moveOpen && (
-            <div className="px-4 pb-4 space-y-3">
-              {MOVE_FLOW.map((m, i) => (
-                <div key={i} className="border-t border-[var(--border)] pt-3 first:border-0 first:pt-0">
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-[var(--text)] text-sm font-medium">{m.name}</span>
-                    <span className="text-[var(--text-secondary)] text-xs">{m.dur}</span>
-                  </div>
-                  <p className="text-[var(--text-body)] text-sm mt-0.5">{m.cue}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="mb-1 mt-6">
-          <div className="text-[var(--text)] font-medium">BUILD</div>
-          <div className="text-[var(--text-secondary)] text-sm mb-1">30–40 Minuten · {weekData.sets} Sätze · RIR {weekData.rir}</div>
-          <RirInfo />
-        </div>
-        <div className="mb-3"></div>
-        <div className="space-y-2">
-          {exList.map((key) => (
-            <ExerciseCard key={key} exKey={key} ex={EXERCISES[key]} sets={weekData.sets} reps={REPS[key]} rir={weekData.rir} location={location} dateKey={dateKey} />
-          ))}
-        </div>
-
-        <div className="mb-1 mt-6">
-          <div className="text-[var(--text)] font-medium">MASTER</div>
-          <div className="text-[var(--text-secondary)] text-sm mb-3">5–8 Minuten · 3 Sätze · Skill, nicht Ermüdung</div>
-        </div>
-        <ExerciseCard exKey={masterKey} ex={EXERCISES[masterKey]} reps="20 Sek" master location={location} dateKey={dateKey} />
-
-        <p className="text-[var(--text-muted)] text-xs text-center mt-4">Gesamtdauer realistisch: ca. 55–60 Minuten.</p>
-
-        <div className="mb-1 mt-8">
-          <div className="text-[var(--text)] font-medium">Skills</div>
-          <div className="text-[var(--text-secondary)] text-sm mb-3">Wenn Foundation sitzt – der nächste Schritt, aufklappbar zum Nachlesen</div>
-        </div>
-        <div className="space-y-2">
-          <SkillCard skill={SKILLS.pistol_squat} />
-          <SkillCard skill={SKILLS.squat_roll} />
-          <SkillCard skill={SKILLS.klimmzug} />
-        </div>
-        <p className="text-[var(--text-muted)] text-xs mt-2">Squat Roll inspiriert von @romove.method.</p>
-
-        <LogForm dateKey={dateKey} week={week} day={day} location={location} />
-
-        <p className="text-[var(--text-muted)] text-xs text-center mt-8 leading-relaxed">
-          Regel: Du verlässt das Training mit Energie, nicht platt.<br />Muskelkater &gt; 4? Nächstes Mal Gewicht runter.
-        </p>
-      </div>
-    </div>
-  );
+  // Grobe Schaetzung, keine Stoppuhr-Messung: MOVE ~9 Min, GET UP 6-8 Min (Mittel 7),
+  // BUILD ~4 Min pro Übung inkl. Pausen, MASTER ~6 Min. Bewusst als Spanne, nicht als
+  // einzelne Fixzahl - Build B hat strukturell eine Übung mehr als Build A.
+  const dauerSchaetzung = {
+    min: 9 + 6 + exList.length * 3.5 + 5,
+    max: 9 + 8 + exList.length * 4.5 + 7
+  };
+  dauerSchaetzung.min = Math.round(dauerSchaetzung.min);
+  dauerSchaetzung.max = Math.round(dauerSchaetzung.max);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "min-h-screen bg-[var(--bg)]",
+    style: {
+      fontFamily: "'Inter', system-ui, sans-serif",
+      ...THEMES[theme]
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-md mx-auto px-4 pt-8 pb-16"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mb-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between mb-1"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[#c1541f] text-xs font-semibold tracking-widest uppercase"
+  }, "JOGA Strength · Einstieg (Wochen 1–4)"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setTheme(theme === "dark" ? "light" : "dark"),
+    className: "text-[var(--text-secondary)] text-xs border border-[var(--border)] rounded-full px-2.5 py-1 shrink-0"
+  }, theme === "dark" ? "☀️ Hell" : "🌙 Dunkel")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between gap-2"
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: "text-[var(--text)] text-xl font-semibold"
+  }, formatDateDE(date), " · Build ", day)), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: date,
+    onChange: e => setDate(e.target.value),
+    className: "bg-transparent text-[var(--text-secondary)] text-xs mt-1 border border-[var(--border)] rounded px-2 py-1"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-secondary)] text-sm mt-2"
+  }, "Woche ", week, " · ", weekData.note)), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2 mb-4"
+  }, WEEKS.map(w => /*#__PURE__*/React.createElement("button", {
+    key: w.week,
+    onClick: () => setWeek(w.week),
+    className: `flex-1 py-2 rounded-lg text-sm font-medium border ${week === w.week ? "bg-[#c1541f] border-[#c1541f] text-[#171512]" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, "W", w.week))), /*#__PURE__*/React.createElement(WeekRecommendation, {
+    week: week
+  }), week === 3 && /*#__PURE__*/React.createElement("div", {
+    className: "rounded-lg bg-[var(--warning-bg)] border border-[var(--warning-border)] px-3 py-2.5 mb-4"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--warning-text)] text-xs leading-relaxed"
+  }, "Nur erhöhen, wenn: alle Wiederholungen sauber waren, RIR mind. 4 blieb und der Muskelkater am Folgetag ≤3 war. Sonst gleiches Gewicht wiederholen. Kein Satz soll sich schwerer als 6/10 anfühlen. Bei einseitigen Übungen: 1–2 Arbeitssätze pro Seite.")), week === 4 && /*#__PURE__*/React.createElement("div", {
+    className: "rounded-lg bg-[var(--card)] border border-[var(--border)] px-3 py-2.5 mb-4"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-secondary)] text-xs leading-relaxed"
+  }, "Woche 4 ist Deload – Ende von Block 1 (Einstieg). Block 2 (Progression über Woche 4 hinaus) ist noch nicht ausgearbeitet und folgt separat, sobald die Steigerungslogik dafür feststeht. Diese App endet hier bewusst nicht im luftleeren Raum, sondern markiert das als offenen nächsten Schritt.")), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2 mb-3"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setDay("A"),
+    className: `flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "A" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, "Montag · Build A"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setDay("B"),
+    className: `flex-1 py-2.5 rounded-lg text-sm font-medium border ${day === "B" ? "bg-[var(--border)] border-[#c1541f] text-[var(--text)]" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, "Donnerstag · Build B")), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2 mb-6"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setLocation("studio"),
+    className: `flex-1 py-2 rounded-lg text-sm font-medium border ${location === "studio" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, "Studio"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setLocation("home"),
+    className: `flex-1 py-2 rounded-lg text-sm font-medium border ${location === "home" ? "bg-[#c1541f]/10 border-[#c1541f] text-[#c1541f]" : "border-[var(--border)] text-[var(--text-secondary)]"}`
+  }, "Home")), /*#__PURE__*/React.createElement("div", {
+    className: "rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden mb-3"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setMoveOpen(!moveOpen),
+    className: "w-full flex items-center justify-between px-4 py-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-left"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, "MOVE"), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-sm"
+  }, "8–10 Minuten · immer gleich")), /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text-secondary)]"
+  }, moveOpen ? /*#__PURE__*/React.createElement(IconChevronDown, null) : /*#__PURE__*/React.createElement(IconChevronRight, null))), moveOpen && /*#__PURE__*/React.createElement("div", {
+    className: "px-4 pb-4 space-y-3"
+  }, (day === "A" ? MOVE_FLOW_A : MOVE_FLOW_B).map((m, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "border-t border-[var(--border)] pt-3 first:border-0 first:pt-0"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-baseline justify-between"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text)] text-sm font-medium"
+  }, m.name), /*#__PURE__*/React.createElement("span", {
+    className: "text-[var(--text-secondary)] text-xs"
+  }, m.dur)), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-body)] text-sm mt-0.5"
+  }, m.cue))))), /*#__PURE__*/React.createElement(GetUpBlock, {
+    day: day,
+    week: week,
+    dateKey: dateKey
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "mb-1 mt-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, "BUILD"), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-sm mb-1"
+  }, "30–40 Minuten · ", weekData.sets, " Sätze · RIR ", weekData.rir), /*#__PURE__*/React.createElement(RirInfo, null)), /*#__PURE__*/React.createElement("div", {
+    className: "mb-3"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-2"
+  }, exList.map(key => /*#__PURE__*/React.createElement(ExerciseCard, {
+    key: key,
+    exKey: key,
+    ex: EXERCISES[key],
+    sets: weekData.sets,
+    reps: REPS[key],
+    rir: weekData.rir,
+    location: location,
+    dateKey: dateKey
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "mb-1 mt-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, "MASTER"), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-sm mb-3"
+  }, "5–8 Minuten · 3 Sätze · Skill, nicht Ermüdung")), /*#__PURE__*/React.createElement(ExerciseCard, {
+    exKey: masterKey,
+    ex: EXERCISES[masterKey],
+    reps: "20 Sek",
+    master: true,
+    location: location,
+    dateKey: dateKey
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-muted)] text-xs text-center mt-4"
+  }, "Gesamtdauer realistisch: ca. ", dauerSchaetzung.min, "–", dauerSchaetzung.max, " Minuten", day === "B" ? " (Build B hat eine Übung mehr als Build A, dauert entsprechend länger)." : "."), /*#__PURE__*/React.createElement("div", {
+    className: "mb-1 mt-8"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text)] font-medium"
+  }, "Skills"), /*#__PURE__*/React.createElement("div", {
+    className: "text-[var(--text-secondary)] text-sm mb-3"
+  }, "Wenn Foundation sitzt – der nächste Schritt, aufklappbar zum Nachlesen")), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-2"
+  }, Object.values(SKILLS).filter(s => s.days.includes(day)).map(s => /*#__PURE__*/React.createElement(SkillCard, {
+    key: s.name,
+    skill: s
+  }))), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-muted)] text-xs mt-2"
+  }, "Squat Roll inspiriert von @romove.method."), /*#__PURE__*/React.createElement(LosgeloestUeben, {
+    week: week,
+    dateKey: dateKey
+  }), /*#__PURE__*/React.createElement(LogForm, {
+    dateKey: dateKey,
+    week: week,
+    day: day,
+    location: location
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "text-[var(--text-muted)] text-xs text-center mt-8 leading-relaxed"
+  }, "Regel: Du verlässt das Training mit Energie, nicht platt.", /*#__PURE__*/React.createElement("br", null), "Muskelkater > 4? Nächstes Mal Gewicht runter.")));
 }
-
-ReactDOM.createRoot(document.getElementById("root")).render(<JogaStrength />);
-</script>
-<script>
-  var source = document.getElementById("app-source").textContent;
-  var compiled = Babel.transform(source, { presets: [["react", { runtime: "classic" }]] }).code;
-  var runScript = document.createElement("script");
-  runScript.text = compiled;
-  document.body.appendChild(runScript);
+ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(JogaStrength, null));
 </script>
 </body>
 </html>
