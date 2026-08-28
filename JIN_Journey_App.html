@@ -1153,7 +1153,14 @@ function renderPractice(main, j){
   document.getElementById("ttstoggle").onclick=()=>{
     ttsEnabled = !ttsEnabled;
     try { localStorage.setItem("jin-tts", ttsEnabled?"1":"0"); } catch(e){}
-    if(!ttsEnabled) ttsStop();
+    if(!ttsEnabled){
+      ttsStop();
+    } else {
+      // Wiedereinschalten mitten im Block: nicht rückwirkend von vorne vorlesen.
+      // Der aktuelle Block gilt ab jetzt als "schon dran gewesen" – erst der
+      // nächste Blockwechsel löst wieder automatisches Vorlesen aus.
+      ttsLastSpokenKey = current.phase+"|"+current.time+"|"+current.title;
+    }
     render();
   };
   document.getElementById("speaknow").onclick=(ev)=>{
