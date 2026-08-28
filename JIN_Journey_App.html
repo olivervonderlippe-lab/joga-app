@@ -1054,6 +1054,7 @@ function renderCards(main, j){
 // ===================== TEXT-TO-SPEECH (Cues vorlesen) =====================
 let ttsEnabled = (function(){ try { return localStorage.getItem("jin-tts")!=="0"; } catch(e){ return true; } })();
 let ttsLastSpokenKey = null;
+let ttsInterruptedKey = null;
 let ttsVoice = null;
 function ttsLoadVoice(){
   if(!("speechSynthesis" in window)) return;
@@ -1151,15 +1152,24 @@ function renderPractice(main, j){
     render();
   };
   document.getElementById("ttstoggle").onclick=()=>{
+    const key = current.phase+"|"+current.time+"|"+current.title;
+    const wasSpeaking = ("speechSynthesis" in window) && window.speechSynthesis.speaking;
     ttsEnabled = !ttsEnabled;
     try { localStorage.setItem("jin-tts", ttsEnabled?"1":"0"); } catch(e){}
     if(!ttsEnabled){
       ttsStop();
+      // Wurde der Cue gerade aktiv gesprochen, merken wir uns das, um ihn beim
+      // Wiedereinschalten fortzusetzen (TTS kann nicht mitten im Satz weitermachen).
+      ttsInterruptedKey = wasSpeaking ? key : ttsInterruptedKey;
+    } else if(ttsInterruptedKey === key){
+      ttsInterruptedKey = null;
+      ttsLastSpokenKey = key;
+      ttsSpeak(extractCueText(current.body));
     } else {
-      // Wiedereinschalten mitten im Block: nicht rückwirkend von vorne vorlesen.
-      // Der aktuelle Block gilt ab jetzt als "schon dran gewesen" – erst der
-      // nächste Blockwechsel löst wieder automatisches Vorlesen aus.
-      ttsLastSpokenKey = current.phase+"|"+current.time+"|"+current.title;
+      // Wiedereinschalten, ohne dass der Cue dieses Blocks unterbrochen wurde:
+      // nicht rückwirkend von vorne vorlesen. Erst der nächste Blockwechsel
+      // löst wieder automatisches Vorlesen aus.
+      ttsLastSpokenKey = key;
     }
     render();
   };
