@@ -594,7 +594,7 @@ const CORE = {
 
 // ---------- state ----------
 let state = { journey:"morning", mode:"study", flashIndex:0, flashFlipped:false,
-  timer:{running:false, elapsed:0, interval:null} };
+  timer:{running:false, elapsed:0, interval:null, startedAt:null} };
 
 // theme (dark/light), matches JOGA Strength toggle pattern
 try {
@@ -1127,7 +1127,7 @@ function renderPractice(main, j){
     const row=document.createElement("div");
     row.className="miniblock"+(b===current?" active":"");
     row.innerHTML=`<span class="t">${b.time}</span><span>${b.title}</span>`;
-    row.onclick=()=>{ state.timer.elapsed=b.start; render(); };
+    row.onclick=()=>{ state.timer.elapsed=b.start; if(state.timer.running) state.timer.startedAt=Date.now()-b.start*1000; render(); };
     mini.appendChild(row);
   });
   main.appendChild(mini);
@@ -1135,8 +1135,13 @@ function renderPractice(main, j){
   document.getElementById("ptoggle").onclick=()=>{
     state.timer.running=!state.timer.running;
     if(state.timer.running){
+      // Anker auf die Wanduhr statt nur hochzuzählen: so bleibt die Anzeige auch
+      // korrekt, wenn der Browser den Tick mal verzögert oder aussetzt (z.B. während
+      // Sprachausgabe läuft oder das Display kurz sperrt) — beim nächsten Tick holt
+      // sie sich automatisch die tatsächlich vergangene Zeit statt einfach weiterzuzählen.
+      state.timer.startedAt = Date.now() - state.timer.elapsed*1000;
       state.timer.interval=setInterval(()=>{
-        state.timer.elapsed+=1;
+        state.timer.elapsed = Math.floor((Date.now()-state.timer.startedAt)/1000);
         if(state.timer.elapsed>=total){ state.timer.elapsed=total; state.timer.running=false; clearInterval(state.timer.interval); }
         render();
       },1000);
@@ -1147,8 +1152,8 @@ function renderPractice(main, j){
     render();
   };
   document.getElementById("preset").onclick=()=>{
-    state.timer.running=false; state.timer.elapsed=0; clearInterval(state.timer.interval);
-    ttsStop(); ttsLastSpokenKey=null;
+    state.timer.running=false; state.timer.elapsed=0; state.timer.startedAt=null; clearInterval(state.timer.interval);
+    ttsStop(); ttsLastSpokenKey=null; ttsInterruptedKey=null;
     render();
   };
   document.getElementById("ttstoggle").onclick=()=>{
