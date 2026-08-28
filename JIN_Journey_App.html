@@ -138,9 +138,16 @@
     background:var(--card); font-size:14px; font-weight:600; color:var(--text);}
   .ctrls button.go{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
   .nowcard{background:var(--card); border:1px solid var(--accent); border-radius:14px; padding:14px; margin-bottom:14px;}
+  .nowcard .lblrow{display:flex; align-items:center; justify-content:space-between; gap:8px;}
   .nowcard .lbl{font-size:11px; font-weight:700; color:var(--accent); letter-spacing:0.4px; text-transform:uppercase;}
   .nowcard .title{font-size:17px; font-weight:600; margin:4px 0 6px; color:var(--text);}
   .nowcard .txt{font-size:14px; color:var(--text-2); line-height:1.5;}
+  .speakbtn{flex:0 0 auto; background:none; border:1px solid var(--accent); color:var(--accent);
+    border-radius:8px; padding:4px 9px; font-size:11px; font-weight:700; cursor:pointer;}
+  .speakbtn.speaking{background:var(--accent); color:var(--accent-ink);}
+  .ttstoggle{flex:0 0 auto !important; background:none; border:1px solid var(--line); color:var(--text-3);
+    font-size:16px !important;}
+  .ttstoggle.on{border-color:var(--accent); color:var(--accent);}
   .minilist .miniblock{display:flex; gap:10px; padding:9px 4px; border-bottom:1px solid var(--line);
     font-size:13px; color:var(--text-2);}
   .minilist .miniblock.active{color:var(--accent); font-weight:600;}
@@ -1044,6 +1051,53 @@ function renderCards(main, j){
   document.getElementById("fnext").onclick=()=>{ state.flashIndex=(state.flashIndex+1)%items.length; state.flashFlipped=false; render(); };
 }
 
+// ===================== TEXT-TO-SPEECH (Cues vorlesen) =====================
+let ttsEnabled = (function(){ try { return localStorage.getItem("jin-tts")!=="0"; } catch(e){ return true; } })();
+let ttsLastSpokenKey = null;
+let ttsVoice = null;
+function ttsLoadVoice(){
+  if(!("speechSynthesis" in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  ttsVoice = voices.find(v=>v.lang && v.lang.toLowerCase().startsWith("de")) || null;
+}
+if("speechSynthesis" in window){
+  ttsLoadVoice();
+  window.speechSynthesis.onvoiceschanged = ttsLoadVoice;
+}
+function extractCueText(bodyHtml){
+  const m = (bodyHtml||"").match(/<div class='cue'>([\s\S]*?)<\/div>/);
+  const html = m ? m[1] : (bodyHtml||"");
+  const lines = html.split("<br>").map(l=>{
+    let t = l;
+    t = t.replace(/<span class='lbl'>(.*?)<\/span>/g, (mm,txt)=> txt+": ");
+    t = t.replace(/<span class='tag (ground|flight)'>(.*?)<\/span>/g, (mm,cls,txt)=> txt+": ");
+    t = t.replace(/<[^>]+>/g,"");
+    t = t.replace(/„|“/g,"");
+    return t.trim();
+  }).filter(Boolean);
+  return lines.join(". ");
+}
+function ttsSpeak(text, onEnd){
+  if(!("speechSynthesis" in window) || !text) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "de-DE";
+  if(ttsVoice) u.voice = ttsVoice;
+  u.rate = 0.95;
+  if(onEnd){ u.onend = onEnd; u.onerror = onEnd; }
+  window.speechSynthesis.speak(u);
+}
+function ttsStop(){
+  if("speechSynthesis" in window) window.speechSynthesis.cancel();
+}
+function ttsMaybeAutoSpeak(block){
+  if(!ttsEnabled || !state.timer.running) return;
+  const key = block.phase+"|"+block.time+"|"+block.title;
+  if(key===ttsLastSpokenKey) return;
+  ttsLastSpokenKey = key;
+  ttsSpeak(extractCueText(block.body));
+}
+
 function renderPractice(main, j){
   const flat = allBlocksFlat(j);
   const total = 3600;
@@ -1059,11 +1113,12 @@ function renderPractice(main, j){
     <div class="ctrls">
       <button id="ptoggle" class="go">${state.timer.running? "Pause":"Start"}</button>
       <button id="preset">Reset</button>
+      <button id="ttstoggle" class="ttstoggle${ttsEnabled?" on":""}" title="Cues automatisch vorlesen">${ttsEnabled?"🔊":"🔇"}</button>
     </div>`;
   main.appendChild(hero);
 
   const now = document.createElement("div"); now.className="nowcard";
-  now.innerHTML = `<div class="lbl">${current.time} · ${current.phase}</div><div class="title">${current.title}</div><div class="txt">${current.body}</div>`;
+  now.innerHTML = `<div class="lblrow"><div class="lbl">${current.time} · ${current.phase}</div><button id="speaknow" class="speakbtn">🔊 Vorlesen</button></div><div class="title">${current.title}</div><div class="txt">${current.body}</div>`;
   main.appendChild(now);
 
   const mini = document.createElement("div"); mini.className="minilist";
@@ -1086,12 +1141,28 @@ function renderPractice(main, j){
       },1000);
     } else {
       clearInterval(state.timer.interval);
+      ttsStop();
     }
     render();
   };
   document.getElementById("preset").onclick=()=>{
-    state.timer.running=false; state.timer.elapsed=0; clearInterval(state.timer.interval); render();
+    state.timer.running=false; state.timer.elapsed=0; clearInterval(state.timer.interval);
+    ttsStop(); ttsLastSpokenKey=null;
+    render();
   };
+  document.getElementById("ttstoggle").onclick=()=>{
+    ttsEnabled = !ttsEnabled;
+    try { localStorage.setItem("jin-tts", ttsEnabled?"1":"0"); } catch(e){}
+    if(!ttsEnabled) ttsStop();
+    render();
+  };
+  document.getElementById("speaknow").onclick=(ev)=>{
+    ttsSpeak(extractCueText(current.body));
+    const btn=ev.currentTarget; btn.classList.add("speaking");
+    setTimeout(()=>btn.classList.remove("speaking"), 600);
+  };
+
+  ttsMaybeAutoSpeak(current);
 }
 
 function renderCore(main){
