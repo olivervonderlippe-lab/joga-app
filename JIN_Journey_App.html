@@ -64,34 +64,6 @@
     border:1px solid var(--line); background:var(--card); color:var(--text-2);}
   .modebtn.active{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
 
-  /* teacher workbook */
-  .wbcard{margin-top:14px; border:1px solid var(--accent); border-radius:10px; padding:10px 12px; background:var(--bg2, var(--card));}
-  .wbhead{font-size:11px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase; color:var(--accent); margin-bottom:8px;}
-  .wbpremiere{font-size:9px; background:var(--accent); color:var(--accent-ink); padding:2px 6px; border-radius:20px; margin-left:6px; letter-spacing:0.3px;}
-  .wbcard .lbl{font-size:10.5px; font-weight:700; color:var(--text-3); letter-spacing:0.3px; text-transform:uppercase; margin:8px 0 2px;}
-  .wbcard p{font-size:13px; line-height:1.5; margin:0 0 2px; color:var(--text-2);}
-  .wbcard .wbwarn{color:#c0392b;}
-  .ampelrow{display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:10px; margin-bottom:6px; font-size:13px;}
-  .ampelrow.gruen{background:color-mix(in srgb, #2e7d32 15%, transparent);}
-  .ampelrow.gelb{background:color-mix(in srgb, #e8a53a 18%, transparent);}
-  .ampelrow.rot{background:color-mix(in srgb, #c0392b 18%, transparent);}
-  .ampeldot{flex:0 0 auto; width:10px; height:10px; border-radius:50%;}
-  .ampeldot.gruen{background:#2e7d32;} .ampeldot.gelb{background:#e8a53a;} .ampeldot.rot{background:#c0392b;}
-  .checkrow{display:flex; align-items:flex-start; gap:8px; font-size:13px; color:var(--text-2); padding:6px 2px; border-bottom:1px solid var(--line);}
-  .checkrow:last-child{border-bottom:none;}
-  .checkrow input{margin-top:3px;}
-  .plantable{width:100%; border-collapse:collapse; font-size:12px;}
-  .plantable td{padding:6px 4px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--text-2);}
-  .plantable td:first-child{font-weight:700; color:var(--accent); white-space:nowrap;}
-  .debriefq{font-size:13px; color:var(--text); font-weight:600; margin:10px 0 4px;}
-  .debriefta{width:100%; box-sizing:border-box; background:var(--bg); color:var(--text); border:1px solid var(--line);
-    border-radius:8px; padding:8px 10px; font-size:13px; font-family:inherit; min-height:50px; resize:vertical;}
-  .debriefmeta{display:flex; gap:8px; margin-bottom:10px;}
-  .debriefmeta input{flex:1; box-sizing:border-box; background:var(--bg); color:var(--text); border:1px solid var(--line);
-    border-radius:8px; padding:8px 10px; font-size:12px;}
-  .debriefentry{border:1px solid var(--line); border-radius:10px; padding:10px; margin-bottom:8px; font-size:12px; color:var(--text-2);}
-  .debriefentry .dedate{font-weight:700; color:var(--accent); font-size:11px;}
-
   main{max-width:520px; margin:0 auto; padding:0 16px 24px;}
 
   .phase{margin-bottom:18px;}
@@ -166,11 +138,6 @@
     background:var(--card); font-size:14px; font-weight:600; color:var(--text);}
   .ctrls button.go{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
   .nowcard{background:var(--card); border:1px solid var(--accent); border-radius:14px; padding:14px; margin-bottom:14px;}
-  .nextstrip{display:flex; justify-content:space-between; align-items:center; gap:10px;
-    background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:9px 14px; margin-bottom:14px;}
-  .nextstrip .rem{font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; font-size:15px; white-space:nowrap;}
-  .nextstrip .nx{color:var(--text-2); font-size:13px; text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-  .nextstrip .nx b{color:var(--text); font-weight:600;}
   .nowcard .lblrow{display:flex; align-items:center; justify-content:space-between; gap:8px;}
   .nowcard .lbl{font-size:11px; font-weight:700; color:var(--accent); letter-spacing:0.4px; text-transform:uppercase;}
   .nowcard .title{font-size:17px; font-weight:600; margin:4px 0 6px; color:var(--text);}
@@ -203,6 +170,20 @@
   nav.bottom button{flex:1; background:none; border:none; padding:8px 0; font-size:9.5px;
     font-weight:600; color:var(--text-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   nav.bottom button.active{color:var(--accent);}
+  .froute-label{font-size:10px; font-weight:700; color:var(--accent); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;}
+  .froute{font-family:'Melvinsone',sans-serif; font-size:16px; line-height:1.7; color:var(--text); letter-spacing:0.3px; margin-bottom:13px; padding:11px 13px; background:var(--bg); border-radius:10px; border:1px solid var(--line);}
+  .fidea{font-size:12px; color:var(--text-3); line-height:1.45; margin-bottom:7px;}
+  .fidea b{color:var(--accent); font-weight:700;}
+  .fopts{font-size:13px; color:var(--text-2); line-height:1.7; margin-bottom:9px;}
+  .fkeycue-label{font-size:10px; font-weight:700; color:var(--text-4); letter-spacing:1px; text-transform:uppercase; margin:8px 0 3px;}
+  .fkeycues{font-size:12.5px; font-style:italic; color:var(--text-3); line-height:1.5; margin-bottom:4px;}
+  details.fcues{margin-top:10px;}
+  details.fcues summary{cursor:pointer; font-size:12px; font-weight:700; color:var(--accent); list-style:none;}
+  details.fcues summary::-webkit-details-marker{display:none;}
+  details.fcues summary::before{content:"▸ "; }
+  details.fcues[open] summary::before{content:"▾ "; }
+  details.fcues .cue-full{font-style:italic; color:var(--text-2); border-left:2px solid var(--accent); padding:3px 0 3px 10px; margin-top:8px; font-size:13.5px; line-height:1.65;}
+
 /* === JIN_BUILDER_CSS_START === */
 
   /* ---- Class Builder ---- */
@@ -218,15 +199,14 @@
   .brow{display:flex; gap:8px;}
   .brow > .bfield{flex:1; min-width:0;}
   .bphase{border:1px solid var(--line); border-radius:12px; padding:10px; margin-bottom:10px; background:var(--bg);}
-  .bphase > .bphasehead{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;}
+  .bphase > .bphasehead{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; gap:8px;}
   .bphase > .bphasehead .bpname{font-family:'Melvinsone',sans-serif; font-size:16px; color:var(--accent);}
-  .bphase > .bphasehead .brange{font-size:11px; color:var(--text-3); font-weight:600;}
+  .bp-name-input{font-family:'Melvinsone',sans-serif; font-size:16px; color:var(--accent); background:transparent; border:none; border-bottom:1px dashed var(--line); padding:2px 2px; flex:1; min-width:0;}
+  .bp-name-input:focus{outline:none; border-bottom-color:var(--accent);}
+  .bphase > .bphasehead .brange{font-size:11px; color:var(--text-3); font-weight:600; flex:0 0 auto;}
   .bblock{border:1px solid var(--line); border-radius:10px; padding:10px; margin-bottom:8px; background:var(--card);}
   .bblock .bblockhead{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px;}
   .bblock .bblockhead .bt{font-size:12px; color:var(--text-3); font-weight:700;}
-  .regenbtn{flex:0 0 auto; background:none; border:none; font-size:15px; padding:4px 6px; cursor:pointer; opacity:0.6;}
-  .regenbtn:hover{opacity:1;}
-  .regenbtn:disabled{opacity:0.3;}
   .bsmallbtn{font-size:11px; font-weight:600; color:var(--text-3); background:var(--bg); border:1px solid var(--line);
     border-radius:8px; padding:5px 9px;}
   .bsmallbtn.danger{color:#c0392b; border-color:#c0392b;}
@@ -295,7 +275,6 @@
   <button class="modebtn" data-mode="cards">Karten</button>
   <button class="modebtn" data-mode="practice">Übung</button>
   <button class="modebtn" data-mode="music">Musik</button>
-  <button class="modebtn" data-mode="prep" id="prepModeBtn" style="display:none;">Vorbereitung</button>
 </div>
 
 <main id="main"></main>
@@ -306,8 +285,8 @@
   <button data-j="energy">Energy</button>
   <button data-j="qigongyin">QIJIN</button>
   <button data-j="yin">Yin</button>
+  <button data-j="tennis">Tennis</button>
   <button data-j="core">Core 1.0</button>
-  <button data-j="study">Nacharbeit</button>
   <button data-j="builder">Erstellen</button>
 </nav>
 
@@ -331,9 +310,9 @@ morning: { label:"Morning Rise", theme:"Raum schaffen", color:"#c98a4b",
       P("11:00","Side Reach Flow","Abwechselnde Seitbeugen R/L. Arme lang. Knie weich. Kontinuierlich fließen. Radius zum Ende leicht reduzieren.<div class='cue'>„Der Radius darf jetzt schon kleiner werden. Ihr bereitet den Körper vor, nicht das Publikum.“</div>"),
     ]},
     {name:"FLOW", range:"12–24", start:720, blocks:[
-      P("12:00","Round 1 — Learn","Mountain → Reach → Forward Fold (Knie weich) → Half Lift → Fold → rechtes Bein zurück = Low Lunge L → rechtes Knie kurz ablegen → Brust öffnen → Hände absetzen → Vierfüßler → Cat/Cow 3× → Down Dog → rechter Fuß nach vorne = Low Lunge R → linkes Knie kurz ablegen → Brust öffnen → Hände absetzen → linker Fuß nach vorne → Fold → Half Lift → Fold → Roll Up → Mountain.<div class='cue'>„Kommt nach vorne auf eure Matte, in den Stand.“<br>„Einatmen – Arme heben, lang nach oben. Schafft euch Raum, bevor der Tag ihn füllt.“<br>„Ausatmen – nach vorne falten. Knie bleiben weich.“<br>„Einatmen – halber Lift, Rücken lang.“<br>„Ausatmen – wieder Fold.“<br>„Rechtes Bein weit nach hinten: Low Lunge links.“<br>„Rechtes Knie sinkt sanft zum Boden.“<br>„Brustkorb öffnet sich, kurz nach oben schauen, wenn das gut tut.“<br>„Hände zum Boden. Vierfüßler.“<br>„Cat/Cow, drei Mal – rund, dann lang.“<br>„Hände schieben, Hüfte hoch: Down Dog.“<br>„Rechter Fuß nach vorne, zwischen die Hände: Low Lunge rechts.“<br>„Linkes Knie sinkt sanft zum Boden.“<br>„Brustkorb öffnet sich.“<br>„Linker Fuß kommt dazu. Fold.“<br>„Einatmen – halber Lift. Ausatmen – Fold.“<br>„Roll Up, Wirbel für Wirbel. Mountain.“<br>„Wir nehmen jetzt die freie Bewegung von eben mit in einen ersten Flow. Kein Tempo. Kein Wettbewerb. Der Atem gibt uns den Rhythmus.“</div>"),
-      P("16:30","Round 2 — Flow","Identische Sequenz. Cat/Cow 2×. Übergänge weicher verbinden. Atem und Bewegung stärker verbinden. Lunges bleiben dynamisch.<div class='cue'>„Gleicher Weg, diesmal fließender.“<br>„Reach, Fold, Half Lift, Fold, Low Lunge links, Vierfüßler, Cat/Cow zweimal, Down Dog, Low Lunge rechts, Fold, Roll Up, Mountain.“<br>„Zweite Runde: Lasst die Übergänge ineinanderfließen. Die Form kennt ihr jetzt.“</div>"),
-      P("20:30","Round 3 — Feel","Gleicher Bewegungsbogen. Cat/Cow 1×. Weniger technische Führung. Kurzer Moment des Wahrnehmens der Gruppe (optional). Am Ende: Down Dog → Knie ablegen → Vierfüßler. Nicht mehr aufstehen.<div class='cue'>„Wir haben groß angefangen. Vielleicht bemerkt ihr kurz die anderen im Raum, die heute mit euch angefangen haben. Ab jetzt wird unsere Bewegung langsam näher zum Boden und etwas kleiner.“</div>"),
+      P("12:00","Round 1 — Learn","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ LOW LUNGE L → KNIE AB → BRUST ÖFFNEN<br>→ VIERFÜSSLER → CAT/COW → DOWN DOG<br>→ LOW LUNGE R → KNIE AB → BRUST ÖFFNEN<br>→ FOLD → HALF LIFT → FOLD → ROLL UP → MOUNTAIN</div><div class='fidea'><b>LEARN:</b> Form finden. Jeder Übergang wird angesagt. Cat/Cow dreimal.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Wir nehmen jetzt die freie Bewegung von eben mit in einen ersten Flow. Kein Tempo. Kein Wettbewerb. Der Atem gibt uns den Rhythmus.“<br>„Cat/Cow, drei Mal – rund, dann lang.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Kommt nach vorne auf eure Matte, in den Stand.“<br>„Einatmen – Arme heben, lang nach oben. Schafft euch Raum, bevor der Tag ihn füllt.“<br>„Ausatmen – nach vorne falten. Knie bleiben weich.“<br>„Einatmen – halber Lift, Rücken lang.“<br>„Ausatmen – wieder Fold.“<br>„Rechtes Bein weit nach hinten: Low Lunge links.“<br>„Rechtes Knie sinkt sanft zum Boden.“<br>„Brustkorb öffnet sich, kurz nach oben schauen, wenn das gut tut.“<br>„Hände zum Boden. Vierfüßler.“<br>„Hände schieben, Hüfte hoch: Down Dog.“<br>„Rechter Fuß nach vorne, zwischen die Hände: Low Lunge rechts.“<br>„Linkes Knie sinkt sanft zum Boden.“<br>„Brustkorb öffnet sich.“<br>„Linker Fuß kommt dazu. Fold.“<br>„Einatmen – halber Lift. Ausatmen – Fold.“<br>„Roll Up, Wirbel für Wirbel. Mountain.“</div></details>"),
+      P("16:30","Round 2 — Flow","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ LOW LUNGE L → KNIE AB → BRUST ÖFFNEN<br>→ VIERFÜSSLER → CAT/COW → DOWN DOG<br>→ LOW LUNGE R → KNIE AB → BRUST ÖFFNEN<br>→ FOLD → HALF LIFT → FOLD → ROLL UP → MOUNTAIN</div><div class='fidea'><b>FLOW:</b> Gleiche Route, fließender. Weniger Ansage. Cat/Cow zweimal.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Zweite Runde: Lasst die Übergänge ineinanderfließen. Die Form kennt ihr jetzt.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Gleicher Weg, diesmal fließender.“<br>„Reach, Fold, Half Lift, Fold, Low Lunge links, Vierfüßler, Cat/Cow zweimal, Down Dog, Low Lunge rechts, Fold, Roll Up, Mountain.“</div></details>"),
+      P("20:30","Round 3 — Feel","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ LOW LUNGE L → KNIE AB → BRUST ÖFFNEN<br>→ VIERFÜSSLER → CAT/COW → DOWN DOG<br>→ LOW LUNGE R → KNIE AB → BRUST ÖFFNEN<br>→ FOLD → DOWN DOG → KNIE AB → VIERFÜSSLER  (nicht mehr aufstehen)</div><div class='fidea'><b>FEEL:</b> Gleiche Route, kaum Führung. Cat/Cow einmal. Am Ende kein Aufstehen mehr – direkt in Vierfüßler.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Ab jetzt wird unsere Bewegung langsam näher zum Boden und etwas kleiner.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Wir haben groß angefangen. Vielleicht bemerkt ihr kurz die anderen im Raum, die heute mit euch angefangen haben. Ab jetzt wird unsere Bewegung langsam näher zum Boden und etwas kleiner.“</div></details>"),
     ]},
     {name:"EXPLORE", range:"24–39", start:1440, blocks:[
       P("24:00","Dragon R","<span class='lbl'>Arrive</span> Aus Vierfüßler rechten Fuß zwischen die Hände. Linkes Knie zunächst am Boden.<br><span class='lbl'>Move</span> Rock: Becken 3–4× vor/zurück. Half-Split Rock: Becken zurück, rechtes Bein länger, wieder vor, 3–4×. Activate — <span class='tag ground'>GROUND</span> linkes Knie am Boden. <span class='tag flight'>FLOAT</span> linke Zehen auf, Knie wenige cm heben. Rotate: linke Hand innen am rechten Fuß, rechter Arm öffnet, 2–3×. Side Reach: Oberkörper auf, linker Arm hoch, Neigung rechts.<br><span class='lbl'>Reduce</span> Zurück zum Low Lunge, zwei Rocks → kleiner → minimal.<br><span class='lbl'>Pause</span> Ca. 15–20 Sek.<br><span class='lbl'>Release</span> Bein zurück, Vierfüßler, Knie entlasten.<div class='cue'>„Rock, dann Half-Split Rock – findet euer Tempo.“<br><span class='lbl'>Ground</span> „Das linke Knie bleibt am Boden.“<br><span class='lbl'>Float</span> „Oder die linken Zehen kommen auf, das Knie hebt ein paar Zentimeter.“<br>„Große Bewegung. Kleine Bewegung. Noch kleiner. Bis ihr nichts mehr verändern müsst.“</div>"),
@@ -386,8 +365,8 @@ evening: { label:"Evening Unwind", theme:"Den Tag abgeben", color:"#5a7a8a",
       P("8:00","Side-to-Side Sway","Gewicht R/L. Arme frei mitfließen. Zunehmend weicher und kleiner.<div class='cue'>„Wir hören nicht plötzlich auf, uns zu bewegen. Wir lassen die Bewegung nur langsam ruhiger werden.“</div>"),
     ]},
     {name:"FLOW", range:"10–20", start:600, blocks:[
-      P("10:00","Moon Flow 1","Mountain → Reach → Crescent Side Bend R → Mitte → L → Mitte → Standing Twist R/L → Fold → Half Lift → Fold → rechtes Bein zurück = Low Lunge L → Knie ablegen → <b>Evening Low Crescent</b> (Arme seitlich bis Schulterhöhe/weiches V, 2–3×, keine Überkopfhaltung) → rechte Hand innen, Brustkorb links → Vierfüßler → Cat/Cow 3× → Down Dog → rechter Fuß vor = Low Lunge R → Evening Low Crescent 2–3× → linke Hand innen, Brustkorb rechts → Fold → Roll Up → Mountain.<div class='cue'>„Kommt nach vorne auf eure Matte, in den Stand.“<br>„Einatmen – Arme heben, lang nach oben.“<br>„Neigt euch sanft nach rechts – Crescent Side Bend.“<br>„Zurück zur Mitte. Und nach links.“<br>„Zurück zur Mitte.“<br>„Dreht den Oberkörper sanft nach rechts, Arme schwingen locker mit. Und nach links.“<br>„Ausatmen – nach vorne falten.“<br>„Einatmen – halber Lift, Rücken lang.“<br>„Ausatmen – wieder Fold.“<br>„Rechtes Bein weit nach hinten, Knie sinkt ab: Low Lunge links.“<br>„Arme seitlich bis Schulterhöhe öffnen, ein weiches V – Evening Low Crescent. Keine Überkopfhaltung heute Abend.“<br>„Zwei, drei Mal, in eurem eigenen Tempo.“<br>„Rechte Hand innen neben dem Fuß, Brustkorb öffnet sich nach links.“<br>„Hände zum Boden. Vierfüßler.“<br>„Cat/Cow, drei Mal – Wirbelsäule rund, dann lang.“<br>„Hände schieben, Hüfte hoch: Down Dog.“<br>„Rechter Fuß nach vorne, zwischen die Hände: Low Lunge rechts.“<br>„Evening Low Crescent, zwei, drei Mal.“<br>„Linke Hand innen, Brustkorb öffnet sich nach rechts.“<br>„Zurück zur Matte, Fold.“<br>„Roll Up, Wirbel für Wirbel, Kopf kommt zuletzt.“<br>„Mountain.“<br>„Der Mond drängt nicht. Jede Position darf einen Atemzug länger bleiben als beim Sun Flow heute Morgen.“</div>"),
-      P("15:00","Moon Flow 2","Identischer Ablauf. Cat/Cow 1–2×. Weniger technische Führung, mehr kontinuierliche Bewegung. Kurzer Moment des gemeinsamen Atems (optional). Am Ende: Down Dog → Knie → Vierfüßler.<div class='cue'>„Gleicher Weg wie eben. Diesmal fließt er von selbst.“<br>„Reach, Seitneigung rechts und links, Twist, Fold, Half Lift, Fold.“<br>„Low Lunge links, Evening Low Crescent, Brustkorb öffnet.“<br>„Vierfüßler, Cat/Cow ein-, zweimal, Down Dog.“<br>„Low Lunge rechts, Evening Low Crescent, Brustkorb öffnet.“<br>„Fold, Roll Up, Mountain.“<br>„Der Atem darf jetzt länger werden. Wir brauchen immer weniger Schwung. Immer weniger Kraft.“<br>„Ihr atmet gerade alle im selben Raum. Jede*r in ihrem eigenen Tempo.“<br>„Wir bewegen uns langsam nach innen.“</div>"),
+      P("10:00","Moon Flow 1","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → SIDE BEND R → MITTE → L → MITTE<br>→ TWIST R/L → FOLD → HALF LIFT → FOLD<br>→ LOW LUNGE L → EVENING LOW CRESCENT → BRUSTKORB L<br>→ VIERFÜSSLER → CAT/COW → DOWN DOG<br>→ LOW LUNGE R → EVENING LOW CRESCENT → BRUSTKORB R<br>→ FOLD → ROLL UP → MOUNTAIN</div><div class='fidea'><b>LEARN:</b> Form finden. Jeder Übergang wird angesagt. Evening Low Crescent statt Überkopf. Cat/Cow dreimal.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Keine Überkopfhaltung heute Abend.“<br>„Der Mond drängt nicht. Jede Position darf einen Atemzug länger bleiben als beim Sun Flow heute Morgen.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Kommt nach vorne auf eure Matte, in den Stand.“<br>„Einatmen – Arme heben, lang nach oben.“<br>„Neigt euch sanft nach rechts – Crescent Side Bend.“<br>„Zurück zur Mitte. Und nach links.“<br>„Zurück zur Mitte.“<br>„Dreht den Oberkörper sanft nach rechts, Arme schwingen locker mit. Und nach links.“<br>„Ausatmen – nach vorne falten.“<br>„Einatmen – halber Lift, Rücken lang.“<br>„Ausatmen – wieder Fold.“<br>„Rechtes Bein weit nach hinten, Knie sinkt ab: Low Lunge links.“<br>„Arme seitlich bis Schulterhöhe öffnen, ein weiches V – Evening Low Crescent.“<br>„Zwei, drei Mal, in eurem eigenen Tempo.“<br>„Rechte Hand innen neben dem Fuß, Brustkorb öffnet sich nach links.“<br>„Hände zum Boden. Vierfüßler.“<br>„Cat/Cow, drei Mal – Wirbelsäule rund, dann lang.“<br>„Hände schieben, Hüfte hoch: Down Dog.“<br>„Rechter Fuß nach vorne, zwischen die Hände: Low Lunge rechts.“<br>„Evening Low Crescent, zwei, drei Mal.“<br>„Linke Hand innen, Brustkorb öffnet sich nach rechts.“<br>„Zurück zur Matte, Fold.“<br>„Roll Up, Wirbel für Wirbel, Kopf kommt zuletzt.“<br>„Mountain.“</div></details>"),
+      P("15:00","Moon Flow 2","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → SIDE BEND R → MITTE → L → MITTE<br>→ TWIST R/L → FOLD → HALF LIFT → FOLD<br>→ LOW LUNGE L → EVENING LOW CRESCENT → BRUSTKORB L<br>→ VIERFÜSSLER → CAT/COW → DOWN DOG<br>→ LOW LUNGE R → EVENING LOW CRESCENT → BRUSTKORB R<br>→ FOLD → DOWN DOG → KNIE AB → VIERFÜSSLER</div><div class='fidea'><b>FEEL:</b> Gleiche Route, fließt von selbst. Cat/Cow ein- bis zweimal. Optionaler gemeinsamer Atemmoment.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Gleicher Weg wie eben. Diesmal fließt er von selbst.“<br>„Wir bewegen uns langsam nach innen.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Gleicher Weg wie eben. Diesmal fließt er von selbst.“<br>„Reach, Seitneigung rechts und links, Twist, Fold, Half Lift, Fold.“<br>„Low Lunge links, Evening Low Crescent, Brustkorb öffnet.“<br>„Vierfüßler, Cat/Cow ein-, zweimal, Down Dog.“<br>„Low Lunge rechts, Evening Low Crescent, Brustkorb öffnet.“<br>„Fold, Down Dog, Knie ablegen, Vierfüßler.“<br>„Der Atem darf jetzt länger werden. Wir brauchen immer weniger Schwung. Immer weniger Kraft.“<br>„Ihr atmet gerade alle im selben Raum. Jede*r in ihrem eigenen Tempo.“</div></details>"),
     ]},
     {name:"EXPLORE", range:"20–35", start:1200, blocks:[
       P("20:00","Melting Cat","<span class='lbl'>Arrive</span> Vierfüßler.<br><span class='lbl'>Move</span> Cat/Cow 4–5×. Becken Richtung Fersen → Gewicht nach vorne, 3–4×. Body Circles: zurück→rechts→vorne→links, 3×, Richtungswechsel.<br><span class='lbl'>Reduce</span> Kreise kleiner bis minimal.<br><span class='lbl'>Pause</span> Child's Pose, ca. 45 Sek.<br><span class='lbl'>Release</span> Zurück Vierfüßler, Handgelenke entlasten.<div class='cue'>„Nicht mehr Cat-Cow wie am Morgen. Die Wirbelsäule bewegt sich jetzt kleiner, wärmer, langsamer.“</div>"),
@@ -426,59 +405,65 @@ evening: { label:"Evening Unwind", theme:"Den Tag abgeben", color:"#5a7a8a",
   ]},
 
 energy: { label:"Energy", theme:"Du musst nicht müde sein, um ruhig zu sein.", color:"#a15c3e",
-  memory:["KLOPFEN","BOUNCE","WAVE","ARME&TWISTS","GOLFERSWING","QISQUAT","ENERGY FLOW","SWAY","TRAVELING WAVE","90/90","DRAGONFLY","HALF BUTTERFLY","SPHINX","BUTTERFLY","CHEST OPENER","TWIST","REST"],
+  memory:["KLOPFEN","BOUNCE","WAVE","KREUZSCHLAG","TWIST","GOLFERSWING","QISQUAT","FAUSTSCHLAG","ENERGY FLOW","SWAY","FOLD WAVE","LUNGE WAVE","90/90","DRAGONFLY","SPHINX","BUTTERFLY","CHEST OPENER","KNEES TO CHEST","TWIST","REST"],
   phases:[
-    {name:"AWAKEN", range:"0–8", start:0, blocks:[
-      P("0:00","Wach-Klopfen · 1:00","Mit den Fingerspitzen oder der flachen Hand Arme, Schultern und Oberschenkel abklopfen. Gleichmäßiges Tempo, Stärke selbst gewählt.<div class='cue'>„Klopft mit den Fingerspitzen oder der flachen Hand sanft über Arme, Schultern und Oberschenkel.“<br>„Ihr bestimmt die Stärke – von ganz leicht bis kräftiger.“<br>„Keine Massage, keine Therapie. Nur ein Weg, dem Körper zu sagen: wir sind jetzt wach.“</div>"),
-      P("1:00","Bounce · 1:00","<span class='tag ground'>GROUND</span> Federn, Fersen lösen, Bodenkontakt bleibt. <span class='tag flight'>FLIGHT</span> Kleine Hops. Jederzeit wechseln.<div class='cue'>„Lasst die Fersen leicht federn.“<br>„Am Boden lassen oder ein Stück lösen – eure Wahl.“<br>„Kiefer locker. Schultern locker.“<br>„Wir strengen uns nicht an. Wir schauen, was schon da ist.“</div>"),
-      P("2:00","Body Waves · 1:00","Knie → Becken → Wirbelsäule → Brust → Kopf. Zwei, drei Wellen.<div class='cue'>„Beugt die Knie ein wenig, Becken nach vorne.“<br>„Rollt die Bewegung durch die Wirbelsäule – Brustkorb, Schultern, Kopf zuletzt.“<br>„Muss nicht schön aussehen. Sucht eure Welle.“</div>"),
-      P("3:00","Arme & Twists · 2:30","Vier Elemente fließend hintereinander: Arme über Kreuz vor der Brust zusammenschlagen und öffnen (30 Sek.) → Arme komplett locker hängen lassen, Oberkörper schwingt sie mit (30 Sek.) → Rumpf-Twist, Arme locker mitfliegend (45 Sek.) → Hüfte treibt die Drehung, Arme schlagen seitlich an (45 Sek.).<div class='cue'>„Schlagt die Arme über Kreuz vor der Brust zusammen – wie eine Umarmung mit Schwung. Und wieder öffnen.“<br>„Jetzt lasst die Arme komplett schwer werden. Keine Kraft mehr – nur der Oberkörper bewegt sie mit.“<br>„Dreht jetzt den Oberkörper nach rechts und links. Die Arme fliegen einfach hinterher.“<br>„Und jetzt kommt die Drehung aus der Hüfte, nicht mehr aus dem Oberkörper – die Arme schlagen von selbst seitlich an, wenn die Hüfte dreht.“<br>„Vier Bewegungen, ein Fluss. Ihr bestimmt Tempo und Stärke.“</div>"),
-      P("5:30","Golferswing · 1:00","Breiter Stand, Arme wie einen Golfschläger gefasst. Große Rotation R/L, Schwung kommt aus der Hüfte.<div class='cue'>„Stellt euch vor, ihr haltet einen Golfschläger.“<br>„Großer Schwung von einer Seite zur anderen, die Hüfte dreht mit.“<br>„Lasst den Schwung größer werden, wenn es sich gut anfühlt.“</div>"),
-      P("6:30","QiSquat & Faustschlag · 1:30","QiSquat (45 Sek.): breiter Stand, Zehen leicht nach außen, Arme über die Seite nach oben, Hände sinken mit dem Squat nach unten. Direkt daraus Faustschlag (45 Sek.): Fäuste ballen, abwechselnd nach vorne stoßen. <span class='tag ground'>SMALL RANGE</span> flacher Stand, kleinerer Stoß. <span class='tag flight'>OPEN RANGE</span> tieferer Stand, größerer Stoß.<div class='cue'>„Breiter Stand, Zehen leicht nach außen. Arme über die Seite nach oben, Hände sinken mit euch in den Squat.“<br>„Und jetzt direkt weiter: ballt die Fäuste, stoßt abwechselnd nach vorne.“<br>„Richtung und Klarheit – nicht Kraft.“<br><span class='lbl'>Small Range</span> „Stand höher, Stoß kleiner.“<br><span class='lbl'>Open Range</span> „Stand tiefer, Stoß größer.“<br>„Das ist der letzte Moment vor dem Flow.“</div>"),
+    {name:"AWAKEN", range:"0–12", start:0, blocks:[
+      P("0:00","Wach-Klopfen","Mit den Fingerspitzen oder der flachen Hand Arme, Schultern und Oberschenkel abklopfen. Gleichmäßiges Tempo, Stärke selbst gewählt.<div class='cue'>„Klopft mit den Fingerspitzen oder der flachen Hand sanft über Arme, Schultern und Oberschenkel.“<br>„Ihr bestimmt die Stärke – von ganz leicht bis kräftiger.“<br>„Das ist keine Massage und keine Therapie. Nur ein einfacher Weg, dem Körper zu sagen: wir sind jetzt wach.“<br>„Das ist heute unser Start – keine Haltung, kein Vorwissen nötig.“</div>"),
+      P("1:30","Bounce","<span class='tag ground'>GROUND</span> Federn, Fersen lösen, Bodenkontakt bleibt. <span class='tag flight'>FLIGHT</span> Kleine Hops. Jederzeit wechseln.<div class='cue'>„Lasst die Fersen leicht federn.“<br>„Ihr könnt die Fersen am Boden lassen oder sie ein kleines Stück lösen.“<br>„Lasst das Federn langsam durch den ganzen Körper laufen.“<br>„Kiefer locker. Schultern locker. Hände locker.“<br>„Ihr müsst hier nichts erreichen. Wir bringen nur Bewegung in den Körper.“<br>„Heute suchen wir Energie nicht, indem wir uns anstrengen. Wir schauen erst einmal, was schon da ist.“</div>"),
+      P("2:30","Body Waves","Knie → Becken → Wirbelsäule → Brust → Kopf. Mehrere Wellen.<div class='cue'>„Beugt die Knie ein wenig.“<br>„Schiebt das Becken nach vorne.“<br>„Dann rollt die Bewegung durch die Wirbelsäule.“<br>„Brustkorb. Schultern. Kopf zuletzt.“<br>„Und wieder von unten.“<br>„Knie. Becken. Wirbelsäule. Brust. Kopf.“<br>„Es muss nicht schön aussehen.“<br>„Sucht eine Welle, die sich für euren Körper gut anfühlt.“</div>"),
+      P("3:30","Arme-Kreuz-Schlag","Arme über Kreuz vor der Brust zusammenschlagen, dann weit nach hinten öffnen, dann andersherum über Kreuz. Tempo und Stärke selbst wählen.<div class='cue'>„Schlagt die Arme über Kreuz vor der Brust zusammen – wie eine Umarmung mit Schwung.“<br>„Dann öffnen sich die Arme weit nach hinten.“<br>„Und andersherum über Kreuz.“<br>„Ihr bestimmt Tempo und Stärke.“</div>"),
+      P("4:30","Dead Arms","Arme komplett locker lassen, aus dem Oberkörper heraus leicht hin und her schwingen. Die Arme dürfen dabei gegen Oberkörper und Rücken schlagen. Kein Krafteinsatz in den Armen selbst.<div class='cue'>„Lasst die Arme komplett schwer werden und hängen. Keine Kraft in den Armen – nur der Oberkörper bewegt sich, die Arme schwingen wie von selbst mit. Wer es etwas kräftiger mag, kann die Arme gegen Oberkörper und Rücken schlagen lassen.“</div>"),
+      P("5:30","Trunk Twist","Rumpf R/L, Arme locker. Keine maximale Rotation suchen.<div class='cue'>„Arme ganz locker.“<br>„Dreht den Oberkörper nach rechts und links.“<br>„Die Arme dürfen einfach hinterherfliegen.“<br>„Nicht maximal drehen.“<br>„Das Becken darf reagieren.“<br>„Der Blick folgt, wenn das für den Nacken angenehm ist.“<br>„Nicht kontrollieren. Bewegen.“</div>"),
+      P("6:30","Hüft-Twist mit Armschlag","Hüfte treibt die Drehung R/L, Arme bleiben komplett locker und schlagen durch den Schwung seitlich gegen den Körper. Anders als Trunk Twist: Bewegung kommt aus der Hüfte, nicht aus dem Oberkörper.<div class='cue'>„Diesmal treibt die Hüfte die Bewegung, nicht der Oberkörper.“<br>„Lasst die Arme komplett locker – sie schlagen von selbst seitlich an, wenn die Hüfte dreht.“<br>„Kein Ziehen mit den Armen. Nur die Hüfte bewegt, der Rest folgt.“</div>"),
+      P("7:30","Golferswing","Breiter Stand, Arme wie einen Golfschläger gefasst. Große Rotation R/L, Schwung kommt aus der Hüfte.<div class='cue'>„Stellt euch vor, ihr haltet einen Golfschläger.“<br>„Großer Schwung von einer Seite zur anderen, die Hüfte dreht mit.“<br>„Lasst den Schwung größer werden, wenn es sich gut anfühlt.“</div>"),
+      P("8:30","QiSquat","Breiter Stand, Zehen leicht nach außen. Arme über die Seite nach oben führen, dann Hände nach unten führen, während die Beine in den Squat sinken. <span class='tag ground'>SMALL RANGE</span> Squat bleibt flach. <span class='tag flight'>OPEN RANGE</span> Squat wird tiefer.<div class='cue'>„Breiter Stand, Zehen leicht nach außen.“<br>„Arme über die Seite nach oben führen.“<br>„Und jetzt die Hände nach unten führen, während die Beine in den Squat sinken.“<br><span class='lbl'>Small Range</span> „Der Squat bleibt flach.“<br><span class='lbl'>Open Range</span> „Oder er wird tiefer.“<br>„Mehrfach wiederholen, im eigenen Tempo.“</div>"),
+      P("9:45","Faustschlag","Aus dem Squat: Fäuste ballen, abwechselnd nach vorne stoßen, Blick fokussiert. <span class='tag ground'>SMALL RANGE</span> Stand höher, Stoß kleiner. <span class='tag flight'>OPEN RANGE</span> Tieferer Stand, größerer Stoß.<div class='cue'>„Aus dem Squat: ballt die Fäuste.“<br>„Stoßt abwechselnd nach vorne.“<br>„Gebt dem Schlag Richtung und Klarheit – nicht Kraft.“<br>„Der Blick geht mit dem Stoß mit – fokussiert, nicht wild.“<br><span class='lbl'>Small Range</span> „Der Stand bleibt höher, der Stoß kleiner.“<br><span class='lbl'>Open Range</span> „Oder tieferer Stand, größerer Stoß.“<br>„Das ist der letzte Moment vor dem Flow.“</div>"),
     ]},
-    {name:"FLOW", range:"8–27", start:480, blocks:[
-      P("8:00","Round 1 — Learn · 6:00","Mountain → Reach → Fold → Half Lift → Fold → rechtes Bein weit nach hinten, hintere Ferse hebt, Bein streckt sich = High Lunge L → hintere Ferse sinkt, hinterer Fuß öffnet sich deutlich: Warrior II L (Ground: kürzerer Stand / Reach: Arme horizontal) → Reverse Warrior L (kein Gewicht in die hintere Hand) → zurück Warrior II → Side Angle L → Hände zum Boden, Down Dog → Plank Wave (Ground: Knie am Boden / Float: kurze Plank) → Down Dog → rechter Fuß nach vorne, hintere Ferse hebt, Bein streckt sich = High Lunge R → hintere Ferse sinkt, hinterer Fuß öffnet sich deutlich: Warrior II R → Reverse Warrior R → Side Angle R → Fold → Roll Up → Mountain.<div class='cue'>„Kommt nach vorne auf eure Matte.“<br>„Einatmen – Arme heben. Ausatmen – nach vorne falten.“<br>„Einatmen – halber Lift. Ausatmen – Fold.“<br>„Rechtes Bein weit nach hinten, die hintere Ferse hebt, das Bein streckt sich: High Lunge links.“<br>„Jetzt sinkt die hintere Ferse zum Boden, der hintere Fuß öffnet sich deutlich: Warrior II links.“<br>„Der Stand darf kürzer oder weiter sein. Findet euren Stand.“<br>„Arme öffnen. Einatmen – Reverse Warrior. Die hintere Hand trägt kein Gewicht.“<br>„Ausatmen – zurück in Warrior II.“<br>„Unterarm Richtung Oberschenkel oder Hand Richtung Boden – Side Angle.“<br>„Hände zum Boden. Down Dog.“<br>„Von hier nach vorne in eure Plank Wave.“<br><span class='lbl'>Ground</span> „Die Knie können am Boden bleiben.“<br><span class='lbl'>Float</span> „Oder ihr nehmt kurz die Plank.“<br>„Brustkorb nach vorne. Becken zurück. Wieder Down Dog.“<br>„Rechter Fuß nach vorne. High Lunge rechts. Warrior II rechts. Reverse Warrior. Side Angle rechts.“<br>„Zurück zur Matte. Fold. Roll Up. Mountain.“<br>„Lernt erst die Linie. Wir müssen noch nichts daraus machen.“</div>"),
-      P("14:00","Round 2 — Build · 7:00","Gleiche Route wie Runde 1. Nach Side Angle: Warrior II → kurze Balance-Option (Zehen tippen neben Standfuß / Knie hebt vor-oben) — ein Atemzug, keine eigene Erklärung nötig. Danach die eigentliche neue Bewegung: <b>Twist-Reach</b> aus Warrior II — Oberkörper öffnet sich zum vorderen Bein, hinterer Arm reicht diagonal nach oben, Blick folgt optional. Beide Seiten.<div class='cue'>„Gleicher Weg. Diesmal kennt euer Körper die Richtung schon.“<br>„Reach. Fold. Half Lift. High Lunge. Warrior II. Reverse. Warrior II. Side Angle. Down Dog. Plank Wave.“<br>„Zurück in Warrior II. Wer mag: Zehen tippen oder Knie lösen sich – nur ein Atemzug, dann zurück.“<br>„Und jetzt das Neue: der Oberkörper öffnet sich zum vorderen Bein, der hintere Arm reicht diagonal nach oben – eine sanfte Drehung, kein Ziehen.“<br>„Der Blick darf folgen, wenn das für den Nacken gut ist.“<br>„Zurück in Warrior II, dann weiter zu Side Angle.“<br>„Energie bedeutet heute nicht: schneller. Energie bedeutet: mehr Richtungen.“</div>"),
-      P("21:00","Round 3 — Feel · 6:00","Nur 2–3 Atemzüge pro Seite: Warrior II → Reverse Warrior → Side Angle → Warrior II, atemgebunden, ohne feste Halts. Dann früher als bisher in den freien Bewegungsmoment übergehen — das ist das eigentliche Ziel der Runde, nicht ein drittes Mal dieselben drei Formen. Frei bewegen, Augen offen oder geschlossen, eigene Wahl.<div class='cue'>„Dritte Runde. Nur zwei, drei Atemzüge pro Seite.“<br>„Warrior II, Reverse, Side Angle, zurück in Warrior II – ein Atemzug pro Übergang.“<br>„Andere Seite, gleich kurz.“<br>„Und jetzt lasst die Form los. Bewegt euch frei, so wie es sich gerade richtig anfühlt.“<br>„Kein Warrior II mehr nötig – das war die Vorbereitung, das hier ist der eigentliche Moment.“<br>„Vielleicht spürt ihr den Herzschlag etwas schneller, den Atem etwas größer. Das ist okay – wir schauen dem jetzt einfach nur zu.“</div>"),
+    {name:"FLOW", range:"12–27", start:720, blocks:[
+      P("12:00","Round 1 — Learn · 5:30","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ HIGH LUNGE L → WARRIOR II → REVERSE → SIDE ANGLE<br>→ DOWN DOG → PLANK WAVE → DOWN DOG<br>→ HIGH LUNGE R → WARRIOR II → REVERSE → SIDE ANGLE<br>→ FOLD → ROLL UP → MOUNTAIN</div><div class='fidea'><b>LEARN:</b> Form finden · Übergänge erklären · Tempo ruhig. Optional 1–3×, Ausstieg jederzeit in Kindshaltung/Sitz möglich.</div><div class='fopts'><span class='tag ground'>GROUND</span> Plank Wave: Knie bleiben am Boden.<br><span class='tag flight'>FLOAT</span> Plank Wave: kurze Plank.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Lernt erst die Linie. Wir müssen noch nichts daraus machen.“<br>„Wer hier eine Pause spüren möchte: Kindshaltung oder bequemer Sitz. Ihr steigt mit EXPLORE wieder ein.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Kommt nach vorne auf eure Matte.“<br>„Wir gehen diesen Weg heute bis zu dreimal. Ihr entscheidet selbst, wie oft für euch heute richtig ist.“<br>„Einatmen – Arme heben. Ausatmen – nach vorne falten.“<br>„Einatmen – halber Lift. Ausatmen – Fold.“<br>„Rechtes Bein weit nach hinten, die hintere Ferse hebt, das Bein streckt sich: High Lunge links.“<br>„Jetzt sinkt die hintere Ferse zum Boden, der hintere Fuß öffnet sich deutlich: Warrior II links.“<br>„Der Stand darf kürzer oder weiter sein. Findet euren Stand.“<br>„Arme öffnen. Einatmen – Reverse Warrior. Die hintere Hand trägt kein Gewicht.“<br>„Ausatmen – zurück in Warrior II.“<br>„Unterarm Richtung Oberschenkel oder Hand Richtung Boden – Side Angle.“<br>„Hände zum Boden. Down Dog. Von hier nach vorne in eure Plank Wave.“<br>„Brustkorb nach vorne. Becken zurück. Wieder Down Dog.“<br>„Rechter Fuß nach vorne. High Lunge rechts, Warrior II rechts, Reverse Warrior, Side Angle rechts.“<br>„Zurück zur Matte. Fold. Roll Up. Mountain.“</div></details>"),
+      P("17:30","Round 2 — Build · 5:00","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ HIGH LUNGE L → WARRIOR II → REVERSE → SIDE ANGLE<br>→ WARRIOR II → TOUCH / FLOAT → WARRIOR II<br>→ DOWN DOG → PLANK WAVE → DOWN DOG<br>→ HIGH LUNGE R → WARRIOR II → REVERSE → SIDE ANGLE<br>→ WARRIOR II → TOUCH / FLOAT → WARRIOR II<br>→ FOLD → ROLL UP → MOUNTAIN</div><div class='fidea'><b>BUILD:</b> Gleiche Route + Balance-Impuls: Side Angle → Warrior II → Touch/Float → Warrior II → Boden. Kein Knee-Drive-Hold.</div><div class='fopts'><span class='tag ground'>TOUCH</span> Zehen tippen neben Standfuß.<br><span class='tag flight'>FLOAT</span> Knie hebt vor/oben.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Jetzt darf Kraft dazukommen. Nicht Geschwindigkeit. Energie bedeutet heute nicht: schneller. Energie bedeutet: bewusster.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Gleicher Weg. Diesmal kennt euer Körper die Richtung schon.“<br>„Reach. Fold. Half Lift. High Lunge. Warrior II. Reverse. Warrior II. Side Angle. Down Dog. Plank Wave.“<br>„Zurück in Warrior II. Verlagert das Gewicht nach vorne.“<br>„Die Zehen tippen neben dem Standfuß. Oder das Knie löst sich nach vorne und oben.“<br>„Nur ein Moment. Und wieder zurück.“<br>„Wer hier aussetzen möchte: Kindshaltung oder bequemer Sitz. Ihr steigt mit EXPLORE wieder ein. Wer weitermacht: Runde drei.“</div></details>"),
+      P("22:30","Round 3 — Feel · 4:30","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ HIGH LUNGE L → WARRIOR II → REVERSE → SIDE ANGLE<br>→ DOWN DOG → PLANK WAVE → DOWN DOG<br>→ HIGH LUNGE R → WARRIOR II → REVERSE → SIDE ANGLE<br>→ FOLD → ROLL UP → MOUNTAIN</div><div class='fidea'><b>FEEL:</b> Gleiche Grundroute · Balance-Impuls entfällt · weniger Ansagen, mehr Flow. Für alle, die weitermachen – Pausierende bleiben, genauso richtig.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Dritte Runde. Nicht mehr lernen. Spüren.“<br>„Für ein paar Atemzüge: bewegt euch frei, so wie es sich gerade richtig anfühlt.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Wer noch dabei ist: ihr kennt den Weg. Nehmt die Variante, die heute zu euch passt.“<br>„Reach. Fold. High Lunge. Warrior II. Reverse. Side Angle. Down Dog. Wave. Andere Seite.“<br>„Ihr seid diesen Weg heute mit mir gegangen – ein-, zwei- oder dreimal, je nachdem, was heute gepasst hat.“<br>„Wenn ihr mögt, nehmt wahr, dass ihr das gerade gemeinsam im Raum macht.“<br>„Augen offen oder geschlossen – eure Wahl. Bleibt hier.“<br>„Vielleicht spürt ihr gerade den Herzschlag etwas schneller, den Atem etwas größer. Das ist okay – wir schauen dem jetzt einfach nur zu.“<br>„Alle kommen jetzt wieder zusammen.“</div></details>"),
     ]},
-    {name:"EXPLORE", range:"27–35", start:1620, blocks:[
-      P("27:00","Standing Energy Sway · 2:00","<span class='lbl'>Arrive</span> Nach Runde 3 nicht sofort auf die Matte. Füße etwas weiter als hüftbreit, Knie weich, Arme hängen.<br><span class='lbl'>Move</span> Gewicht R/L verlagern, ein Knie beugt sich, das andere Bein wird länger. Arme dürfen beim Wechsel locker durch die Mitte schwingen. <span class='tag ground'>GROUND</span> kleiner Gewichtswechsel. <span class='tag flight'>OPEN</span> größere seitliche Verlagerung, Arme weiter.<br><span class='lbl'>Reduce</span> Weg wird kleiner, bis nur noch das Gewicht wandert.<div class='cue'>„Bleibt noch einen Moment im Stand.“<br>„Verlagert euer Gewicht nach rechts. Und nach links.“<br>„Lasst die Arme irgendwann mitkommen. Nicht platzieren. Schwingen lassen.“<br>„Ihr habt gerade sehr klare Formen gemacht. Jetzt dürft ihr die Form wieder verlieren.“<br>„Macht den Weg jetzt kleiner. Bis nur noch das Gewicht wandert.“</div>"),
-      P("29:00","Traveling Lunge Wave · 3:00","<span class='lbl'>Arrive</span> Aus dem Stand.<br><span class='lbl'>Move</span> Eine durchgehende Reise statt vier Einzelstationen: Ausatmen in Fold → rechtes Bein weit zurück in Low Lunge → Becken-Welle vor/zurück, 2–3× → Becken zurück zur Mitte, durch einen tiefen Fold hindurch → linkes Bein weit zurück in Low Lunge → Becken-Welle vor/zurück, 2–3× → zurück zur Mitte, Fold, Roll Up. <span class='tag ground'>GROUND</span> Hände bleiben am Boden/Oberschenkel. <span class='tag flight'>REACH</span> hinterer Arm hebt bei der Welle mit.<br><span class='lbl'>Reduce</span> Wellen werden kleiner, Übergänge langsamer.<br><span class='lbl'>Live-Hinweis</span> Bewusst wenig sprechen — es ist eine Reise, keine vier Stopps. Zu viele Ansagen brechen genau das.<div class='cue'>„Fold. Rechtes Bein weit zurück.“<br>„Becken pendelt.“<br>„Weiter zur Mitte, zur anderen Seite.“<br>„Becken pendelt.“<br>„Zurück. Fold.“</div>"),
-      P("32:00","90/90 Melt · 3:00","<span class='lbl'>Arrive</span> Sitz, beide Füße vor dem Körper aufgestellt, Knie gebeugt.<br><span class='lbl'>Move</span> Knie nach rechts sinken lassen → Mitte → links, 6–8 langsame Wechsel. Arme/Hände dürfen hinter dem Körper stützen. Auf einer Seite bleiben: Oberkörper leicht Richtung vorderes Knie → zurück, 2–3 kleine Waves. Andere Seite.<br><span class='lbl'>Reduce</span> Zurück zu den Wechseln, dann kleiner: nur noch ein kleines Pendeln.<br><span class='lbl'>Pause</span> Mitte, Beine ausstrecken oder locker angewinkelt, 20–30 Sek. sitzen. — <b>Hier endet der Peak.</b><div class='cue'>„Lasst beide Knie zu einer Seite sinken.“<br>„Durch die Mitte. Andere Seite.“<br>„Kein Winkel muss stimmen.“<br>„Jetzt wird auch dieser Weg kleiner. Nur noch ein kleines Pendeln.“<br>„Unser Peak liegt schon hinter uns.“<br>„Du musst nicht müde sein, um ruhig zu sein. Ab jetzt bauen wir nichts mehr auf.“</div>"),
+    {name:"EXPLORE", range:"27–40", start:1620, blocks:[
+      P("27:00","Standing Energy Sway · 3:00","<span class='lbl'>Arrive</span> Nach Runde 3 nicht sofort auf die Matte. Füße etwas weiter als hüftbreit, Knie weich, Arme hängen.<br><span class='lbl'>Move</span> Gewicht langsam R/L verlagern, ein Knie beugt sich, das andere Bein wird länger. Dann Arme dazunehmen: beim Wechsel locker durch die Mitte schwingen, zur neuen Seite öffnen. Dann Oberkörper leicht diagonal reachen. <span class='tag ground'>GROUND</span> kleiner Gewichtswechsel, Füße bleiben schwer. <span class='tag flight'>OPEN</span> größere seitliche Verlagerung, Arme weiter.<br><span class='lbl'>Reduce</span> Nach ca. 2 Min: Weg kleiner, Arme müssen irgendwann nicht mehr mit, bis nur noch das Gewicht wandert. Dann Mitte, keine lange Pause.<div class='cue'>„Bleibt noch einen Moment im Stand.“<br>„Vielleicht ist der Atem größer. Vielleicht spürt ihr euren Herzschlag.“<br>„Wir versuchen jetzt nicht, das wegzumachen.“<br>„Wir verändern nur die Bewegung.“<br>„Verlagert euer Gewicht nach rechts. Und nach links.“<br>„Ein Bein beugt sich, das andere wird länger.“<br>„Lasst die Arme irgendwann mitkommen.“<br>„Nicht platzieren. Schwingen lassen.“<br>„Ihr habt gerade sehr klare Formen gemacht. Jetzt dürft ihr die Form wieder verlieren.“<br>„Und jetzt macht denselben Weg etwas kleiner.“<br>„Noch einmal rechts. Links.“<br>„Weniger Weg.“<br>„Die Arme müssen irgendwann nicht mehr mit.“<br>„Bis nur noch das Gewicht von einem Fuß zum anderen wandert.“</div>"),
+      P("30:00","Fold Wave / Ragdoll · 3:00","<span class='lbl'>Arrive</span> Aus dem Stand.<br><span class='lbl'>Move</span> Einatmen: Brust/Arme öffnen. Ausatmen: Knie weich, Oberkörper sinkt (Fold). Einatmen: Half Lift oder Oberkörper etwas anheben. Ausatmen: wieder schwer. Roll Up nur bis etwa halbhoch, wieder zurück – freie vertikale Welle. Dann Ragdoll: Ellbogen greifen oder Arme hängen lassen, leicht R/L swayen. <span class='tag ground'>GROUND</span> Hände auf Oberschenkeln, Fold deutlich höher. <span class='tag flight'>DEEP</span> Oberkörper darf vollständig hängen. Kein Stretch-Block, bleibt zunächst bewegt.<br><span class='lbl'>Reduce</span> Große Fold Wave → halbe Wave → nur noch leichtes Sway → Stillstand im Fold. Dann Hände zum Boden, Knie ablegen, Vierfüßler.<div class='cue'>„Einatmen, richtet euch noch einmal auf.“<br>„Ausatmen, Knie weich, lasst den Oberkörper nach unten sinken.“<br>„Einatmen, hebt euch ein Stück.“<br>„Ausatmen, wieder schwer.“<br>„Ihr müsst nicht jedes Mal ganz nach oben.“<br>„Findet eure eigene Welle zwischen Aufrichten und Nachgeben.“<br>„Die Welle wird kleiner.“<br>„Vielleicht bleibt nur noch ein leichtes Pendeln.“<br>„Und irgendwann müsst ihr auch das nicht mehr machen.“</div>"),
+      P("33:00","Low Lunge Wave R · 2:00","<span class='lbl'>Arrive</span> Aus dem Vierfüßler rechter Fuß nach vorne.<br><span class='lbl'>Move</span> Low Lunge → Becken nach vorne. Dann Becken zurück → vorderes Bein wird länger/Half Split. Wieder nach vorne. 3–4 Wellen. Dann beim nächsten Vorwärtskommen Oberkörper aufrichten, linker Arm über die Seite nach oben und leicht nach rechts. Zurück → Hände Boden → Half Split. Noch 2–3×. <span class='tag ground'>GROUND</span> Hände bleiben am Boden/auf dem Oberschenkel. <span class='tag flight'>REACH</span> Arm nimmt die Bewegung mit. Keine Rückbeuge.<br><span class='lbl'>Reduce</span> Weg kleiner, noch kleiner, kurz dort bleiben, wo es sich richtig anfühlt (10–15 Sek.). Zurück Vierfüßler.<div class='cue'>„Rechter Fuß nach vorne.“<br>„Becken kommt nach vorne.“<br>„Dann schiebt euch wieder zurück, das vordere Bein darf länger werden.“<br>„Vor. Zurück.“<br>„Nicht halten. Pendeln.“<br>„Wenn ihr mögt, nimmt der linke Arm beim nächsten Mal den Weg mit.“<br>„Groß nach vorne – und wieder zurück.“<br>„Macht den Weg kleiner.“<br>„Noch kleiner.“<br>„Und bleibt einen Moment dort, wo es sich gerade richtig anfühlt.“</div>"),
+      P("35:00","Low Lunge Wave L · 2:00","Exakt gespiegelt, weniger Ansage nötig – die Grammatik ist bekannt. Danach eine einzige langsame Cat/Cow-Welle (nicht drei), dann Becken zu einer Seite → Sitz.<div class='cue'>„Linker Fuß nach vorne.“<br>„Gleicher Weg.“<br>„Vor und zurück.“<br>„Ground oder Reach.“<br>„Und dann lasst auch diese Bewegung kleiner werden.“<br>„Eine letzte große Welle durch die Wirbelsäule.“</div>"),
+      P("37:00","90/90 Melt · 3:00","<span class='lbl'>Arrive</span> Beide Füße vor dir aufstellen, Knie gebeugt.<br><span class='lbl'>Move</span> Beide Knie R↔L sinken lassen, 6–8 langsame Wechsel, Arme/Hände dürfen hinter dem Körper stützen. Nach einigen Wiederholungen auf einer Seite bleiben, Oberkörper leicht Richtung vorderes Knie → zurück, 2–3 kleine Waves. Andere Seite.<br><span class='lbl'>Reduce</span> Zurück zu den Wechseln, dann: Knie müssen nicht mehr bis zum Boden, nur noch ein kleines Pendeln, noch kleiner, schließlich Mitte. Beine ausstrecken oder locker angewinkelt lassen, 20–30 Sek. sitzen. — <b>Hier endet der Peak.</b><div class='cue'>„Lasst beide Knie zu einer Seite sinken.“<br>„Durch die Mitte.“<br>„Andere Seite.“<br>„Kein Winkel muss stimmen.“<br>„Die Beine wechseln einfach von einer Seite zur anderen.“<br>„Jetzt wird auch dieser Weg kleiner.“<br>„Die Knie müssen nicht mehr bis zum Boden.“<br>„Nur noch ein kleines Pendeln.“<br>„Noch kleiner.“<br>„Unser Peak liegt schon hinter uns.“<br>„Und vielleicht ist trotzdem noch Energie da.“<br>„Die müssen wir nicht loswerden.“<br>„Du musst nicht müde sein, um ruhig zu sein.“<br>„Ab jetzt bauen wir nichts mehr auf.“</div>"),
     ]},
-    {name:"MELT", range:"35–54", start:2100, blocks:[
-      P("35:00","Dragonfly · 2:30","Breiter Sitz, Beine nur so weit wie ohne Haltearbeit. Knie deutlich gebeugt möglich. Oberkörper nach vorne sinken. Keine Hände ziehen.<div class='cue'>„Öffnet die Beine nur so weit, dass ihr sie nicht aktiv festhalten müsst.“<br>„Richtet euch zunächst auf. Dann lasst den Oberkörper nach vorne schwerer werden.“<br>„Nicht weiter. Schwerer.“</div>"),
-      P("37:30","Half Butterfly R · 1:30","Rechtes Bein lang, linker Fuß zum inneren Oberschenkel. Oberkörper Richtung rechtes Bein sinken, Knie darf weich sein.<div class='cue'>„Rechtes Bein lang, linker Fuß zum inneren Oberschenkel.“<br>„Oberkörper sinkt Richtung rechtes Bein – nicht zum Fuß, einfach Richtung Bein.“</div>"),
-      P("39:00","Half Butterfly L · 1:30","Spiegelverkehrt.<div class='cue'>„Gespiegelt. Beobachtet, was hier anders ist als rechts.“</div>"),
-      P("40:30","Sphinx · 2:00","Bauchlage, Unterarme am Boden. Ellbogen weiter vorne reduziert die Rückbeuge. Bewusst kurz gehalten.<div class='cue'>„Bauchlage, Unterarme zum Boden.“<br>„Je weiter die Ellbogen nach vorne wandern, desto sanfter die Rückbeuge.“<br>„Nach so viel Bewegung: hier öffnet sich der Oberkörper einmal in die andere Richtung.“</div>"),
-      P("42:30","Reclined Butterfly · 2:30","Rückenlage, Fußsohlen zusammen, Knie sinken zur Seite. <span class='tag ground'>WIDE</span> Füße weiter vom Becken. <span class='tag flight'>CLOSE</span> Füße näher am Becken. Hände drücken die Knie nicht nach unten.<div class='cue'>„Lasst die Knie einfach sinken, ohne nachzuhelfen.“<br><span class='lbl'>Wide</span> „Füße etwas weiter vom Becken.“<br><span class='lbl'>Close</span> „Oder näher zum Becken.“<br>„Die Schwerkraft übernimmt.“</div>"),
-      P("45:00","Reclined Chest Opener · 2:00","Rückenlage, Beine angestellt oder lang. <span class='tag ground'>GROUND</span> Arme in Kaktus-Position, Ellbogen angewinkelt, Oberarme auf Schulterhöhe am Boden. <span class='tag flight'>FLIGHT</span> Arme lang über den Kopf, Hände fassen sich oder verschränken.<div class='cue'>„Legt euch auf den Rücken. Beine dürfen angestellt oder lang sein.“<br><span class='lbl'>Ground</span> „Arme in die Kaktus-Position.“<br><span class='lbl'>Flight</span> „Oder Arme lang über den Kopf strecken.“<br>„Die Schultern sinken einfach zum Boden, kein Ziehen.“<br>„Nach so viel Armarbeit im Flow darf sich hier vorne alles öffnen.“</div>"),
-      P("47:00","Knees to Chest · 1:00","Rückenlage, beide Knie zur Brust, Hände locker an den Beinen.<div class='cue'>„Beide Knie zur Brust, Hände locker dran. Wiegt euch sanft hin und her, dann still.“</div>"),
-      P("48:00","Supine Twist R · 3:00","Knie links, Brustkorb rotiert rechts. Arme bequem, Kopf neutral oder rechts. Bewusst länger als sonst — die Rotation darf hier wirklich ankommen.<div class='cue'>„Füße noch einmal aufstellen. Knie nach links sinken lassen.“<br>„Brustkorb dreht nach rechts. Rechter Arm darf sich öffnen.“<br>„Die Knie müssen den Boden nicht erreichen.“<br>„Findet die Version, in der ihr nicht festhalten müsst.“<br>„Lasst euch hier ruhig etwas mehr Zeit als sonst.“</div>"),
-      P("51:00","Supine Twist L · 3:00","Spiegelverkehrt.<div class='cue'>„Knie zurück zur Mitte. Langsam zur anderen Seite.“<br>„Knie nach rechts. Brustkorb nach links. Linker Arm öffnet.“<br>„Nichts ziehen. Nichts korrigieren. Nur Gewicht abgeben.“<br>„Auch hier: mehr Zeit als sonst.“</div>"),
+    {name:"MELT", range:"40–54", start:2400, blocks:[
+      P("40:00","Dragonfly · 3:00","Breiter Sitz, Beine nur so weit wie ohne Haltearbeit. Knie deutlich gebeugt möglich. Becken auf, Oberkörper nach vorne sinken. Keine Hände ziehen.<div class='cue'>„Öffnet die Beine nur so weit, dass ihr sie nicht aktiv festhalten müsst.“<br>„Die Knie dürfen deutlich gebeugt sein.“<br>„Richtet euch zunächst auf. Dann lasst den Oberkörper nach vorne schwerer werden.“<br>„Die Hände ziehen euch nirgendwo hin.“<br>„Beobachtet, ob irgendwo noch Arbeit übrig ist. Vielleicht Kiefer. Vielleicht Schultern. Vielleicht Beine.“<br>„Nicht weiter. Schwerer.“</div>"),
+      P("43:00","Sphinx · 2:00","Bauchlage, Unterarme am Boden. Ellbogen weiter vorne reduziert die Rückbeuge. Bewusst kurz gehalten – eine gehaltene Streckung belastet den unteren Rücken anders als ein Fold.<div class='cue'>„Bauchlage, Unterarme zum Boden.“<br>„Je weiter die Ellbogen nach vorne wandern, desto sanfter die Rückbeuge.“<br>„Nach so viel Bewegung: hier öffnet sich der Oberkörper einmal in die andere Richtung.“</div>"),
+      P("45:00","Reclined Butterfly · 2:00","Rückenlage, Fußsohlen zusammen, Knie sinken zur Seite. <span class='tag ground'>WIDE</span> Füße weiter vom Becken. <span class='tag flight'>CLOSE</span> Füße näher am Becken. Hände drücken die Knie nicht nach unten.<div class='cue'>„Lasst die Knie einfach sinken, ohne nachzuhelfen.“<br><span class='lbl'>Wide</span> „Füße etwas weiter vom Becken.“<br><span class='lbl'>Close</span> „Oder näher zum Becken.“<br>„Die Schwerkraft übernimmt.“</div>"),
+      P("47:00","Reclined Chest Opener · 2:00","Rückenlage, Beine angestellt oder lang. <span class='tag ground'>GROUND</span> Arme in Kaktus-Position, Ellbogen angewinkelt, Oberarme auf Schulterhöhe am Boden. <span class='tag flight'>FLIGHT</span> Arme lang über den Kopf, Hände fassen sich oder verschränken.<div class='cue'>„Legt euch auf den Rücken. Beine dürfen angestellt oder lang sein.“<br><span class='lbl'>Ground</span> „Arme in die Kaktus-Position: Ellbogen angewinkelt, Oberarme liegen auf Schulterhöhe am Boden.“<br><span class='lbl'>Flight</span> „Oder Arme lang über den Kopf strecken, Hände können sich fassen oder ineinander verschränken.“<br>„Die Schultern sinken einfach zum Boden, kein Ziehen.“<br>„Nach so viel Armarbeit im Flow darf sich hier vorne alles öffnen.“</div>"),
+      P("49:00","Knees to Chest · 1:00","Rückenlage, beide Knie zur Brust, Hände locker an den Beinen.<div class='cue'>„Beide Knie zur Brust, Hände locker dran. Wiegt euch sanft hin und her, dann still.“</div>"),
+      P("50:00","Supine Twist R · 2:00","Knie links, Brustkorb rotiert rechts. Arme bequem, Kopf neutral oder rechts.<div class='cue'>„Füße noch einmal aufstellen. Knie nach links sinken lassen.“<br>„Brustkorb dreht nach rechts. Rechter Arm darf sich öffnen.“<br>„Die Knie müssen den Boden nicht erreichen.“<br>„Schulter und Knie müssen nicht gleichzeitig unten sein.“<br>„Findet die Version, in der ihr nicht festhalten müsst.“</div>"),
+      P("52:00","Supine Twist L · 2:00","Spiegelverkehrt.<div class='cue'>„Knie zurück zur Mitte. Langsam zur anderen Seite.“<br>„Knie nach rechts. Brustkorb nach links. Linker Arm öffnet.“<br>„Nichts ziehen. Nichts korrigieren. Nur Gewicht abgeben.“</div>"),
     ]},
     {name:"REST", range:"54–60", start:3240, blocks:[
-      P("54:00","Savasana","Arme/Beine bequem. Keine Atemtechnik, keine Visualisierung, keine Aufgabe. Ca. fünf Minuten vollständige Ruhe. Erst gegen Ende reaktivieren.<div class='cue'>„Kommt langsam zurück zur Mitte. Beine ausstrecken.“<br>„Arme dort ablegen, wo sie bequem liegen.“<br>„Vorhin haben wir Energie bewegt. Wir haben sie nicht verbraucht.“<br>„Und wir müssen nicht erschöpft sein, um still zu werden.“<br>(Etwa vier Minuten Stille.)<br>„Vertieft langsam den Atem. Bewegt Finger und Zehen.“<br>„Nehmt euch Zeit, über eine Seite nach oben zu kommen.“<br>„Energie und Ruhe sind keine Gegensätze.“</div>"),
+      P("54:00","Savasana","Arme/Beine bequem. Keine Atemtechnik, keine Visualisierung, keine Aufgabe. Ca. fünf Minuten vollständige Ruhe. Erst gegen Ende reaktivieren.<div class='cue'>„Kommt langsam zurück zur Mitte. Beine ausstrecken, Arme dort ablegen, wo sie bequem liegen.“<br>(Ca. fünf Minuten Stille.)<br>„Vertieft langsam den Atem. Bewegt Finger und Zehen.“<br>„Über eine Seite, wenn ihr bereit seid, langsam hoch.“</div>"),
     ]},
   ],
   cards:[
-    {label:"KLOPFEN", phase:"AWAKEN", time:"0:00", title:"Wach-Klopfen · 1:00", body:"Fingerspitzen oder flache Hand über Arme, Schultern, Oberschenkel. Stärke selbst gewählt."},
-    {label:"BOUNCE", phase:"AWAKEN", time:"1:00", title:"Bounce · 1:00", body:"Ground: federn, Bodenkontakt bleibt. Flight: kleine Hops."},
-    {label:"WAVE", phase:"AWAKEN", time:"2:00", title:"Body Waves · 1:00", body:"Knie → Becken → Wirbelsäule → Brust → Kopf."},
-    {label:"ARME&TWISTS", phase:"AWAKEN", time:"3:00", title:"Arme & Twists · 2:30", body:"Vier Elemente fließend: Kreuz-Schlag → Dead Arms → Trunk Twist → Hüft-Twist mit Armschlag."},
-    {label:"GOLFERSWING", phase:"AWAKEN", time:"5:30", title:"Golferswing · 1:00", body:"Breiter Stand, Arme wie Golfschläger gefasst. Große Rotation R/L, Schwung aus der Hüfte."},
-    {label:"QISQUAT", phase:"AWAKEN", time:"6:30", title:"QiSquat & Faustschlag · 1:30", body:"Squat mit Armführung, direkt weiter in abwechselnden Faustschlag. Small Range/Open Range je nach Tiefe."},
-    {label:"ENERGY FLOW", phase:"FLOW", time:"8:00", title:"JIN Energy Flow", body:"High Lunge → Warrior II → Reverse Warrior → Side Angle → Down Dog → Plank Wave → andere Seite. Learn → Build (kurze Balance-Option + Twist-Reach als eigentliches Neues) → Feel (nur 2–3 Atemzüge/Seite, dann früh frei)."},
-    {label:"SWAY", phase:"EXPLORE", time:"27:00", title:"Standing Energy Sway · 2:00", body:"Gewicht R/L verlagern, Arme schwingen frei mit. Reduce bis nur noch das Gewicht wandert."},
-    {label:"TRAVELING WAVE", phase:"EXPLORE", time:"29:00", title:"Traveling Lunge Wave · 3:00", body:"Eine durchgehende Reise: Low Lunge R mit Becken-Welle → Mitte → Low Lunge L mit Becken-Welle → Mitte. Live bewusst wenig sprechen."},
-    {label:"90/90", phase:"EXPLORE", time:"32:00", title:"90/90 Melt · 3:00", body:"Knie R/L sinken lassen, Reduce bis minimal. Hier endet der Peak."},
-    {label:"DRAGONFLY", phase:"MELT", time:"35:00", title:"Dragonfly · 2:30", body:"Breiter Sitz, Beine nur so weit wie ohne Haltearbeit. Oberkörper nach vorne sinken."},
-    {label:"HALF BUTTERFLY", phase:"MELT", time:"37:30", title:"Half Butterfly R/L · 1:30", body:"Langes Bein, anderer Fuß innen. Oberkörper zum langen Bein orientieren."},
-    {label:"SPHINX", phase:"MELT", time:"40:30", title:"Sphinx · 2:00", body:"Bauchlage, Unterarme am Boden. Bewusst kurz gehalten."},
-    {label:"BUTTERFLY", phase:"MELT", time:"42:30", title:"Reclined Butterfly · 2:30", body:"Rückenlage, Fußsohlen zusammen. Wide/Close je nach Fußabstand."},
-    {label:"CHEST OPENER", phase:"MELT", time:"45:00", title:"Reclined Chest Opener · 2:00", body:"Rückenlage. Ground: Kaktus-Arme. Flight: Arme über Kopf."},
-    {label:"KNEES TO CHEST", phase:"MELT", time:"47:00", title:"Knees to Chest · 1:00", body:"Knie zum Oberkörper, sanft wiegen, dann still."},
-    {label:"TWIST", phase:"MELT", time:"48:00", title:"Supine Twist R/L · 3:00", body:"Knie zur einen Seite, Brustkorb rotiert zur anderen. Bewusst länger als die anderen MELT-Holds."},
+    {label:"KLOPFEN", phase:"AWAKEN", time:"0:00", title:"Wach-Klopfen", body:"Fingerspitzen oder flache Hand über Arme, Schultern, Oberschenkel. Stärke selbst gewählt."},
+    {label:"BOUNCE", phase:"AWAKEN", time:"1:30", title:"Bounce", body:"Ground: federn, Bodenkontakt bleibt. Flight: kleine Hops. Jederzeit wechseln."},
+    {label:"WAVE", phase:"AWAKEN", time:"2:30", title:"Body Waves", body:"Knie → Becken → Wirbelsäule → Brust → Kopf."},
+    {label:"KREUZSCHLAG", phase:"AWAKEN", time:"3:30", title:"Arme-Kreuz-Schlag", body:"Arme über Kreuz vor der Brust zusammenschlagen, weit nach hinten öffnen, andersherum über Kreuz."},
+    {label:"TWIST", phase:"AWAKEN", time:"5:30", title:"Trunk Twist", body:"Rumpf R/L, Arme locker. Keine maximale Rotation suchen."},
+    {label:"GOLFERSWING", phase:"AWAKEN", time:"7:30", title:"Golferswing", body:"Breiter Stand, Arme wie Golfschläger gefasst. Große Rotation R/L, Schwung aus der Hüfte."},
+    {label:"QISQUAT", phase:"AWAKEN", time:"8:30", title:"QiSquat", body:"Arme über die Seite nach oben, Hände nach unten führen, Beine sinken in den Squat. Small Range/Open Range je nach Tiefe."},
+    {label:"FAUSTSCHLAG", phase:"AWAKEN", time:"9:45", title:"Faustschlag", body:"Aus dem Squat: Fäuste ballen, abwechselnd nach vorne stoßen, Richtung und Klarheit statt Kraft."},
+    {label:"ENERGY FLOW", phase:"FLOW", time:"12:00", title:"JIN Energy Flow", body:"High Lunge → Warrior II → Reverse Warrior → Side Angle → Down Dog → Plank Wave → andere Seite. Drei Runden: Learn → Build → Feel, 1–3× frei wählbar."},
+    {label:"SWAY", phase:"EXPLORE", time:"27:00", title:"Standing Energy Sway · 3:00", body:"Gewicht R/L verlagern, Arme dürfen mitschwingen, Oberkörper diagonal reachen. Ground/Open. Reduce bis nur noch das Gewicht wandert."},
+    {label:"FOLD WAVE", phase:"EXPLORE", time:"30:00", title:"Fold Wave / Ragdoll · 3:00", body:"Vertikale Welle zwischen Aufrichten und Fold, dann Ragdoll. Ground/Deep. Reduce bis Stillstand im Fold."},
+    {label:"LUNGE WAVE", phase:"EXPLORE", time:"33:00", title:"Low Lunge Wave R/L · 2:00 + 2:00", body:"Becken vor/zurück pendeln aus dem Low Lunge, optional Arm-Reach. Ground/Reach. Beide Seiten, danach eine Cat/Cow-Welle zum Sitz."},
+    {label:"90/90", phase:"EXPLORE", time:"37:00", title:"90/90 Melt · 3:00", body:"Knie R/L pendeln, dann kleiner werdend bis Stillstand im Sitz. Hier endet der Peak."},
+    {label:"DRAGONFLY", phase:"MELT", time:"40:00", title:"Dragonfly · 3:00", body:"Breiter Sitz, Beine nur so weit wie ohne Haltearbeit. Oberkörper nach vorne sinken."},
+    {label:"SPHINX", phase:"MELT", time:"43:00", title:"Sphinx · 2:00", body:"Bauchlage, Unterarme am Boden. Bewusst kurz gehalten."},
+    {label:"BUTTERFLY", phase:"MELT", time:"45:00", title:"Reclined Butterfly · 2:00", body:"Rückenlage, Fußsohlen zusammen. Wide/Close je nach Fußabstand."},
+    {label:"CHEST OPENER", phase:"MELT", time:"47:00", title:"Reclined Chest Opener · 2:00", body:"Rückenlage. Ground: Kaktus-Arme. Flight: Arme über Kopf. Ausgleich für die Armarbeit im Flow."},
+    {label:"KNEES TO CHEST", phase:"MELT", time:"49:00", title:"Knees to Chest · 1:00", body:"Knie zum Oberkörper, sanft wiegen, dann still."},
+    {label:"TWIST", phase:"MELT", time:"50:00", title:"Supine Twist R/L · 2:00", body:"Knie zur einen Seite, Brustkorb rotiert zur anderen."},
     {label:"REST", phase:"REST", time:"54:00", title:"Savasana", body:"Ca. fünf Minuten vollständige Ruhe, erst gegen Ende reaktivieren."},
   ]},
 
@@ -589,129 +574,55 @@ yin: { label:"Yin", theme:"Manchmal braucht Ruhe Zeit.", color:"#7a6a8c",
     {label:"TWIST", phase:"MELT", time:"46:30", title:"Supine Twist R/L · 3:00", body:"Knie zur einen Seite, Brustkorb rotiert zur anderen. Optional Fuß fassen für Quad-Dehnung."},
     {label:"REST", phase:"REST", time:"52:30", title:"Savasana", body:"7:30 volle Länge, letzte Minute Atem vertiefen, über die Seite hoch."},
   ]},
-
-menspilates: { label:"Men's Pilates", theme:"Nicht die größte Bewegung gewinnt. Die Bewegung, die du kontrollieren kannst.", color:"#3a5a7a",
-  memory:["ROLL DOWN","SQUAT+REACH","FOUNDATION","TOE TAP","DEAD BUG","HUNDRED","SHOULDER","ENGINE","GLUTES","ATHLETIC","BURN","RESET"],
+tennis: { label:"Tennis", theme:"Shift. Rotate. Reach.", color:"#4a7a6a",
+  memory:["ARRIVE","UPPER WAKE-UP","LOWER WAKE-UP","SQUAT","FOOTWORK","LEARN","MOVE","HIP","THORACIC","SHOULDER","PEAK","HALF SPLIT","HIP FLEXOR","CHEST OPENER","TWIST","REST"],
   phases:[
-    {name:"MOBILIZE", range:"0–8", start:0, blocks:[
-      P("0:00","Standing Roll Down · ×4","Füße hüftbreit, Knie ganz leicht gebeugt. Kinn sinkt zur Brust, dann Wirbel für Wirbel nach unten abrollen — Kopf, Nacken, oberer Rücken, unterer Rücken. Unten hängen Arme und Kopf komplett schwer, Knie bleiben weich. Dann von unten wieder aufrollen, Wirbel für Wirbel, Kopf kommt zuletzt.<div class='cue'>„Lasst den Kopf zuerst fallen, als würde eine Perlenkette Wirbel für Wirbel abgelegt.“<br>„Unten angekommen: Knie weich, Kopf und Arme komplett schwer.“<br>„Und jetzt von ganz unten wieder aufbauen — Becken zuerst, Kopf kommt als Letztes.“<br>„Keine Eile. Das ist die einzige Übung heute ohne Zeitdruck.“</div>"),
-      P("2:00","Squat + Reach · ×8","Füße hüftbreit, Zehen leicht nach außen. In die Kniebeuge sinken, so tief wie kontrolliert möglich, Gewicht bleibt in der Fußmitte. Beim Hochkommen Arme über den Kopf strecken und ausatmen. <span class='tag ground'>LEICHTER</span> nur halbe Tiefe, Hände bleiben an den Hüften. <span class='tag flight'>SCHWERER</span> mit einer Kurzhantel in jeder Hand, Arme strecken sich beim Hochkommen mit Gewicht nach oben.<div class='cue'>„Runter so tief, wie ihr die Knie noch über den Füßen halten könnt.“<br>„Beim Hochkommen: Arme lang nach oben, ausatmen.“<br>„Wer mag: Hanteln dazu — sonst bleibt's bei den Armen allein.“</div>"),
-      P("4:00","World's Greatest Stretch · 3×/Seite","Großer Ausfallschritt nach vorne, hintere Ferse hoch. Innere Hand neben dem vorderen Fuß absetzen, äußerer Arm dreht sich zur Decke, Blick darf folgen. Becken zeigt so weit wie möglich nach vorne.<div class='cue'>„Großer Schritt nach vorne, innere Hand neben den Fuß.“<br>„Und jetzt öffnet sich der obere Arm zur Decke — der Blick darf mitgehen, wenn's der Nacken mag.“<br>„Lasst die Rotation vor allem aus Brustwirbelsäule und Hüfte entstehen — nicht erzwingen.“</div>"),
-      P("6:00","Cat–Cow · 6× → Thread the Needle · 3×/Seite","Vierfüßler, Handgelenke unter den Schultern. Cat–Cow: Wirbelsäule rund machen (Kinn zur Brust, Becken einrollen), dann lang machen (Brustbein nach vorne, Blick leicht nach oben). Direkt im Anschluss Thread the Needle: ein Arm hebt zur Decke, dreht dann unter dem anderen Arm hindurch, Schulter und Schläfe sinken zum Boden.<div class='cue'>„Rund machen — und lang machen. Noch fünfmal, in eurem Tempo.“<br>„Jetzt ein Arm zur Decke — und darunter hindurchfädeln, Schulter sinkt zum Boden.“<br>„Heute geht es nicht darum, beweglich auszusehen. Sondern darum, den Körper kontrollieren zu können — das ist der Satz, der die ganze Stunde trägt.“</div>"),
+    {name:"AWAKEN", range:"0–11", start:0, blocks:[
+      P("0:00","Arrive & Breath","Stand oder Sitz. Ankommen, Atem wahrnehmen.<div class='cue'>„Wir bewegen erst, bevor wir irgendwas richtig machen müssen.“</div>"),
+      P("2:00","Upper Body Wake-up","Arm Circles → Cross-body Swings → Trunk Twist, fließend ineinander. Schultergürtel und Brustwirbelsäule kommen zunehmend in Bewegung."),
+      P("4:00","Lower Body Wake-up","Hip Circles → Knee/Ankle Mobilisation → Calf Raises. Hüfte, Knie und Sprunggelenke vorbereiten."),
+      P("6:00","Athletic Squat","Squat → Reach → Rotation R/L. Erstmals Füße, Hüfte, Rumpf und Oberkörper als Bewegungskette verbinden."),
+      P("8:00","Lateral Footwork Prep","Side Step → Side Lunge → Center → andere Seite. Zunächst kontrolliert, anschließend etwas federnder.<div class='cue'>„Ab jetzt bringen wir das zusammen: Shift. Rotate. Reach.“</div>"),
     ]},
-    {name:"POWERHOUSE FOUNDATION", range:"8–16", start:480, blocks:[
-      P("8:00","Neutral Spine + Breathing · 3 Atemzüge","Rückenlage, Knie aufgestellt, Füße hüftbreit. Neutrale Wirbelsäule finden: kleine Kurve im unteren Rücken, weder flach gepresst noch stark hohl. Seitliche Rippenatmung: beim Einatmen weiten sich die Rippen zur Seite, beim Ausatmen sinken sie, Bauchnabel zieht sich sanft zur Wirbelsäule.<div class='cue'>„Findet die Mitte zwischen ganz flach und stark hohl im Rücken — das ist eure Neutralstellung.“<br>„Einatmen in die Rippen seitlich. Ausatmen, Nabel zieht sanft nach innen.“<br>„Diese Position ist die Basis für alles, was heute noch kommt.“</div>"),
-      P("9:00","Pelvic Tilt / Imprint & Release · ×6","Aus der Neutralstellung: Becken kippt sanft, unterer Rücken presst komplett in die Matte (Imprint). Dann wieder lösen zurück in die Neutralstellung (Release). Bewegung kommt aus dem Becken, nicht aus den Beinen oder dem Bauch nach oben drücken.<div class='cue'>„Kippt das Becken, bis der untere Rücken ganz in der Matte liegt.“<br>„Und wieder lösen, zurück in die neutrale Mitte.“<br>„Hier lernt ihr die Verbindung, die den Rest der Stunde trägt: Becken, Rippen, Bauchspannung.“</div>"),
-      P("10:30","Toe Tap · 6×/Seite","Beide Beine im Tabletop (Knie über der Hüfte, 90 Grad). Ein Fuß sinkt kontrolliert Richtung Boden, tippt leicht auf, kommt zurück — ohne dass sich Becken oder unterer Rücken bewegen. Je tiefer der Fuß sinkt, desto mehr Arbeit für die tiefe Bauchmuskulatur.<div class='cue'>„Das Becken bleibt komplett still — das ist die ganze Übung.“<br>„Sinkt nur so tief, wie ihr die Stille im Becken halten könnt.“<br>„Merkt ihr, wie der untere Bauch mitarbeitet, sobald der Fuß sinkt?“</div>"),
-      P("12:00","Dead Bug · 6×/Seite","Tabletop-Position, dann gegenüberliegender Arm (nach hinten über den Kopf) und Bein (nach vorne, Ferse Richtung Boden) strecken sich gleichzeitig aus, während der untere Rücken flach am Boden bleibt. Zurück in die Ausgangsposition, Seite wechseln. <span class='tag ground'>LEICHTER</span> nur die Arme bewegen, Füße bleiben die ganze Zeit am Boden. <span class='tag flight'>SCHWERER</span> ein Widerstandsband um beide Füße gespannt, Beine arbeiten gegen den Zug.<div class='cue'>„Arm und gegenüberliegendes Bein strecken sich gemeinsam — der Rücken bleibt flach.“<br>„Wenn der Rücken sich hohl macht: Weg kleiner, nicht durchziehen.“<br>„Das ist Dead Bug — die Königsdisziplin der Powerhouse-Kontrolle.“</div>"),
-      P("13:30","Chest Lift → Hundred Prep · ×6 + 30–50 Pumps","Chest Lift: Hände hinter dem Kopf oder verschränkt vor der Brust, Oberkörper hebt sich langsam bis zur Schulterblattspitze, Blick bleibt zum Bauchnabel, Nacken lang. Direkt im Anschluss oben bleiben, Arme strecken sich neben dem Körper und pumpen kraftvoll auf und ab (Hundred). <span class='tag ground'>LEICHTER</span> Füße bleiben am Boden statt im Tabletop. <span class='tag flight'>SCHWERER</span> Beine gestreckt in die Diagonale angehoben.<div class='cue'>„Langsam hoch bis zu den Schulterblattspitzen. Blick zum Bauchnabel, Nacken bleibt lang.“<br>„Oben bleiben — und jetzt die Arme pumpen, klein und kraftvoll.“<br>„Qualität vor Zahl. Noch keine 100 erzwingen, wir sind erst beim Fundament.“</div>"),
+    {name:"FLOW 1", range:"11–20", start:660, blocks:[
+      P("11:00","Round 1 · Learn · 9:00","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ HIGH LUNGE L → OPEN TWIST L → FOLD<br>→ SIDE LUNGE L → WARRIOR II L → SIDE ANGLE L → FOLD<br>→ SIDE LUNGE R → WARRIOR II R → SIDE ANGLE R → FOLD<br>→ HIGH LUNGE R → OPEN TWIST R<br>→ DOWN DOG → WALK FORWARD → ROLL UP</div><div class='fidea'><b>LEARN:</b> Jeder Übergang wird angesagt. Noch kein Tempo, erst Orientierung.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„High Lunge – vorwärts/rückwärts orientierte Position.“<br>„Side Lunge – seitliche Gewichtsverlagerung.“<br>„Warrior II – offene athletische Position.“<br>„Side Angle – Gewichtsverlagerung und Reichweite verbinden.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Kommt auf die Matte, in den Stand.“<br>„High Lunge – vorwärts/rückwärts orientierte Position.“<br>„Side Lunge – seitliche Gewichtsverlagerung.“<br>„Warrior II – offene athletische Position.“<br>„Side Angle – Gewichtsverlagerung und Reichweite verbinden.“<br>„Noch kein Tempo. Erst Orientierung.“</div></details>"),
     ]},
-    {name:"SHOULDER CONTROL", range:"16–22", start:960, blocks:[
-      P("16:00","Band Pull-Apart · 10–12×","Stand, Band mit beiden Händen schulterbreit greifen, Arme gestreckt vor dem Körper. Arme ziehen das Band auseinander bis vor die Brust, Schulterblätter ziehen sich sanft zueinander, dann kontrolliert zurück.<div class='cue'>„Zieht das Band auseinander, die Schulterblätter kommen sanft zusammen.“<br>„Kontrolliert zurück — nicht das Band zurückschnappen lassen.“<br>„Das ist der Ausgleich zu allem, was das Bankdrücken euch eingebrockt hat.“</div>"),
-      P("18:00","External Rotation mit Band","8–10×/Seite. Ellbogen bleibt fest am Körper fixiert, 90 Grad gebeugt. Unterarm dreht nach außen gegen den Widerstand des Bandes, dann kontrolliert zurück zur Mitte.<div class='cue'>„Der Ellbogen bleibt am Körper kleben — nur der Unterarm dreht nach außen.“<br>„Kontrolliert zurück, nicht fallen lassen.“</div>"),
-      P("20:00","Scapular Push-up → Plank Hold · ×8 + 20 Sek.","Direkter Übergang auf die Matte: Plank-Position, Arme gestreckt. Ohne die Arme zu beugen, Schulterblätter zueinander sinken lassen (Brustkorb sinkt leicht zwischen die Schultern), dann aktiv auseinanderdrücken (oberer Rücken rundet sich leicht). Danach direkt in den Plank Hold übergehen. <span class='tag ground'>LEICHTER</span> Knie am Boden statt Zehen.<div class='cue'>„Arme bleiben gestreckt — nur die Schulterblätter bewegen sich zueinander und auseinander.“<br>„Und jetzt halten: Schulterkontrolle geht direkt ins Gewicht auf den Händen über.“<br>„Zwanzig Sekunden. Eine gerade Linie von Kopf bis Ferse.“</div>"),
+    {name:"FLOW 2", range:"20–27", start:1200, blocks:[
+      P("20:00","Round 2 · Move · 7:00","<div class='froute-label'>Route</div><div class='froute'>MOUNTAIN → REACH → FOLD → HALF LIFT → FOLD<br>→ HIGH LUNGE L → OPEN TWIST L → FOLD<br>→ SIDE LUNGE L → WARRIOR II L → SIDE ANGLE L → FOLD<br>→ SIDE LUNGE R → WARRIOR II R → SIDE ANGLE R → FOLD<br>→ HIGH LUNGE R → OPEN TWIST R<br>→ DOWN DOG → WALK FORWARD → ROLL UP</div><div class='fidea'><b>MOVE:</b> Gleiche Route, weniger Einzelansagen, mehr Fluss. Side Lunges werden größer, Rotation wächst aus der Gewichtsverlagerung.</div><div class='fkeycue-label'>Key Cues</div><div class='fkeycues'>„Side Lunge – Shift. Open Twist – Rotate. Side Angle – Reach.“</div><details class='fcues'><summary>Alle Cues anzeigen</summary><div class='cue-full'>„Side Lunge – Shift.“<br>„Open Twist – Rotate.“<br>„Side Angle – Reach.“<br>„Nicht drei isolierte Aktionen. Die eine Bewegung bereitet die nächste vor.“</div></details>"),
     ]},
-    {name:"THE ENGINE", range:"22–33", start:1320, blocks:[
-      P("22:00","Single Leg Stretch · 8×/Seite","Rückenlage, Oberkörper in Chest-Lift-Höhe. Ein Knie zur Brust ziehen (Hände außen am Schienbein/innen am Knie), anderes Bein lang und knapp über dem Boden gestreckt. Wechsel mit dem Atem — ausatmen bei jedem Wechsel.<div class='cue'>„Ein Knie zur Brust, das andere Bein lang und tief — aber der Rücken bleibt am Boden.“<br>„Wechsel mit dem Ausatmen, zwei Wechsel pro Atemzug.“<br>„Der Oberkörper bleibt oben, der Nacken bleibt lang.“</div>"),
-      P("24:00","Double Leg Stretch · ×8","Erste Variante bewusst reduziert: Knie im Tabletop, Oberkörper oben. Arme strecken sich nach hinten über den Kopf, kreisen dann seitlich zurück zu den Knien — die Beine bleiben die ganze Zeit im Tabletop oben. <span class='tag flight'>SCHWERER</span> Beine strecken sich zusätzlich diagonal nach vorne-unten, während die Arme nach hinten reichen, dann kehren beide gemeinsam zurück.<div class='cue'>„Nur die Arme reisen heute Runde eins — die Beine bleiben oben und ruhig.“<br>„Wenn die Rippen hochkommen, der Rücken hohl wird oder der Nacken hart wird: kleiner machen, nicht durchziehen.“<br>„Wer mag: Beine strecken sich mit den Armen mit — aber nur, wenn der Rücken flach bleibt.“</div>"),
-      P("26:00","Criss Cross · 6–8×/Seite","Hände hinter dem Kopf, Ellbogen weit geöffnet. Oberkörper rotiert, Ellbogen bewegt sich Richtung gegenüberliegendes Knie, während das andere Bein sich streckt. Rotation kommt aus dem Rumpf, nicht aus dem Ziehen am Kopf.<div class='cue'>„Die Rotation kommt aus der Körpermitte — die Hände ziehen nicht am Kopf.“<br>„Ellbogen zum gegenüberliegenden Knie, dann Seite wechseln.“<br>„Langsamer ist hier schwerer als schnell.“</div>"),
-      P("28:00","Forearm Plank · 30 Sek.","Unterarme am Boden, Ellbogen unter den Schultern, Körper eine durchgehende gerade Linie von Kopf bis Ferse. Becken weder nach oben noch nach unten hängen lassen. <span class='tag ground'>LEICHTER</span> Knie am Boden. <span class='tag flight'>SCHWERER</span> zusätzlich Knee Taps, 10× abwechselnd Knie Richtung Boden tippen.<div class='cue'>„Eine gerade Linie — kein Buckel, kein Durchhängen im Becken.“<br>„Atmen nicht vergessen, auch wenn's brennt.“</div>"),
-      P("30:00","Plank Hold — Finisher · 20 Sek.","Letzte, bewusst maximale Anspannung des Blocks vor dem Wechsel zu Glutes & Legs. Gleiche Form wie zuvor, aber ohne Bewegung dazwischen — nur Halten. <span class='tag ground'>LEICHTER</span> Knie am Boden.<div class='cue'>„Zwanzig Sekunden. Das ist der Abschluss des Engine-Blocks.“<br>„Atmen nicht vergessen. Fast geschafft.“</div>"),
+    {name:"EXPLORE", range:"27–39", start:1620, blocks:[
+      P("27:00","Hip Rotation Explore · 5:00","Innen- und Außenrotation der Hüfte erkunden, im Wechsel R/L. Nicht maximale Range suchen, sondern Unterschiede wahrnehmen: rechts/links, stabil/frei, kontrolliert/ungewohnt."),
+      P("32:00","Thoracic Rotation Explore · 4:00","Rotation aus der Brustwirbelsäule differenzieren, ohne die Bewegung einfach aus Schulter oder Becken zu holen. Seiten vergleichen, ohne Asymmetrie automatisch als Problem zu bewerten."),
+      P("36:00","Shoulder Rotation Explore · 3:00","Kontrollierte Innen-/Außenrotation des Schultergelenks mit unterschiedlicher Armposition. Bezug zum Aufschlag darf hier benannt werden, ohne eine Tennisbewegung nachzustellen."),
     ]},
-    {name:"GLUTES & LEGS", range:"33–43", start:1980, blocks:[
-      P("33:00","Pelvic Curl → Bridge Hold → Heel Raises → Marching Bridge","×6 / Hold / ×8 / 6×/Seite. Pelvic Curl: Rückenlage, Füße hüftbreit aufgestellt, Wirbel für Wirbel vom Becken aus abheben bis zu einer geraden Linie Knie–Hüfte–Schulter, dann Wirbel für Wirbel wieder ablegen. Oben halten (Bridge Hold). Dann Fersen abwechselnd anheben und senken (Heel Raises). Dann im Bridge-Hold abwechselnd ein Knie zur Brust ziehen, ohne dass das Becken kippt (Marching Bridge).<div class='cue'>„Wirbel für Wirbel hoch — Becken zuerst, dann der Rücken folgt.“<br>„Oben halten. Und jetzt die Fersen: heben, senken, heben, senken.“<br>„Ein Knie zur Brust — das Becken bleibt dabei ganz ruhig und gerade.“<br>„Das ist die Sequenz, die euch Hamstrings, Glutes und Beckenkontrolle in einem Rutsch gibt.“</div>"),
-      P("36:30","Side-Lying Series · Leg Lift ×8, Small Circles 8/8, Front/Back ×6","Seitlage, unterer Arm stützt den Kopf oder liegt lang am Boden, Körper eine gerade Linie. Oberes Bein gestreckt auf Hüfthöhe anheben und senken (Leg Lift). Dann kleine Kreise vorwärts und rückwärts (Small Circles). Dann das Bein kontrolliert nach vorne und nach hinten schwingen, ohne dass der Oberkörper mitrotiert (Front/Back).<div class='cue'>„Das Bein hebt sich, der Oberkörper bleibt exakt da, wo er ist.“<br>„Kleine Kreise — die Größe ist egal, die Kontrolle zählt.“<br>„Und jetzt vor und zurück: Kann sich das Bein bewegen, ohne dass der Rest mitwackelt? Das ist Pilates pur.“</div>"),
-      P("40:00","Bird Dog → Knee Hover · 8×/Seite + 20 Sek.","Vierfüßler, Handgelenke unter den Schultern, Knie unter der Hüfte. Gegenüberliegender Arm und Bein strecken sich gleichzeitig lang aus, Becken bleibt gerade, kein Kippen zur Seite. Danach: Knie heben 2–3 cm über den Boden und dort halten, Rumpf bleibt stabil. <span class='tag ground'>LEICHTER</span> Knee Hover auslassen, nur Bird Dog. <span class='tag flight'>SCHWERER</span> im Knee Hover zusätzlich abwechselnd einen Fuß antippen, 6×.<div class='cue'>„Arm und gegenüberliegendes Bein strecken sich — das Becken bleibt gerade, kein Kippen.“<br>„Und jetzt die Knie nur wenige Zentimeter heben und dort halten. Der Rumpf trägt, nicht die Arme.“</div>"),
+    {name:"PEAK", range:"39–42", start:2340, blocks:[
+      P("39:00","Integrated Rotation · 3:00","<span class='lbl'>Arrive</span> Split Stance, Gewicht noch mittig.<br><span class='lbl'>Move</span> Split Stance → Weight Shift → Rotate → Reach → Return. Erst langsam und deutlich getrennt, dann zunehmend als eine zusammenhängende Bewegung.<div class='cue'>„Shift. Rotate. Reach.“<br>„Erst das Gewicht, dann die Rotation, dann der Raum.“</div>"),
     ]},
-    {name:"ATHLETIC PILATES", range:"43–52", start:2580, blocks:[
-      P("43:00","Leg Pull Front Prep · 6×/Seite","Plank-Position, Arme gestreckt. Ein Bein hebt sich nur wenige Zentimeter vom Boden, wird kurz gehalten, setzt kontrolliert wieder ab — das Becken bleibt dabei exakt gerade, keine Rotation. Seite wechseln. <span class='tag ground'>LEICHTER</span> Knie am Boden oder nur die Plank halten, ohne das Bein zu heben. <span class='tag flight'>SCHWERER</span> Leg Lift plus ein kleines, kontrolliertes Vor-und-Zurück-Schaukeln des ganzen Körpers (Rock).<div class='cue'>„Das Bein geht nur so hoch, wie dein Becken ruhig bleiben kann.“<br>„Sieht winzig aus — genau deshalb ist es schwer.“</div>"),
-      P("45:00","Push-up Pilates Style · 3 Runden","Plank-Position → drei langsame Push-ups, dabei 3 Sekunden kontrolliert nach unten → Pike-Position/Down Dog zum Ausgleich → zurück in die Plank für die nächste Runde.<div class='cue'>„Drei Sekunden runter — nicht schneller.“<br>„Runter kann jeder. Mich interessiert, ob ihr den Weg nach unten kontrolliert.“<br>„Aus der Pike-Position wieder zurück in die Plank für die nächste Runde.“</div>"),
-      P("47:30","Side Plank Prep · 20–30 Sek./Seite","Unterarmstütz seitlich, unteres Knie am Boden abgestützt, oberer Arm zeigt zur Decke oder liegt an der Hüfte. Körper eine gerade Linie von Kopf bis Knie. <span class='tag flight'>SCHWERER</span> beide Beine lang übereinander gestreckt; wer noch mehr will: oben ein kleiner, kontrollierter Hip Lift ×5.<div class='cue'>„Eine gerade Linie, das untere Knie trägt einen Teil des Gewichts ab.“<br>„Wer die Beine lang streckt: die Hüfte bleibt gestapelt, nicht nach vorne kippen.“</div>"),
-      P("49:30","Standing Scooter / Standing Leg Press · 8–10×/Seite","Mit dem Widerstandsband: Standbein leicht gebeugt, stabil. Anderes Bein mit dem Band kontrolliert weit nach hinten führen (Hüftstreckung), dann langsam und kontrolliert wieder nach vorne zurück — der Widerstand des Bandes wirkt in beide Richtungen.<div class='cue'>„Das Standbein bleibt stabil und leicht gebeugt.“<br>„Das andere Bein nach hinten gegen das Band — und genauso kontrolliert wieder zurück.“<br>„Der Rückweg zählt genauso wie der Hinweg.“</div>"),
+    {name:"MELT", range:"42–54", start:2520, blocks:[
+      P("42:00","Half Split R · 2:00","Hamstrings und hintere Kette."),
+      P("44:00","Half Split L · 2:00","Hamstrings und hintere Kette, gespiegelt."),
+      P("46:00","Hip Flexor R · 2:00","Vordere Hüfte nach wiederholten Lunges, Beschleunigungen und Gewichtsverlagerungen."),
+      P("48:00","Hip Flexor L · 2:00","Vordere Hüfte, gespiegelt."),
+      P("50:00","Chest/Shoulder Opener · 2:00","Ausgleich nach der wiederholten Rotations- und Schlagarbeit. Brust- und Schulterbereich bekommen Raum, ohne daraus eine pauschale Haltungsdiagnose abzuleiten."),
+      P("52:00","Supine Twist R/L · 2:00","Rotation wird passiv und ruhig. Übergang von aktiver Bewegungssteuerung zu Ruhe."),
     ]},
-    {name:"POWERHOUSE BURN", range:"52–57", start:3120, blocks:[
-      P("52:00","Rückenlagen-Kette · je 30 Sek. + Hundred 50 Pumps","Ohne Pause direkt hintereinander, alle in Rückenlage: Chest Lift Hold (oben bleiben, 30 Sek.) → Single Leg Stretch (30 Sek., zügiger als zuvor) → Tabletop Toe Taps (30 Sek.) → Hundred (50 Pumps). Danach kurz lösen, Beine ausschütteln.<div class='cue'>„Vier Übungen, ein Fluss, kein Ablegen dazwischen.“<br>„Oben bleiben. Wechseln. Weiter. Das ist der letzte große Push.“<br>„Kurz lösen — Beine ausschütteln, bevor's weitergeht.“</div>"),
-      P("54:30","Teaser Prep · 5× langsam, letzte Wiederholung 10 Sek. halten","Füße am Boden aufgestellt, Hände fassen hinter die Oberschenkel. Oberkörper rollt kontrolliert in eine C-Curve nach hinten, bis kurz vor dem Kippunkt, dann wieder kontrolliert nach vorne hoch. Bei der letzten Wiederholung oben in der C-Curve halten, dann erst ablegen.<div class='cue'>„Kontrolliert zurück in die C-Curve — nicht fallen lassen.“<br>„Und genauso kontrolliert wieder hoch.“<br>„Letzte Wiederholung: oben halten, zehn Sekunden.“<br>„Falls ihr euch gefragt habt, wo euer Powerhouse ist: Jetzt wisst ihr es.“</div>"),
-    ]},
-    {name:"RESET", range:"57–60", start:3420, blocks:[
-      P("57:00","Child's Pose → Hip Flexor Stretch → Figure Four → Supine Spinal Twist → Standing Roll Up","Bewusst kein abruptes Ende — diese Zielgruppe braucht Beweglichkeit mindestens so dringend wie Core-Stärke. Child's Pose (Knie breit, Stirn sinkt), dann im Kniestand Hüftbeuger dehnen (Ausfallschritt, Becken nach vorne), dann Rückenlage Figure Four (Knöchel aufs gegenüberliegende Knie, Bein zur Brust ziehen), dann Supine Spinal Twist (Knie zur Seite sinken lassen, Brustkorb bleibt offen), zum Schluss aufstehen und ein letztes Mal die Wirbelsäule aufrollen.<div class='cue'>„Nach so viel Kontrolle heute: hier darf einfach nur losgelassen werden.“<br>„Die Hüftbeuger haben heute viel gearbeitet — hier bekommen sie ihre Länge zurück.“<br>„Knie sinkt zur Seite, der Brustkorb bleibt offen.“<br>„Und zum Schluss: ein letztes Mal aufrollen, ein letzter bewusster Atemzug.“</div>"),
+    {name:"REST", range:"54–60", start:3240, blocks:[
+      P("54:00","Savasana · 6:00","Kurze Ankunft. Dann Stille. Kurze Rückkehr. Kein Motiv-Cue mehr – der konzeptionelle Bogen ist bereits geschlossen.<div class='cue'>„Kommt zur Ruhe.“<br>(Ca. sechs Minuten Stille.)<br>„Über eine Seite, wenn ihr bereit seid, langsam hoch.“</div>"),
     ]},
   ],
   cards:[
-    {label:"ROLL DOWN", phase:"MOBILIZE", time:"0:00", title:"Standing Roll Down · ×4", body:"Kinn zur Brust, Wirbel für Wirbel abrollen, unten schwer hängen, Wirbel für Wirbel aufrollen."},
-    {label:"SQUAT+REACH", phase:"MOBILIZE", time:"2:00", title:"Squat + Reach · ×8", body:"Kniebeuge, beim Hochkommen Arme über Kopf. Leichter: halbe Tiefe. Schwerer: mit Kurzhantel."},
-    {label:"FOUNDATION", phase:"POWERHOUSE FOUNDATION", time:"9:00", title:"Pelvic Tilt / Imprint & Release · ×6", body:"Becken kippt, unterer Rücken presst in die Matte und löst — die Basis für den ganzen Rest der Stunde."},
-    {label:"TOE TAP", phase:"POWERHOUSE FOUNDATION", time:"10:30", title:"Toe Tap · 6×/Seite", body:"Tabletop, Fuß tippt Richtung Boden, Becken bleibt komplett still."},
-    {label:"DEAD BUG", phase:"POWERHOUSE FOUNDATION", time:"12:00", title:"Dead Bug · 6×/Seite", body:"Gegenüberliegender Arm/Bein strecken, Rücken bleibt flach. Leichter: nur Arme. Schwerer: Band um die Füße."},
-    {label:"HUNDRED", phase:"POWERHOUSE FOUNDATION", time:"13:30", title:"Chest Lift → Hundred Prep", body:"Oben bleiben, Arme pumpen. 30–50 Pumps, Qualität vor Zahl."},
-    {label:"SHOULDER", phase:"SHOULDER CONTROL", time:"16:00", title:"Band Pull-Apart → External Rotation → Scapular Push-up", body:"Drei Übungen, direkter Übergang auf die Matte in den Plank Hold."},
-    {label:"ENGINE", phase:"THE ENGINE", time:"22:00", title:"Single Leg Stretch → Double Leg Stretch → Criss Cross → Plank", body:"Eine Runde plus Plank-Finisher. Double Leg Stretch zuerst ohne Beine wegzuschicken."},
-    {label:"GLUTES", phase:"GLUTES & LEGS", time:"33:00", title:"Pelvic Curl-Kette → Side Series → Bird Dog", body:"Hamstrings, Glutes, Beckenkontrolle, dann laterale Kette, dann Vierfüßler-Stabilität."},
-    {label:"ATHLETIC", phase:"ATHLETIC PILATES", time:"43:00", title:"Leg Pull Front Prep → Push-up → Side Plank → Standing Scooter", body:"Athletisch über Kontrolle: langsame Exzentrik, Instabilität, lange Hebel, unilateral."},
-    {label:"BURN", phase:"POWERHOUSE BURN", time:"52:00", title:"Rückenlagen-Kette → Teaser Prep", body:"Finaler Burn statt Wiederholungszirkel, endet mit gehaltener C-Curve."},
-    {label:"RESET", phase:"RESET", time:"57:00", title:"Child's Pose → Hip Flexor → Figure Four → Twist → Roll Up", body:"Beweglichkeit zum Schluss, mindestens so wichtig wie Core-Stärke."},
-  ]},
-
-mensreformer: { label:"Men's Reformer", theme:"Kontrollierte Kraft. Stabiler Core.", color:"#516170",
-  memory:["FOOTWORK","FOUNDATION","HUNDRED","COORDINATION","ROWING","ENGINE","GLUTES","ATHLETIC","BURN","RESET"],
-  phases:[
-    {name:"SETUP & FOOTWORK", range:"0–8", start:0, blocks:[
-      P("0:00","Footwork — Parallel · ×10","Rückenlage, Schulterpolster fixiert, Ballen auf der Fußstange, Fersen zusammen, Knie über den Hüften gebeugt. Beine strecken die Carriage kontrolliert nach außen, dann genauso kontrolliert zurück. 3–4 Federn (mittel–schwer) für einen spürbaren Beinkraft-Reiz von Anfang an.<div class='cue'>„Ballen auf die Stange, Fersen zusammen.“<br>„Die Carriage fährt nur so schnell raus, wie ihr sie auch wieder kontrolliert reinholt.“<br>„Das ist der klassische Reformer-Einstieg — sofortiger Beinkraft-Reiz, gleichzeitig lernt ihr die Carriage-Kontrolle, ohne dass es wie Aufwärmen wirkt.“</div>"),
-      P("2:00","Footwork — V-Position · ×10","Gleiche Bewegung wie Parallel, andere Fußstellung: Fersen bleiben zusammen, Zehen öffnen sich weit (V-Form). Die Innenseite der Beine arbeitet dadurch spürbar stärker mit.<div class='cue'>„Fersen zusammen, Zehen weit auf — eine V-Form.“<br>„Gleiche Kontrolle wie eben, nur die Fußstellung ändert sich.“</div>"),
-      P("4:00","Footwork — Wide & Heels · ×8 + ×8","Wide: Füße hüftbreit auseinander, parallel zueinander, gleiche Streck-Beuge-Bewegung. Direkt im Anschluss Heels: Fersen liegen auf der Stange, Zehen frei in der Luft — Waden und Achillessehne übernehmen zusätzlich Arbeit.<div class='cue'>„Erst breiter Stand, parallel.“<br>„Und jetzt die Fersen auf die Stange, Zehen frei — spürt ihr, wie die Waden übernehmen?“</div>"),
-      P("6:00","Footwork — Single Leg · 6×/Seite","Ein Fuß bleibt auf der Stange, das andere Bein hebt sich in die Luft oder wird am Körper gehalten. Deutlich mehr Beckenstabilität gefordert als beidbeinig — die Carriage will bei jedem Wiederholungszyklus leicht kippen. <span class='tag ground'>LEICHTER</span> beide Füße bleiben auf der Stange, nur das Gewicht mental auf eine Seite verlagern. <span class='tag flight'>SCHWERER</span> das freie Bein bleibt während der ganzen Bewegung gestreckt in der Luft.<div class='cue'>„Ein Fuß auf der Stange, das andere Bein bleibt entspannt.“<br>„Das Becken bleibt gerade — das ist schwerer als die Beinarbeit selbst.“</div>"),
-    ]},
-    {name:"POWERHOUSE FOUNDATION", range:"8–16", start:480, blocks:[
-      P("8:00","Neutral Spine + Breathing · 1 Min.","Rückenlage auf dem Carriage, Füße auf der Fußstange. Neutrale Wirbelsäule finden — kleine Kurve im unteren Rücken, weder flach gepresst noch stark hohl — während das Gerät unter euch leicht nachgibt.<div class='cue'>„Findet die Mitte zwischen ganz flach und stark hohl — das ist eure Neutralstellung, auch wenn das Gerät sich bewegt.“</div>"),
-      P("9:00","Pelvic Curl auf dem Reformer · ×6","Füße auf der Fußstange, Becken hebt sich Wirbel für Wirbel bis zu einer geraden Linie Knie–Hüfte–Schulter, dann Wirbel für Wirbel wieder ablegen. Die Carriage bleibt dabei ruhig — keine zusätzliche Bewegung durch die Beine. 2–3 Federn (leicht–mittel): ausreichend, damit die Carriage stabil bleibt, ohne dass die Beinarbeit die Wirbelsäulenartikulation übernimmt.<div class='cue'>„Wirbel für Wirbel hoch — Becken zuerst, dann folgt der Rücken.“<br>„Die Carriage soll dabei still stehen. Wenn sie wandert, ist die Feder nicht die richtige Stellschraube — probiert kleiner zu werden.“</div>"),
-      P("10:30","Hundred Prep · 30–50 Pumps","Beine im Tabletop oder Fersen auf der Stange, Oberkörper oben (Chest-Lift-Höhe), Hände greifen den Rahmen oder die Straps, Arme pumpen klein und kraftvoll neben dem Körper. <span class='tag ground'>LEICHTER</span> Füße bleiben auf der Stange statt Tabletop. <span class='tag flight'>SCHWERER</span> Beine gestreckt in die Diagonale, Fersen zusammen.<div class='cue'>„Qualität vor Zahl — die Carriage soll dabei still bleiben, nicht nur der Oberkörper.“</div>"),
-      P("13:00","Coordination Prep · ×6","Aus dem Tabletop: Beine strecken sich nach vorne, während die Arme (an den Straps) gleichzeitig nach hinten ziehen — eine Gegenbewegung von Armen und Beinen bei stabilem Rumpf. 2 Federn (leicht) für die Arme.<div class='cue'>„Arme und Beine bewegen sich gegeneinander — die Mitte bleibt der ruhige Punkt.“<br>„Das ist die Foundation-Bewegung, die euch im Finale später in verdichteter Form nochmal begegnet.“</div>"),
-    ]},
-    {name:"SHOULDER CONTROL", range:"16–22", start:960, blocks:[
-      P("16:00","Rowing 1 — Arms Front · ×8","Aufrechter Sitz auf dem Carriage, Straps in beiden Händen. Arme ziehen von vorne kontrolliert zum Körper, dann kontrolliert wieder nach vorne strecken. 1–2 Federn (leicht) — Kontrolle vor Kraft.<div class='cue'>„Das Becken bleibt aufrecht, auch wenn der Zug nach vorne zieht.“<br>„Das ersetzt die Bandarbeit von der Matte — echte Zugarbeit mit Reformer-Widerstand.“</div>"),
-      P("18:00","Chest Expansion · ×8","Kniend oder sitzend, Straps hinter dem Körper, Arme ziehen kontrolliert nach hinten, Brustkorb öffnet sich. Am Ende der Bewegung darf sich der Kopf sanft zur Seite drehen, dann zur Mitte zurück.<div class='cue'>„Die Arme ziehen nach hinten, der Brustkorb öffnet sich — nicht der untere Rücken.“</div>"),
-      P("20:00","Triceps Press · ×8","Bauchlage oder Kniestand, Straps in den Händen, Arme strecken sich kontrolliert nach hinten (Trizeps), dann zurück. Bewusst als eigenständige Übung — kein Übergang in eine andere Position danach.<div class='cue'>„Nur der Oberarm bewegt sich — der Oberkörper bleibt ruhig liegen.“</div>"),
-    ]},
-    {name:"THE ENGINE", range:"22–33", start:1320, blocks:[
-      P("22:00","Elephant · ×8","Stehend, Hände auf der Fußstange, Füße auf der Carriage-Kante, Becken hoch (umgekehrtes V). Die Carriage fährt durch Hüftbeugung rein und raus, die Fersen bleiben dabei unten. Vor dieser Übung bewusst Federn und Fußposition neu einstellen — kein nahtloser Übergang aus der vorherigen Übung. 2–3 Federn (mittel).<div class='cue'>„Die Bewegung kommt aus der Hüfte, nicht aus den Armen.“<br>„Das ist der athletischste und für viele eindrücklichste Block heute: Plank auf einer beweglichen Fläche. Sieht simpel aus, ist es nicht.“</div>"),
-      P("24:00","Long Stretch · ×8","Plank-Position, Hände auf der Fußstange, Körper eine gerade Linie. Die Carriage fährt durch Armkraft und Rumpfspannung raus und rein, das Becken bleibt dabei auf Schulterhöhe. 2 Federn (leicht–mittel) — weniger Federn heißt hier mehr Stabilisationsarbeit für den Rumpf. <span class='tag ground'>LEICHTER</span> kleinerer Bewegungsweg, mehr Federn. <span class='tag flight'>SCHWERER</span> weniger Federn, größerer Weg.<div class='cue'>„Das Becken darf beim Rausfahren nicht nach oben wandern — das ist der Kontrollpunkt.“</div>"),
-      P("26:30","Down Stretch · ×6","Aus der Plank: Becken sinkt in eine sanfte Rückbeuge, die Carriage bewegt sich dabei nur minimal, dann zurück in die neutrale Plank."),
-      P("28:30","Up Stretch / Pike · ×6","Aus der Plank: Becken hebt sich in eine Pike-Position, die Carriage fährt durch die Hüftbeugung ein Stück ein, dann zurück in die Plank.<div class='cue'>„Kontrolliert nach oben, kontrolliert zurück — kein Schwung.“</div>"),
-      P("31:00","Core-Finisher: Knees to Chest auf dem Carriage · ×8","Plank-Position, beide Knie ziehen gemeinsam kontrolliert zur Brust (die Carriage fährt dabei ein), dann zurück in die Plank. — Hinweis: Nicht alle fünf Elemente dieses Blocks sind Pflicht. Bei knapper Zeit oder Kondition dürfen Down Stretch oder dieser Core-Finisher entfallen, die Serie bleibt trotzdem stimmig."),
-    ]},
-    {name:"GLUTES & LEGS", range:"33–43", start:1980, blocks:[
-      P("33:00","Single-Leg Footwork + Free-Leg Circles · 6×/Seite","Ein Fuß bleibt auf der Stange, das freie Bein zeichnet kontrollierte Kreise in der Luft, während die Carriage-Position stabil gehalten wird.<div class='cue'>„Der Reformer erlaubt hier echten Widerstand statt nur Körpergewicht — das ist der Bonus gegenüber der Matten-Klasse.“</div>"),
-      P("35:30","Bridge auf dem Reformer → Marching · ×10, dann 6×/Seite","Füße auf der Fußstange, Becken hebt sich zur Bridge, dann abwechselnd ein Knie zur Brust ziehen, ohne dass die Carriage wegrutscht. 2 Federn (leicht) — zu viel Widerstand macht die Bridge instabil."),
-      P("38:00","Side Splits / Skating · 8×/Seite","Seitlich stehend auf der Carriage-Plattform, ein Fuß auf dem Frame, ein Fuß auf der Carriage. Die Carriage fährt seitlich weg und wieder heran, das Standbein trägt. 3–4 Federn (mittel–schwer) für Stabilität beim Erstversuch. <span class='tag ground'>LEICHTER</span> mit einer Hand am Rahmen abstützen.<div class='cue'>„Sieht leichter aus, als es ist — die Hüftstabilität wird hier massiv gefordert.“</div>"),
-      P("40:30","Runner's Lunge auf dem Reformer · 6×/Seite","Ein Fuß auf der Carriage, ein Fuß fest auf der Plattform/dem Boden vor dem Gerät — eine Ausfallschritt-Bewegung, bei der die Carriage mit dem hinteren Bein rein und raus fährt."),
-    ]},
-    {name:"ATHLETIC", range:"43–52", start:2580, blocks:[
-      P("43:00","Standing Lunge auf der Fußstange · 8×/Seite","Ein Fuß auf der Fußstange, anderer Fuß auf der Plattform hinter dem Gerät, kontrollierte Kniebeuge-Bewegung, die Carriage fährt mit dem vorderen Bein. 3 Federn (mittel) für Stabilität.<div class='cue'>„Balance zuerst, Bewegungsumfang danach.“</div>"),
-      P("45:30","Short Box — Round Back · ×8","Sitz auf der Short Box, Füße unter den Riemen fixiert, Oberkörper rollt in eine runde Vorbeuge und wieder auf."),
-      P("47:30","Short Box — Flat Back & Oblique · 6×/Seite","Oberkörper bleibt lang (kein Runden), neigt sich seitlich und rotiert leicht — arbeitet gezielt die schräge Bauchmuskulatur."),
-      P("49:30","Knee Stretch Series · ×8","Kniend auf der Carriage, Hände auf der Fußstange, die Hüfte fährt die Carriage durch Kniebeugung ein und aus, der Rücken bleibt lang. <span class='tag ground'>LEICHTER</span> kleinerer Bewegungsweg.<div class='cue'>„Der Rücken bleibt eine gerade Linie — die Hüfte macht die Arbeit.“</div>"),
-    ]},
-    {name:"POWERHOUSE BURN", range:"52–57", start:3120, blocks:[
-      P("52:00","Rowing-Kette · je 30 Sek.","Arms Front direkt gefolgt von Chest Expansion, ohne Pause dazwischen. Kein neues Lernen mehr — ein echter Final Burn aus bereits beherrschten Bewegungen, zügiger und mit einem starken, aber bekannten Abschluss."),
-      P("53:00","Long Stretch — zügig · ×10","Gleiche Form wie im Engine-Block, jetzt zügiger und ohne Zwischenerklärung."),
-      P("54:30","Hundred/Coordination-Kette — zügig · 1:30","Hundred Prep direkt gefolgt von Coordination Prep, beides bereits aus der Foundation bekannt — hier nur schneller und ohne neue Erklärung."),
-      P("56:00","Knee Stretch — kontrollierter Abschluss · ×8","Aus dem Athletic-Block bereits bekannte Bewegung, hier als ruhigerer Abschluss vor dem Reset — kein neuer Skill, sondern der bewusste letzte bekannte Reiz.<div class='cue'>„Nichts Neues mehr — das kennt ihr schon. Nur noch sauber zu Ende bringen.“<br>„Finale heißt Bekanntes verdichten, nicht nach 52 Minuten Ermüdung noch etwas Neues lernen.“</div>"),
-    ]},
-    {name:"RESET", range:"57–60", start:3420, blocks:[
-      P("57:00","Mermaid Stretch → Spine Stretch → Kindshaltung","Bewusst kein abruptes Ende — nach so viel Zugarbeit und Beinkraft braucht diese Zielgruppe die Dehnung mindestens so dringend wie die Kraft davor. Mermaid Stretch am Rahmen: seitliche Dehnung, eine Hand hält den Rahmen oder die Fußstange. Spine Stretch im Sitz auf dem Carriage: Wirbelsäule rundet sich nach vorne. Zum Schluss kurze Kindshaltung neben dem Gerät am Boden.<div class='cue'>„Letzter bewusster Atemzug.“</div>"),
-    ]},
-  ],
-  cards:[
-    {label:"FOOTWORK", phase:"SETUP & FOOTWORK", time:"0:00", title:"Footwork Parallel → V → Wide/Heels → Single Leg", body:"Sofortiger Beinkraft-Reiz, gleichzeitig Carriage-Kontrolle lernen. 3–4 Federn (mittel–schwer)."},
-    {label:"FOUNDATION", phase:"POWERHOUSE FOUNDATION", time:"9:00", title:"Pelvic Curl auf dem Reformer · ×6", body:"Becken hebt sich Wirbel für Wirbel, Carriage bleibt ruhig. 2–3 Federn."},
-    {label:"HUNDRED", phase:"POWERHOUSE FOUNDATION", time:"10:30", title:"Hundred Prep · 30–50 Pumps", body:"Oberkörper oben, Arme pumpen. Qualität vor Zahl."},
-    {label:"COORDINATION", phase:"POWERHOUSE FOUNDATION", time:"13:00", title:"Coordination Prep · ×6", body:"Arme und Beine bewegen sich gegeneinander, die Mitte bleibt ruhig. Kehrt im Finale verdichtet zurück."},
-    {label:"ROWING", phase:"SHOULDER CONTROL", time:"16:00", title:"Rowing 1 → Chest Expansion → Triceps Press", body:"Echte Zugarbeit statt Band — Kontrolle vor Kraft, 1–2 Federn."},
-    {label:"ENGINE", phase:"THE ENGINE", time:"22:00", title:"Elephant → Long Stretch → Down/Up Stretch → Knees to Chest", body:"Plank auf einer beweglichen Fläche — der athletischste Block. Down Stretch oder Knees to Chest sind optional."},
-    {label:"GLUTES", phase:"GLUTES & LEGS", time:"33:00", title:"Single-Leg Footwork → Bridge → Side Splits → Runner's Lunge", body:"Echter Widerstand statt nur Körpergewicht — der Bonus gegenüber der Matten-Klasse."},
-    {label:"ATHLETIC", phase:"ATHLETIC", time:"43:00", title:"Standing Lunge → Short Box → Knee Stretch", body:"Athletisch über Kontrolle und Balance, nicht über Tempo."},
-    {label:"BURN", phase:"POWERHOUSE BURN", time:"52:00", title:"Rowing-Kette → Long Stretch → Hundred/Coordination → Knee Stretch", body:"Nur bereits Bekanntes verdichtet — kein neuer Skill im Finale."},
-    {label:"RESET", phase:"RESET", time:"57:00", title:"Mermaid Stretch → Spine Stretch → Kindshaltung", body:"Dehnung mindestens so wichtig wie die Kraft davor."},
+    {label:"ARRIVE", phase:"AWAKEN", time:"0:00", title:"Arrive & Breath", body:"Stand oder Sitz, Atem wahrnehmen. Wir bewegen erst, bevor wir irgendwas richtig machen müssen."},
+    {label:"FOOTWORK", phase:"AWAKEN", time:"8:00", title:"Lateral Footwork Prep", body:"Side Step → Side Lunge → Center. Übergang: Shift. Rotate. Reach."},
+    {label:"LEARN", phase:"FLOW 1", time:"11:00", title:"Round 1 · Learn · 9:00", body:"High Lunge → Open Twist → Side Lunge → Warrior II → Side Angle, beide Seiten. Vier Formen bei Erstnennung erklärt."},
+    {label:"MOVE", phase:"FLOW 2", time:"20:00", title:"Round 2 · Move · 7:00", body:"Gleiche Route, größere Side Lunges. Side Lunge = Shift, Open Twist = Rotate, Side Angle = Reach."},
+    {label:"HIP", phase:"EXPLORE", time:"27:00", title:"Hip Rotation Explore · 5:00", body:"Innen-/Außenrotation der Hüfte R/L, Unterschiede wahrnehmen statt maximale Range suchen."},
+    {label:"THORACIC", phase:"EXPLORE", time:"32:00", title:"Thoracic Rotation Explore · 4:00", body:"Rotation aus der BWS differenzieren, nicht aus Schulter oder Becken holen."},
+    {label:"SHOULDER", phase:"EXPLORE", time:"36:00", title:"Shoulder Rotation Explore · 3:00", body:"Kontrollierte Innen-/Außenrotation der Schulter, Bezug zum Aufschlag benennbar."},
+    {label:"PEAK", phase:"PEAK", time:"39:00", title:"Integrated Rotation · 3:00", body:"Split Stance → Weight Shift → Rotate → Reach → Return. Shift. Rotate. Reach. Erst das Gewicht, dann die Rotation, dann der Raum."},
+    {label:"HALF SPLIT", phase:"MELT", time:"42:00", title:"Half Split R/L · 2:00", body:"Hamstrings und hintere Kette."},
+    {label:"HIP FLEXOR", phase:"MELT", time:"46:00", title:"Hip Flexor R/L · 2:00", body:"Vordere Hüfte nach wiederholten Lunges und Beschleunigungen."},
+    {label:"CHEST OPENER", phase:"MELT", time:"50:00", title:"Chest/Shoulder Opener · 2:00", body:"Ausgleich nach wiederholter Rotations- und Schlagarbeit."},
+    {label:"REST", phase:"REST", time:"54:00", title:"Savasana · 6:00", body:"Kurze Ankunft, ca. sechs Minuten Stille, kurze Rückkehr."},
   ]},
 };
 
@@ -742,372 +653,13 @@ const CORE = {
     ["12","Pose-Namen ersetzen keine Anleitung","Ein Detailed Teacher Script nennt nicht nur „Deer R“, sondern beschreibt Ausgangsposition → Eintritt → Orientierung → Position → Austritt. Besonders wichtig bei Positionen, deren Namen zwischen Traditionen variieren."],
     ["13","Sprache","JIN-Sprache lädt ein, statt zu bewerten. Nicht „Geh tiefer“, sondern „Schau, ob dein Körper heute noch etwas Raum anbietet.“ Nicht „Zieh dich zum Bein“, sondern „Lass den Oberkörper schwerer werden.“ Nicht „Du solltest die Dehnung jetzt spüren“, sondern „Beobachte, wo dein Körper auf die Position reagiert.“ Zentraler Cue: „Mach die Bewegung langsam kleiner.“"],
     ["14","Morning & Evening","Morning: Die Aktivierung darf zunächst ansteigen, danach führt die Kurve über Explore Richtung Ruhe. Evening: Der Körper darf ebenfalls zunächst aktiviert werden, ohne hochgefahren zu werden – nach Flow nimmt die Aktivierung kontinuierlich ab."],
-    ["15","Rest Rule","Rest ist Praxis, keine Restzeit. Bei Zeitverzug wird Rest nicht geopfert – reduziert werden vorher Move-Wiederholungen, einzelne Explore-Elemente, Pause-Zeiten oder Melt-Holds."],
+    ["15","Rest Rule","Rest ist Praxis, keine Restzeit. Bei Zeitverzug wird Rest nicht geopfert – reduziert werden vorher Move-Wiederholungen, einzelne Explore-Elemente, Pause-Zeiten oder Melt-Holds. Savasana wird nicht zugequatscht – das ist Stille. Eine kurze Ankunfts- und eine kurze Rückkehr-Anweisung reichen; die Zeit dazwischen bekommt keinen Kommentar, keine Lehre, keine Zusammenfassung."],
     ["16","Hilfsmittel","Hilfsmittelfreiheit gehört nicht zum Core, sondern ist Venue-Parameter. Core = methodische DNA. Class Design = konkrete Journey. Venue Parameters = Raum, Hilfsmittel, Gruppengröße. JIN Journey kann mit oder ohne Block, Bolster, Gurt oder Decke unterrichtet werden."],
     ["17","Autonomie","Jede Journey ist vollständig eigenständig unterrichtbar. Keine Journey setzt die Kenntnis einer anderen voraus – Bewegungen werden vollständig beschrieben, auch wenn sie in anderen Journeys bereits vorkommen."],
     ["18","Dokumenthierarchie","1 Core (Methode) → 2 Journey Design (Dramaturgie/Ziel) → 3 Detailed Teacher Script (vollständige Anleitung) → 4 Teacher Quick Sheet (Gedächtnisstütze). Ein Quick Sheet darf seinem Detailed Teacher Script niemals widersprechen."],
+    ["19","Sport-Specific Journeys","Sport-spezifische Journeys dürfen einzelne Phasen aufzoomen, wenn motorisches Lernen eine klarere Progression braucht – ohne das Fünf-Phasen-Modell zu ersetzen. Sport-specific Journeys may expand individual phases when motor learning requires a clearer progression. FLOW can separate into LEARN and MOVE; EXPLORE can lead into a dedicated PEAK in which previously differentiated movement qualities are reintegrated. The underlying five-phase architecture remains intact."],
   ],
 };
-
-const STUDY_PLAN = {
-  intro: "8-Wochen-Nacharbeit nach der Yogaausbildung — Anatomie/Biomechanik vertiefen und direkt an den bestehenden Journeys gegenchecken. Ein Thema pro Woche, ein Lese-Häppchen, eine konkrete Anwendung.",
-  books: [
-    ["Mark Stephens", "Yoga Sequencing", "Peak-Pose-Methode, Arc-Struktur — Wochen 1 und 8"],
-    ["Ann Swanson", "Yoga verstehen", "Gelenke, Wirbelsäule, Schulter — Wochen 2, 4, 6"],
-    ["Ray Long", "The Key Poses of Yoga", "Muskelketten pro Haltung, sehr visuell — Wochen 3, 5, 7"],
-    ["Kelly Starrett", "Becoming a Supple Leopard", "Optional, passt gut zur movement-first Zielgruppe — Woche 6"],
-  ],
-  weeks: [
-    {n:1, title:"Sequencing-Logik", reading:"Mark Stephens, „Yoga Sequencing“ — Kap. Peak Pose & Arc-Struktur.",
-     apply:"Energy Class durch diese Brille analysieren: Liegt der Peak in Runde 3 im FLOW oder bei 90/90 Melt im EXPLORE? In einem Satz begründen."},
-    {n:2, title:"Hüftbiomechanik I: Flexion/Extension", reading:"Swanson, „Yoga verstehen“, Kapitel Hüftgelenk; ergänzend Ray Long zu Lunges.",
-     apply:"Low Lunge Wave R/L (Energy) und Low Lunge Explore (Morning): was passiert am vorderen vs. hinteren Bein? Prüfen, ob die Ground/Reach-Cues das korrekt abbilden."},
-    {n:3, title:"Balance & Propriozeption", reading:"Ray Long, Kapitel Standing Balance Poses.",
-     apply:"Dragon R/L (Morning) und die Warrior-Elemente in Energy: sind Touch/Float propriozeptiv sinnvoll (Blick, Fußgewölbe, Beckenneutralität)?"},
-    {n:4, title:"Wirbelsäulenrotation", reading:"Swanson, „Yoga verstehen“, Kapitel Wirbelsäule/Rotation.",
-     apply:"Alle Supine-Twist-Blöcke über die 5 Journeys durchgehen: ist die Seitenkonvention (Brustkorb-Richtung zählt) überall konsistent und anatomisch korrekt cued?"},
-    {n:5, title:"Hüftaußenrotation & Hip Openers", reading:"Ray Long, Kapitel Hip External Rotators.",
-     apply:"Deer, Dragonfly, Half Butterfly, Butterfly vergleichen: warum ist „kein erzwungenes Quadrat“ bei Deer richtig — und wird das bei Dragonfly/Butterfly genauso konsequent durchgehalten?"},
-    {n:6, title:"Schulter & Brustöffnung", reading:"Starrett, Kapitel Schulterposition; Swanson, „Yoga verstehen“, Kapitel Schulter.",
-     apply:"Sphinx, Reclined Chest Opener, Thread the Needle: verändern Ground/Flight die Schulterbelastung wirklich, oder nur kosmetisch?"},
-    {n:7, title:"Rückbeugen & Wirbelsäulenextension", reading:"Ray Long, Kapitel Backbends; Kontraindikationen (z. B. Bandscheibe) recherchieren.",
-     apply:"Bridge (Yin) und Sphinx (alle Journeys): Sicherheitsgrenzen und Ground/Flight-Progression nochmal gegenchecken."},
-    {n:8, title:"Synthese & Live-Cueing", reading:"Stephens, Kapitel Teaching Language/Cueing.",
-     apply:"Statt Cues neu zu schreiben (da live improvisiert wird): eine Aufnahme (z. B. Energy Class) gegen das Vokabular der Wochen 2–7 gegenhören. Pro Cue notieren: Gefühls-Cue oder Struktur-Cue — und wo die Begründung noch gefehlt hat."},
-  ],
-};
-
-// ===================== ENERGY TEACHER WORKBOOK =====================
-// Karten hängen sich an konkrete Moves der Energy-Journey — sichtbar,
-// wenn der jeweilige Move im Lernen-Modus geöffnet wird.
-const WORKBOOK_ENERGY_MOVES = [
-  {id:"01", titles:["Wach-Klopfen · 1:00"], premiere:false,
-   job:"Aufmerksamkeit und Körperkontakt herstellen; keine therapeutische Wirkung versprechen.",
-   verstehen:"Druck ist selbst gewählt. Klopfen ist äußerer Reiz, keine Gelenkbewegung.",
-   beobachten:"Unsicherheit bei empfindlichen Stellen, Hämatomen oder Schmerz.",
-   sagen:"Klopft nur dort und so kräftig, wie es heute angenehm ist.",
-   option:"Statt klopfen: ausstreichen oder Hände auflegen.",
-   aendern:"Schmerzhafte, verletzte oder frisch operierte Bereiche auslassen.",
-   drill:"30 Sekunden drei Intensitäten testen; den Satz einmal neutral anleiten."},
-  {id:"02", titles:["Bounce · 1:00"], premiere:false,
-   job:"Kreislauf und elastisches Federn aufbauen.",
-   verstehen:"Bewegung verteilt sich über Sprunggelenk, Knie und Hüfte; Landung bleibt leise und kontrolliert.",
-   beobachten:"Steife Knie, laute Landung, Atem wird sofort hektisch, Schwindel.",
-   sagen:"Federt so klein, dass ihr jederzeit ruhig stoppen könnt.",
-   option:"Fersen bleiben am Boden; Gewichtswechsel ohne Hops.",
-   aendern:"Bei Schwindel, Unsicherheit oder unkontrollierter Landung: Bodenkontakt behalten oder pausieren.",
-   drill:"30 Sekunden Ground, 15 Sekunden kleine Hops, 15 Sekunden zurück zu Ground."},
-  {id:"03", titles:["Body Waves · 1:00"], premiere:false,
-   job:"Wirbelsäule segmental und spielerisch bewegen.",
-   verstehen:"Welle beginnt in Knie/Becken und läuft durch den Rumpf; Kopf folgt zuletzt, nicht mit Schwung voraus.",
-   beobachten:"Überstreckter Nacken, abruptes Hohlkreuz, Atem anhalten.",
-   sagen:"Lasst die Welle kleiner werden, bis sie durchgehend kontrolliert bleibt.",
-   option:"Nur Becken kippen und Brustkorb sanft runden/öffnen.",
-   aendern:"Stechender Rücken- oder Nackenschmerz: Bewegungsweg verkleinern oder neutral stehen.",
-   drill:"Zwei sehr kleine, eine mittlere Welle; spüren, wo die Kontrolle verloren geht."},
-  {id:"04", titles:["Arme & Twists · 2:30"], premiere:false,
-   job:"Vier bekannte Elemente zu einem fließenden Warm-up-Block verbinden, ohne dass Übergänge hektisch werden.",
-   verstehen:"Kreuz-Schlag und Dead Arms lockern die Schultern; Trunk Twist und Hüft-Twist verlagern die Rotation von Oberkörper zu Hüfte. Übergänge dürfen einen Atemzug Pause haben.",
-   beobachten:"Schulterschmerz vorn, Hochziehen der Schultern, fixierte Knie bei maximaler Rotation, Schwindel.",
-   sagen:"Vier Bewegungen, ein Fluss – der Übergang darf einen Atemzug dauern.",
-   option:"Jedes Element einzeln und kleiner; Übergänge mit kurzer Pause statt nahtlos.",
-   aendern:"Bei Schulterbeschwerden Kreuz-Schlag/Dead Arms auslassen; bei Schwindel/Rückenschmerz Twists klein halten oder aussetzen.",
-   drill:"Den ganzen 2:30-Block einmal komplett laut anleiten, ohne ins Stocken zu geraten."},
-  {id:"05", titles:["Golferswing · 1:00"], premiere:false,
-   job:"Große Rotation aus der Hüfte einführen, als Brücke zu QiSquat.",
-   verstehen:"Schwung kommt aus der Hüfte, Oberkörper folgt; Knie bleiben weich statt blockiert.",
-   beobachten:"Knie fixiert bei großem Schwung, Rücken übernimmt die Rotation statt der Hüfte.",
-   sagen:"Lasst den Schwung größer werden, wenn es sich gut anfühlt – nicht davor.",
-   option:"Kleinerer Schwung, Hände bleiben näher am Körper.",
-   aendern:"Rückenschmerz oder Schwindel: Schwung deutlich verkleinern.",
-   drill:"Drei Schwunggrößen testen; beobachten, ab wann die Knie nachgeben."},
-  {id:"06", titles:["QiSquat & Faustschlag · 1:30"], premiere:true,
-   job:"Beine belasten und direkt mit Koordination verbinden – der letzte Moment vor dem Flow.",
-   verstehen:"QiSquat: Knie und Hüfte beugen gemeinsam, Knie folgen der Fußrichtung. Faustschlag direkt danach: Beine halten, während Rumpf gegen den Armschwung stabilisiert.",
-   beobachten:"Knie kollabieren nach innen nach kurzem Squat direkter Übergang, Atem wird beim Faustschlag angehalten, Stoß zieht Schulter nach vorn.",
-   sagen:"Sinkt nur so tief, dass ihr den Stand kontrolliert wieder verlassen könnt. Dann: Richtung statt Kraft.",
-   option:"Flacher Squat und aufrechter Stand mit nur Armbewegung beim Faustschlag; offene Hände statt Fäuste.",
-   aendern:"Knie-/Hüftschmerz: Tiefe reduzieren. Schulter-/Handbeschwerden: Stoß klein oder Squat ohne Faustschlag.",
-   drill:"Den Übergang QiSquat→Faustschlag fünfmal ohne Bruch im Tempo üben."},
-  {id:"07", titles:["Round 1 — Learn · 6:00"], premiere:true,
-   job:"Die gemeinsame Route lernen: Lunge → Warrior II → Reverse → Side Angle.",
-   verstehen:"Vorderes Bein trägt und beugt; hinterer Fuß/Bein schaffen Basis. Beim Wechsel High Lunge → Warrior II öffnen sich Becken und hinterer Fuß gemeinsam.",
-   beobachten:"Zu langer Stand, instabiles Umsetzen des hinteren Fußes, vorderes Knie verliert Richtung, Gewicht in hinterer Hand bei Reverse.",
-   sagen:"Macht den Stand so kurz, dass ihr ihn kontrolliert verändern könnt.",
-   option:"Kürzerer Stand; Hände an Hüften; Side Angle mit Unterarm am Oberschenkel.",
-   aendern:"Bei Gleichgewichtsverlust: Füße breiter/Stand kürzer; bei Schmerz aus der Position heraus, nicht tiefer korrigieren.",
-   drill:"Beide Seiten ohne Down Dog fünfmal langsam wechseln und die Fußarbeit laut ansagen."},
-  {id:"08", titles:["Round 1 — Learn · 6:00"], premiere:true,
-   job:"Vom Stand zum Stütz wechseln und den Körper als Einheit bewegen.",
-   verstehen:"Hände drücken aktiv; Schulterblätter bewegen/stabilisieren am Brustkorb. Knie dürfen unten sein.",
-   beobachten:"Handgelenksschmerz, eingesunkener Brustkorb, durchhängendes Becken, Atem anhalten.",
-   sagen:"Knie dürfen unten bleiben. Schiebt den Boden weg und bewegt euch nur so weit vor, wie der Rumpf mitkommt.",
-   option:"Vierfüßler-Wave; Child's Pose; Down Dog ohne Plank.",
-   aendern:"Schmerz in Handgelenk/Schulter/Rücken: aus dem Stütz, Vierfüßler oder Pause. Kein Durchdrücken durch Schmerz.",
-   drill:"Die Plank Wave je 5× als Ground und Float wiederholen; die bekannten Cues laut dazu sprechen."},
-  {id:"09", titles:["Round 2 — Build · 7:00"], premiere:false,
-   job:"Eine echte neue Bewegung einführen (Twist-Reach) — Balance bleibt eine kurze, nebenbei erwähnte Option, keine eigene Übung.",
-   verstehen:"Der Twist-Reach öffnet den Oberkörper zum vorderen Bein aus der stabilen Warrior-II-Basis, hinterer Arm reicht diagonal — eine Rotation, kein Ziehen. Die Balance-Option (Zehen tippen/Knie lösen) dauert nur einen Atemzug und braucht keine eigene Erklärung.",
-   beobachten:"Wird die Balance-Option ausführlich erklärt, wirkt Build erklärlastig und die eigentliche neue Bewegung geht unter. Beim Twist-Reach: Rumpf wird verdreht statt geöffnet, Nacken wird mitgerissen.",
-   sagen:"Balance kurz und beiläufig anbieten. Beim Twist-Reach: öffnen, nicht ziehen.",
-   option:"Twist-Reach mit kleinerem Radius, Blick bleibt vorn. Balance-Option ganz auslassen, wenn die Zeit drängt.",
-   aendern:"Bei Unsicherheit kein Twist-Reach — dann bleibt Warrior II die volle Haltung.",
-   drill:"Die Balance-Ansage auf einen Satz kürzen; den Twist-Reach als eigentlichen Fokuspunkt der Runde üben."},
-  {id:"10", titles:["Round 3 — Feel · 6:00"], premiere:false,
-   job:"Nur kurz strukturiert fließen (2–3 Atemzüge pro Seite), dann früh und bewusst in freie Bewegung übergehen — das freie Moment ist das Ziel der Runde, nicht ein Anhängsel.",
-   verstehen:"Nach zwei Runden kann eine dritte Wiederholung derselben drei Formen wie „nochmal dasselbe“ wirken. Der frühere Übergang in freie Bewegung ist deshalb entscheidend, nicht optional.",
-   beobachten:"Der strukturierte Teil zieht sich zu lange, das freie Moment wird zur Randnotiz statt zum eigentlichen Höhepunkt der Runde.",
-   sagen:"Nur zwei, drei Atemzüge – dann lasst die Form los.",
-   option:"Wer die Form noch länger mag, darf bleiben; wer loslässt, bewegt sich frei weiter.",
-   aendern:"Bei sichtbarer Erschöpfung: eigenes Tempo anbieten, nicht der Gruppe hinterherhetzen.",
-   drill:"Die eigene Uhr stoppen: wie lange dauern die 2–3 Atemzüge pro Seite wirklich, bevor bewusst losgelassen wird?"},
-  {id:"11", titles:["Standing Energy Sway · 2:00"], premiere:false,
-   job:"Herzschlag und Atem nach FLOW regulieren, ohne abrupt stillzustehen.",
-   verstehen:"Seitliche Gewichtsverlagerung: ein Bein beugt, das andere verlängert; Bewegungsweite nimmt danach bewusst ab.",
-   beobachten:"Zu tiefer Seit-Lunge, Knie verliert Fußrichtung, Arme machen Bewegung wieder hektisch.",
-   sagen:"Verlagert nur das Gewicht. Die Arme dürfen folgen – sie müssen nicht.",
-   option:"Kleiner Sway, Hände an Hüften, Füße näher.",
-   aendern:"Bei Schwindel Bewegung verkleinern, Blick stabilisieren, stehen oder sitzen.",
-   drill:"Eine Minute groß → mittel → klein mit Timer, ohne zusätzliche Choreografie."},
-  {id:"12", titles:["Traveling Lunge Wave · 3:00"], premiere:true,
-   job:"Eine durchgehende Reise statt vier Einzelstationen — hier lag in der Testklasse die größte Verwirrung, deshalb bewusst neu gebaut.",
-   verstehen:"Fold, Low Lunge R mit Becken-Welle, Rückweg durch die Mitte, Low Lunge L mit Becken-Welle, Rückweg — als ein zusammenhängender Bogen, nicht als vier separate Haltungen mit eigenem Arrive/Release.",
-   beobachten:"Teilnehmende suchen nach jeder Station eine neue Anleitung; Übergang durch die Mitte wird übersprungen oder zu schnell.",
-   sagen:"Das ist eine Reise, kein Stopp-und-Los. Lasst die Übergänge fließen.",
-   option:"Kleinere Wellen; Hände auf Blöcken/Oberschenkel; Übergang durch die Mitte langsamer und mit klarer Ansage.",
-   aendern:"Knieschmerz hinten: Decke unterlegen oder Weg verkleinern. Nervenziehen im hinteren Bein: Knie beugen, Weg reduzieren.",
-   drill:"Den kompletten Bogen dreimal am Stück sprechen, ohne zwischendurch neu anzusetzen — das ist die eigentliche Übung."},
-  {id:"13", titles:["90/90 Melt · 3:00"], premiere:true,
-   job:"Hüftrotation spielerisch verkleinern und Peak beenden.",
-   verstehen:"Beide Hüften rotieren, während Füße aufgestellt bleiben; Hände hinter dem Körper dürfen tragen. Exakte 90°-Winkel sind unnötig.",
-   beobachten:"Teilnehmende erzwingen Knie zum Boden, sitzen auf einer Hüfte fest, Handgelenke hinter dem Körper schmerzen.",
-   sagen:"Kein Winkel muss stimmen. Lasst die Knie nur so weit sinken, wie der Wechsel leicht bleibt.",
-   option:"Füße weiter auseinander; Hände auf Unterarmen/Fäusten oder seitlich; nur kleiner Scheibenwischer.",
-   aendern:"Knie-/Hüftschmerz: Bewegungsweg reduzieren oder Beine neutral aufstellen.",
-   drill:"Drei Fußabstände testen und den zugänglichsten Wechsel auswählen."},
-  {id:"14", titles:["Dragonfly · 2:30"], premiere:false,
-   job:"Aktive Beinarbeit abgeben und die Vorbeuge passiv werden lassen.",
-   verstehen:"Breiter Sitz fordert Hüftbeugung und hintere/innere Beinlinien; gebeugte Knie und erhöhte Sitzposition reduzieren Zug.",
-   beobachten:"Beine werden aktiv festgehalten, Rücken kämpft, Hände ziehen, Taubheit/Kribbeln.",
-   sagen:"Nicht weiter. Schwerer. Beugt die Knie so deutlich, dass ihr loslassen könnt.",
-   option:"Auf gefalteter Decke sitzen; Knie beugen; Hände/Unterarme erhöht ablegen.",
-   aendern:"Scharfer Schmerz, Taubheit oder Kribbeln: Position verändern oder auflösen.",
-   drill:"Drei Varianten 30 Sekunden testen; die Version finden, in der Beine wirklich entspannen."},
-  {id:"15", titles:["Half Butterfly R · 1:30","Half Butterfly L · 1:30"], premiere:false,
-   job:"Neu im Ablauf: einseitige Hüftöffnung nach Dragonfly, statt einen einzelnen Hold künstlich zu verlängern.",
-   verstehen:"Langes Bein trägt, gebeugtes Bein öffnet die Hüfte; Oberkörper sinkt Richtung langes Bein, nicht zum Fuß. Knie darf weich bleiben.",
-   beobachten:"Ziehen zum Fuß statt zum Bein, durchgedrücktes Knie, Ausweichen über den Rücken.",
-   sagen:"Nicht zum Fuß. Einfach in Richtung Bein. Das Knie darf weich sein.",
-   option:"Block unter das lange Knie; aufrechter bleiben statt tief sinken.",
-   aendern:"Zug/Schmerz hinten am Oberschenkel oder in der Kniekehle: Knie stärker beugen oder Position verlassen.",
-   drill:"Beide Seiten je 30 Sekunden mit und ohne Block vergleichen."},
-  {id:"16", titles:["Sphinx · 2:00"], premiere:true,
-   job:"Nach vielen Folds eine dosierte, passive Rückbeuge anbieten.",
-   verstehen:"Unterarme tragen; Ellbogen weiter vorn verkleinern die Wirbelsäulenstreckung. Brustbein zieht eher vor als maximal hoch.",
-   beobachten:"Druck/Stechen im unteren Rücken, Schultern an Ohren, Gesäß maximal angespannt.",
-   sagen:"Zieht das Brustbein nach vorn. Wandert mit den Ellbogen weiter vor, wenn der Rücken mehr Raum braucht.",
-   option:"Sehr niedrige Sphinx; Unterarme weiter vorn; flach in Bauchlage ruhen.",
-   aendern:"Stechender oder zunehmender Rückenschmerz: sofort niedriger oder ganz heraus.",
-   drill:"Ellbogen in drei Abständen testen; Wirkung im unteren Rücken vergleichen."},
-  {id:"17", titles:["Reclined Butterfly · 2:30"], premiere:false,
-   job:"Hüften in Rückenlage ohne aktive Haltearbeit öffnen.",
-   verstehen:"Fußabstand verändert den Hüftwinkel; Unterstützung unter Knien reduziert Last.",
-   beobachten:"Zug im inneren Knie, Hände drücken Knie, Beine können nicht entspannen.",
-   sagen:"Lasst die Knie nur so weit sinken, wie die Beine getragen wirken.",
-   option:"Füße weiter weg; Blöcke/Decken unter Knie; Füße hüftbreit aufstellen.",
-   aendern:"Knie-/Leistenschmerz: Knie unterstützen oder neutrale Rückenlage wählen.",
-   drill:"Wide/Close plus Unterstützung testen; beste Entspannungsvariante merken."},
-  {id:"18", titles:["Reclined Chest Opener · 2:00"], premiere:false,
-   job:"Vordere Schulter-/Brustregion nach Stütz und Armführung entlasten.",
-   verstehen:"Armposition bestimmt Schulterwinkel; Kaktus ist nicht automatisch für jede Schulter leichter.",
-   beobachten:"Kribbeln/Taubheit in Händen, Schultervorderseite schmerzt, Rippen springen stark hoch.",
-   sagen:"Legt die Arme dort ab, wo Schultern und Hände ruhig bleiben.",
-   option:"Arme tiefer als Schulterhöhe; Hände auf Bauch; ein Arm nach dem anderen.",
-   aendern:"Kribbeln, Taubheit oder Schulterweh: Arme sofort tiefer/neutral.",
-   drill:"Kaktus, diagonale Arme und Hände am Bauch je 30 Sekunden vergleichen."},
-  {id:"19", titles:["Knees to Chest · 1:00","Supine Twist R · 3:00","Supine Twist L · 3:00"], premiere:false,
-   job:"Rückenlage sammeln, dann Rotation ohne Zug anbieten — bewusst die längsten Holds im MELT-Teil, als Ausgleich zu den kürzeren Hüftöffnern davor.",
-   verstehen:"Im Twist müssen weder Knie noch Schulter den Boden erreichen. Kopf kann neutral bleiben. Drei Minuten sind hier bewusst lang genug, um wirklich anzukommen.",
-   beobachten:"Knie werden heruntergedrückt, Nacken dreht widerwillig, Atem wird flach.",
-   sagen:"Findet die Version, in der ihr nichts festhalten oder herunterdrücken müsst.",
-   option:"Kissen unter Knie; kleiner Twist; Kopf neutral; Füße weiter auseinander.",
-   aendern:"Schmerz, Taubheit oder Atembeklemmung: zur Mitte zurück.",
-   drill:"Twist in drei Intensitäten und mit neutralem Kopf testen."},
-  {id:"20", titles:["Savasana"], premiere:false,
-   job:"Reiz und Aufgabe beenden; fünf Minuten echte Ruhe bewahren.",
-   verstehen:"Komfort ist wichtiger als formale Symmetrie. Knie können unterstützt oder aufgestellt sein.",
-   beobachten:"Unruhe, Rückenbeschwerden, Frieren; du redest aus Nervosität weiter.",
-   sagen:"Legt euch so hin, dass ihr für die nächsten Minuten nichts halten müsst.",
-   option:"Knie aufstellen/unterstützen; Seitenlage; bequemer Sitz.",
-   aendern:"Atemnot, Unwohlsein oder Schmerz: Position wechseln; freie Entscheidung lassen.",
-   drill:"Fünf Minuten Timer stellen und selbst schweigen. Rückkehr in maximal 45 Sekunden anleiten."},
-];
-
-const WORKBOOK_ENERGY_PREP = {
-  rule: "Lies nicht alles am Stück. Arbeite zuerst die sechs PREMIERE-Karten (06, 07, 08, 12, 13, 16). Sprich die Cues laut. Probiere jede Option selbst. Erst danach kommt der Rest.",
-  premiereChecklist: [
-    {id:"p1", text:"Karte 06 QiSquat & Faustschlag: Übergang ohne Bruch im Tempo."},
-    {id:"p2", text:"Karte 07 Energy Flow Standlinie: Übergänge der Route sicher abrufbar."},
-    {id:"p3", text:"Karte 08 Plank Wave: bekannte Ausführung und Cues abrufbar machen."},
-    {id:"p4", text:"Karte 12 Traveling Lunge Wave: den ganzen Bogen ohne Neuansatz sprechen können — hier lag die größte Verwirrung beim ersten Test."},
-    {id:"p5", text:"Karte 13 90/90 Melt: zugängliche Sitzposition demonstrieren."},
-    {id:"p6", text:"Karte 16 Sphinx: Rückbeuge dosieren und Ausstieg anbieten."},
-  ],
-  arbeitsweise: [
-    ["5 Min","Karte lesen und die eine Kernidee markieren."],
-    ["10 Min","Bewegung selbst in Standard- und Optionsversion ausführen."],
-    ["10 Min","Ohne Skript laut anleiten; dabei nur den Satz aus SAGEN benutzen."],
-    ["5 Min","Notieren: Was war unklar? Was ändere ich in meiner Class?"],
-  ],
-  ampel: [
-    ["gruen","GRÜN — Ich kann Zweck, Haupt-Cue und Option ohne Nachdenken sagen."],
-    ["gelb","GELB — Ich kann die Bewegung, aber verliere beim Erklären den Faden: vereinfachen."],
-    ["rot","ROT — Ich kann Schmerz/Unsicherheit nicht sinnvoll beantworten: ersetzen oder weglassen."],
-  ],
-  neuHinweis: "Nach dem ersten Testlauf umgebaut: AWAKEN von 12 auf 8 Minuten gestrafft (Elemente kombiniert statt gestrichen). FLOW von 15 auf 19 Minuten gewachsen — Runde 2 bekommt einen echten Zusatzimpuls (Twist-Reach), Runde 3 wird fließend statt nur reduziert. EXPLORE von 13 auf 8 Minuten verkürzt und von vier auf drei Stationen reduziert — Fold Wave und Low Lunge Wave R/L sind jetzt eine durchgehende Traveling Lunge Wave, weil die alte Version in der Praxis nicht nachvollziehbar war. MELT von 14 auf 19 Minuten gewachsen, neu mit Half Butterfly R/L als Ausgleich. Braucht einen vollständigen Probedurchlauf, weil sich Timing und Übergänge an mehreren Stellen verändert haben, nicht nur an einer.",
-  premierenplan: [
-    ["D–5","Traveling Lunge Wave + 90/90 Melt","neue EXPLORE-Bewegung, ganzer Bogen"],
-    ["D–4","FLOW Runde 2 (Twist-Reach) + Runde 3 (fließend)","neue Variation üben"],
-    ["D–3","Komplette Class selbst machen","neue Fassung mit Timer"],
-    ["D–2","Komplette Class laut teachen","AWAKEN-Straffung und EXPLORE-Bogen bewerten"],
-    ["D–1","Nur Ampel prüfen","Gelb vereinfachen, Rot streichen"],
-    ["CLASS","Unterrichten","Keine neuen Elemente"],
-    ["+10 Min","Debrief","sofort, nicht am nächsten Tag"],
-  ],
-  timerCheck: [
-    "Bei 8:00 beginnt FLOW.",
-    "Runde 2 (mit Twist-Reach) beginnt bei 14:00.",
-    "Runde 3 (fließend) beginnt bei 21:00.",
-    "Bei 27:00 beginnt EXPLORE mit allen zusammen.",
-    "Bei 35:00 beginnt MELT mit Dragonfly.",
-    "Bei 54:00 beginnt Savasana — REST wird nicht gekürzt.",
-  ],
-  notfallKuerzung: "Wenn du fünf Minuten hinten liegst: Runde 2 auf 5:00 oder Runde 3 auf 4:00 kürzen; Traveling Lunge Wave auf 2:00; Dragonfly auf 2:00. Nicht hetzen und Savasana nicht opfern.",
-  debriefQuestions: [
-    "Wo musste die Gruppe mich anschauen, weil meine Worte nicht gereicht haben?",
-    "Welche Bewegung brauchte eine Option — und hat meine Option funktioniert?",
-    "Wo wurde ich hektisch oder zu spät?",
-    "Welche Stelle war körperlich oder organisatorisch unsicher?",
-    "Was ändere ich beim nächsten Mal? Genau eine Sache.",
-  ],
-  classWeeks: [
-    {n:1, thema:"Route & Timing", auftrag:"Komplette Class zweimal laut mit Timer. Ergebnis: Zeitmarken sitzen."},
-    {n:2, thema:"Knie, Füße, Hüfte", auftrag:"QiSquat + Flow-Standlinie + Lunge Wave. Ergebnis: je eine tragfähige Option."},
-    {n:3, thema:"Schulter & Handgelenk", auftrag:"Arm Swings + Down Dog + Plank Wave + Chest Opener."},
-    {n:4, thema:"Wirbelsäule", auftrag:"Body Wave + Twists + Fold Wave + Sphinx + Supine Twist."},
-    {n:5, thema:"Cueing", auftrag:"Jede Bewegung mit höchstens einem Setup- und einem Wirkungs-Cue."},
-    {n:6, thema:"Beobachten", auftrag:"In AWAKEN weniger mitmachen; drei reale Muster notieren."},
-    {n:7, thema:"Optionen", auftrag:"Ground-Version der gesamten Class selbst unterrichten."},
-    {n:8, thema:"Regulation", auftrag:"Übergang FLOW → EXPLORE → MELT prüfen: Herzschlag, Atem, Tempo, Sprache."},
-  ],
-  grenzen: "Du stellst keine Diagnose und versprichst keine Therapie. Du bietest einen kleineren Weg, eine neutrale Position oder Pause an. Bekannte Verletzungen und Erkrankungen gehören — wenn relevant — vorab in fachkundige Abklärung.",
-  notfallSymptome: "Class sofort unterbrechen und Hilfe organisieren bei plötzlich starkem Brustschmerz/-druck, schwerer Atemnot, Bewusstlosigkeit oder nicht normaler Reaktion. Bei Schwindel, Beinahe-Ohnmacht, ungewöhnlicher Atemnot, neuem stechendem Schmerz, Taubheit oder Kribbeln: Belastung stoppen, Person sichern und nicht zum Weitermachen drängen. Für Deutschland gilt im akuten Notfall: 112. Das Workbook ersetzt weder Erste-Hilfe-Training noch medizinische Beurteilung.",
-  quellen: "Cramer et al., The Safety of Yoga (American Journal of Epidemiology, 2015); Cramer et al., Injuries and other adverse events associated with yoga practice (Journal of Science and Medicine in Sport, 2018); NHS-Informationen zu Brustschmerz, Atemnot, Schwindel und Bewusstlosigkeit.",
-  kleineGruppe: "Steht nur eine Person vor dir, unterrichte nicht so, als wären 18 da. Kein „ihr“, keine standardisierten Ansagen in den Raum, keine künstliche Gruppendynamik. Das ist praktisch eine Semi-Private-Stunde — nutze das als Vorteil: mehr beobachten, schneller merken, ob Touch oder Float, GROUND oder FLIGHT passt, Übergänge individuell feinjustieren, deutlich weniger sprechen. Gerade in Round 3 (Feel): bewege dich mit ihr mit statt vorne zu stehen — weniger Teacher-Rolle, mehr gemeinsamer Flow. Mit einer Person kann das stärker werden als mit fünfzehn.",
-};
-
-// ===================== STUNDENGENERATOR (KI-Varianten) =====================
-// Journey-spezifische Regeln, die bei jedem KI-Aufruf mitgegeben werden —
-// JIN-Methode und Men's Pilates brauchen unterschiedliche Leitplanken.
-const GENERATOR_RULES = {
-  jin: "Diese Journey folgt der JIN-Methode: Bewegungsqualität bewegt sich von groß/fließend zu klein/still, Bodenwechsel bewusst, kein Hold über 3:00 (Stillness Rule), saubere Übergänge zwischen Positionen, Gelenkbelastung wechselt statt einseitig zu bleiben, Dramaturgie führt Richtung Ruhe. Optionen als Ground/Flight benennen, niemals als Anfänger/Fortgeschritten.",
-  menspilates: "Diese Class folgt Pilates-Prinzipien für männliche Einsteiger: Powerhouse-Kontrolle, ausgewogene Verteilung auf Schultergürtel/Core/Glutes/Beine, klare Leichter/Schwerer-Optionen pro Übung, kein Workout- oder CrossFit-Charakter. Keine zwei sehr ähnlichen Bewegungsmuster direkt hintereinander (z. B. nicht mehrere Plank-Varianten in Folge). Sprache klar und funktional, keine Esoterik.",
-  mensreformer: "Diese Class nutzt den Reformer für sportliche Männer/Reformer-Neulinge mit Kraftbasis. Prinzip: erst lernen, dann belasten, dann brennen. Stellschrauben sind je nach Übung Federwahl, Bewegungsumfang, Ausgangsposition oder zusätzliche Stabilisierung — nie pauschal nur die Feder, und nie als Anfänger/Fortgeschritten benannt. Keine zwei komplexen neuen Gerätepositionen direkt hintereinander ohne kurze Umbau-/Orientierungsphase. Finale verdichtet nur bereits bekannte Bewegungen, führt keinen neuen Skill ein. Sprache klar und funktional, keine Fitnessstudio-Klischees. Bei jedem Wechsel von Körperposition, Straps, Box, Fußstange oder Feder-Setup muss die neue Einstellung im Vorschlag ausdrücklich genannt werden — keine Übung vorschlagen, deren sichere Geräteposition oder Federlogik nicht eindeutig beschrieben werden kann. Minimiere unnötige Geräteumbauten: bevorzuge innerhalb eines Blocks Übungen mit kompatiblem Setup und Federbereich; ein Gerätewechsel muss einen klaren methodischen Nutzen haben.",
-};
-function generatorRulesFor(journeyKey){
-  if(journeyKey==="menspilates") return GENERATOR_RULES.menspilates;
-  if(journeyKey==="mensreformer") return GENERATOR_RULES.mensreformer;
-  return GENERATOR_RULES.jin;
-}
-
-function loadVariantStore(){ return loadWB("jin-variants", {}); }
-function saveVariantStore(store){ saveWB("jin-variants", store); }
-function getVariantEntry(journeyKey){
-  const store = loadVariantStore();
-  return store[journeyKey] || { activeId:null, draftPhases:null, list:[] };
-}
-function setVariantEntry(journeyKey, entry){
-  const store = loadVariantStore();
-  store[journeyKey] = entry;
-  saveVariantStore(store);
-}
-function getActivePhases(journeyKey){
-  const entry = getVariantEntry(journeyKey);
-  if(entry.activeId==="draft" && entry.draftPhases) return entry.draftPhases;
-  if(entry.activeId && entry.activeId!=="draft"){
-    const v = (entry.list||[]).find(x=>x.id===entry.activeId);
-    if(v) return v.phases;
-  }
-  return null; // null = Original
-}
-function getDisplayJourney(journeyKey){
-  const base = DATA[journeyKey];
-  if(!base || !base.phases) return base;
-  const activePhases = getActivePhases(journeyKey);
-  if(!activePhases) return base;
-  return Object.assign({}, base, { phases: activePhases });
-}
-function ensureDraft(journeyKey){
-  const entry = getVariantEntry(journeyKey);
-  if(entry.activeId==="draft" && entry.draftPhases) return entry;
-  const base = getActivePhases(journeyKey) || DATA[journeyKey].phases;
-  entry.draftPhases = JSON.parse(JSON.stringify(base));
-  entry.activeId = "draft";
-  setVariantEntry(journeyKey, entry);
-  return entry;
-}
-
-async function aiSuggestBlock(journeyKey, phaseName, originalBlock, siblingTitles, durationSec){
-  const j = DATA[journeyKey];
-  const rules = generatorRulesFor(journeyKey);
-  const res = await fetch("/.netlify/functions/joga", {
-    method: "POST", headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ type:"jin_move_suggestion", params:{
-      phase: phaseName,
-      journeyLabel: j.label,
-      journeyTheme: j.theme + " | Regeln: " + rules + " | Ersetze diese eine Übung, behalte die Dauer bei, vermeide Wiederholung von: " + siblingTitles.join(", "),
-      existingTitles: siblingTitles,
-      remainingTime: secToTime(durationSec || 120),
-      provider:"claude"
-    }})
-  });
-  if(!res.ok) throw new Error("HTTP "+res.status);
-  const data = await res.json();
-  if(!data.claude) throw new Error(data.claudeError || "Keine Antwort von der KI.");
-  const cleaned = data.claude.trim().replace(/^```json\s*/,"").replace(/```$/,"");
-  const parsed = JSON.parse(cleaned);
-  const suggestions = parsed.suggestions || [];
-  if(!suggestions.length) throw new Error("Keine Vorschläge erhalten.");
-  return suggestions[0];
-}
-function computeBlockDurationSec(ph, blockIdx){
-  const startSec = parseTimeToSec(ph.blocks[blockIdx].time);
-  let endSec;
-  if(blockIdx+1 < ph.blocks.length){
-    endSec = parseTimeToSec(ph.blocks[blockIdx+1].time);
-  } else {
-    const m = String(ph.range||"").match(/[\u2013-](\d+)\s*$/);
-    endSec = m ? (+m[1])*60 : startSec + 120;
-  }
-  return Math.max(30, endSec - startSec);
-}
-function suggestionToCompiledBlock(sug, time){
-  let bodyHtml = "";
-  if(sug.explore && Object.values(sug.explore).some(v=>v)){
-    bodyHtml = ["arrive","move","reduce","pause","release"].map(k=>{
-      const val = sug.explore[k];
-      const lbl = k.charAt(0).toUpperCase()+k.slice(1);
-      return val && val.trim() ? "<span class='lbl'>"+lbl+"</span> "+nl2br(val) : null;
-    }).filter(Boolean).join("<br>");
-  } else {
-    bodyHtml = nl2br(sug.body||"");
-  }
-  if(sug.cueLong && sug.cueLong.trim()){
-    const lines = sug.cueLong.split("\n").map(quoteLine).filter(Boolean);
-    if(lines.length) bodyHtml += "<div class='cue'>"+lines.join("<br>")+"</div>";
-  }
-  return { time, title: sug.title || "(KI-Vorschlag)", body: bodyHtml };
-}
 
 // ---------- state ----------
 let state = { journey:"morning", mode:"study", flashIndex:0, flashFlipped:false,
@@ -1166,6 +718,7 @@ function fmt(sec){
 function render(){
   document.querySelectorAll(".jtab").forEach(b=> b.classList.toggle("active", b.dataset.j===state.journey));
   document.querySelectorAll("nav.bottom button").forEach(b=> b.classList.toggle("active", b.dataset.j===state.journey));
+  document.querySelectorAll(".modebtn").forEach(b=> b.classList.toggle("active", b.dataset.mode===state.mode));
 
   const modebar = document.querySelector(".modebar");
   const themebar = document.querySelector(".themebar");
@@ -1182,14 +735,6 @@ function render(){
     renderCore(main);
     return;
   }
-  if(state.journey==="study"){
-    modebar.style.display="none";
-    themebar.style.display="none";
-    label.textContent="Nacharbeit";
-    main.innerHTML="";
-    renderStudyPlan(main);
-    return;
-  }
   if(state.journey==="builder"){
     modebar.style.display="none";
     themebar.style.display="none";
@@ -1200,23 +745,16 @@ function render(){
   }
   modebar.style.display="flex";
   themebar.style.display="block";
-  const j = getDisplayJourney(state.journey);
+  const j = DATA[state.journey];
   label.textContent = j.label;
   themeText.textContent = "„" + j.theme + "“";
   memline.innerHTML = j.memory.map(m=>`<span class="memchip">${m}</span>`).join("");
   main.innerHTML="";
 
-  const prepBtn = document.getElementById("prepModeBtn");
-  const hasPrep = state.journey==="energy";
-  prepBtn.style.display = hasPrep ? "block" : "none";
-  if(state.mode==="prep" && !hasPrep) state.mode="study";
-  document.querySelectorAll(".modebtn").forEach(b=> b.classList.toggle("active", b.dataset.mode===state.mode));
-
   if(state.mode==="study") renderStudy(main, j);
   if(state.mode==="cards") renderCards(main, j);
   if(state.mode==="practice") renderPractice(main, j);
   if(state.mode==="music") renderMusic(main, j);
-  if(state.mode==="prep" && hasPrep) renderWorkbookPrep(main);
 }
 
 function cleanMoveName(title){
@@ -1269,11 +807,6 @@ const VIDEO_MAP = {
   "Low Lunge Explore": "https://www.youtube.com/watch?v=a_g_qUpsBII",
   "Low Lunge Explore R · 2:00": "https://www.youtube.com/watch?v=a_g_qUpsBII",
   "Low Lunge Explore L · 2:00": "https://www.youtube.com/watch?v=a_g_qUpsBII",
-  "Standing Energy Sway · 3:00": "https://www.youtube.com/watch?v=TG-OC6qOPMQ",
-  "Fold Wave / Ragdoll · 3:00": "https://www.youtube.com/watch?v=_JGWt2BDCl4",
-  "Low Lunge Wave R · 2:00": "https://www.youtube.com/watch?v=a_g_qUpsBII",
-  "Low Lunge Wave L · 2:00": "https://www.youtube.com/watch?v=a_g_qUpsBII",
-  "90/90 Melt · 3:00": "https://www.youtube.com/watch?v=nWBKgtVjIjE",
   "Knees to Chest · 1:00": "https://www.youtube.com/watch?v=-_KJznvtlR4",
   "Goddess Explore": "https://www.youtube.com/watch?v=wgXefCprLm0",
   "Half Butterfly R · 2:30": "https://www.youtube.com/watch?v=jiCs6vq2gqA",
@@ -1529,213 +1062,26 @@ function renderMusic(main, j){
   });
 }
 
-function getWorkbookEntries(journeyKey, title){
-  if(journeyKey !== "energy") return [];
-  return WORKBOOK_ENERGY_MOVES.filter(w=> w.titles.includes(title));
-}
-function workbookCardHtml(w){
-  return `<div class="wbcard">
-    <div class="wbhead">Teacher-Workbook · Karte ${w.id}${w.premiere?"<span class='wbpremiere'>PREMIERE</span>":""}</div>
-    <p class="lbl">Job</p><p>${w.job}</p>
-    <p class="lbl">Verstehen</p><p>${w.verstehen}</p>
-    <p class="lbl">Beobachten</p><p>${w.beobachten}</p>
-    <p class="lbl">Sagen</p><p>„${w.sagen}“</p>
-    <p class="lbl">Option</p><p>${w.option}</p>
-    <p class="lbl">Ändern / Raus</p><p class="wbwarn">${w.aendern}</p>
-    <p class="lbl">Dein Drill</p><p>${w.drill}</p>
-  </div>`;
-}
-
 function renderStudy(main, j){
-  renderGeneratorBar(main, state.journey);
-
-  j.phases.forEach((ph, phaseIdx)=>{
+  j.phases.forEach(ph=>{
     const sec = document.createElement("div"); sec.className="phase";
     sec.innerHTML = `<div class="phasehead"><h2>${ph.name}</h2><span class="range">${ph.range} Min.</span></div>`;
     const list = document.createElement("div");
-    ph.blocks.forEach((bl, blockIdx)=>{
+    ph.blocks.forEach(bl=>{
       const card = document.createElement("div"); card.className="block";
-      const wbHtml = getWorkbookEntries(state.journey, bl.title).map(workbookCardHtml).join("");
       card.innerHTML = `
         <div class="blockhead">
           <div class="bt"><span class="time">${bl.time}</span><span class="title">${bl.title}</span></div>
-          <button class="regenbtn" title="KI-Alternative für diese Übung">🔀</button>
           <span class="chev">⌄</span>
         </div>
         <div class="blockbody"><div class="blockbody-in"><p>${bl.body}</p>
           <a class="ytlink" href="${ytLink(bl.title)}" target="_blank" rel="noopener">▶ Video ansehen (Platzhalter)</a>
-          ${wbHtml}
         </div></div>`;
-      card.querySelector(".blockhead").addEventListener("click", (e)=>{
-        if(e.target.closest(".regenbtn")) return;
-        card.classList.toggle("open");
-      });
-      card.querySelector(".regenbtn").addEventListener("click", async (e)=>{
-        e.stopPropagation();
-        const btn = e.currentTarget;
-        const originalLabel = btn.textContent;
-        btn.textContent = "…"; btn.disabled = true;
-        try {
-          const siblingTitles = ph.blocks.map(b=>b.title).filter(t=>t!==bl.title);
-          const sug = await aiSuggestBlock(state.journey, ph.name, bl, siblingTitles, computeBlockDurationSec(ph, blockIdx));
-          const entry = ensureDraft(state.journey);
-          entry.draftPhases[phaseIdx].blocks[blockIdx] = suggestionToCompiledBlock(sug, bl.time);
-          setVariantEntry(state.journey, entry);
-          render();
-        } catch(err){
-          btn.textContent = originalLabel; btn.disabled = false;
-          alert("KI-Vorschlag fehlgeschlagen: " + err.message);
-        }
-      });
+      card.querySelector(".blockhead").onclick=()=> card.classList.toggle("open");
       list.appendChild(card);
     });
     sec.appendChild(list);
     main.appendChild(sec);
-  });
-}
-
-async function aiReviewClass(journeyKey, phases){
-  const j = DATA[journeyKey];
-  const rules = generatorRulesFor(journeyKey);
-  const overview = phases.map(ph => ph.name + ": " + ph.blocks.map(b=> b.time+" "+b.title).join(" | ")).join("\n");
-  const res = await fetch("/.netlify/functions/joga", {
-    method: "POST", headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ type:"jin_move_suggestion", params:{
-      phase: "GESAMTE STUNDE — QUALITÄTSCHECK",
-      journeyLabel: j.label,
-      journeyTheme: j.theme + " | Regeln: " + rules + " | Das ist die komplette generierte Stunde:\n" + overview +
-        "\nPrüfe auf Wiederholungen, Belastungsverteilung über die Stunde, Positionswechsel, Dramaturgie und die genannten Regeln. Antworte NUR mit JSON in der Form {\"flagged\":[{\"phase\":\"<Phasenname>\",\"title\":\"<exakter Übungstitel>\",\"reason\":\"<kurzer Grund>\"}]}. Wenn alles gut ist: {\"flagged\":[]}.",
-      existingTitles: [],
-      remainingTime: "",
-      provider:"claude"
-    }})
-  });
-  if(!res.ok) throw new Error("HTTP "+res.status);
-  const data = await res.json();
-  if(!data.claude) throw new Error(data.claudeError || "Keine Antwort von der KI.");
-  const cleaned = data.claude.trim().replace(/^```json\s*/,"").replace(/```$/,"");
-  const parsed = JSON.parse(cleaned);
-  return parsed.flagged || [];
-}
-
-function renderGeneratorBar(main, journeyKey){
-  const j = DATA[journeyKey];
-  if(!j || !j.phases) return;
-  const entry = getVariantEntry(journeyKey);
-  const hasDraft = entry.activeId==="draft" && entry.draftPhases;
-  const activeSaved = entry.activeId && entry.activeId!=="draft" ? (entry.list||[]).find(v=>v.id===entry.activeId) : null;
-
-  const bar = document.createElement("div"); bar.className="corebox"; bar.style.marginBottom="16px";
-  bar.innerHTML = `
-    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-      <select id="variantSelect" style="flex:1; min-width:140px; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:7px 8px; font-size:13px;">
-        <option value="" ${!entry.activeId?"selected":""}>Original</option>
-        ${hasDraft ? `<option value="draft" ${entry.activeId==="draft"?"selected":""}>Entwurf (nicht gespeichert)</option>` : ""}
-        ${(entry.list||[]).map(v=>`<option value="${v.id}" ${entry.activeId===v.id?"selected":""}>${escapeHtml(v.name)}</option>`).join("")}
-      </select>
-      <button id="genRemix" class="bsmallbtn">🔀 Ganze Stunde neu mischen</button>
-    </div>
-    <div id="genActions" style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;">
-      ${hasDraft ? `<button id="genSave" class="bsmallbtn">💾 Variante speichern</button><button id="genReset" class="bsmallbtn">↺ Original</button>` : ""}
-      ${activeSaved ? `<button id="genDelete" class="bsmallbtn danger">🗑️ Variante löschen</button><button id="genReset" class="bsmallbtn">↺ Original</button>` : ""}
-    </div>
-    <div id="genStatus" style="font-size:12px; color:var(--text-3); margin-top:6px;"></div>
-  `;
-  main.appendChild(bar);
-
-  const statusEl = bar.querySelector("#genStatus");
-
-  bar.querySelector("#variantSelect").addEventListener("change", (e)=>{
-    const entry2 = getVariantEntry(journeyKey);
-    entry2.activeId = e.target.value || null;
-    setVariantEntry(journeyKey, entry2);
-    render();
-  });
-
-  const saveBtn = bar.querySelector("#genSave");
-  if(saveBtn) saveBtn.addEventListener("click", ()=>{
-    const name = prompt("Name für diese Variante (z. B. \"Hüftfokus\" oder \"softer\"):");
-    if(!name || !name.trim()) return;
-    const entry2 = getVariantEntry(journeyKey);
-    const id = "v_" + Date.now();
-    entry2.list = entry2.list || [];
-    entry2.list.push({ id, name: name.trim(), createdAt: new Date().toISOString(), phases: entry2.draftPhases });
-    entry2.activeId = id;
-    entry2.draftPhases = null;
-    setVariantEntry(journeyKey, entry2);
-    render();
-  });
-
-  const resetBtn = bar.querySelector("#genReset");
-  if(resetBtn) resetBtn.addEventListener("click", ()=>{
-    const entry2 = getVariantEntry(journeyKey);
-    entry2.activeId = null;
-    setVariantEntry(journeyKey, entry2);
-    render();
-  });
-
-  const deleteBtn = bar.querySelector("#genDelete");
-  if(deleteBtn) deleteBtn.addEventListener("click", ()=>{
-    if(!confirm("Diese Variante wirklich löschen?")) return;
-    const entry2 = getVariantEntry(journeyKey);
-    entry2.list = (entry2.list||[]).filter(v=>v.id!==entry2.activeId);
-    entry2.activeId = null;
-    setVariantEntry(journeyKey, entry2);
-    render();
-  });
-
-  bar.querySelector("#genRemix").addEventListener("click", async ()=>{
-    const btn = bar.querySelector("#genRemix");
-    btn.disabled = true;
-    const base = getActivePhases(journeyKey) || DATA[journeyKey].phases;
-    const newPhases = JSON.parse(JSON.stringify(base));
-    let total = 0; newPhases.forEach(ph=> total += ph.blocks.length);
-    let done = 0;
-    try {
-      for(const ph of newPhases){
-        const usedTitles = ph.blocks.map(b=>b.title);
-        for(let i=0;i<ph.blocks.length;i++){
-          statusEl.textContent = `Mische … ${done+1}/${total}`;
-          const sug = await aiSuggestBlock(journeyKey, ph.name, ph.blocks[i], usedTitles.filter(t=>t!==ph.blocks[i].title), computeBlockDurationSec(ph, i));
-          const newBlock = suggestionToCompiledBlock(sug, ph.blocks[i].time);
-          usedTitles[i] = newBlock.title;
-          ph.blocks[i] = newBlock;
-          done++;
-        }
-      }
-      // Class-Check: ein zusätzlicher KI-Aufruf bewertet die gesamte neue Stunde
-      // und nennt nur die problematischen Blöcke — nur diese werden ersetzt.
-      try {
-        statusEl.textContent = "Qualitätscheck läuft …";
-        const flagged = await aiReviewClass(journeyKey, newPhases);
-        if(flagged.length){
-          statusEl.textContent = `Qualitätscheck: ${flagged.length} Position(en) werden ersetzt …`;
-          for(const f of flagged){
-            const ph = newPhases.find(p=>p.name===f.phase);
-            if(!ph) continue;
-            const idx = ph.blocks.findIndex(b=>b.title===f.title);
-            if(idx===-1) continue;
-            const siblingTitles = ph.blocks.map(b=>b.title).filter(t=>t!==ph.blocks[idx].title);
-            const sug2 = await aiSuggestBlock(journeyKey, ph.name, ph.blocks[idx], siblingTitles, computeBlockDurationSec(ph, idx));
-            ph.blocks[idx] = suggestionToCompiledBlock(sug2, ph.blocks[idx].time);
-          }
-        }
-      } catch(reviewErr){
-        // Qualitätscheck ist ein Bonus, kein Muss — die bereits generierte Stunde bleibt gültig,
-        // wenn der Check selbst fehlschlägt (z. B. unerwartetes Antwortformat).
-        console.warn("Class-Check übersprungen:", reviewErr.message);
-      }
-      const entry2 = getVariantEntry(journeyKey);
-      entry2.draftPhases = newPhases;
-      entry2.activeId = "draft";
-      setVariantEntry(journeyKey, entry2);
-      statusEl.textContent = "";
-      render();
-    } catch(err){
-      btn.disabled = false;
-      statusEl.textContent = "";
-      alert("Neu mischen fehlgeschlagen: " + err.message);
-    }
   });
 }
 
@@ -1826,11 +1172,8 @@ function renderPractice(main, j){
   const flat = allBlocksFlat(j);
   const total = 3600;
   const elapsed = state.timer.elapsed;
-  let currentIdx = 0;
-  for(let i=0;i<flat.length;i++){ if(flat[i].start<=elapsed) currentIdx=i; }
-  const current = flat[currentIdx];
-  const next = flat[currentIdx+1] || null;
-  const remaining = Math.max(0, (next ? next.start : total) - elapsed);
+  let current = flat[0];
+  for(const b of flat){ if(b.start<=elapsed) current=b; }
 
   const hero = document.createElement("div"); hero.className="practice-hero";
   hero.innerHTML = `
@@ -1843,10 +1186,6 @@ function renderPractice(main, j){
       <button id="ttstoggle" class="ttstoggle${ttsEnabled?" on":""}" title="Cues automatisch vorlesen">${ttsEnabled?"🔊":"🔇"}</button>
     </div>`;
   main.appendChild(hero);
-
-  const nextstrip = document.createElement("div"); nextstrip.className="nextstrip";
-  nextstrip.innerHTML = `<span class="rem">${fmt(remaining)} VERBLEIBEND</span><span class="nx">${next ? `NEXT → <b>${next.title}</b>` : "Letzte Übung"}</span>`;
-  main.appendChild(nextstrip);
 
   const now = document.createElement("div"); now.className="nowcard";
   now.innerHTML = `<div class="lblrow"><div class="lbl">${current.time} · ${current.phase}</div><button id="speaknow" class="speakbtn">🔊 Vorlesen</button></div><div class="title">${current.title}</div><div class="txt">${current.body}</div>`;
@@ -1925,7 +1264,7 @@ function renderCore(main){
   main.appendChild(box);
 
   const sec = document.createElement("div"); sec.className="phase"; sec.style.marginTop="18px";
-  sec.innerHTML = `<div class="phasehead"><h2>Method & Teacher Manual</h2><span class="range">18 Abschnitte</span></div>`;
+  sec.innerHTML = `<div class="phasehead"><h2>Method & Teacher Manual</h2><span class="range">${CORE.sections.length} Abschnitte</span></div>`;
   const list = document.createElement("div");
   CORE.sections.forEach(([num,title,body])=>{
     const card = document.createElement("div"); card.className="block";
@@ -1940,275 +1279,6 @@ function renderCore(main){
   });
   sec.appendChild(list);
   main.appendChild(sec);
-}
-
-// ===================== NACHARBEIT (STUDY PLAN) =====================
-function loadStudyProgress(){
-  try { return JSON.parse(localStorage.getItem("jin-study-progress") || "{}"); } catch(e){ return {}; }
-}
-function saveStudyProgress(progress){
-  try { localStorage.setItem("jin-study-progress", JSON.stringify(progress)); } catch(e){}
-}
-
-function renderStudyPlan(main){
-  const progress = loadStudyProgress();
-  const doneCount = STUDY_PLAN.weeks.filter(w=> progress[w.n]).length;
-
-  const intro = document.createElement("div"); intro.className="corebox";
-  intro.style.marginTop="16px";
-  intro.innerHTML = `<h3>Plan</h3><p style="font-size:13px; color:var(--text-2); line-height:1.6; margin:0 0 10px;">${STUDY_PLAN.intro}</p>
-    <div class="bar"><div class="barfill" style="width:${Math.round(doneCount/STUDY_PLAN.weeks.length*100)}%"></div></div>
-    <p style="font-size:12px; color:var(--text-3); margin-top:6px;">${doneCount} / ${STUDY_PLAN.weeks.length} Wochen erledigt</p>`;
-  main.appendChild(intro);
-
-  const booksSec = document.createElement("div"); booksSec.className="phase"; booksSec.style.marginTop="18px";
-  booksSec.innerHTML = `<div class="phasehead"><h2>Bücher</h2><span class="range">${STUDY_PLAN.books.length}</span></div>`;
-  const bookList = document.createElement("div");
-  STUDY_PLAN.books.forEach(([author,title,note])=>{
-    const row = document.createElement("div"); row.className="musictrack";
-    row.innerHTML = `<div class="mt"><span class="martist">${author}</span><span class="mtitle">${title}</span></div>
-      <span style="font-size:11px; color:var(--text-3); text-align:right; max-width:150px;">${note}</span>`;
-    bookList.appendChild(row);
-  });
-  booksSec.appendChild(bookList);
-  main.appendChild(booksSec);
-
-  const weeksSec = document.createElement("div"); weeksSec.className="phase"; weeksSec.style.marginTop="18px";
-  weeksSec.innerHTML = `<div class="phasehead"><h2>Wochen</h2><span class="range">8 Themen</span></div>`;
-  const weekList = document.createElement("div");
-  STUDY_PLAN.weeks.forEach(w=>{
-    const isDone = !!progress[w.n];
-    const card = document.createElement("div"); card.className="block"+(isDone?" active":"");
-    card.innerHTML = `
-      <div class="blockhead">
-        <div class="bt"><span class="time">Woche ${w.n}${isDone?" ✓":""}</span><span class="title">${w.title}</span></div>
-        <span class="chev">⌄</span>
-      </div>
-      <div class="blockbody"><div class="blockbody-in">
-        <p class="lbl">Lesen</p><p>${w.reading}</p>
-        <p class="lbl">Anwenden</p><p>${w.apply}</p>
-        <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-2); margin-top:10px;">
-          <input type="checkbox" class="wk-done" data-wk="${w.n}" ${isDone?"checked":""}> Erledigt
-        </label>
-      </div></div>`;
-    card.querySelector(".blockhead").onclick=()=> card.classList.toggle("open");
-    card.querySelector(".wk-done").addEventListener("click", e=> e.stopPropagation());
-    card.querySelector(".wk-done").addEventListener("change", e=>{
-      const p = loadStudyProgress();
-      if(e.target.checked) p[w.n] = true; else delete p[w.n];
-      saveStudyProgress(p);
-      render();
-    });
-    weekList.appendChild(card);
-  });
-  weeksSec.appendChild(weekList);
-  main.appendChild(weeksSec);
-}
-
-// ===================== ENERGY TEACHER PREP (Vorbereitung) =====================
-function loadWB(key, fallback){
-  try { const raw = localStorage.getItem(key); return raw===null ? fallback : JSON.parse(raw); } catch(e){ return fallback; }
-}
-function saveWB(key, val){
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){}
-}
-
-function renderWorkbookPrep(main){
-  const P = WORKBOOK_ENERGY_PREP;
-
-  // --- Intro / Regel ---
-  const intro = document.createElement("div"); intro.className="corebox";
-  intro.style.marginTop="16px";
-  intro.innerHTML = `<h3>Energy Teacher Workbook</h3>
-    <p style="font-size:13px; color:var(--text-2); line-height:1.6; margin:0 0 10px;">${P.rule}</p>
-    <p style="font-size:12px; color:var(--text-3); line-height:1.6; margin:0;">${P.neuHinweis}</p>`;
-  main.appendChild(intro);
-
-  // --- Ampel ---
-  const ampelSec = document.createElement("div"); ampelSec.className="phase"; ampelSec.style.marginTop="18px";
-  ampelSec.innerHTML = `<div class="phasehead"><h2>Ampel</h2><span class="range">vor dem Unterrichten</span></div>`;
-  const ampelBox = document.createElement("div");
-  P.ampel.forEach(([level,text])=>{
-    const row = document.createElement("div"); row.className="ampelrow "+level;
-    row.innerHTML = `<span class="ampeldot ${level}"></span><span>${text}</span>`;
-    ampelBox.appendChild(row);
-  });
-  ampelSec.appendChild(ampelBox);
-  main.appendChild(ampelSec);
-
-  // --- Premiere-Checkliste ---
-  const premProgress = loadWB("jin-wb-premiere", {});
-  const premSec = document.createElement("div"); premSec.className="phase"; premSec.style.marginTop="18px";
-  const premDone = P.premiereChecklist.filter(i=> premProgress[i.id]).length;
-  premSec.innerHTML = `<div class="phasehead"><h2>Vor der ersten Class</h2><span class="range">${premDone}/${P.premiereChecklist.length}</span></div>`;
-  const premBox = document.createElement("div"); premBox.className="corebox";
-  P.premiereChecklist.forEach(item=>{
-    const row = document.createElement("label"); row.className="checkrow";
-    row.innerHTML = `<input type="checkbox" data-pid="${item.id}" ${premProgress[item.id]?"checked":""}><span>${item.text}</span>`;
-    row.querySelector("input").addEventListener("change", e=>{
-      const p = loadWB("jin-wb-premiere", {});
-      if(e.target.checked) p[item.id]=true; else delete p[item.id];
-      saveWB("jin-wb-premiere", p);
-      render();
-    });
-    premBox.appendChild(row);
-  });
-  premSec.appendChild(premBox);
-  main.appendChild(premSec);
-
-  // --- 30-Minuten-Arbeitsweise ---
-  const workSec = document.createElement("div"); workSec.className="phase"; workSec.style.marginTop="18px";
-  workSec.innerHTML = `<div class="phasehead"><h2>30-Minuten-Arbeitsweise</h2></div>`;
-  const workBox = document.createElement("div"); workBox.className="corebox";
-  workBox.innerHTML = `<table class="plantable">${P.arbeitsweise.map(([t,txt])=>`<tr><td>${t}</td><td>${txt}</td></tr>`).join("")}</table>`;
-  workSec.appendChild(workBox);
-  main.appendChild(workSec);
-
-  // --- Premierenplan ---
-  const planSec = document.createElement("div"); planSec.className="phase"; planSec.style.marginTop="18px";
-  planSec.innerHTML = `<div class="phasehead"><h2>Premierenplan</h2></div>`;
-  const planBox = document.createElement("div"); planBox.className="corebox";
-  planBox.innerHTML = `<table class="plantable">${P.premierenplan.map(([w,txt,res])=>`<tr><td>${w}</td><td>${txt}<br><span style="color:var(--text-3);">${res}</span></td></tr>`).join("")}</table>`;
-  planSec.appendChild(planBox);
-  main.appendChild(planSec);
-
-  // --- Timer-Check ---
-  const timerProgress = loadWB("jin-wb-timercheck", {});
-  const timerDone = P.timerCheck.filter((_,i)=> timerProgress[i]).length;
-  const timerSec = document.createElement("div"); timerSec.className="phase"; timerSec.style.marginTop="18px";
-  timerSec.innerHTML = `<div class="phasehead"><h2>Timer-Check</h2><span class="range">${timerDone}/${P.timerCheck.length}</span></div>`;
-  const timerBox = document.createElement("div"); timerBox.className="corebox";
-  P.timerCheck.forEach((text,i)=>{
-    const row = document.createElement("label"); row.className="checkrow";
-    row.innerHTML = `<input type="checkbox" data-tid="${i}" ${timerProgress[i]?"checked":""}><span>${text}</span>`;
-    row.querySelector("input").addEventListener("change", e=>{
-      const t = loadWB("jin-wb-timercheck", {});
-      if(e.target.checked) t[i]=true; else delete t[i];
-      saveWB("jin-wb-timercheck", t);
-      render();
-    });
-    timerBox.appendChild(row);
-  });
-  timerSec.appendChild(timerBox);
-  main.appendChild(timerSec);
-
-  // --- Notfall-Kürzung ---
-  const notfallSec = document.createElement("div"); notfallSec.className="phase"; notfallSec.style.marginTop="18px";
-  notfallSec.innerHTML = `<div class="phasehead"><h2>Notfall-Kürzung</h2></div>`;
-  const notfallBox = document.createElement("div"); notfallBox.className="corebox";
-  notfallBox.innerHTML = `<p style="font-size:13px; color:var(--text-2); line-height:1.6; margin:0;">${P.notfallKuerzung}</p>`;
-  notfallSec.appendChild(notfallBox);
-  main.appendChild(notfallSec);
-
-  // --- Debrief ---
-  const debriefSec = document.createElement("div"); debriefSec.className="phase"; debriefSec.style.marginTop="18px";
-  debriefSec.innerHTML = `<div class="phasehead"><h2>Debrief nach der Class</h2></div>`;
-  const debriefBox = document.createElement("div"); debriefBox.className="corebox";
-  debriefBox.innerHTML = `
-    <div class="debriefmeta">
-      <input type="text" id="dbDate" placeholder="Datum">
-      <input type="text" id="dbTeil" placeholder="Teilnehmende">
-      <input type="text" id="dbVor" placeholder="Energie vorher" style="max-width:70px;">
-      <input type="text" id="dbNach" placeholder="Energie nachher" style="max-width:70px;">
-    </div>
-    ${P.debriefQuestions.map((q,i)=>`<div class="debriefq">${q}</div><textarea class="debriefta" id="dbQ${i}"></textarea>`).join("")}
-    <button class="navbtn primary" id="dbSave" style="margin-top:12px; width:100%;">Debrief speichern</button>
-    <div id="dbLog" style="margin-top:14px;"></div>
-  `;
-  debriefSec.appendChild(debriefBox);
-  main.appendChild(debriefSec);
-
-  function renderDebriefLog(){
-    const log = loadWB("jin-wb-debrief-log", []);
-    const logEl = debriefBox.querySelector("#dbLog");
-    if(!log.length){ logEl.innerHTML = ""; return; }
-    logEl.innerHTML = `<p class="lbl" style="margin-bottom:8px;">Bisherige Einträge</p>` + log.slice().reverse().map(entry=>`
-      <div class="debriefentry">
-        <span class="dedate">${entry.date || "(ohne Datum)"}</span> · ${entry.teilnehmende || "–"} Teilnehmende · Energie ${entry.energieVor||"–"} → ${entry.energieNach||"–"}<br>
-        ${entry.answers.map((a,i)=> a ? `<p style="margin:6px 0 0;"><b>${P.debriefQuestions[i]}</b><br>${a}</p>` : "").join("")}
-      </div>`).join("");
-  }
-  renderDebriefLog();
-
-  debriefBox.querySelector("#dbSave").onclick = ()=>{
-    const entry = {
-      date: debriefBox.querySelector("#dbDate").value.trim(),
-      teilnehmende: debriefBox.querySelector("#dbTeil").value.trim(),
-      energieVor: debriefBox.querySelector("#dbVor").value.trim(),
-      energieNach: debriefBox.querySelector("#dbNach").value.trim(),
-      answers: P.debriefQuestions.map((_,i)=> debriefBox.querySelector("#dbQ"+i).value.trim()),
-    };
-    const log = loadWB("jin-wb-debrief-log", []);
-    log.push(entry);
-    saveWB("jin-wb-debrief-log", log);
-    renderDebriefLog();
-    ["dbDate","dbTeil","dbVor","dbNach"].forEach(id=> debriefBox.querySelector("#"+id).value="");
-    P.debriefQuestions.forEach((_,i)=> debriefBox.querySelector("#dbQ"+i).value="");
-  };
-
-  // --- Deine eine Änderung für Class 2 ---
-  const changeSec = document.createElement("div"); changeSec.className="phase"; changeSec.style.marginTop="18px";
-  changeSec.innerHTML = `<div class="phasehead"><h2>Deine eine Änderung</h2><span class="range">für Class 2</span></div>`;
-  const changeBox = document.createElement("div"); changeBox.className="corebox";
-  const savedChange = localStorage.getItem("jin-wb-nextchange") || "";
-  changeBox.innerHTML = `<p style="font-size:12px; color:var(--text-3); margin:0 0 8px;">Nach der Premiere trägst du hier nur eine Änderung ein. Nicht fünf.</p>
-    <textarea class="debriefta" id="nextChange" style="min-height:70px;">${savedChange}</textarea>`;
-  changeBox.querySelector("#nextChange").addEventListener("input", e=>{
-    try { localStorage.setItem("jin-wb-nextchange", e.target.value); } catch(err){}
-  });
-  changeSec.appendChild(changeBox);
-  main.appendChild(changeSec);
-
-  // --- 8 Wochen Nacharbeit nur zu dieser Class ---
-  const cwProgress = loadWB("jin-wb-classweeks", {});
-  const cwDone = P.classWeeks.filter(w=> cwProgress[w.n]).length;
-  const cwSec = document.createElement("div"); cwSec.className="phase"; cwSec.style.marginTop="18px";
-  cwSec.innerHTML = `<div class="phasehead"><h2>Acht Wochen — nur diese Class</h2><span class="range">${cwDone}/${P.classWeeks.length}</span></div>`;
-  const cwList = document.createElement("div");
-  P.classWeeks.forEach(w=>{
-    const isDone = !!cwProgress[w.n];
-    const card = document.createElement("div"); card.className="block"+(isDone?" active":"");
-    card.innerHTML = `
-      <div class="blockhead">
-        <div class="bt"><span class="time">Woche ${w.n}${isDone?" ✓":""}</span><span class="title">${w.thema}</span></div>
-        <span class="chev">⌄</span>
-      </div>
-      <div class="blockbody"><div class="blockbody-in">
-        <p>${w.auftrag}</p>
-        <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-2); margin-top:10px;">
-          <input type="checkbox" class="cw-done" data-cw="${w.n}" ${isDone?"checked":""}> Erledigt
-        </label>
-      </div></div>`;
-    card.querySelector(".blockhead").onclick=()=> card.classList.toggle("open");
-    card.querySelector(".cw-done").addEventListener("click", e=> e.stopPropagation());
-    card.querySelector(".cw-done").addEventListener("change", e=>{
-      const p = loadWB("jin-wb-classweeks", {});
-      if(e.target.checked) p[w.n]=true; else delete p[w.n];
-      saveWB("jin-wb-classweeks", p);
-      render();
-    });
-    cwList.appendChild(card);
-  });
-  cwSec.appendChild(cwList);
-  main.appendChild(cwSec);
-
-  // --- Kleine Gruppe / Einzelunterricht ---
-  const kgSec = document.createElement("div"); kgSec.className="phase"; kgSec.style.marginTop="18px";
-  kgSec.innerHTML = `<div class="phasehead"><h2>Kleine Gruppe / Einzelunterricht</h2></div>`;
-  const kgBox = document.createElement("div"); kgBox.className="corebox";
-  kgBox.innerHTML = `<p style="font-size:13px; color:var(--text-2); line-height:1.6; margin:0;">${P.kleineGruppe}</p>`;
-  kgSec.appendChild(kgBox);
-  main.appendChild(kgSec);
-
-  // --- Grenzen & Quellen ---
-  const grenzSec = document.createElement("div"); grenzSec.className="phase"; grenzSec.style.marginTop="18px";
-  grenzSec.innerHTML = `<div class="phasehead"><h2>Teacher-Grenzen & Stoppsignale</h2></div>`;
-  const grenzBox = document.createElement("div"); grenzBox.className="corebox";
-  grenzBox.innerHTML = `<p style="font-size:13px; color:var(--text-2); line-height:1.6; margin:0 0 10px;">${P.grenzen}</p>
-    <p style="font-size:13px; color:#c0392b; line-height:1.6; margin:0 0 10px;">${P.notfallSymptome}</p>
-    <p style="font-size:11px; color:var(--text-3); line-height:1.5; margin:0;">${P.quellen}</p>`;
-  grenzSec.appendChild(grenzBox);
-  main.appendChild(grenzSec);
 }
 
 /* === JIN_BUILDER_JS_START === */
@@ -2356,7 +1426,7 @@ function validateJourney(draft){
     text: "Gesamtzeit: " + secToTime(totalSec) + " (Ziel: 60:00)"
   });
   if(draft.phases.every(ph=>ph.blocks.length>0) && !holdIssues.length){
-    items.push({level:"ok", text:"Alle 5 Phasen belegt, keine Stillness-Rule-Verletzung."});
+    items.push({level:"ok", text:"Alle angelegten Phasen sind belegt, keine Stillness-Rule-Verletzung."});
   }
   const hasErr = items.some(i=>i.level==="err");
   return { items, canSave: !hasErr };
@@ -2427,13 +1497,34 @@ function renderBuilder(main){
     const sec = document.createElement("div");
     sec.className = "bsection bphase";
     const cursorSec = builderDraft.phases.slice(0,pIdx).reduce((s,p2)=> s + p2.blocks.reduce((s2,b)=> s2+(parseDur(b.dur)||0),0), 0);
-    sec.innerHTML = `<div class="bphasehead"><span class="bpname">${ph.name}</span><span class="brange">ab ${secToTime(cursorSec)}</span></div><div class="bblocklist"></div><button class="baddbtn" data-addblock="${pIdx}">+ Move zu ${ph.name}</button><div class="bsuggestbar"><button data-suggest="library" data-pidx="${pIdx}">📚 Bibliothek</button><button data-suggest="ai" data-pidx="${pIdx}">✨ KI-Vorschlag</button></div><div class="bsuggest-panel" id="bsuggest-${pIdx}" style="display:none;"></div>`;
+    sec.innerHTML = `<div class="bphasehead"><input type="text" class="bp-name-input" value="${escapeHtml(ph.name)}"><span class="brange">ab ${secToTime(cursorSec)}</span><button class="bsmallbtn danger" data-removephase="${pIdx}" title="Phase entfernen">✕</button></div><div class="bblocklist"></div><button class="baddbtn" data-addblock="${pIdx}">+ Move zu ${escapeHtml(ph.name)}</button><div class="bsuggestbar"><button data-suggest="library" data-pidx="${pIdx}">📚 Bibliothek</button><button data-suggest="ai" data-pidx="${pIdx}">✨ KI-Vorschlag</button></div><div class="bsuggest-panel" id="bsuggest-${pIdx}" style="display:none;"></div>`;
     const listEl = sec.querySelector(".bblocklist");
     ph.blocks.forEach((bl, bIdx)=>{
       listEl.appendChild(renderBlockCard(pIdx, bIdx, bl));
     });
+    sec.querySelector(".bp-name-input").addEventListener("input", e=>{
+      // Nur den Namen im Draft aktualisieren, kein voller Re-Render (sonst verliert das
+      // Feld beim Tippen den Fokus). Der "+ Move zu ..."-Button zeigt daher bis zum
+      // naechsten vollen Render noch den alten Namen - kosmetisch, kein Datenproblem.
+      builderDraft.phases[pIdx].name = e.target.value;
+    });
+    sec.querySelector("[data-removephase]").onclick = ()=>{
+      const hasBlocks = builderDraft.phases[pIdx].blocks.length > 0;
+      if(hasBlocks && !confirm(`Phase "${builderDraft.phases[pIdx].name}" hat ${builderDraft.phases[pIdx].blocks.length} Move(s). Wirklich entfernen?`)) return;
+      builderDraft.phases.splice(pIdx, 1);
+      render();
+    };
     phasesEl.appendChild(sec);
   });
+  const addPhaseBtn = document.createElement("button");
+  addPhaseBtn.className = "baddbtn";
+  addPhaseBtn.style.marginBottom = "14px";
+  addPhaseBtn.textContent = "+ Phase hinzufügen";
+  addPhaseBtn.onclick = ()=>{
+    builderDraft.phases.push({ name: "NEUE PHASE", blocks: [] });
+    render();
+  };
+  phasesEl.appendChild(addPhaseBtn);
   wrap.querySelectorAll("[data-suggest]").forEach(b=>{
     b.onclick = ()=>{
       const pIdx = +b.dataset.pidx;
