@@ -54,6 +54,10 @@
   .themebar{max-width:520px; margin:0 auto; padding:12px 16px; background:var(--card);
     border-radius:0 0 14px 14px; margin-bottom:10px; border:1px solid var(--line); border-top:none;}
   .themebar .theme{font-size:13px; font-style:italic; color:var(--text-2);}
+  .durtoggle{display:flex; gap:6px; margin-top:8px;}
+  .durbtn{flex:1; padding:6px 0; font-size:12px; font-weight:600; border-radius:8px;
+    border:1px solid var(--line); background:var(--bg); color:var(--text-2);}
+  .durbtn.active{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
   .memline{display:flex; gap:6px; overflow-x:auto; padding:10px 0 2px; -webkit-overflow-scrolling:touch;}
   .memline::-webkit-scrollbar{display:none;}
   .memchip{flex:0 0 auto; font-size:10px; font-weight:700; letter-spacing:0.4px;
@@ -287,6 +291,10 @@
 
 <div class="themebar">
   <div class="theme" id="themeText"></div>
+  <div class="durtoggle" id="durToggle" style="display:none;">
+    <button data-dur="60" class="durbtn">60 Min</button>
+    <button data-dur="45" class="durbtn">45 Min</button>
+  </div>
   <div class="memline" id="memline"></div>
 </div>
 
@@ -304,6 +312,8 @@
   <button data-j="menspilates">Mat Pilates</button>
   <button data-j="mensreformer">Reformer</button>
   <button data-j="pilatesrolle">Rolle</button>
+  <button data-j="holdtheline">Hold the Line</button>
+  <button data-j="unleashed">Unleashed</button>
 </nav>
 
 <script>
@@ -483,6 +493,202 @@ pilatesrolle: { label:"Pilates mit Rolle", theme:"Mobilisation. Core. Ruhe.", co
     {label:"MERMAID", phase:"SITZENDE MOBILITÄT", time:"46:00", title:"Rotation → Vorbeuge → Butterfly → Mermaid in zwei Richtungen", body:"Sitzende Mobilität, Stunde baut bewusst kontinuierlich ab."},
     {label:"SAVASANA", phase:"SAVASANA", time:"53:00", title:"Savasana mit Rolle im Nacken", body:"Sieben Minuten vollständige Ruhe, Rolle als sanfte Nackenstütze."},
   ]},
+holdtheline: { label:"Hold the Line", theme:"Kontrolle beginnt dort, wo Bewegung aufhört.", color:"#7a4a3a",
+  durations: {
+    "60": {
+      memory:["PRIME","FRONT LINE","RESET","BACK LINE","PLANK LINE","SIDE FORCE","POWER FLOW","LINE-UP","RELEASE"],
+      phases:[
+        {name:"PRIME", range:"0–6", start:0, blocks:[
+          P("0:00","Standing Roll Down · ×3","Füße hüftbreit, Knie weich. Kinn sinkt zur Brust, Wirbel für Wirbel abrollen, unten Kopf und Arme komplett schwer hängen lassen. Wirbel für Wirbel wieder aufrollen, Kopf kommt zuletzt.<div class='cue'>„Wirbel für Wirbel runter — Kopf kommt zuerst, Becken zuletzt.“<br>„Und wieder rauf, genau andersherum.“</div>"),
+          P("1:00","Squat + Overhead Reach · ×8","Füße hüftbreit, in die Kniebeuge sinken, beim Hochkommen Arme über den Kopf strecken und ausatmen.<div class='cue'>„Runter, Gewicht in der Fußmitte. Hoch, Arme lang nach oben.“</div>"),
+          P("2:30","Walkout in die Plank · ×3","Aus dem Stand vorbeugen, Hände gehen am Boden nach vorne bis zur Plank-Position, dann zurück und aufrollen.<div class='cue'>„Hände laufen nach vorne, bis der Körper eine Linie ist.“<br>„Und zurück — Schritt für Schritt, nicht springen.“</div>"),
+          P("4:00","Cat–Cow · ×4","Vierfüßler, Wirbelsäule abwechselnd runden und strecken, mit dem Atem verbunden.<div class='cue'>„Einatmen lang, ausatmen rund.“</div>"),
+          P("5:00","Knee Hover · 3×10 Sek.","Vierfüßler, Knie heben 2–3 cm vom Boden, kurz halten, absetzen. Dreimal wiederholen.<div class='cue'>„Knie schweben knapp über dem Boden — der Rumpf trägt, nicht die Arme.“<br>„Temperatur, Wirbelsäule, Schultern, Powerhouse — alles ist jetzt an.“</div>"),
+        ]},
+        {name:"FRONT LINE", range:"6–13", start:360, blocks:[
+          P("6:00","Imprint & Release · ×6","Rückenlage, Knie aufgestellt. Becken kippt, unterer Rücken presst in die Matte (Imprint), dann lösen zur Neutralstellung (Release).<div class='cue'>„Kippen, pressen — und wieder lösen.“</div>"),
+          P("7:00","Dead Bug · ×6/Seite","Tabletop, gegenüberliegender Arm und Bein strecken sich gleichzeitig aus, unterer Rücken bleibt flach am Boden.<div class='cue'>„Arm und Bein strecken sich gemeinsam — der Rücken bleibt flach.“</div>"),
+          P("8:30","Single Leg Stretch · ×8/Seite","Oberkörper oben, ein Knie zur Brust, anderes Bein lang und tief. Wechsel mit dem Ausatmen.<div class='cue'>„Wechsel mit dem Ausatmen — der Oberkörper bleibt oben.“</div>"),
+          P("10:00","Double Leg Stretch · ×6","Beide Knie zur Brust, dann Arme und Beine strecken sich gemeinsam lang aus, dann zurück in die Ausgangsposition.<div class='cue'>„Lang werden — und zurück zur Mitte.“</div>"),
+          P("11:30","Hollow Body Hold — Zielzeit bis 60 Sek.","Rückenlage, unterer Rücken bleibt am Boden, Oberkörper und Beine heben sich zu einer flachen Schale. Vier Optionsstufen: Füße aufgestellt und nur Oberkörper angehoben; Beine im Tabletop; ein Bein lang; beide Beine und Arme lang. Der Hebel entscheidet über die Schwierigkeit, nicht die Zeit.<div class='cue'>„Die Form bleibt. Wenn die Form geht, machst du den Hebel kürzer — nicht die Übung schlechter.“<br>„Zielzeit bis 60 Sekunden — den Hebel jederzeit verkürzen.“</div>"),
+        ]},
+        {name:"MOVE & RESET", range:"13–16", start:780, blocks:[
+          P("13:00","Move & Reset","Windshield Wipers (Knie fallen kontrolliert von Seite zu Seite), dann Spine Twist im Sitz, dann Dynamic Child's Pose (Arme kriechen abwechselnd nach vorne), etwas Swimming oder eine leichte Gegenbewegung, zum Schluss die Handgelenke bewusst ausschütteln.<div class='cue'>„Kurz gegenbewegen — das ist kein Pausieren, das ist Vorbereitung auf die Rückseite.“</div>"),
+        ]},
+        {name:"BACK LINE", range:"16–23", start:960, blocks:[
+          P("16:00","Pelvic Curl · ×8","Rückenlage, Füße aufgestellt, Wirbel für Wirbel das Becken heben und wieder ablegen.<div class='cue'>„Wirbel für Wirbel — Becken zuerst, dann der Rücken.“</div>"),
+          P("17:00","Bridge Marching · ×6/Seite","Oben in der Bridge bleiben, abwechselnd einen Fuß lösen und das Knie bis ungefähr über die Hüfte anheben. Becken bleibt ruhig.<div class='cue'>„Oben bleiben. Ein Fuß löst sich, Knie über die Hüfte — das Becken bleibt ruhig.“</div>"),
+          P("18:30","Single-Leg Bridge · ×6/Seite","Ein Bein gestreckt in die Luft, das Standbein hebt und senkt das Becken kontrolliert.<div class='cue'>„Das lange Bein bleibt ruhig — das Standbein macht die Arbeit.“</div>"),
+          P("20:00","Swimming Prep · ×8/Seite","Bauchlage, gegenüberliegender Arm und Bein heben sich sanft abwechselnd, Rumpf bleibt stabil.<div class='cue'>„Klein und alternierend — kein großer Schwung.“</div>"),
+          P("21:30","Back Hold — Dart Hold · Zielzeit bis 60 Sek.","Bauchlage, Dart Hold ist der Standard: Oberkörper hebt sich leicht, Arme lang am Körper, Beine dürfen am Boden bleiben. Voller Superman (Arme und Beine lang angehoben) nur als Option für alle, die im Dart Hold stabil bleiben.<div class='cue'>„Länge halten, nicht Höhe erzwingen. Sobald der untere Rücken übernimmt, Beine oder Arme ablegen.“</div>"),
+        ]},
+        {name:"MOVE & RESET 2", range:"23–26", start:1380, blocks:[
+          P("23:00","Move & Reset","Windshield Wipers, Spine Twist, Dynamic Child's Pose, leichte Swimming-Gegenbewegung, Handgelenke ausschütteln — gleiche Reset-Bausteine wie zuvor, jetzt als Übergang zur Stützarbeit.<div class='cue'>„Noch einmal gegenbewegen, bevor die Hände wieder tragen.“</div>"),
+        ]},
+        {name:"PLANK LINE", range:"26–34", start:1560, blocks:[
+          P("26:00","Scapular Push-ups · ×8","Plank-Position, Arme gestreckt, Schulterblätter sinken zueinander und drücken sich wieder auseinander, Arme bleiben lang. <span class='tag ground'>LEICHTER</span> Knie am Boden.<div class='cue'>„Nur die Schulterblätter bewegen sich — die Arme bleiben lang.“</div>"),
+          P("27:30","Slow Knee to Elbow · ×6/Seite","Aus der Plank ein Knie langsam zum gleichseitigen Ellbogen führen, Becken bleibt ruhig, dann kontrolliert zurück.<div class='cue'>„Langsam — das Becken darf nicht nach oben springen.“</div>"),
+          P("29:00","Push-up to Pike · ×6","Ein langsamer Push-up, dann Becken hebt sich in die Pike-Position, zurück in die Plank für die nächste Wiederholung.<div class='cue'>„Runter kontrolliert, hoch in die Pike, zurück in die Plank.“</div>"),
+          P("30:30","Leg Pull Front Prep · ×6/Seite","Plank-Position, ein Bein hebt sich wenige Zentimeter, kurz halten, kontrolliert absetzen.<div class='cue'>„Nur so hoch, wie das Becken ruhig bleibt.“</div>"),
+          P("32:00","High Plank Hold · Zielzeit bis 60 Sek.","Klassische High Plank. Handgelenksoptionen von Anfang an: Fäuste statt flacher Hand, Hände auf Blöcken, oder Knie am Boden statt Zehen.<div class='cue'>„Eine Minute. Nicht überleben — organisieren.“<br>„Fäuste, Blöcke oder Knie — sucht euch die Version, die die Handgelenke schont.“</div>"),
+        ]},
+        {name:"SIDE FORCE", range:"34–40", start:2040, blocks:[
+          P("34:00","Side-Lying Leg Lift → Front/Back Kick → Small Circles → Side Plank Hip Lift → Side Plank Hold","Je Seite: acht Leg Lifts, sechs Front/Back Kicks, sechs Kreise je Richtung, sechs Side Plank Hip Lifts, dann Side Plank Hold 30–40 Sekunden. <span class='tag ground'>LEICHTER</span> im Side Plank auf dem Unterarm statt mit gestrecktem Arm. Direkter Seitenwechsel, danach kurze Child's Pose als Reset.<div class='cue'>„Das Bein bewegt sich, der Rest bleibt ruhig.“<br>„Im Side Plank: Unterarm ist genauso vollständig wie gestreckter Arm — sucht die Version, die trägt.“</div>"),
+        ]},
+        {name:"PILATES POWER FLOW", range:"40–49", start:2400, blocks:[
+          P("40:00","Runde 1 — Learn","Acht Stationen der Reihe nach aufbauen: Standing Roll Down → mit den Händen in die Plank laufen → drei langsame Push-ups → Leg Pull Front rechts/links → Pike → Hände zurücklaufen → tiefer Squat → aufrichten und ein Knie in die Balance heben.<div class='cue'>„Jede Station einzeln — wir lernen die Linie, bevor wir sie fließen lassen.“</div>"),
+          P("43:00","Runde 2 — Flow","Gleiche acht Stationen, jetzt mit dem Atem verbunden, Übergänge fließender.<div class='cue'>„Gleicher Weg, diesmal verbunden — ein Atemzug pro Übergang.“</div>"),
+          P("46:00","Runde 3 — Langsamer und stärker","Gleiche Stationen, bewusst verlangsamt, jede Position einen Moment länger kontrolliert.<div class='cue'>„Kein hektischer Fitnesszirkel. Jede Runde bleibt präzise und kontrolliert.“</div>"),
+        ]},
+        {name:"THE LINE-UP", range:"49–56", start:2940, blocks:[
+          P("49:00","The Line-Up","Bereits bekannte Positionen im Wechsel, je 40 Sekunden Arbeit, 15–20 Sekunden Wechsel: Hollow Hold → Side Plank rechts → Back Hold (Dart) → Side Plank links → Plank Hold → Teaser/C-Curve Hold als Abschluss. Kein neuer Skill, nur Verdichtung.<div class='cue'>„Ihr kennt jede Position. Jetzt gibt es keine Erklärung mehr — nur noch Kontrolle.“</div>"),
+        ]},
+        {name:"RELEASE", range:"56–60", start:3360, blocks:[
+          P("56:00","Child's Pose → Hüftbeuger → Supine Twist → Aufrollen","Child's Pose, dann Hüftbeuger rechts/links im Ausfallschritt, dann Supine Twist rechts/links, einmal aufrollen zum Stand, ein letzter bewusster Atemzug im Stand.<div class='cue'>„Nach so viel Kontrolle heute: hier darf einfach nur losgelassen werden.“<br>„Ein letzter bewusster Atemzug — im Stand.“</div>"),
+        ]},
+      ],
+      cards:[
+        {label:"PRIME", phase:"PRIME", time:"0:00", title:"Roll Down → Squat → Walkout → Cat-Cow → Knee Hover", body:"Temperatur, Wirbelsäule, Schultern und Powerhouse aktivieren."},
+        {label:"FRONT LINE", phase:"FRONT LINE", time:"11:30", title:"Hollow Body Hold", body:"Signature Hold Nr. 1 — vier Hebel-Optionen, Form vor Zeit."},
+        {label:"RESET", phase:"MOVE & RESET", time:"13:00", title:"Move & Reset", body:"Windshield Wipers, Spine Twist, Dynamic Child's Pose, Handgelenke ausschütteln."},
+        {label:"BACK LINE", phase:"BACK LINE", time:"21:30", title:"Back Hold — Dart Hold", body:"Signature Hold Nr. 2 — Dart Hold als Standard, voller Superman nur als Option."},
+        {label:"PLANK LINE", phase:"PLANK LINE", time:"32:00", title:"High Plank Hold", body:"Signature Hold Nr. 3 — mit Handgelenksoptionen (Fäuste/Blöcke/Knie)."},
+        {label:"SIDE FORCE", phase:"SIDE FORCE", time:"34:00", title:"Side-Lying Series → Side Plank Hold", body:"Je Seite komplett, dann direkter Wechsel, kurze Child's Pose."},
+        {label:"POWER FLOW", phase:"PILATES POWER FLOW", time:"40:00", title:"Learn → Flow → Langsamer & Stärker", body:"Acht-Stationen-Sequenz, drei Runden mit wachsender Kontrolle statt Tempo."},
+        {label:"LINE-UP", phase:"THE LINE-UP", time:"49:00", title:"Hollow → Side Plank → Dart → Side Plank → Plank → Teaser", body:"Alle drei Signature Holds verdichtet, kein neuer Skill."},
+        {label:"RELEASE", phase:"RELEASE", time:"56:00", title:"Child's Pose → Hüftbeuger → Twist → Aufrollen", body:"Bewusster Ausklang nach viel Spannung."},
+      ]},
+    "45": {
+      memory:["PRIME","FRONT LINE","RESET","BACK LINE","PLANK LINE","SIDE FORCE","POWER FLOW","LINE-UP","RELEASE"],
+      phases:[
+        {name:"PRIME", range:"0–4", start:0, blocks:[
+          P("0:00","Roll Down → Squat+Reach → Walkout → Cat-Cow → Knee Hover","Verkürzte Prime-Kette: Standing Roll Down ×2, Squat + Overhead Reach ×6, Walkout in die Plank ×2, Cat–Cow ×3, Knee Hover 2×10 Sek. — gleiche Reihenfolge, kompaktere Dosierung.<div class='cue'>„Gleicher Weg wie immer, heute etwas kompakter.“</div>"),
+        ]},
+        {name:"FRONT LINE", range:"4–10", start:240, blocks:[
+          P("4:00","Imprint & Release → Dead Bug → Single Leg Stretch · ×4 / ×4/Seite / ×6/Seite","Gleiche Reihenfolge wie in der 60-Minuten-Fassung, mit reduzierten Wiederholungen.<div class='cue'>„Kürzer, nicht kleiner gedacht.“</div>"),
+          P("6:30","Hollow Body Hold — Zielzeit bis 60 Sek.","Signature Hold bleibt unverändert: gleiche vier Hebel-Optionen, gleiche Zielzeit.<div class='cue'>„Die Form bleibt. Wenn die Form geht, wird der Hebel kürzer — nicht die Übung schlechter.“</div>"),
+        ]},
+        {name:"RESET", range:"10–12", start:600, blocks:[
+          P("10:00","Move & Reset — kurz","Windshield Wipers und Dynamic Child's Pose, Handgelenke ausschütteln — die kompakte Version des Reset-Bausteins.<div class='cue'>„Kurz gegenbewegen, dann weiter zur Rückseite.“</div>"),
+        ]},
+        {name:"BACK LINE", range:"12–18", start:720, blocks:[
+          P("12:00","Pelvic Curl → Bridge Marching → Single-Leg Bridge · ×6 / ×4/Seite / ×4/Seite","Gleiche Reihenfolge wie in der 60-Minuten-Fassung, reduzierte Wiederholungen. Swimming Prep entfällt hier zugunsten des Signature Holds.<div class='cue'>„Wirbel für Wirbel, dann marschieren, dann einbeinig — bekannter Weg, kürzer dosiert.“</div>"),
+          P("15:00","Back Hold — Dart Hold · Zielzeit bis 60 Sek.","Signature Hold bleibt unverändert: Dart Hold als Standard, voller Superman nur als Option.<div class='cue'>„Länge halten, nicht Höhe erzwingen.“</div>"),
+        ]},
+        {name:"PLANK LINE", range:"18–24", start:1080, blocks:[
+          P("18:00","Scapular Push-ups → Slow Knee to Elbow → Push-up to Pike · ×6 / ×4/Seite / ×4","Gleiche Reihenfolge, reduzierte Wiederholungen.<div class='cue'>„Gleiche Linie, kompaktere Zahl.“</div>"),
+          P("21:00","High Plank Hold · Zielzeit bis 60 Sek.","Signature Hold bleibt unverändert, gleiche Handgelenksoptionen (Fäuste/Blöcke/Knie).<div class='cue'>„Eine Minute. Nicht überleben — organisieren.“</div>"),
+        ]},
+        {name:"SIDE FORCE", range:"24–29", start:1440, blocks:[
+          P("24:00","Side-Lying Series → Side Plank Hold — reduziert","Je Seite: sechs Leg Lifts, vier Front/Back Kicks, vier Kreise je Richtung, vier Side Plank Hip Lifts, dann Side Plank Hold 20–30 Sekunden. <span class='tag ground'>LEICHTER</span> Unterarm statt gestreckter Arm.<div class='cue'>„Das Bein bewegt sich, der Rest bleibt ruhig.“</div>"),
+        ]},
+        {name:"PILATES POWER FLOW", range:"29–37", start:1740, blocks:[
+          P("29:00","Runde 1 — Learn","Acht Stationen aufbauen: Roll Down → Hände in die Plank → drei Push-ups → Leg Pull Front R/L → Pike → Hände zurück → tiefer Squat → Knie-Balance.<div class='cue'>„Jede Station einzeln lernen.“</div>"),
+          P("33:00","Runde 2 — Flow","Gleiche acht Stationen, jetzt verbunden mit dem Atem.<div class='cue'>„Gleicher Weg, diesmal fließend.“</div>"),
+        ]},
+        {name:"THE LINE-UP", range:"37–42", start:2220, blocks:[
+          P("37:00","The Line-Up — kompakt","Vier bekannte Positionen im Wechsel, je 40 Sekunden Arbeit, 15 Sekunden Wechsel: Hollow Hold → Side Plank (beide Seiten kurz nacheinander) → Back Hold (Dart) → Plank Hold. Alle drei Signature Holds bleiben enthalten.<div class='cue'>„Ihr kennt jede Position — jetzt nur noch Kontrolle.“</div>"),
+        ]},
+        {name:"RELEASE", range:"42–45", start:2520, blocks:[
+          P("42:00","Child's Pose → Hüftbeuger/Twist kombiniert → Aufrollen","Child's Pose, dann im Wechsel je Seite kurz Hüftbeuger und Supine Twist, einmal aufrollen zum Stand, ein letzter Atemzug.<div class='cue'>„Kurzer Ausklang, gleiche Ruhe.“</div>"),
+        ]},
+      ],
+      cards:[
+        {label:"PRIME", phase:"PRIME", time:"0:00", title:"Roll Down → Squat → Walkout → Cat-Cow → Knee Hover", body:"Kompakte Prime-Kette."},
+        {label:"FRONT LINE", phase:"FRONT LINE", time:"6:30", title:"Hollow Body Hold", body:"Signature Hold Nr. 1 — unverändert."},
+        {label:"RESET", phase:"RESET", time:"10:00", title:"Move & Reset — kurz", body:"Kompakter Reset-Baustein."},
+        {label:"BACK LINE", phase:"BACK LINE", time:"15:00", title:"Back Hold — Dart Hold", body:"Signature Hold Nr. 2 — unverändert."},
+        {label:"PLANK LINE", phase:"PLANK LINE", time:"21:00", title:"High Plank Hold", body:"Signature Hold Nr. 3 — unverändert."},
+        {label:"SIDE FORCE", phase:"SIDE FORCE", time:"24:00", title:"Side-Lying Series → Side Plank Hold", body:"Reduzierte Wiederholungen, gleiche Struktur."},
+        {label:"POWER FLOW", phase:"PILATES POWER FLOW", time:"29:00", title:"Learn → Flow", body:"Zwei statt drei Runden — Peak bleibt erhalten."},
+        {label:"LINE-UP", phase:"THE LINE-UP", time:"37:00", title:"Hollow → Side Plank → Dart → Plank", body:"Vier statt sechs Positionen, alle drei Signature Holds enthalten."},
+        {label:"RELEASE", phase:"RELEASE", time:"42:00", title:"Child's Pose → Hüftbeuger/Twist → Aufrollen", body:"Kompakter, vollständiger Ausklang."},
+      ]},
+  }},
+
+unleashed: { label:"Unleashed", theme:"Kraft. Kontrolle. Keine angezogene Handbremse.", color:"#a13a2f",
+  durations: {
+    "60": {
+      memory:["IGNITE","LOAD","POWER FLOW","HOLD GROUND","ANIMAL FLOW","UNLEASHED FLOW","COME DOWN"],
+      phases:[
+        {name:"IGNITE", range:"0–6", start:0, blocks:[
+          P("0:00","Schütteln & Federn → Squat Waves · ×8","Lockeres Ausschütteln von Armen und Beinen im Stand, dann acht federnde Squat Waves — kein langes Ankommen im Sitz, direkt in Bewegung.<div class='cue'>„Schüttelt raus, was vom Tag noch drin ist.“<br>„Und jetzt federn — Squat Waves, Musik darf Druck machen.“</div>"),
+          P("2:00","Standing Side Reach → Roll Down → Walkout → Inverted V (Down Dog)","Seitliche Dehnung im Stand, dann Roll Down, Walkout in die Plank, weiter in die Inverted V (klassisch: Down Dog).<div class='cue'>„Seitlich strecken — und runter, Wirbel für Wirbel.“<br>„Hände laufen nach vorne, hoch in die Inverted V.“</div>"),
+          P("4:00","Walking Dog → Deep Lunge mit Rotation","Aus der Inverted V abwechselnd Fersen senken, dann ein Bein nach vorne in den Deep Lunge (klassisch: Low Lunge) mit sanfter Rotation zur Decke. Dynamischer Seitenwechsel.<div class='cue'>„Fersen abwechselnd senken — Walking Dog.“<br>„Ein Bein nach vorne, Deep Lunge, und die Rotation öffnet sich zur Decke.“</div>"),
+        ]},
+        {name:"LOAD THE BODY", range:"6–12", start:360, blocks:[
+          P("6:00","Beast Hover · 3×10 Sek.","Vierfüßler, Knie heben 2–3 cm vom Boden, kurz halten, absetzen. Dreimal wiederholen.<div class='cue'>„Knie schweben — der Rumpf trägt.“</div>"),
+          P("7:00","Beast → Inverted V (Down Dog) · ×6","Aus dem Beast-Hover in die Inverted V wechseln und zurück, sechs Wiederholungen.<div class='cue'>„Beast — und rauf in die Inverted V. Sechsmal.“</div>"),
+          P("8:00","Cossack Shifts · ×6/Seite","Breiter Stand, Gewicht abwechselnd tief auf ein Bein verlagern, anderes Bein lang, Becken bleibt tief.<div class='cue'>„Tief auf ein Bein, das andere lang — und wechseln.“</div>"),
+          P("9:30","Strong Line (Plank) Scapular Push-ups · ×8","Plank-Position, Schulterblätter sinken zueinander und drücken sich auseinander, Arme bleiben lang.<div class='cue'>„Nur die Schulterblätter bewegen sich — die Strong Line bleibt lang.“</div>"),
+          P("10:30","Deep Lunge (Low Lunge) → Hamstring Fold · ×6/Seite","Aus dem Deep Lunge das vordere Bein strecken in eine Hamstring-Fold-Position, dann zurück in den Lunge.<div class='cue'>„Bein strecken, Falte suchen — und zurück in den Lunge.“</div>"),
+        ]},
+        {name:"POWER FLOW", range:"12–26", start:720, blocks:[
+          P("12:00","Runde 1 — Learn","Zehn Stationen langsam aufbauen, pro Seite: Power Squat (Chair) → Fold (Forward Fold) → Strong Line (Plank) → Push-up → Inverted V (Down Dog) → Deep Lunge (Low Lunge) → Open Lunge (Warrior II) → Reverse Reach (Reverse Warrior) → Airplane (Warrior III) → Knee Drive in den Stand. Danach andere Seite.<div class='cue'>„Zehn Stationen, eine nach der anderen — wir lernen die Linie.“<br>„Power Squat, Fold, Strong Line, Push-up, Inverted V, Deep Lunge, Open Lunge, Reverse Reach, Airplane, Knee Drive.“</div>"),
+          P("17:00","Runde 2 — Flow","Gleiche zehn Stationen, beide Seiten jetzt mit dem Atem verbunden, Übergänge fließend.<div class='cue'>„Gleicher Weg, jetzt verbunden — ein Atemzug pro Übergang.“</div>"),
+          P("21:30","Runde 3 — Unleashed","Gleiche Linie, mit optionalen Zusätzen: Knee to Elbow, Three-Legged Dog oder ein kleiner Sprung in die Strong Line — alles zusätzliche Optionen, nicht Pflicht der Grundchoreografie.<div class='cue'>„Wer mag: Knee to Elbow, Three-Legged Dog oder ein Sprung in die Strong Line. Wer nicht mag: gleicher Weg wie eben.“</div>"),
+        ]},
+        {name:"HOLD THE GROUND", range:"26–35", start:1560, blocks:[
+          P("26:00","Power Squat Hold (Chair) · 45 Sek.","Tiefer Squat-Halt, Arme lang nach vorne oder oben, Gewicht in den Fersen.<div class='cue'>„Still heißt nicht Pause. Still heißt: jetzt gibt es keine Ablenkung mehr.“</div>"),
+          P("27:45","Airplane rechts (Warrior III) · 30–40 Sek.","Standbein leicht gebeugt, Oberkörper und freies Bein bilden eine Linie parallel zum Boden. Blick auf einen festen Punkt, bei Bedarf Hand an Wand oder Block.<div class='cue'>„Blick auf einen festen Punkt. Wackelt es: Hand an Wand oder Block.“</div>"),
+          P("28:45","Airplane links (Warrior III) · 30–40 Sek.","Seitenwechsel, gleiche Form.<div class='cue'>„Gleiche Regel: bei Schwindel beide Füße abstellen und rauskommen.“</div>"),
+          P("30:00","Horse Hold (Goddess) · 45 Sek.","Breiter Stand, Zehen nach außen, Oberschenkel parallel zum Boden, Arme in Kaktus-Position.<div class='cue'>„Breit, tief, Brustkorb hoch.“</div>"),
+          P("31:15","Forearm Plank (Strong Line) · 45–60 Sek.","Unterarme am Boden, Körper eine gerade Linie von Kopf bis Ferse.<div class='cue'>„Letzter Hold — eine Linie, bis zum Ende.“</div>"),
+        ]},
+        {name:"ANIMAL FLOW / FOREARM-TRACK", range:"35–47", start:2100, blocks:[
+          P("35:00","Bausteine lernen — Hand-Track oder Forearm-Track","Zwei gleichwertige Wege, je nach Handgelenken. <span class='tag ground'>HAND-TRACK</span> Loaded Beast → Wave Unload → Beast Shoulder Tap → Kick Through → Crab Reach — jeden Baustein einzeln aufbauen. <span class='tag flight'>FOREARM-TRACK</span> Forearm Hover → Sphinx Wave → Forearm Side Plank rechts/links → Child's Pose — ebenfalls einzeln aufbauen. Beide Wege sind vollständig, keiner ist die \"leichtere\" Version.<div class='cue'>„Zwei Wege, beide vollständig — sucht euch den, der zu euren Handgelenken passt.“</div>"),
+          P("41:00","Flow verbinden — drei Runden","Hand-Track: Loaded Beast → Wave Unload → Beast → Kick Through rechts → Beast → Kick Through links → Crab Reach → zurück in Loaded Beast. Forearm-Track: Forearm Hover → Sphinx Wave → Forearm Side Plank rechts → Mitte → Forearm Side Plank links → Child's Pose. Drei Runden: klein und kontrolliert, fließend, mit Tempo oder längeren Holds.<div class='cue'>„Runde eins klein. Runde zwei fließend. Runde drei — Tempo oder Länge, eure Wahl.“</div>"),
+        ]},
+        {name:"UNLEASHED FLOW", range:"47–55", start:2820, blocks:[
+          P("47:00","Unleashed Flow — nur Bekanntes verdichtet","Power Squat → Strong Line → Inverted V → Airplane → Beast oder Forearm-Element, im eigenen Tempo verbunden. Kein neuer Skill, nur die Bausteine der Stunde in einem letzten großen Fluss.<div class='cue'>„Alles, was ihr heute schon gemacht habt — jetzt in einem Fluss.“<br>„Kein neuer Skill mehr. Nur ihr und das, was ihr schon könnt.“</div>"),
+        ]},
+        {name:"COME DOWN", range:"55–60", start:3300, blocks:[
+          P("55:00","Tiefer Squat → Pigeon/Figure Four → Child's Pose → Ruhe","Tiefer Squat oder sitzende Hüftöffnung, dann Pigeon oder Figure Four rechts und links, Child's Pose, Rückenlage mit Knien zur Brust, zum Schluss 30 Sekunden vollständige Ruhe.<div class='cue'>„Runter, tief, langsam. Die Kraft darf jetzt losgelassen werden.“</div>"),
+        ]},
+      ],
+      cards:[
+        {label:"IGNITE", phase:"IGNITE", time:"0:00", title:"Schütteln → Squat Waves → Walkout → Walking Dog → Deep Lunge", body:"Musik direkt mit Druck. Kein langes Ankommen im Sitz."},
+        {label:"LOAD", phase:"LOAD THE BODY", time:"6:00", title:"Beast Hover → Cossack Shifts → Strong Line → Deep Lunge Fold", body:"Handgelenke, Hüften, Beine, Schultergürtel und Core vorbereitet."},
+        {label:"POWER FLOW", phase:"POWER FLOW", time:"12:00", title:"Power Squat → Fold → Strong Line → Inverted V → Deep Lunge → Open Lunge → Reverse Reach → Airplane → Knee Drive", body:"Zehn Stationen, drei Runden: Learn → Flow → Unleashed (Extras optional)."},
+        {label:"HOLD GROUND", phase:"HOLD THE GROUND", time:"26:00", title:"Power Squat Hold → Airplane → Horse Hold → Forearm Plank", body:"Fünf Holds. Blick fix, Hand an Wand bei Bedarf, bei Schwindel abstellen."},
+        {label:"ANIMAL FLOW", phase:"ANIMAL FLOW / FOREARM-TRACK", time:"35:00", title:"Hand-Track oder Forearm-Track", body:"Zwei gleichwertige Wege — Loaded Beast/Kick Through/Crab Reach ODER Forearm Hover/Sphinx Wave/Forearm Side Plank."},
+        {label:"UNLEASHED FLOW", phase:"UNLEASHED FLOW", time:"47:00", title:"Power Squat → Strong Line → Inverted V → Airplane → Beast/Forearm", body:"Nur bekannte Bausteine, kein neuer Skill im Finale."},
+        {label:"COME DOWN", phase:"COME DOWN", time:"55:00", title:"Squat → Pigeon/Figure Four → Child's Pose → Ruhe", body:"30 Sekunden vollständige Ruhe zum Schluss."},
+      ]},
+    "45": {
+      memory:["IGNITE","LOAD","POWER FLOW","HOLD GROUND","ANIMAL FLOW","COME DOWN"],
+      phases:[
+        {name:"IGNITE", range:"0–5", start:0, blocks:[
+          P("0:00","Schütteln → Squat Waves → Roll Down/Walkout → Walking Dog & Deep Lunge","Kompakte Ignite-Kette: Schütteln, sechs Squat Waves, Roll Down/Walkout in die Inverted V, Walking Dog, ein Deep Lunge mit Rotation je Seite.<div class='cue'>„Gleicher Zündfunke, kompakter getaktet.“</div>"),
+        ]},
+        {name:"LOAD THE BODY", range:"5–10", start:300, blocks:[
+          P("5:00","Beast Hover → Cossack Shifts → Strong Line Scapular Push-ups","Reduzierte Wiederholungen, gleiche Reihenfolge wie in der 60-Minuten-Fassung.<div class='cue'>„Gleicher Aufbau, kürzer dosiert.“</div>"),
+        ]},
+        {name:"POWER FLOW", range:"10–22", start:600, blocks:[
+          P("10:00","Runde 1 — Learn","Zehn Stationen aufbauen, pro Seite: Power Squat → Fold → Strong Line → Push-up → Inverted V → Deep Lunge → Open Lunge → Reverse Reach → Airplane → Knee Drive.<div class='cue'>„Eine Station nach der anderen.“</div>"),
+          P("16:00","Runde 2 — Eine intensive Runde","Gleiche zehn Stationen, mit Atem verbunden und den Unleashed-Optionen (Knee to Elbow, Three-Legged Dog, kleiner Sprung) für alle, die mögen.<div class='cue'>„Jetzt verbunden — und wer mag, nimmt die Extras dazu.“</div>"),
+        ]},
+        {name:"HOLD THE GROUND", range:"22–30", start:1320, blocks:[
+          P("22:00","Power Squat Hold → Airplane rechts/links → Horse Hold → Forearm Plank","Alle fünf Signature Holds bleiben erhalten, gleiche Zielzeiten wie in der 60-Minuten-Fassung.<div class='cue'>„Still heißt nicht Pause. Jetzt gibt es keine Ablenkung mehr.“<br>„Blick fix, Hand an Wand bei Bedarf, bei Schwindel abstellen.“</div>"),
+        ]},
+        {name:"ANIMAL FLOW / FOREARM-TRACK", range:"30–40", start:1800, blocks:[
+          P("30:00","Bausteine lernen — Hand-Track oder Forearm-Track","Gleiche zwei gleichwertige Wege wie in der 60-Minuten-Fassung. <span class='tag ground'>HAND-TRACK</span> Loaded Beast → Wave Unload → Kick Through → Crab Reach. <span class='tag flight'>FOREARM-TRACK</span> Forearm Hover → Sphinx Wave → Forearm Side Plank rechts/links.<div class='cue'>„Zwei Wege, beide vollständig.“</div>"),
+          P("34:00","Flow verbinden — zwei Runden","Gleiche Flow-Ketten wie in der 60-Minuten-Fassung, hier zwei statt drei Runden: klein und kontrolliert, dann fließend.<div class='cue'>„Runde eins klein, Runde zwei fließend.“</div>"),
+        ]},
+        {name:"COME DOWN", range:"40–45", start:2400, blocks:[
+          P("40:00","Tiefer Squat → Pigeon/Figure Four → Child's Pose → Ruhe","Gleicher Ausklang wie in der 60-Minuten-Fassung, kompakter getaktet — der zusätzliche Unleashed Flow entfällt hier, die Kraft bleibt trotzdem durch Flow, Holds und Animal Movement vollständig erhalten.<div class='cue'>„Runter, tief, langsam.“</div>"),
+        ]},
+      ],
+      cards:[
+        {label:"IGNITE", phase:"IGNITE", time:"0:00", title:"Schütteln → Squat Waves → Walkout → Walking Dog", body:"Kompakte Zündkette."},
+        {label:"LOAD", phase:"LOAD THE BODY", time:"5:00", title:"Beast Hover → Cossack Shifts → Strong Line", body:"Reduzierte Vorbereitung."},
+        {label:"POWER FLOW", phase:"POWER FLOW", time:"10:00", title:"Zehn Stationen — Learn + eine intensive Runde", body:"Zwei statt drei Runden, Unleashed-Extras optional in Runde 2."},
+        {label:"HOLD GROUND", phase:"HOLD THE GROUND", time:"22:00", title:"Power Squat Hold → Airplane → Horse Hold → Forearm Plank", body:"Alle fünf Signature Holds unverändert."},
+        {label:"ANIMAL FLOW", phase:"ANIMAL FLOW / FOREARM-TRACK", time:"30:00", title:"Hand-Track oder Forearm-Track — zwei Runden", body:"Gleiche zwei Wege, kompaktere Dosierung."},
+        {label:"COME DOWN", phase:"COME DOWN", time:"40:00", title:"Squat → Pigeon/Figure Four → Child's Pose → Ruhe", body:"Vollständiger Ausklang, kompakter getaktet."},
+      ]},
+  }},
+
 };
 
 const CORE = {
@@ -784,23 +990,40 @@ const GENERATOR_RULES = {
   menspilates: "Diese Class folgt Pilates-Prinzipien für männliche Einsteiger: Powerhouse-Kontrolle, ausgewogene Verteilung auf Schultergürtel/Core/Glutes/Beine, klare Leichter/Schwerer-Optionen pro Übung, kein Workout- oder CrossFit-Charakter. Keine zwei sehr ähnlichen Bewegungsmuster direkt hintereinander (z. B. nicht mehrere Plank-Varianten in Folge). Sprache klar und funktional, keine Esoterik.",
   mensreformer: "Diese Class nutzt den Reformer für Männer — bewusst ohne Short Box, alles an Fußstange, Straps und Carriage. Prinzip: erst lernen, dann belasten, dann brennen. Stellschrauben sind je nach Übung Federwahl, Bewegungsumfang, Ausgangsposition oder zusätzliche Stabilisierung — nie pauschal nur die Feder, und nie als Anfänger/Fortgeschritten benannt. Keine zwei komplexen neuen Gerätepositionen direkt hintereinander ohne kurze Umbau-/Orientierungsphase. Finale (Powerhouse Burn) verdichtet nur bereits bekannte Bewegungen ohne Geräte- oder Federwechsel, führt keinen neuen Skill ein. Bei Standing-Leg-Übungen nur eine Variante pro Stunde (z. B. Skating ODER Side Splits, nie beide) und keine Übung doppelt in leicht abgewandelter Form (z. B. kein zusätzlicher Standing Lunge neben Runner's Lunge). Sprache klar und funktional, keine Fitnessstudio-Klischees, keine unnötigen Anfänger-Einweisungen im Übungstext. Minimiere unnötige Geräteumbauten: bevorzuge innerhalb eines Blocks Übungen mit kompatiblem Setup und Federbereich; ein Gerätewechsel muss einen klaren methodischen Nutzen haben.",
   pilatesrolle: "Diese Class nutzt eine lange Pilates-/Faszienrolle für gemischtes Niveau. Prinzip: Ausatmen unterstützt die Anstrengung, Qualität vor Wiederholungszahl/Haltezeit. Stellschrauben sind Bewegungsumfang, Rollenposition, Hebelarm oder Tempo — nie als Anfänger/Fortgeschritten benannt. Bei rückenlastigen/rollenden Bewegungen (z. B. Rolling Like a Ball) immer eine präventive Kontraindikation nennen (Nacken-/Bandscheibenprobleme, Osteoporose), nicht nur eine reaktive Option. Keine zwei Plank-/Stützpositionen direkt hintereinander ohne Alternative dazwischen — außer im dafür vorgesehenen, bewusst dichten Plank Block. Vor besonders core-intensiven Blöcken, die auf vorbelastete Bauchspannung folgen, einen kurzen Reset-Atemzug einbauen statt direkt in die erste Wiederholung zu gehen.",
+  holdtheline: "Diese Class ist athletisches Mat Pilates mit drei Signature Holds (Hollow Body Hold, Back Hold/Dart, High Plank Hold), die in beiden Zeitfassungen (60 und 45 Minuten) unverändert erhalten bleiben müssen. Zwischen intensiven Halte-Blöcken gehören bewegte Move-&-Reset-Passagen, damit sich die Stunde nicht rein statisch anfühlt. Bei Stützpositionen immer Handgelenksoptionen mitdenken (Fäuste, Blöcke, Knie am Boden). Back Hold ist standardmäßig der Dart Hold (Beine dürfen am Boden bleiben), voller Superman nur als Option, nie als Pflicht. Keine pauschalen medizinischen Kontraindikationen — stattdessen klare Stoppsignale wie „Länge halten, nicht Höhe erzwingen; sobald der untere Rücken übernimmt, Hebel verkürzen.“ Das Finale (The Line-Up) verdichtet ausschließlich bereits bekannte Positionen, führt keinen neuen Skill ein. Optionen nie als Anfänger/Fortgeschritten benennen.",
+  unleashed: "Diese Class ist Power Athletic JOGA aus Flow, Holds und Animal Movement. Im sichtbaren Unterrichtstext werden funktionale JOGA-Begriffe verwendet (Power Squat statt Chair, Fold statt Forward Fold, Strong Line statt Plank, Inverted V statt Down Dog, Deep Lunge statt Low Lunge, Open Lunge statt Warrior II, Reverse Reach statt Reverse Warrior, Long Side Line statt Side Angle, Airplane statt Warrior III, Knee Drive bleibt Knee Drive) — der klassische Name darf in Klammern als Teacher-Hinweis stehen, nie als Hauptbegriff. Kein „Power Yoga“ in der Beschreibung. Choreografien bleiben kompakt (max. rund zehn Stationen pro Durchgang), damit Runde 1 wirklich lernbar bleibt. Im Animal-Flow-Block immer zwei gleichwertige Tracks anbieten (Hand-Track und Forearm-Track) statt nur „kleiner machen“. Keine pauschalen medizinischen Kontraindikationen — stattdessen klare Stoppsignale wie „Blick auf einen festen Punkt, Hand an Wand oder Block, bei Schwindel beide Füße abstellen.“ Das Finale (Unleashed Flow) verdichtet ausschließlich bereits bekannte Bausteine, führt keinen neuen Skill ein. Optionen nie als Anfänger/Fortgeschritten benennen.",
 };
 function generatorRulesFor(journeyKey){
   if(journeyKey==="menspilates") return GENERATOR_RULES.menspilates;
   if(journeyKey==="mensreformer") return GENERATOR_RULES.mensreformer;
   if(journeyKey==="pilatesrolle") return GENERATOR_RULES.pilatesrolle;
+  if(journeyKey==="holdtheline") return GENERATOR_RULES.holdtheline;
+  if(journeyKey==="unleashed") return GENERATOR_RULES.unleashed;
   return GENERATOR_RULES.jin;
 }
 
 function loadVariantStore(){ return loadWB("jin-variants", {}); }
 function saveVariantStore(store){ saveWB("jin-variants", store); }
+function hasDurations(journeyKey){ return !!(DATA[journeyKey] && DATA[journeyKey].durations); }
+function currentDuration(journeyKey){ return hasDurations(journeyKey) ? (state.duration||"60") : null; }
+function variantStoreKey(journeyKey){
+  return hasDurations(journeyKey) ? (journeyKey+"_"+currentDuration(journeyKey)) : journeyKey;
+}
+function getBasePhases(journeyKey){
+  const j = DATA[journeyKey];
+  if(!j) return null;
+  if(j.durations) return j.durations[currentDuration(journeyKey)].phases;
+  return j.phases;
+}
 function getVariantEntry(journeyKey){
   const store = loadVariantStore();
-  return store[journeyKey] || { activeId:null, draftPhases:null, list:[] };
+  const key = variantStoreKey(journeyKey);
+  return store[key] || { activeId:null, draftPhases:null, list:[] };
 }
 function setVariantEntry(journeyKey, entry){
   const store = loadVariantStore();
-  store[journeyKey] = entry;
+  const key = variantStoreKey(journeyKey);
+  store[key] = entry;
   saveVariantStore(store);
 }
 function getActivePhases(journeyKey){
@@ -814,15 +1037,16 @@ function getActivePhases(journeyKey){
 }
 function getDisplayJourney(journeyKey){
   const base = DATA[journeyKey];
-  if(!base || !base.phases) return base;
+  if(!base) return base;
+  const durSet = base.durations ? base.durations[currentDuration(journeyKey)] : base;
+  if(!durSet || !durSet.phases) return base;
   const activePhases = getActivePhases(journeyKey);
-  if(!activePhases) return base;
-  return Object.assign({}, base, { phases: activePhases });
+  return Object.assign({}, base, durSet, { phases: activePhases || durSet.phases });
 }
 function ensureDraft(journeyKey){
   const entry = getVariantEntry(journeyKey);
   if(entry.activeId==="draft" && entry.draftPhases) return entry;
-  const base = getActivePhases(journeyKey) || DATA[journeyKey].phases;
+  const base = getActivePhases(journeyKey) || getBasePhases(journeyKey);
   entry.draftPhases = JSON.parse(JSON.stringify(base));
   entry.activeId = "draft";
   setVariantEntry(journeyKey, entry);
@@ -882,7 +1106,7 @@ function suggestionToCompiledBlock(sug, time){
 }
 
 // ---------- state ----------
-let state = { journey:"menspilates", mode:"study", flashIndex:0, flashFlipped:false,
+let state = { journey:"menspilates", mode:"study", flashIndex:0, flashFlipped:false, duration:"60",
   timer:{running:false, elapsed:0, interval:null, startedAt:null} };
 
 // theme (dark/light), matches JOGA Strength toggle pattern
@@ -976,6 +1200,17 @@ function render(){
   label.textContent = j.label;
   themeText.textContent = "„" + j.theme + "“";
   memline.innerHTML = j.memory.map(m=>`<span class="memchip">${m}</span>`).join("");
+
+  const durToggle = document.getElementById("durToggle");
+  if(hasDurations(state.journey)){
+    durToggle.style.display = "flex";
+    durToggle.querySelectorAll(".durbtn").forEach(b=>{
+      b.classList.toggle("active", b.dataset.dur===state.duration);
+      b.onclick = ()=>{ state.duration = b.dataset.dur; state.timer.running=false; clearInterval(state.timer.interval); state.timer.elapsed=0; render(); };
+    });
+  } else {
+    durToggle.style.display = "none";
+  }
   main.innerHTML="";
 
   const prepBtn = document.getElementById("prepModeBtn");
@@ -1196,6 +1431,41 @@ const PLAYLISTS = {
       {artist:"Max Richter", title:"Dream 1 (before the wind blows it all away)"},
     ]},
   ]},
+  holdtheline: { type:"tracks", groups:[
+    { phase:"PRIME & FRONT LINE", tracks:[
+      {artist:"Royal Blood", title:"Figure It Out"},
+      {artist:"Muse", title:"Uprising"},
+    ]},
+    { phase:"BACK LINE & PLANK LINE", tracks:[
+      {artist:"Foo Fighters", title:"The Pretender"},
+      {artist:"The Black Keys", title:"Lonely Boy"},
+    ]},
+    { phase:"POWER FLOW & LINE-UP", tracks:[
+      {artist:"Imagine Dragons", title:"Believer"},
+      {artist:"The White Stripes", title:"Seven Nation Army"},
+    ]},
+    { phase:"RELEASE", tracks:[
+      {artist:"Ben Howard", title:"Depth Over Distance"},
+    ]},
+  ]},
+  unleashed: { type:"tracks", groups:[
+    { phase:"IGNITE & LOAD", tracks:[
+      {artist:"Kaleo", title:"Way Down We Go"},
+      {artist:"Muse", title:"Starlight"},
+    ]},
+    { phase:"POWER FLOW", tracks:[
+      {artist:"Royal Blood", title:"Figure It Out"},
+      {artist:"Wolfmother", title:"Joker & the Thief"},
+      {artist:"Nothing But Thieves", title:"Amsterdam"},
+    ]},
+    { phase:"HOLD THE GROUND & ANIMAL FLOW", tracks:[
+      {artist:"Foo Fighters", title:"The Pretender"},
+      {artist:"The Black Keys", title:"Little Black Submarines"},
+    ]},
+    { phase:"COME DOWN", tracks:[
+      {artist:"Ben Howard", title:"Depth Over Distance"},
+    ]},
+  ]},
 };
 function amLink(artist, title){
   return `https://music.apple.com/de/search?term=${encodeURIComponent(artist + " " + title)}`;
@@ -1398,7 +1668,7 @@ function renderGeneratorBar(main, journeyKey){
   bar.querySelector("#genRemix").addEventListener("click", async ()=>{
     const btn = bar.querySelector("#genRemix");
     btn.disabled = true;
-    const base = getActivePhases(journeyKey) || DATA[journeyKey].phases;
+    const base = getActivePhases(journeyKey) || getBasePhases(journeyKey);
     const newPhases = JSON.parse(JSON.stringify(base));
     let total = 0; newPhases.forEach(ph=> total += ph.blocks.length);
     let done = 0;
@@ -1535,7 +1805,7 @@ function ttsMaybeAutoSpeak(block){
 
 function renderPractice(main, j){
   const flat = allBlocksFlat(j);
-  const total = 3600;
+  const total = (hasDurations(state.journey) ? parseInt(state.duration,10) : 60) * 60;
   const elapsed = state.timer.elapsed;
   let currentIdx = 0;
   for(let i=0;i<flat.length;i++){ if(flat[i].start<=elapsed) currentIdx=i; }
