@@ -982,6 +982,15 @@ holdtheline: { label:"Hold the Line", theme:"Kontrolle beginnt dort, wo Bewegung
 
 };
 
+const CATEGORY_JOURNEYS = {
+  joga: ["morning","evening","energy","qigongyin","yin","unleashed"],
+  pilates: ["menspilates","mensreformer","pilatesrolle","holdtheline"],
+};
+function journeyCategory(journeyKey){
+  if(CATEGORY_JOURNEYS.pilates.includes(journeyKey)) return "pilates";
+  return "joga"; // JIN-Journeys, custom Builder-Journeys und Fallback
+}
+
 const CORE = {
   essence:[
     "Bewegung führt in die Ruhe.",
@@ -3030,14 +3039,6 @@ function renderBlockCard(pIdx, bIdx, bl){
   return card;
 }
 
-const CATEGORY_JOURNEYS = {
-  joga: ["morning","evening","energy","qigongyin","yin","unleashed"],
-  pilates: ["menspilates","mensreformer","pilatesrolle","holdtheline"],
-};
-function journeyCategory(journeyKey){
-  if(CATEGORY_JOURNEYS.pilates.includes(journeyKey)) return "pilates";
-  return "joga"; // JIN-Journeys, custom Builder-Journeys und Fallback
-}
 function buildJourneyTabs(){
   journeytabsEl.innerHTML = "";
   Object.keys(DATA).filter(j=> journeyCategory(j)===state.category).forEach(j=>{
