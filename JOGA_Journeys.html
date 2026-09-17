@@ -303,6 +303,10 @@
     <button data-dur="60" class="durbtn">60 Min</button>
     <button data-dur="45" class="durbtn">45 Min</button>
   </div>
+  <div class="durtoggle" id="langToggle" style="display:none;">
+    <button data-lang="joga" class="durbtn">JOGA-Sprache</button>
+    <button data-lang="yoga" class="durbtn">Yoga-Sprache</button>
+  </div>
   <div class="memline" id="memline"></div>
 </div>
 
@@ -323,6 +327,8 @@
   <button data-j="qigongyin" data-cat="joga">QIJIN</button>
   <button data-j="yin" data-cat="joga">Yin</button>
   <button data-j="unleashed" data-cat="joga">Unleashed</button>
+  <button data-j="airborne" data-cat="joga">Airborne</button>
+  <button data-j="underpressure" data-cat="joga">Under Pressure</button>
   <button data-j="core" data-cat="joga">Core 1.0</button>
   <button data-j="study" data-cat="joga">Nacharbeit</button>
   <button data-j="builder" data-cat="joga">Erstellen</button>
@@ -330,6 +336,7 @@
   <button data-j="mensreformer" data-cat="pilates">Reformer</button>
   <button data-j="pilatesrolle" data-cat="pilates">Rolle</button>
   <button data-j="holdtheline" data-cat="pilates">Hold the Line</button>
+  <button data-j="chakrapilates" data-cat="pilates">Chakra Pilates</button>
 </nav>
 
 <script>
@@ -980,11 +987,208 @@ holdtheline: { label:"Hold the Line", theme:"Kontrolle beginnt dort, wo Bewegung
       ]},
   }},
 
+chakrapilates: { label:"Chakra Pilates", theme:"Vom Boden über das Powerhouse in die Aufrichtung.", color:"#6a4a7a",
+  memory:["WURZEL","SAKRAL","SOLARPLEXUS","HERZ","KEHLE","STIRN","KRONE","ABSCHLUSS"],
+  phases:[
+    {name:"WURZEL · ROOT", range:"0–6", start:0, blocks:[
+      P("0:00","Bewusster Fußstand · 1:00","Hüftbreiter Stand, Gewicht gleichmäßig auf Ferse, Großzehenballen und Kleinzehenballen verteilen. Kurz nachspüren, wo der Boden trägt.<div class='cue'>„Spür zuerst, was dich trägt.“<br>„Kraft beginnt nicht im Bauch, sondern am Boden.“</div>"),
+      P("1:00","Calf Raises · ×8","Aus dem bewussten Stand auf die Fußballen heben, kontrolliert wieder absenken. <span class='tag flight'>SCHWERER</span> zusätzliche Balance auf den Fußballen für 2–3 Atemzüge am oberen Punkt."),
+      P("2:30","Squat + Reach · ×8","In die Kniebeuge sinken, beim Hochkommen Arme über den Kopf strecken. <span class='tag ground'>LEICHTER</span> kleinerer Squat, Hände bleiben an den Hüften."),
+      P("4:00","Standing Roll Down · ×3","Wirbel für Wirbel abrollen, unten Kopf und Arme schwer hängen lassen, Wirbel für Wirbel wieder aufrollen. Beim letzten Roll Down die Knie tief beugen, über einen kontrollierten Sitz zur Matte kommen und Wirbel für Wirbel in die Rückenlage abrollen.<div class='cue'>„Der letzte Roll Down bringt euch über den Sitz auf die Matte.“</div>"),
+    ]},
+    {name:"SAKRAL · SACRAL", range:"6–14", start:360, blocks:[
+      P("6:00","Pelvic Clock · 1:30","Rückenlage, Knie aufgestellt. Das Becken wandert gedanklich wie ein Uhrzeiger: vor, seitlich, zurück, seitlich — kleine kontrollierte Kreise in beide Richtungen.<div class='cue'>„Das Becken darf sich bewegen, ohne dass der ganze Körper mitgeht.“</div>"),
+      P("7:30","Imprint & Release · ×6","Becken kippt, unterer Rücken presst in die Matte, dann lösen zur Neutralstellung."),
+      P("9:00","Knee Sways · ×6/Seite","Knie zusammen, sanft von Seite zu Seite sinken lassen, Oberkörper bleibt ruhig."),
+      P("10:30","Pelvic Curl · ×8","Wirbel für Wirbel das Becken heben und wieder ablegen."),
+      P("12:00","Bridge Marching · ×6/Seite","Oben in der Bridge bleiben, abwechselnd einen Fuß lösen und das Knie Richtung Tabletop anheben. <span class='tag ground'>LEICHTER</span> nur Pelvic Curl ohne Marching, oder Marching mit sehr kleinem Ablösen des Fußes. <span class='tag flight'>SCHWERER</span> längerer Bridge Hold vor dem Marching."),
+    ]},
+    {name:"SOLARPLEXUS · POWER", range:"14–24", start:840, blocks:[
+      P("14:00","Toe Taps · ×6/Seite","Tabletop, ein Fuß tippt kontrolliert Richtung Boden, Becken bleibt still."),
+      P("15:30","Dead Bug · ×6/Seite","Gegenüberliegender Arm und Bein strecken sich, unterer Rücken bleibt flach."),
+      P("17:00","Single Leg Stretch · ×8/Seite","Oberkörper oben, ein Knie zur Brust, anderes Bein lang, Wechsel mit dem Ausatmen. <span class='tag ground'>LEICHTER</span> ein Bein im Tabletop statt lang gestreckt, wenn der untere Rücken reagiert."),
+      P("19:00","Hundred Prep · 50 Pumps","Oberkörper oben, Beine im Tabletop oder Fersen am Boden, Arme pumpen klein und kraftvoll. Fest bei 50 Pumps — keine offene Spanne. <span class='tag ground'>LEICHTER</span> beide Beine im Tabletop. <span class='tag flight'>SCHWERER</span> längerer Hebel (Beine diagonal gestreckt) für alle, die stabil bleiben.<div class='cue'>„Die Extremitäten bewegen sich. Die Mitte bleibt ruhig.“</div>"),
+      P("21:30","Half Roll Back / Teaser Prep · ×5","Sitz hinter den Sitzbeinhöckern, Hände hinter den Oberschenkeln. Kontrolliert in die C-Curve zurückrollen, dann aus dem Powerhouse wieder aufrichten. Das ist die Vorbereitung auf den Teaser bei Krone — nicht nur eine Core-Übung für sich. <span class='tag ground'>LEICHTER</span> Füße aufgestellt statt frei in der Luft, wenn die Balance fehlt.<div class='cue'>„Diese Form trefft ihr später bei Krone wieder — dort ist sie dann schon bekannt.“</div>"),
+    ]},
+    {name:"HERZ · HEART", range:"24–32", start:1440, blocks:[
+      P("24:00","Swan Prep · ×6","Bauchlage, Hände unter den Schultern, Oberkörper hebt sich kontrolliert aus der Rückenstreckung, Becken bleibt am Boden."),
+      P("25:30","Breaststroke Arms · ×6","Bauchlage, Beine lang. Hände zunächst unter oder neben der Stirn. Brustbein hebt sich leicht. Die Arme reichen nach vorn, öffnen seitlich und ziehen in einem weiten Bogen zurück Richtung Hüften, dann wieder nach vorn führen und ablegen. <span class='tag ground'>LEICHTER</span> Brustbein bleibt am Boden, nur die Arme bewegen sich, oder Hände bleiben neben den Schultern statt weit vorn."),
+      P("27:00","Swimming Prep · ×6/Seite","Bauchlage, gegenüberliegender Arm und Bein heben sich sanft abwechselnd."),
+      P("28:30","Dart Hold · 30–40 Sek.","Oberkörper hebt sich leicht, Arme lang am Körper, Beine dürfen am Boden bleiben. <span class='tag ground'>LEICHTER</span> Brustbein nur wenig anheben, Beine vollständig am Boden lassen. <span class='tag flight'>SCHWERER</span> Arme nach vorn verlängern oder die Beine leicht schweben lassen; optional kleine Swimming-Bewegungen.<div class='cue'>„Nicht maximal hoch. Maximal lang und offen.“<br>„Länge vor Höhe. Der Nacken bleibt Teil der Wirbelsäule.“</div>"),
+      P("30:00","Child's Pose mit Side Reach · 2:00","Child's Pose, dann beide Hände zu einer Seite wandern lassen für eine seitliche Dehnung, Seite wechseln."),
+    ]},
+    {name:"KEHLE · EXPRESSION", range:"32–39", start:1920, blocks:[
+      P("32:00","Thread the Needle · ×4/Seite","Vierfüßler, ein Arm fädelt unter dem anderen hindurch, Schulter und Schläfe sinken zum Boden."),
+      P("33:45","Ribcage Breathing mit Arm Arcs · ×5","Aufrechter Sitz, Hände neben dem Körper. Beim Einatmen öffnen sich die Arme seitlich und steigen bis etwa auf Schulterhöhe oder über den Kopf. Beim Ausatmen sinken sie über die Seiten zurück, während sich die Rippen schließen und der Oberkörper aufgerichtet bleibt. <span class='tag ground'>LEICHTER</span> Arme nur bis Schulterhöhe führen, oder auf Block/gefalteter Decke sitzen.<div class='cue'>„Der Atem bewegt die Rippen. Die Schultern müssen dabei nichts festhalten.“</div>"),
+      P("35:30","Spine Twist · ×4/Seite","Aufrechter Sitz, Beine lang oder gekreuzt, Oberkörper rotiert kontrolliert zur Seite, Becken bleibt fest verankert. <span class='tag ground'>LEICHTER</span> Rotation verkleinern, wenn die Sitzbeinhöcker den Boden verlassen."),
+      P("37:15","Mermaid rechts & links","Seitlich sitzen, ein Arm reicht über den Kopf zur Seitendehnung, mit langem, hörbarem Ausatmen. <span class='tag ground'>LEICHTER</span> mit unterlegtem Knie."),
+    ]},
+    {name:"STIRN · FOCUS", range:"39–47", start:2340, blocks:[
+      P("39:00","Bird Dog · ×6/Seite","Vierfüßler, gegenüberliegender Arm und Bein strecken sich gleichzeitig, Becken bleibt gerade."),
+      P("40:30","Bird Dog Knee to Elbow · ×4/Seite","Aus dem Bird Dog Knie und Ellbogen unter dem Körper zusammenführen, dann wieder lang strecken."),
+      P("42:00","Knee Hover → Übergang in den Stand · 2:00","Knie 2–3 cm über dem Boden halten, 30 Sekunden. Danach: Knie absetzen, Zehen aufstellen, Becken nach hinten oben heben, Hände laufen Richtung Füße, Knie bleiben weich, Wirbel für Wirbel zum Stand aufrollen. Einen Atemzug im stabilen Stand nehmen, bevor die Balance beginnt. <span class='tag ground'>LEICHTER</span> Knee Hover auslassen und direkt zum Übergang.<div class='cue'>„Erst ankommen. Dann balancieren.“</div>"),
+      P("44:00","Single-Leg Balance · 1:30","Ein Bein trägt, das andere hebt sich leicht, Blick fixiert einen Punkt, Arme kreisen langsam."),
+      P("45:30","Airplane Balance · ×4/Seite","Standbein leicht gebeugt, Oberkörper und freies Bein neigen sich in eine lange Linie. Nach dem letzten Airplane beide Füße abstellen, nach vorn falten, die Knie beugen, kontrolliert zum Sitz kommen und in die Rückenlage abrollen. <span class='tag ground'>LEICHTER</span> Zehenspitze bleibt am Boden, Hand an Wand oder Block, oder Airplane nur kurz antippen statt halten.<div class='cue'>„Der Blick wird ruhig. Der Körper darf trotzdem arbeiten.“<br>„Nach dem letzten Airplane: falten, beugen, absitzen, abrollen.“</div>"),
+    ]},
+    {name:"KRONE · INTEGRATION", range:"47–55", start:2820, blocks:[
+      P("47:00","Roll Up · ×4","Rückenlage, Arme über dem Kopf, Wirbel für Wirbel zum Sitzen aufrollen, dann Wirbel für Wirbel zurück."),
+      P("48:30","Spine Stretch Forward · ×4","Aufrechter Sitz, Beine mattenbreit, Oberkörper rundet sich nach vorne, dann Wirbel für Wirbel zurück."),
+      P("50:00","Open Leg Balance · 1:30","Hinter den Sitzbeinhöckern balancieren, Hände greifen hinter die Oberschenkel oder an die Schienbeine. Knie bleiben zunächst gebeugt, Brustbein hebt sich, Rücken bleibt lang. Optional ein oder beide Beine in eine offene V-Position strecken. <span class='tag ground'>LEICHTER</span> Hände hinter den Oberschenkeln, nur ein Bein strecken, oder beide Knie gebeugt lassen."),
+      P("51:30","Teaser Prep → Teaser · ×4, dann optional voller Teaser","Gleiche Grundform wie das Half Roll Back aus dem Solarplexus-Block — hier keine neue Übung mehr. Aus der C-Curve heben sich Oberkörper und Beine gemeinsam in die Teaser-V-Form, dann kontrolliert zurück. <span class='tag ground'>LEICHTER</span> beide Knie gebeugt lassen statt voller Teaser mit langen Beinen.<div class='cue'>„Nicht in die Form springen. Die Form aus der Mitte aufbauen.“</div>"),
+      P("53:30","C-Curve Hold · 20–30 Sek.","Bei der letzten Wiederholung des Teaser Prep in der zurückgerollten C-Curve stoppen — kurz vor dem persönlichen Balancepunkt — und dort halten, Powerhouse trägt."),
+    ]},
+    {name:"ABSCHLUSS", range:"55–60", start:3300, blocks:[
+      P("55:00","Supine Twist → Knie zur Brust → Ganzkörperstreckung → Ruhe","Supine Twist rechts und links, dann beide Knie zur Brust, dann eine bewusste Ganzkörperstreckung (Arme und Beine lang in entgegengesetzte Richtungen), zwei bis drei Minuten vollständige Ruhe, zum Schluss über die Seite zum Sitzen kommen.<div class='cue'>„Sieben Qualitäten. Ein zusammenhängender Körper.“</div>"),
+    ]},
+  ],
+  cards:[
+    {label:"WURZEL", phase:"WURZEL · ROOT", time:"0:00", title:"Fußstand → Calf Raises → Squat+Reach → Roll Down", body:"Erdung, bevor irgendetwas anderes beginnt. Letzter Roll Down führt kontrolliert zur Rückenlage."},
+    {label:"SAKRAL", phase:"SAKRAL · SACRAL", time:"6:00", title:"Pelvic Clock → Imprint & Release → Knee Sways → Bridge Marching", body:"Beweglichkeit im Becken, bevor die Mitte zu arbeiten beginnt."},
+    {label:"SOLARPLEXUS", phase:"SOLARPLEXUS · POWER", time:"14:00", title:"Toe Taps → Dead Bug → Single Leg Stretch → Hundred → Half Roll Back", body:"Erster Kraft-Peak. Half Roll Back bereitet den Teaser bei Krone bereits vor."},
+    {label:"HERZ", phase:"HERZ · HEART", time:"24:00", title:"Swan Prep → Breaststroke Arms → Swimming Prep → Dart Hold", body:"Gegenbewegung zur vielen Rumpfbeugung davor."},
+    {label:"KEHLE", phase:"KEHLE · EXPRESSION", time:"32:00", title:"Thread the Needle → Arm Arcs → Spine Twist → Mermaid", body:"Atem darf hier bewusst hörbar werden."},
+    {label:"STIRN", phase:"STIRN · FOCUS", time:"39:00", title:"Bird Dog → Knee Hover → Übergang → Balance → Airplane", body:"Boden-Stand-Übergang bewusst geführt, dann stehende Balance."},
+    {label:"KRONE", phase:"KRONE · INTEGRATION", time:"47:00", title:"Roll Up → Open Leg Balance → Teaser Prep → C-Curve Hold", body:"Integrations-Peak. Teaser ist kein neuer Skill mehr — Basis kommt aus Solarplexus."},
+    {label:"ABSCHLUSS", phase:"ABSCHLUSS", time:"55:00", title:"Supine Twist → Knie zur Brust → Streckung → Ruhe", body:"Sieben Qualitäten, ein zusammenhängender Körper."},
+  ]},
+
+airborne: { label:"Airborne", theme:"Grasshopper, Handstand-Spielraum und Schlussinversion — für bewegungserfahrene Teilnehmende.", color:"#3a7a6a",
+  memory:["SONNENGRUSS A","ATHLETIC 1","SONNENGRUSS B","STRENGTH FLOW","BALANCE & GRASSHOPPER","ARC","INVERSION","SAVASANA"],
+  phases:[
+    {name:"SONNENGRUSS A", range:"0–4", start:0, blocks:[
+      P("0:00","Sonnengruß A · 3–4 Runden","Arme heben → Fold → halbe Fold → Strong Line → Power Squat → Fold → Hände absetzen → zurückspringen oder zurücksteigen in die Strong Line → Low Line → Low Open Line oder Full Open Line → Inverted V → nach vorn → aufrichten. Für sehr Geübte darf der direkte Sprung in die Low Line als Option bleiben. Erste Runde kontrolliert, danach zunehmend fließend.<div class='cue'>„Die erste Runde macht den Weg frei. Danach kommt Tempo hinein.“</div>"),
+    ]},
+    {name:"ATHLETIC BLOCK 1", range:"4–8", start:240, blocks:[
+      P("4:00","Forearm Plank Side to Side · ×20","Unterarmplank. Das Becken schwingt über die Mitte nach rechts, zurück über die Mitte und nach links. Schultern bleiben über den Ellenbogen, Bewegung kommt aus Taille und Rumpf. 20 Seitenwechsel insgesamt."),
+      P("6:00","Diagonal Plank Crunch · ×10/Seite","Hohe Plank: rechter Arm nach vorn, linkes Bein nach hinten, dann Ellenbogen und Knie unter dem Körper zusammenführen, erneut lang werden. Zehn Wiederholungen, dann Seite wechseln.<div class='cue'>„Erst maximale Länge. Dann Ellenbogen und Knie aus der Mitte zusammenziehen.“</div>"),
+    ]},
+    {name:"SONNENGRUSS B", range:"8–14", start:480, blocks:[
+      P("8:00","Sonnengruß B mit Rising Lunge · 2×","Power Squat → Fold → Strong Line → Low Line → Full Open Line → Inverted V → Rising Lunge rechts → Flow Link → Rising Lunge links → Flow Link."),
+      P("11:00","Power Squat Twist-Kette","Einmal: Power Squat → Twist rechts → Mitte → Twist links → Fold."),
+      P("12:00","Athletic Block 2 — Verdichtung","Forearm Plank Side to Side ×10, Diagonal Plank Crunch ×10/Seite. Keine zweite vollständige Runde — der Block verdichtet nur das bekannte Motiv aus Athletic Block 1."),
+    ]},
+    {name:"FERSENSITZ", range:"14–15", start:840, blocks:[
+      P("14:00","Fersensitz — Übergang","Sitz auf den Fersen, Hände auf die Oberschenkel, Schultern lösen, zwei bis drei Atemzüge, Handgelenke ausschütteln.<div class='cue'>„Nicht komplett herunterfahren. Nur neu sortieren.“</div>"),
+    ]},
+    {name:"STRENGTH FLOW", range:"15–22", start:900, blocks:[
+      P("15:00","Runde 1 — Learn","Rechts und links: Power Squat → Fold → Strong Line → Low Line → Full Open Line → Inverted V → Rising Lunge → Open Lunge → Reverse Reach → Long Triangle → Side Squat → zurück in den High Lunge → Hände hinter den Kopf → zehn High-Lunge-Pulses (hinteres Knie senkt sich Richtung Boden und hebt sich wieder bis etwa zur 90-Grad-Position, Beine werden nicht vollständig gestreckt) → Hände zum Boden → Low Line → Inverted V → andere Seite. Positionen klar aufbauen.<div class='cue'>„Bleibt tief. Das hintere Knie sinkt und hebt sich — ohne oben aus der Spannung herauszukommen.“</div>"),
+      P("18:30","Runde 2 — Flow","Gleiche Folge, jetzt weniger erklären, stärker fließen."),
+    ]},
+    {name:"CHILD'S POSE", range:"22–23", start:1320, blocks:[
+      P("22:00","Child's Pose · 3 Atemzüge","Knie absetzen, Gesäß Richtung Fersen, Arme lang, drei ruhige Atemzüge."),
+    ]},
+    {name:"BALANCE & GRASSHOPPER", range:"23–29", start:1380, blocks:[
+      P("23:00","Balance & Grasshopper · 2×/Seite","High Lunge → Gewicht nach vorn verlagern → Airplane → aufrichten in die Einbeinbalance → Außenknöchel auf den gegenüberliegenden Oberschenkel → Figure Four Squat, tief bleiben → Hände vor das Herz → Oberkörper zum Standbein drehen → Hände zum Boden bringen, Fußsohle möglichst hoch am äußeren Oberarm (Trizeps-Bereich) positionieren — nicht der Ellenbogen allein trägt den Fuß — Gewicht nach vorn verlagern, Standbein darf am Boden bleiben → Grasshopper Prep halten oder Hände zum Boden setzen → kontrolliert lösen → zurück in den High Lunge → Flow Link → andere Seite. Die Sequenz zweimal pro Seite. <span class='tag ground'>LEICHTER</span> Figure Four ohne Twist, oder Twist mit Ellenbogen am Knie. <span class='tag flight'>SCHWERER</span> Ellenbogen bis zur Fußsohle, oder vollständiger Grasshopper — nur bei bekannter Praxis.<div class='cue'>„Der Fuß bleibt aktiv. Erst stabil sitzen, dann drehen, dann möglicherweise fliegen.“</div>"),
+    ]},
+    {name:"INTEGRATION", range:"29–37", start:1740, blocks:[
+      P("29:00","Beide Parts verbinden · 2×/Seite","Power Squat → Fold → Low Line → Rising Lunge → Open Lunge → Reverse Reach → Long Triangle → Side Squat → High-Lunge-Pulses → Airplane → Figure Four → Grasshopper Prep → Flow Link. Gesamte Verbindung zweimal pro Seite; erste Runde kontrolliert, zweite Runde fließend."),
+      P("35:00","Low Lunge und Spagat","Je Seite: Low Lunge → Becken zurück in Half Split → optional in den vollständigen Spagat gleiten, nur kurz halten, dynamisch wieder verlassen."),
+    ]},
+    {name:"GESAMTFLOW SCHNELL", range:"37–40", start:2220, blocks:[
+      P("37:00","Gesamtflow schnell","Der vollständige Flow noch einmal rechts und links. Keine neue Erklärung, keine zusätzlichen Optionen.<div class='cue'>„Ihr kennt den Weg. Jetzt bewegt ihr euch.“</div>"),
+    ]},
+    {name:"HALF ARC / FULL ARC", range:"40–43", start:2400, blocks:[
+      P("40:00","Half Arc · 5 Atemzüge → ablegen","5 Atemzüge halten, dann ablegen."),
+      P("41:30","Full Arc 1 → kurz ablegen → Full Arc 2","Zwei Durchgänge. <span class='tag ground'>LEICHTER</span> bei Half Arc bleiben, Block unter das Kreuzbein, oder den zweiten vollen Durchgang auslassen.<div class='cue'>„Wer beim ersten Full Arc stechenden Schmerz, Kribbeln, Taubheitsgefühl oder unangenehmen Druck im Nacken oder unteren Rücken spürt, löst kontrolliert und bleibt beim zweiten Durchgang im Half Arc. Keine zweite Wiederholung nur aus Ehrgeiz.“</div>"),
+        ]},
+    {name:"INVERSION PLAYGROUND", range:"43–47", start:2580, blocks:[
+      P("43:00","Inversion Playground · 4 Min.","Freie, bekannte Inversionspraxis: Handstand, Unterarmstand, Kopfstand. Wand ist ausdrücklich erlaubt. Nach jedem Versuch bewusst herauskommen und neu aufbauen, kein hektisches Dauerkicken.<div class='cue'>„Wählt die Umkehrhaltung, die ihr bereits sicher praktiziert. Heute wird keine neue Inversion gelernt.“<br>„Räumt euch selbst Platz — mindestens eine Beinlänge nach vorne, nach hinten und zur Seite frei, bevor ihr hochkickt.“</div>"),
+    ]},
+    {name:"FINAL STRENGTH", range:"47–57", start:2820, blocks:[
+      P("47:00","Staff Sit","Beine lang, Hände neben dem Becken, Brustbein hebt sich, Füße aktiv, fünf Atemzüge."),
+      P("48:00","Spagat — länger und ruhiger","Spagat beziehungsweise Half Split noch einmal rechts und links, jetzt länger und ruhiger als im Flow."),
+      P("50:00","Push-ups · 3 Runden × 10","Hände auf Blöcken oder am Boden, Körper bleibt eine Linie, Knie dürfen abgelegt werden, kurze Pause zwischen den Runden."),
+      P("53:00","V-Sit / Boat Hold · 30–45 Sek.","Halten, kurz lösen, zehn kleine kontrollierte Pumps oder Knee Extensions."),
+      P("54:00","Schlussinversion","Kopfstand für ungefähr zehn Atemzüge, alternativ Schulterstand. Wer bereits genug Inversionspraxis hatte, bleibt in einer unterstützten Umkehrhaltung oder legt die Beine nach oben. Keine neue Technik mehr erklären."),
+      P("56:00","Supine Twist","Rückenlage, Knie zunächst zur rechten, dann zur linken Seite ablegen."),
+    ]},
+    {name:"SAVASANA", range:"57–60", start:3420, blocks:[
+      P("57:00","Savasana · 3 Min.","Drei Minuten vollständige Ruhe."),
+    ]},
+  ],
+  cards:[
+    {label:"SONNENGRUSS A", phase:"SONNENGRUSS A", time:"0:00", title:"Sonnengruß A · 3–4 Runden", body:"Warmwerden, erste Runde kontrolliert, danach fließend. Sprung in die Low Line erklärt."},
+    {label:"ATHLETIC 1", phase:"ATHLETIC BLOCK 1", time:"4:00", title:"Forearm Plank Side to Side → Diagonal Plank Crunch", body:"Diagonale Core-Arbeit, zwei Runden."},
+    {label:"SONNENGRUSS B", phase:"SONNENGRUSS B", time:"8:00", title:"Sonnengruß B → Twist-Kette → Athletic Block 2", body:"Athletic Block 2 verdichtet nur, keine zweite volle Runde."},
+    {label:"STRENGTH FLOW", phase:"STRENGTH FLOW", time:"15:00", title:"Power Squat → ... → High-Lunge-Pulses → Low Line", body:"Learn → Flow, zwei Runden pro Seite."},
+    {label:"BALANCE & GRASSHOPPER", phase:"BALANCE & GRASSHOPPER", time:"23:00", title:"Airplane → Figure Four → Grasshopper Prep", body:"Zweimal pro Seite. Fußsohle am äußeren Oberarm, nicht am Ellenbogen."},
+    {label:"ARC", phase:"HALF ARC / FULL ARC", time:"40:00", title:"Half Arc → Full Arc 1 → Full Arc 2", body:"Klares Stoppsignal: Schmerz/Kribbeln/Taubheit/Druck — nicht \"Zug\"."},
+    {label:"INVERSION", phase:"INVERSION PLAYGROUND", time:"43:00", title:"Handstand / Unterarmstand / Kopfstand — frei", body:"Nur bekannte Praxis, Raum vorher prüfen, kein neues Lernen."},
+    {label:"SAVASANA", phase:"SAVASANA", time:"57:00", title:"Savasana · 3 Min.", body:"Vollständige Ruhe zum Abschluss."},
+  ]},
+
+underpressure: { label:"Under Pressure", theme:"Konsequenter Forearm-Aufbau bis zum Forearm Stand.", color:"#4a5a7a",
+  memory:["SONNENGRÜSSE","FOREARM IGNITION","TWIST","SHOULDER & LEG","BALANCE","INTEGRATION","PINCHA LAB","SAVASANA"],
+  phases:[
+    {name:"PREPARE THE BASE", range:"0–4", start:0, blocks:[
+      P("0:00","Progressive Sonnengrüße · 3×","Drei Sonnengrüße A: erste Runde ohne Low Line, zweite Runde vollständig, dritte Runde mit langsamer Low Line. In der letzten Runde aus der Inverted V kurz in Dolphin wechseln und wieder zurück."),
+    ]},
+    {name:"FOREARM IGNITION", range:"4–9", start:240, blocks:[
+      P("4:00","Dolphin Push-ups · ×10","Aus Dolphin Schultern vor Richtung Hände bewegen, kontrolliert zurückschieben, Unterarme bleiben parallel."),
+      P("5:30","Forearm Plank Body Saw · ×10","Körper als Linie leicht vor- und zurückbewegen, nicht aus der Hüfte schwingen."),
+      P("7:00","Forearm Knee Drive · ×6/Seite","Aus Unterarmplank Knie Richtung gleichseitigen Oberarm führen, kontrolliert zurück.<div class='cue'>„Unterarme drücken. Schultern tragen. Der Bauch verhindert, dass die Mitte durchhängt.“</div>"),
+    ]},
+    {name:"SONNENGRUSS B UND TWIST", range:"9–13", start:540, blocks:[
+      P("9:00","Sonnengruß B mit Rising Lunge · 2×","Zwei vollständige Runden."),
+      P("12:00","Twist-Kette","Power Squat → Twist rechts → Twist links → Fold → Flow Link."),
+    ]},
+    {name:"FOREARM IGNITION 2", range:"13–16", start:780, blocks:[
+      P("13:00","Dolphin Push-ups → Forearm Plank Side to Side → Dolphin Hold","Dolphin Push-ups ×8, Forearm Plank Side to Side ×10, Dolphin Hold 20–30 Sekunden."),
+      P("15:00","Fersensitz","Handgelenke lösen, Unterarme ausschütteln, zwei bewusste Atemzüge."),
+    ]},
+    {name:"SHOULDER & LEG POWER", range:"16–23", start:960, blocks:[
+      P("16:00","Runde 1 — Learn","Rechts und links: Power Squat → Twist in Power Squat → Fold → Forearm Plank → Dolphin → Three-Legged Dolphin → Fuß nach vorn in den Low Lunge → Rising Lunge → Humble Lunge → Straight Lunge Fold → Side Squat → High Lunge → Arme in Cactus-Position → zehn Lunge Pulses → Hände zum Boden → Forearm Plank → Dolphin → andere Seite.<div class='cue'>„Die Unterarme bleiben eure Basis. Die Beine liefern den Druck.“</div>"),
+      P("19:30","Runde 2 — Flow","Gleiche Folge, jetzt fließender."),
+    ]},
+    {name:"CHILD'S POSE", range:"23–24", start:1380, blocks:[
+      P("23:00","Child's Pose","Arme zunächst lang, dann Hände neben den Körper. Schultern vollständig lösen."),
+    ]},
+    {name:"BALANCE TO DOLPHIN", range:"24–31", start:1440, blocks:[
+      P("24:00","Balance to Dolphin · 2×/Seite","High Lunge → Airplane → Standing Split → Open Balance → zurück in den Standing Split → Fuß weit zurück in den Low Lunge → Wide Lizard → Unterarme zum Boden → Dolphin → Three-Legged Dolphin → Knie Richtung Brust → Bein erneut anheben → Fuß absetzen → andere Seite. <span class='tag ground'>LEICHTER</span> bei Open Balance untere Hand auf Block, Fingerspitzen am Boden."),
+    ]},
+    {name:"FLOW INTEGRATION", range:"31–37", start:1860, blocks:[
+      P("31:00","Runde 1 — kontrolliert","Beide Flows werden ohne Child's Pose miteinander verbunden. Rechts und links. Kontrollierte Übergänge, Open Balance mit Block-Option, Wide Lizard kurz halten."),
+      P("34:00","Runde 2 — fließend","Gleiche Verbindung, fließender, weniger Pausen, Three-Legged Dolphin höher und kraftvoller."),
+    ]},
+    {name:"SPEED ROUND", range:"37–40", start:2220, blocks:[
+      P("37:00","Speed Round","Der verbundene Flow einmal schnell über beide Seiten. Keine neuen Bewegungen und keine langen Holds."),
+    ]},
+    {name:"STRENGTH & OPENING", range:"40–47", start:2400, blocks:[
+      P("40:00","Push-ups · 2 Runden × 10","Hände auf Blöcken oder Boden, alternativ Knie ablegen, kontrollierte Abwärtsbewegung."),
+      P("42:00","Low Lunge und Spagat","Je Seite: Low Lunge → Half Split → optional vollständiger Spagat."),
+      P("44:00","Half Arc → Full Arc 1 → Full Arc 2","Half Arc für fünf Atemzüge, dann zwei Full-Arc-Durchgänge. Half Arc bleibt die gleichwertige Alternative.<div class='cue'>„Wer beim ersten Full Arc stechenden Schmerz, Kribbeln, Taubheitsgefühl oder unangenehmen Druck im Nacken oder unteren Rücken spürt, löst kontrolliert und bleibt beim zweiten Durchgang im Half Arc.“</div>"),
+    ]},
+    {name:"PINCHA LAB", range:"47–53", start:2820, blocks:[
+      P("47:00","Ground — Dolphin Hold","Dolphin Hold, Füße näher zu den Ellenbogen laufen, Becken über die Schultern bringen."),
+      P("48:30","Build — Three-Legged Dolphin + Hops","Ein Bein in Three-Legged Dolphin anheben, kleine kontrollierte Hops mit dem Standbein, zweites Bein bleibt niedrig. Seite wechseln."),
+      P("50:00","Wall — kontrollierter Kick-up","Unterarme parallel und schulterbreit aufsetzen, Hände ungefähr 10–20 cm vor der Wand (je nach Körperbau und Schulterbeweglichkeit). Ein Bein anheben, mit dem Standbein kleine kontrollierte Hops, dann kontrolliert zur Wand hochkicken. Alle üben in dieselbe Richtung, hinter jeder Person bleibt der Kick-Radius frei. Einen Fuß nach dem anderen kontrolliert absetzen.<div class='cue'>„Die Unterarme drücken den Boden weg.“<br>„Blick zwischen die Hände, nicht nach vorn.“<br>„Erst Schultern über Ellenbogen — dann kommt das Bein.“</div>"),
+      P("52:00","Flight — freier Forearm Stand","Nur bei etablierter Praxis und sicher beherrschtem Ausstieg. Der freie Track ist ausschließlich für Teilnehmende mit sicherer eigener Ausstiegstechnik gedacht — dazu zählt bei freier Praxis auch ein kontrollierter seitlicher Cartwheel-Ausstieg.<div class='cue'>„Ein sauberer Versuch zählt mehr als zehn wilde.“</div>"),
+    ]},
+    {name:"FINALE", range:"53–57", start:3180, blocks:[
+      P("53:00","Staff Sit","Aufrichten, Schultergürtel lösen, Beine aktiv halten."),
+      P("54:00","V-Sit Finisher","V-Sit Hold 30 Sekunden, acht Knee Extensions, zehn kleine Arm Pumps, letzter Hold bis zum kontrollierten Ablegen."),
+      P("56:00","Supine Twist","Knie rechts und links ablegen, Schultern schwer."),
+    ]},
+    {name:"SAVASANA", range:"57–60", start:3420, blocks:[
+      P("57:00","Savasana · 3 Min.","Drei Minuten Ruhe."),
+    ]},
+  ],
+  cards:[
+    {label:"SONNENGRÜSSE", phase:"PREPARE THE BASE", time:"0:00", title:"Progressive Sonnengrüße · 3×", body:"Stufenweiser Aufbau zu Low Line über drei Runden."},
+    {label:"FOREARM IGNITION", phase:"FOREARM IGNITION", time:"4:00", title:"Dolphin Push-ups → Body Saw → Knee Drive", body:"Unterarmbasis von Anfang an aufgebaut."},
+    {label:"TWIST", phase:"SONNENGRUSS B UND TWIST", time:"9:00", title:"Sonnengruß B → Twist-Kette", body:"Zwei volle Runden, dann Rotation."},
+    {label:"SHOULDER & LEG", phase:"SHOULDER & LEG POWER", time:"16:00", title:"Forearm Plank → Dolphin → Lunge-Kette", body:"Learn → Flow, zwei Runden pro Seite."},
+    {label:"BALANCE", phase:"BALANCE TO DOLPHIN", time:"24:00", title:"Airplane → Standing Split → Open Balance → Dolphin", body:"Balance direkt verbunden mit Forearm-Rückkehr."},
+    {label:"INTEGRATION", phase:"FLOW INTEGRATION", time:"31:00", title:"Beide Flows verbunden — kontrolliert → fließend", body:"Ohne Child's Pose dazwischen, zwei Runden."},
+    {label:"PINCHA LAB", phase:"PINCHA LAB", time:"47:00", title:"Ground → Build → Wall → Flight", body:"Wandabstand korrigiert (10–20 cm), Wand kommt nach Ground/Build, nicht als früher Solo-Drill."},
+    {label:"SAVASANA", phase:"SAVASANA", time:"57:00", title:"Savasana · 3 Min.", body:"Ruhe zum Abschluss."},
+  ]},
+
 };
 
 const CATEGORY_JOURNEYS = {
-  joga: ["morning","evening","energy","qigongyin","yin","unleashed"],
-  pilates: ["menspilates","mensreformer","pilatesrolle","holdtheline"],
+  joga: ["morning","evening","energy","qigongyin","yin","unleashed","airborne","underpressure"],
+  pilates: ["menspilates","mensreformer","pilatesrolle","holdtheline","chakrapilates"],
 };
 function journeyCategory(journeyKey){
   if(CATEGORY_JOURNEYS.pilates.includes(journeyKey)) return "pilates";
@@ -1292,13 +1496,19 @@ const GENERATOR_RULES = {
   mensreformer: "Diese Class nutzt den Reformer für Männer — bewusst ohne Short Box, alles an Fußstange, Straps und Carriage. Prinzip: erst lernen, dann belasten, dann brennen. Stellschrauben sind je nach Übung Federwahl, Bewegungsumfang, Ausgangsposition oder zusätzliche Stabilisierung — nie pauschal nur die Feder, und nie als Anfänger/Fortgeschritten benannt. Keine zwei komplexen neuen Gerätepositionen direkt hintereinander ohne kurze Umbau-/Orientierungsphase. Finale (Powerhouse Burn) verdichtet nur bereits bekannte Bewegungen ohne Geräte- oder Federwechsel, führt keinen neuen Skill ein. Bei Standing-Leg-Übungen nur eine Variante pro Stunde (z. B. Skating ODER Side Splits, nie beide) und keine Übung doppelt in leicht abgewandelter Form (z. B. kein zusätzlicher Standing Lunge neben Runner's Lunge). Sprache klar und funktional, keine Fitnessstudio-Klischees, keine unnötigen Anfänger-Einweisungen im Übungstext. Minimiere unnötige Geräteumbauten: bevorzuge innerhalb eines Blocks Übungen mit kompatiblem Setup und Federbereich; ein Gerätewechsel muss einen klaren methodischen Nutzen haben.",
   pilatesrolle: "Diese Class nutzt eine lange Pilates-/Faszienrolle für gemischtes Niveau. Prinzip: Ausatmen unterstützt die Anstrengung, Qualität vor Wiederholungszahl/Haltezeit. Stellschrauben sind Bewegungsumfang, Rollenposition, Hebelarm oder Tempo — nie als Anfänger/Fortgeschritten benannt. Bei rückenlastigen/rollenden Bewegungen (z. B. Rolling Like a Ball) immer eine präventive Kontraindikation nennen (Nacken-/Bandscheibenprobleme, Osteoporose), nicht nur eine reaktive Option. Keine zwei Plank-/Stützpositionen direkt hintereinander ohne Alternative dazwischen — außer im dafür vorgesehenen, bewusst dichten Plank Block. Vor besonders core-intensiven Blöcken, die auf vorbelastete Bauchspannung folgen, einen kurzen Reset-Atemzug einbauen statt direkt in die erste Wiederholung zu gehen.",
   holdtheline: "Diese Class ist athletisches Mat Pilates mit drei Signature Holds (Hollow Body Hold, Back Hold/Dart, High Plank Hold), die in beiden Zeitfassungen (60 und 45 Minuten) unverändert erhalten bleiben müssen. Zwischen intensiven Halte-Blöcken gehören bewegte Move-&-Reset-Passagen, damit sich die Stunde nicht rein statisch anfühlt. Bei Stützpositionen immer Handgelenksoptionen mitdenken (Fäuste, Blöcke, Knie am Boden). Back Hold ist standardmäßig der Dart Hold (Beine dürfen am Boden bleiben), voller Superman nur als Option, nie als Pflicht. Keine pauschalen medizinischen Kontraindikationen — stattdessen klare Stoppsignale wie „Länge halten, nicht Höhe erzwingen; sobald der untere Rücken übernimmt, Hebel verkürzen.“ Das Finale (The Line-Up) verdichtet ausschließlich bereits bekannte Positionen, führt keinen neuen Skill ein. Optionen nie als Anfänger/Fortgeschritten benennen.",
+  chakrapilates: "Diese Class nutzt sieben Zentren als körperliche Dramaturgie, nicht als esoterischen Vortrag. Im sichtbaren Unterrichtstext stehen die funktionalen Namen (Wurzel · Root, Sakral · Sacral, Solarplexus · Power, Herz · Heart, Kehle · Expression, Stirn · Focus, Krone · Integration) — Sanskrit-Namen nur als Klammerzusatz, nie als Hauptbegriff. Keine Wirkungsversprechen wie „öffnet Energiekanäle“ oder „löst Blockaden“. Solarplexus (14–24 Min.) ist der erste Kraft-Peak, Krone (47–55 Min.) der Integrations-Peak — der Teaser dort ist kein neuer Skill, seine Basis (Half Roll Back) wird bereits bei Solarplexus gelegt; keine Übung darf im letzten Drittel zum ersten Mal auftauchen. Größere Positionswechsel (z. B. Stand → Rückenlage, Boden → Stand) müssen explizit geführt werden, nie implizit angenommen. Optionen in jedem Block, nie als Anfänger/Fortgeschritten benannt. Alle Zeitangaben verstehen sich einschließlich Aufbau, Optionen und Positionswechsel.",
+  airborne: "Diese Class ist für bewegungserfahrene Teilnehmende: schneller Flow, diagonale Core-Arbeit, tiefe Hüftöffnung, Grasshopper, Rückbeugen und freie, bereits bekannte Inversionspraxis — keine neue Inversion wird gelehrt. Im sichtbaren Unterrichtstext gilt dieselbe funktionale JOGA-Sprache wie bei Unleashed, erweitert um Low Line (Chaturanga), Low Open Line (Cobra), Full Open Line (Upward Dog), Rising Lunge (Warrior I), Long Triangle (Trikonasana), Side Squat (Skandasana), Flow Link (Vinyasa), Half Arc/Full Arc (Half Bridge/Wheel), Staff Sit (Dandasana), Fersensitz (nie „Heldensitz“) — Sanskrit nur als Klammerzusatz. Wiederholungen und Rundenzahl immer explizit nennen, nie implizit lassen. Sprünge/Schritte zwischen Positionen (z. B. in die Low Line) müssen benannt werden, nicht nur die Endpositionen. Bei Full Arc als Stoppsignal ausschließlich Schmerz/Kribbeln/Taubheit/unangenehmer Druck nennen — „Zug“ ist bei Rückbeugen kein brauchbares Abbruchsignal. Vor Inversionen und Grasshopper-Elementen ausdrücklich Raum-Check ansagen. Finale verdichtet nur Bekanntes, keine neue Technik im letzten Drittel.",
+  underpressure: "Diese Class ist für bewegungserfahrene Teilnehmende: konsequenter Forearm-Aufbau bis zum Forearm Stand (Pincha Mayurasana) als klarer Peak. Gleiche JOGA-Sprache wie Airborne, zusätzlich Humble Lunge (Humble Warrior), Straight Lunge Fold (Pyramid), Open Balance (Half Moon), Wide Lizard (Lizard), Forearm Stand (Pincha Mayurasana). Das Pincha Lab folgt zwingend der Reihenfolge Ground → Build → Wall → Flight — die Wand kommt erst nach Ground/Build, nie als früher Solo-Drill ohne Wand. Wandabstand der Hände: 10–20 cm, nie „eine Beinlänge“. Vor jedem Wall-Versuch: Kick-Radius hinter der Person muss frei sein, alle üben in dieselbe Richtung. Der freie Flight-Track ist ausschließlich für sicher beherrschte eigene Ausstiegstechnik — ein seitlicher Cartwheel-Ausstieg ist dort erlaubt, kein pauschales „nicht seitlich abkippen“. In der 45-Minuten-Fassung ist Pincha der alleinige Peak: Push-ups und Full Arc entfallen ersatzlos, die gewonnene Zeit bleibt vollständig im Pincha Lab.",
 };
 function generatorRulesFor(journeyKey){
   if(journeyKey==="unleashed") return GENERATOR_RULES.unleashed;
+  if(journeyKey==="airborne") return GENERATOR_RULES.airborne;
+  if(journeyKey==="underpressure") return GENERATOR_RULES.underpressure;
   if(journeyKey==="menspilates") return GENERATOR_RULES.menspilates;
   if(journeyKey==="mensreformer") return GENERATOR_RULES.mensreformer;
   if(journeyKey==="pilatesrolle") return GENERATOR_RULES.pilatesrolle;
   if(journeyKey==="holdtheline") return GENERATOR_RULES.holdtheline;
+  if(journeyKey==="chakrapilates") return GENERATOR_RULES.chakrapilates;
   return GENERATOR_RULES.jin;
 }
 
@@ -1335,13 +1545,76 @@ function getActivePhases(journeyKey){
   }
   return null; // null = Original
 }
+
+// ===================== JOGA / YOGA SPRACHSCHALTER =====================
+// Journeys, die mit doppeltem Vokabular arbeiten (funktionaler JOGA-Begriff im
+// Fließtext, klassischer Name nur als Klammer-Hinweis gedacht). Für diese
+// Journeys kann zwischen JOGA- und Yoga-Sprache umgeschaltet werden.
+const VOCAB_JOURNEYS = ["unleashed","airborne","underpressure"];
+const JOGA_TO_YOGA = {
+  "Power Squat":"Chair (Utkatasana)",
+  "Fold":"Forward Fold (Uttanasana)",
+  "Strong Line":"Plank",
+  "Low Line":"Chaturanga",
+  "Low Open Line":"Cobra — Becken und Beine bleiben am Boden",
+  "Full Open Line":"Upward Dog — Oberschenkel und Becken heben ab",
+  "Inverted V":"Down Dog",
+  "Rising Lunge":"Warrior I",
+  "Deep Lunge":"Low Lunge",
+  "Open Lunge":"Warrior II",
+  "Reverse Reach":"Reverse Warrior",
+  "Long Side Line":"Side Angle",
+  "Long Triangle":"Trikonasana",
+  "Side Squat":"Skandasana",
+  "Airplane":"Warrior III",
+  "Flow Link":"Vinyasa",
+  "Half Arc":"Half Bridge (Setu Bandha)",
+  "Full Arc":"Wheel",
+  "Staff Sit":"Dandasana",
+  "Open Balance":"Half Moon",
+  "Wide Lizard":"Lizard",
+  "Forearm Stand":"Pincha Mayurasana",
+  "Humble Lunge":"Humble Warrior",
+  "Straight Lunge Fold":"Pyramid",
+  "Fersensitz":"Heldensitz (Vajrasana)",
+  "Knee Drive":"Knee Drive",
+};
+// Längste Begriffe zuerst ersetzen, damit z. B. "Long Side Line" nicht von
+// einem kürzeren Treffer wie "Line" zerschnitten wird.
+const JOGA_TERMS_SORTED = Object.keys(JOGA_TO_YOGA).sort((a,b)=> b.length - a.length);
+function applyVocab(text, lang){
+  if(lang!=="yoga" || !text) return text;
+  let out = text;
+  JOGA_TERMS_SORTED.forEach(term=>{
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp("\\b"+escaped+"\\b", "g");
+    out = out.replace(re, JOGA_TO_YOGA[term]);
+  });
+  return out;
+}
+function hasVocabToggle(journeyKey){ return VOCAB_JOURNEYS.includes(journeyKey); }
+function transformJourneyVocab(journeyObj, journeyKey){
+  if(!hasVocabToggle(journeyKey) || state.language!=="yoga") return journeyObj;
+  const clone = JSON.parse(JSON.stringify(journeyObj));
+  (clone.phases||[]).forEach(ph=> ph.blocks.forEach(b=>{
+    b.title = applyVocab(b.title, "yoga");
+    b.body = applyVocab(b.body, "yoga");
+  }));
+  (clone.cards||[]).forEach(c=>{
+    c.title = applyVocab(c.title, "yoga");
+    c.body = applyVocab(c.body, "yoga");
+  });
+  return clone;
+}
+
 function getDisplayJourney(journeyKey){
   const base = DATA[journeyKey];
   if(!base) return base;
   const durSet = base.durations ? base.durations[currentDuration(journeyKey)] : base;
   if(!durSet || !durSet.phases) return base;
   const activePhases = getActivePhases(journeyKey);
-  return Object.assign({}, base, durSet, { phases: activePhases || durSet.phases });
+  const merged = Object.assign({}, base, durSet, { phases: activePhases || durSet.phases });
+  return transformJourneyVocab(merged, journeyKey);
 }
 function ensureDraft(journeyKey){
   const entry = getVariantEntry(journeyKey);
@@ -1406,7 +1679,7 @@ function suggestionToCompiledBlock(sug, time){
 }
 
 // ---------- state ----------
-let state = { journey:"morning", mode:"study", flashIndex:0, flashFlipped:false, duration:"60", category:"joga",
+let state = { journey:"morning", mode:"study", flashIndex:0, flashFlipped:false, duration:"60", category:"joga", language:"joga",
   timer:{running:false, elapsed:0, interval:null, startedAt:null} };
 
 // theme (dark/light), matches JOGA Strength toggle pattern
@@ -1527,6 +1800,17 @@ function render(){
     });
   } else {
     durToggle.style.display = "none";
+  }
+
+  const langToggle = document.getElementById("langToggle");
+  if(hasVocabToggle(state.journey)){
+    langToggle.style.display = "flex";
+    langToggle.querySelectorAll(".durbtn").forEach(b=>{
+      b.classList.toggle("active", b.dataset.lang===state.language);
+      b.onclick = ()=>{ state.language = b.dataset.lang; render(); };
+    });
+  } else {
+    langToggle.style.display = "none";
   }
 
   const prepBtn = document.getElementById("prepModeBtn");
@@ -1826,6 +2110,40 @@ const PLAYLISTS = {
       {artist:"Ben Howard", title:"Depth Over Distance"},
     ]},
   ]},
+  airborne: { type:"tracks", groups:[
+    { phase:"SONNENGRÜSSE & ATHLETIC", tracks:[
+      {artist:"Bonobo", title:"Kerala"},
+      {artist:"ODESZA", title:"A Moment Apart"},
+    ]},
+    { phase:"STRENGTH FLOW & GRASSHOPPER", tracks:[
+      {artist:"Jamie xx", title:"Gosh"},
+      {artist:"Rhye", title:"The Fall"},
+    ]},
+    { phase:"ARC & INVERSION", tracks:[
+      {artist:"Ólafur Arnalds", title:"Near Light"},
+      {artist:"Nils Frahm", title:"Says"},
+    ]},
+    { phase:"SAVASANA", tracks:[
+      {artist:"Max Richter", title:"Dream 1 (before the wind blows it all away)"},
+    ]},
+  ]},
+  underpressure: { type:"tracks", groups:[
+    { phase:"FOREARM IGNITION", tracks:[
+      {artist:"Royal Blood", title:"Figure It Out"},
+      {artist:"Muse", title:"Starlight"},
+    ]},
+    { phase:"SHOULDER & LEG POWER", tracks:[
+      {artist:"Wolfmother", title:"Joker & the Thief"},
+      {artist:"Nothing But Thieves", title:"Amsterdam"},
+    ]},
+    { phase:"PINCHA LAB", tracks:[
+      {artist:"Bonobo", title:"Cirrus"},
+      {artist:"Jamie xx", title:"Gosh"},
+    ]},
+    { phase:"SAVASANA", tracks:[
+      {artist:"Max Richter", title:"Dream 1 (before the wind blows it all away)"},
+    ]},
+  ]},
   menspilates: { type:"tracks", groups:[
     { phase:"MOBILIZE", tracks:[
       {artist:"Kaleo", title:"Way Down We Go"},
@@ -1898,6 +2216,27 @@ const PLAYLISTS = {
     ]},
     { phase:"RELEASE", tracks:[
       {artist:"Ben Howard", title:"Depth Over Distance"},
+    ]},
+  ]},
+  chakrapilates: { type:"tracks", groups:[
+    { phase:"WURZEL & SAKRAL", tracks:[
+      {artist:"Bonobo", title:"Kerala"},
+      {artist:"Ólafur Arnalds", title:"Near Light"},
+    ]},
+    { phase:"SOLARPLEXUS", tracks:[
+      {artist:"Rhye", title:"Open"},
+      {artist:"Jamie xx", title:"Gosh"},
+    ]},
+    { phase:"HERZ & KEHLE", tracks:[
+      {artist:"Bon Iver", title:"Holocene"},
+      {artist:"Nils Frahm", title:"Says"},
+    ]},
+    { phase:"STIRN & KRONE", tracks:[
+      {artist:"Kiasmos", title:"Blurred"},
+      {artist:"Bonobo", title:"Cirrus"},
+    ]},
+    { phase:"ABSCHLUSS", tracks:[
+      {artist:"Max Richter", title:"Dream 1 (before the wind blows it all away)"},
     ]},
   ]},
 };
