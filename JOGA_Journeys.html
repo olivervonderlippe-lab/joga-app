@@ -45,15 +45,36 @@
     border-radius:20px; padding:5px 9px; white-space:nowrap;}
   .themebtn#cueToggle{color:var(--accent); border-color:var(--accent); font-weight:700;}
 
-  .cattoggle{display:flex; gap:8px; max-width:320px; margin:14px auto 0; justify-content:center;}
-  .catbtn{flex:1; padding:8px 0; font-size:13px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase;
-    border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--text-2);}
-  .catbtn.active{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
-  .journeytabs{display:flex; gap:6px; max-width:520px; margin:12px auto 0; overflow-x:auto;}
-  .jtab{flex:1; text-align:center; padding:9px 4px; border-radius:10px 10px 0 0;
-    font-size:12px; font-weight:600; color:var(--text-3); background:transparent;
-    border:none; white-space:nowrap;}
-  .jtab.active{background:var(--card); color:var(--accent);}
+  .classpicker-trigger{display:flex; align-items:center; justify-content:center; gap:8px;
+    max-width:420px; margin:14px auto 0; width:calc(100% - 32px);
+    padding:11px 16px; border-radius:12px; border:1px solid var(--line);
+    background:var(--card); color:var(--text); font-size:14px; font-weight:600;}
+  .classpicker-trigger .cp-trigger-text{color:var(--text);}
+  .classpicker-trigger .cp-trigger-chevron{color:var(--text-3); font-size:12px;}
+
+  .classpicker-overlay{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:80;
+    display:flex; align-items:flex-end; justify-content:center;}
+  .classpicker-panel{background:var(--bg); width:100%; max-width:560px; max-height:82vh;
+    border-radius:18px 18px 0 0; display:flex; flex-direction:column; overflow:hidden;
+    box-shadow:0 -8px 30px rgba(0,0,0,.25);}
+  .classpicker-head{display:flex; align-items:center; gap:10px; padding:14px 16px;
+    border-bottom:1px solid var(--line); background:var(--card);}
+  .classpicker-head input{flex:1; padding:10px 12px; border-radius:10px; border:1px solid var(--line);
+    background:var(--bg); color:var(--text); font-size:15px;}
+  .cp-close{background:none; border:none; font-size:18px; color:var(--text-3); padding:4px 8px;}
+  .classpicker-body{overflow-y:auto; padding:8px 12px 20px;}
+  .cp-group{margin-top:14px;}
+  .cp-grouplabel{font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+    color:var(--accent); padding:4px 6px;}
+  .cp-row{display:flex; align-items:center; gap:10px; padding:11px 8px; border-radius:10px;
+    cursor:pointer;}
+  .cp-row:active, .cp-row:focus-visible{background:var(--card); outline:2px solid var(--accent);}
+  .cp-star{font-size:17px; color:var(--text-3); padding:2px 6px; line-height:1;
+    background:none; border:none; border-radius:6px;}
+  .cp-star:focus-visible{outline:2px solid var(--accent);}
+  .cp-star.active{color:#d9a441;}
+  .cp-name{font-size:15px; color:var(--text); font-weight:500;}
+  .cp-empty{padding:20px 8px; color:var(--text-3); font-size:14px; text-align:center;}
 
   .themebar{max-width:520px; margin:0 auto; padding:12px 16px; background:var(--card);
     border-radius:0 0 14px 14px; margin-bottom:10px; border:1px solid var(--line); border-top:none;}
@@ -206,11 +227,9 @@
   footer.corebox .essence{font-size:12px; font-weight:600; color:var(--text); line-height:1.9;}
 
   nav.bottom{position:fixed; bottom:0; left:0; right:0; background:var(--card);
-    border-top:1px solid var(--line); display:flex; z-index:30; overflow-x:auto;
-    -webkit-overflow-scrolling:touch; scrollbar-width:none;
-    padding:6px 4px calc(6px + env(safe-area-inset-bottom));}
-  nav.bottom::-webkit-scrollbar{display:none;}
-  nav.bottom button{flex:0 0 auto; min-width:64px; background:none; border:none; padding:8px 10px; font-size:10.5px;
+    border-top:1px solid var(--line); display:flex; z-index:30;
+    padding:8px 4px calc(8px + env(safe-area-inset-bottom));}
+  nav.bottom button{flex:1; background:none; border:none; padding:8px 4px; font-size:12px;
     font-weight:600; color:var(--text-3); white-space:nowrap;}
   nav.bottom button.active{color:var(--accent);}
 /* === JIN_BUILDER_CSS_START === */
@@ -20408,13 +20427,22 @@ var __async = (__this, __arguments, generator) => {
       <button class="themebtn" id="themeToggle">☀️</button>
     </div>
   </div>
-  <div class="cattoggle" id="catToggle">
-    <button data-cat="joga" class="catbtn">JOGA</button>
-    <button data-cat="pilates" class="catbtn">Pilates</button>
-  </div>
-  <div class="journeytabs" id="journeytabs"></div>
+  <button class="classpicker-trigger" id="classPickerTrigger">
+    <span class="cp-trigger-text"><span id="currentClassGroup"></span> › <span id="currentClassName"></span></span>
+    <span class="cp-trigger-chevron">▾</span>
+  </button>
   <span id="journeyLabel" style="display:none"></span>
 </header>
+
+<div class="classpicker-overlay" id="classPickerOverlay" style="display:none;">
+  <div class="classpicker-panel">
+    <div class="classpicker-head">
+      <input type="text" id="classSearchInput" placeholder="Klasse suchen…">
+      <button class="cp-close" id="classPickerClose">✕</button>
+    </div>
+    <div class="classpicker-body" id="classPickerBody"></div>
+  </div>
+</div>
 
 <div class="themebar">
   <div class="theme" id="themeText"></div>
@@ -20440,22 +20468,10 @@ var __async = (__this, __arguments, generator) => {
 <main id="main"></main>
 
 <nav class="bottom" id="bottomnav">
-  <button data-j="morning" data-cat="joga">Morning</button>
-  <button data-j="evening" data-cat="joga">Evening</button>
-  <button data-j="energy" data-cat="joga">Energy</button>
-  <button data-j="qigongyin" data-cat="joga">QIJIN</button>
-  <button data-j="yin" data-cat="joga">Yin</button>
-  <button data-j="unleashed" data-cat="joga">Unleashed</button>
-  <button data-j="airborne" data-cat="joga">Airborne</button>
-  <button data-j="underpressure" data-cat="joga">Under Pressure</button>
-  <button data-j="core" data-cat="joga">Core 1.0</button>
-  <button data-j="study" data-cat="joga">Nacharbeit</button>
-  <button data-j="builder" data-cat="joga">Erstellen</button>
-  <button data-j="menspilates" data-cat="pilates">Mat Pilates</button>
-  <button data-j="mensreformer" data-cat="pilates">Reformer</button>
-  <button data-j="pilatesrolle" data-cat="pilates">Rolle</button>
-  <button data-j="holdtheline" data-cat="pilates">Hold the Line</button>
-  <button data-j="chakrapilates" data-cat="pilates">Chakra Pilates</button>
+  <button data-nav="classes">Klassen</button>
+  <button data-nav="core">Grundlagen</button>
+  <button data-nav="study">Nacharbeit</button>
+  <button data-nav="builder">Erstellen</button>
 </nav>
 
 <script>
@@ -20605,7 +20621,8 @@ energy: { label:"Energy", theme:"Du musst nicht müde sein, um ruhig zu sein.", 
       P("51:00","Supine Twist L · 3:00","Spiegelverkehrt.<div class='cue'>„Knie zurück zur Mitte. Langsam zur anderen Seite.“<br>„Knie nach rechts. Brustkorb nach links. Linker Arm öffnet.“<br>„Nichts ziehen. Nichts korrigieren. Nur Gewicht abgeben.“<br>„Auch hier: mehr Zeit als sonst.“</div>"),
     ]},
     {name:"REST", range:"54–60", start:3240, blocks:[
-      P("54:00","Savasana","Arme/Beine bequem. Keine Atemtechnik, keine Visualisierung, keine Aufgabe. Ca. fünf Minuten vollständige Ruhe. Erst gegen Ende reaktivieren.<div class='cue'>„Kommt langsam zurück zur Mitte. Beine ausstrecken.“<br>„Arme dort ablegen, wo sie bequem liegen.“<br>„Vorhin haben wir Energie bewegt. Wir haben sie nicht verbraucht.“<br>„Und wir müssen nicht erschöpft sein, um still zu werden.“<br>(Etwa vier Minuten Stille.)<br>„Vertieft langsam den Atem. Bewegt Finger und Zehen.“<br>„Nehmt euch Zeit, über eine Seite nach oben zu kommen.“<br>„Energie und Ruhe sind keine Gegensätze.“</div>"),
+      P("54:00","Savasana · 5:00","Arme/Beine bequem. Keine Atemtechnik, keine Visualisierung, keine Aufgabe. Ca. fünf Minuten vollständige Ruhe.<div class='cue'>„Kommt langsam zurück zur Mitte. Beine ausstrecken.“<br>„Arme dort ablegen, wo sie bequem liegen.“<br>„Vorhin haben wir Energie bewegt. Wir haben sie nicht verbraucht.“<br>„Und wir müssen nicht erschöpft sein, um still zu werden.“</div>"),
+      P("59:00","Rückführung · 1:00","Erst jetzt reaktivieren.<div class='cue'>„Vertieft langsam den Atem. Bewegt Finger und Zehen.“<br>„Nehmt euch Zeit, über eine Seite nach oben zu kommen.“<br>„Energie und Ruhe sind keine Gegensätze.“</div>"),
     ]},
   ],
   cards:[
@@ -20735,6 +20752,215 @@ yin: { label:"Yin", theme:"Manchmal braucht Ruhe Zeit.", color:"#7a6a8c",
     {label:"BRIDGE", phase:"MELT", time:"44:00", title:"Bridge · 2:30", body:"Ground: kleine Bridge Waves, dann unten liegen bleiben, kein Prop nötig. Flight: Becken anheben, Block unter das Kreuzbein."},
     {label:"TWIST", phase:"MELT", time:"46:30", title:"Supine Twist R/L · 3:00", body:"Knie zur einen Seite, Brustkorb rotiert zur anderen. Optional Fuß fassen für Quad-Dehnung."},
     {label:"REST", phase:"REST", time:"52:30", title:"Savasana", body:"7:30 volle Länge, letzte Minute Atem vertiefen, über die Seite hoch."},
+  ]},
+
+groundedpower: { label:"Grounded Power", theme:"Wurzeln zuerst. Kraft danach.", color:"#7a5a3a",
+  memory:["STAND","SQUAT","LOW LUNGE","WARRIOR-KETTE","RESET","HOLDS","BODEN","FIGURE FOUR","BUTTERFLY","STILLE","REST"],
+  phases:[
+    {name:"AWAKEN", range:"0–8", start:0, blocks:[
+      P("0:00","Bewusster Stand · 1:00","Füße hüftbreit, Gewicht gleichmäßig auf Ferse, Groß- und Kleinzehenballen verteilen.<div class='cue'>„Findet euren Stand. Gewicht gleichmäßig auf alle drei Punkte des Fußes.“<br>„Kurz nachspüren, wo der Boden euch trägt.“</div>"),
+      P("1:00","Squat Pulses klein · ×8 · 1:30","Aus dem Stand in die halbe Kniebeuge sinken, Knie bleiben über den Zehen. Kleine, kontrollierte Pulse.<div class='cue'>„Klein und kontrolliert — das ist Vorbereitung, kein Warm-up-Zirkus.“<br>„Die Knie zeigen dahin, wo die Zehen hinzeigen.“</div>"),
+      P("2:30","Standing Foot Awareness · 1:30","Gewicht bewusst nach vorne auf die Ballen, zurück auf die Fersen, dann seitlich auf Außen- und Innenkante verlagern.<div class='cue'>„Vor — zurück — seitlich. Der Fuß lernt gerade, was er gleich tragen soll.“</div>"),
+      P("4:00","Squat mit Armreichen · ×6 · 1:30","Kniebeuge, Arme hängen locker. Beim Hochkommen strecken sich die Arme über den Kopf, beim Sinken kehren sie zurück.<div class='cue'>„Runter in die Kraft, hoch in die Länge.“</div>"),
+      P("5:30","Low Lunge Setup rechts · 1:15","Aus dem Stand großer Schritt mit dem linken Bein nach hinten. Rechtes (vorderes) Knie beugt sich über dem Knöchel, linkes (hinteres) Knie darf zunächst am Boden bleiben, Becken sinkt nach vorne-unten. <span class='tag ground'>GROUND</span> hinteres Knie bleibt abgelegt, wenn die Hüfte noch nicht offen ist.<div class='cue'>„Großer Schritt zurück mit dem linken Bein — das rechte, vordere Knie sinkt über dem Knöchel.“<br>„Das hintere Knie darf am Boden bleiben, das Becken sinkt einfach nach vorne-unten.“</div>"),
+      P("6:45","Low Lunge Setup links · 1:15","Seitenwechsel: großer Schritt mit dem rechten Bein nach hinten, linkes (vorderes) Knie beugt sich, gleicher Aufbau gespiegelt.<div class='cue'>„Seitenwechsel, gleicher Aufbau.“</div>"),
+    ]},
+    {name:"FLOW", range:"8–27", start:480, blocks:[
+      P("8:00","Chair → Low Lunge → Warrior II → Side Angle rechts, Runde 1 · 4:00",
+        "Aus Chair (Füße hüftbreit, in die Kniebeuge sinken, Arme heben) großer Schritt mit dem linken Bein zurück in Low Lunge. Übergang zu Warrior II — vollständig: hinteres (linkes) Knie anheben, falls es noch am Boden war → hintere Ferse setzt sich ab → vordere Zehen zeigen zur kurzen Mattenkante, hinteren Fuß ungefähr parallel zur kurzen Mattenkante ausrichten, Zehen bei Bedarf leicht nach vorne eindrehen → Becken und Oberkörper drehen sich zur langen Mattenseite → Arme breiten sich auf Schulterhöhe aus, Blick über die vordere Hand. Aus Warrior II weiter in Side Angle: Oberkörper neigt sich über das vordere (rechte) Bein, Unterarm oder Hand sinkt auf oder vor den Oberschenkel, der andere Arm reicht lang über den Kopf.<div class='cue'>„Heute keine Eile — die Beine dürfen ankommen, bevor sie weiterziehen.“<br>„Hintere Ferse ab, Fuß parallel zur kurzen Kante — das ist der Unterschied zwischen Warrior II und einem einfachen Ausfallschritt.“<br>„Arme breit, Blick über die vordere Hand.“</div>"),
+      P("12:00","Rückweg: Side Angle → Chair der nächsten Runde · 4:00",
+        "Aus Side Angle Oberkörper aufrichten zurück in Warrior II → vorderes (rechtes) Knie streckt sich → hinterer (linker) Fuß setzt sich neben den vorderen — zurück im Stand, Arme sinken. Direkt weiter in Chair, dann erneut die komplette Kette Low Lunge → Warrior II → Side Angle rechts, Runde 2, gleicher Aufbau, etwas flüssiger.<div class='cue'>„Aufrichten, Fuß setzt neben — zurück im Stand.“<br>„Zweite Runde, gleicher Weg, schon vertrauter.“</div>"),
+      P("16:00","Chair → Low Lunge → Warrior II → Side Angle links, Runde 1 · 4:00",
+        "Gleicher Aufbau wie rechts, gespiegelt: Schritt mit dem rechten Bein zurück, rechte Ferse setzt sich ab und richtet sich aus, Becken öffnet zur langen Mattenseite, Oberkörper neigt sich über das linke (vordere) Bein.<div class='cue'>„Chair, Schritt zurück mit dem rechten Bein, Ferse ab und ausrichten — Warrior II öffnet sich zur langen Mattenseite.“<br>„Und weiter über das linke Bein in Side Angle — gleicher Weg, andere Seite.“</div>"),
+      P("20:00","Rückweg und Runde 2 links · 4:00","Gleicher Rückweg wie rechts, gespiegelt: aufrichten → Warrior II → Fuß setzt neben → Chair → Runde 2 der Kette links.<div class='cue'>„Gleicher Rückweg wie rechts — aufrichten, Fuß setzt neben, zurück im Stand.“</div>"),
+      P("24:00","Reset · 3:00","Beide Beine locker ausschütteln (0:30) → lockeres Gehen auf der Stelle, Knie heben abwechselnd leicht (1:00) → seitliche Gewichtsverlagerungen von einem Bein zum anderen ×6, Arme schwingen locker mit (1:00) → zur Ruhe kommen, ein letzter bewusster Atemzug vor dem Peak (0:30).<div class='cue'>„Ausschütteln, dann laufen, dann wiegen — die Beine dürfen sich noch einmal neu sortieren, bevor es ernst wird.“</div>"),
+    ]},
+    {name:"EXPLORE", range:"27–35", start:1620, blocks:[
+      P("27:00","Dynamische Brücke · 3:00",
+        "Aus dem Stand in Warrior II rechts (gleicher Aufbau wie in FLOW). Warrior II Beugungen: vorderes Knie beugt und streckt sich ×6, Oberkörper bleibt aufrecht und zentriert über dem Becken. Fuß setzt neben, Seitenwechsel: Warrior II Beugungen links ×6. Aus dem Stand Schritt in Horse (breiter Stand, Zehen nach außen): Gewicht seitlich von einem Bein zum anderen verlagern ×6, tief bleiben. Aufrichten, Füße hüftbreit, Chair mit Aufrichten ×6: aus der Kniebeuge mit Armhebung aufrichten, dann wieder sinken.<div class='cue'>„Jede Position bewegt sich zuerst, bevor sie gleich hält.“<br>„Warrior II rechts, sechs Beugungen — Fuß setzt neben, links, sechs Beugungen.“<br>„Weiter in Horse, breiter Stand, Gewicht wandert sechsmal seitlich, tief bleiben.“<br>„Aufrichten, Füße hüftbreit — Chair, sechsmal aufrichten und sinken.“</div>"),
+      P("30:00","Vier Holds mit Ausschütteln · 3:00",
+        "Warrior II rechts halten, 30 Sek.: Arme aktiv auf Schulterhöhe, Blick über die vordere Hand, dann lösen und beide Beine ausschütteln (15 Sek.). Warrior II links halten, 30 Sek., ausschütteln (15 Sek.). Horse halten, 30 Sek., Arme in Kaktus-Position, ausschütteln (15 Sek.). Chair halten, 30 Sek., Arme lang nach vorne oder oben, ausschütteln (15 Sek.). <span class='tag ground'>GROUND</span> Beugung reduzieren, Fußstellung individuell anpassen, bei Beschwerden aufrichten.<div class='cue'>„Vier Positionen, jede dreißig Sekunden, dazwischen fünfzehn Sekunden Ausschütteln: Warrior II rechts, Warrior II links, Horse, Chair.“<br>„Warrior II rechts — Arme aktiv, Blick über die vordere Hand. Still heißt: der Atem arbeitet, nicht die Unruhe.“<br>„Lösen, ausschütteln — und Warrior II links.“<br>„Weiter in Horse, Arme in Kaktus-Position.“<br>„Und zum Schluss Chair, Arme lang nach vorne oder oben.“</div>"),
+      P("33:00","Übergang zum Boden · 2:00","Der Peak-Ausgang: aus dem letzten Hold aufrichten → lockere Gewichtsverlagerungen von Bein zu Bein → Bewegung wird bewusst kleiner → in die Hocke sinken → zum Sitz auf dem Boden kommen, Beine vor sich ausstrecken oder anwinkeln.<div class='cue'>„Das war der Peak. Jetzt darf alles kleiner werden.“<br>„Aufrichten, Gewicht locker von Bein zu Bein — und immer kleiner werden lassen.“<br>„In die Hocke sinken, dann zum Sitz auf dem Boden.“</div>"),
+    ]},
+    {name:"MELT", range:"35–54", start:2100, blocks:[
+      P("35:00","Ankommen in Rückenlage · 1:00","Aus dem Sitz zurück ablegen, Knie aufgestellt. Kurz nachspüren, wie der Boden trägt.<div class='cue'>„Ablegen, Knie aufgestellt — kurz nachspüren, wie der Boden trägt.“</div>"),
+      P("36:00","Figure Four rechts · 2:30","Rückenlage, rechten Knöchel auf das linke Knie legen (Knöchel bleibt aktiv, nicht einhängen), beide Hände fassen hinter den linken Oberschenkel, Knie sanft Richtung Brust ziehen. <span class='tag ground'>GROUND</span> Kopf bleibt am Boden, wenn der Nacken sich sonst verspannt.<div class='cue'>„Rechter Knöchel aufs linke Knie, Hände fassen hinter den Oberschenkel.“<br>„Der Knöchel bleibt aktiv, nicht einhängen. Knie sanft Richtung Brust.“</div>"),
+      P("38:30","Figure Four links · 2:30","Seitenwechsel, gleicher Aufbau gespiegelt: linker Knöchel auf das rechte Knie, Hände hinter dem rechten Oberschenkel.<div class='cue'>„Seitenwechsel, gleicher Aufbau.“</div>"),
+      P("41:00","Half Butterfly links · 3:00","Aufrechter Sitz, rechte Fußsohle an den linken Innenschenkel, linkes Bein lang ausgestreckt — benannt nach dem gestreckten, linken Bein. Oberkörper sinkt sanft über das linke Bein. <span class='tag ground'>GROUND</span> Kissen oder Block unter dem angewinkelten (rechten) Knie, falls dort Zug entsteht.<div class='cue'>„Aufrechter Sitz, rechte Fußsohle an den linken Innenschenkel, linkes Bein lang ausgestreckt.“<br>„Der Oberkörper sinkt über das lange, linke Bein — der Rücken bleibt lang, keine Rundung erzwingen.“</div>"),
+      P("44:00","Half Butterfly rechts · 3:00","Seitenwechsel: linke Fußsohle an den rechten Innenschenkel, rechtes Bein lang ausgestreckt, Oberkörper sinkt über das rechte Bein.<div class='cue'>„Seitenwechsel, gleicher Aufbau.“</div>"),
+      P("47:00","Knee Sways · ×10 · 2:00","Rückenlage, Knie aufgestellt und zusammen, sanft von Seite zu Seite sinken lassen, Oberkörper und Schultern bleiben ruhig am Boden.<div class='cue'>„Die Knie sinken, der Brustkorb bleibt offen.“</div>"),
+      P("49:00","Stille aufbauen · 5:00","Die Knee Sways werden über drei weitere Wiederholungen bewusst kleiner → Beine strecken sich lang aus → Handflächen öffnen sich nach oben → Atem beobachten, ohne ihn zu verändern → vollständig still.<div class='cue'>„Die Knee Sways werden jetzt über drei Wiederholungen bewusst kleiner.“<br>„Beine strecken sich lang aus, Handflächen öffnen sich nach oben.“<br>„Kleiner, kleiner — bis nur noch der Atem übrig bleibt.“</div>"),
+    ]},
+    {name:"REST", range:"54–60", start:3240, blocks:[
+      P("54:00","Savasana · 5:00","Vollständige Ruhe. Der lange ruhige Abschluss ist eine bewusste dramaturgische Entscheidung dieser Klasse.<div class='cue'>„Nichts mehr zu tun, nichts mehr zu halten.“<br>„Arme und Beine, wo immer sie bequem liegen.“</div>"),
+      P("59:00","Rückführung · 1:00","Behutsam reaktivieren — Finger und Zehen bewegen — und über die Seite zum Sitz kommen.<div class='cue'>„Finger und Zehen bewegen, tief einatmen — über die Seite zum Sitz kommen.“</div>"),
+    ]},
+  ],
+  cards:[
+    {label:"STAND", phase:"AWAKEN", time:"0:00", title:"Bewusster Stand → Squat Pulses → Low Lunge Setup", body:"Füße und Beine aktivieren, bevor die Kette beginnt."},
+    {label:"WARRIOR-KETTE", phase:"FLOW", time:"8:00", title:"Chair → Low Lunge → Warrior II → Side Angle, beide Seiten", body:"Bewusst langsam, kein schneller Durchlauf — die Beine dürfen ankommen."},
+    {label:"RESET", phase:"FLOW", time:"24:00", title:"Ausschütteln → Gehen → Gewichtsverlagerung", body:"Konkret dosierter Übergang vor dem Kraft-Peak."},
+    {label:"HOLDS", phase:"EXPLORE", time:"30:00", title:"Vier Holds: Warrior II R/L, Horse, Chair", body:"Der Kraft-Peak der Stunde — dynamisch aufgebaut, dann gehalten."},
+    {label:"BODEN", phase:"EXPLORE", time:"33:00", title:"Übergang zum Boden", body:"Der Peak-Ausgang: aufrichten, kleiner werden, absitzen."},
+    {label:"FIGURE FOUR", phase:"MELT", time:"36:00", title:"Figure Four rechts/links", body:"Die Hüfte öffnet sich nach der Kraftarbeit."},
+    {label:"BUTTERFLY", phase:"MELT", time:"41:00", title:"Half Butterfly links/rechts", body:"Benannt nach dem gestreckten Bein."},
+    {label:"STILLE", phase:"MELT", time:"49:00", title:"Stille aufbauen", body:"Knee Sways werden bewusst kleiner, bis nur der Atem bleibt."},
+    {label:"REST", phase:"REST", time:"54:00", title:"Savasana · 6 Min.", body:"Bewusst langer Abschluss nach dem Halte-Peak."},
+  ]},
+
+wave: { label:"Wave", theme:"Bewegung wird Welle. Welle wird Ruhe.", color:"#3a6a7a",
+  memory:["CAT-COW","WAVE-ÜBERGANG","ROLL DOWN","GROUND/FLIGHT","DURCHGÄNGE","AUSKLINGEN","WARRIOR-WELLE","SPINAL WAVES","STILLE","REST"],
+  phases:[
+    {name:"AWAKEN", range:"0–8", start:0, blocks:[
+      P("0:00","Cat-Cow als Basis-Welle · ×6 · 1:30","Vierfüßler, Handgelenke unter den Schultern, Knie unter der Hüfte. Einatmen: Bauch sinkt, Brustbein und Kopf heben (Cow). Ausatmen: Rücken rundet sich, Kinn sinkt Richtung Brust (Cat).<div class='cue'>„Vierfüßler, Handgelenke unter den Schultern, Knie unter der Hüfte.“<br>„Einatmen: Bauch sinkt, Brustbein und Kopf heben.“<br>„Ausatmen: Rücken rundet sich, Kinn sinkt zur Brust.“</div>"),
+      P("1:30","Wave-Übergang: Vierfüßler → Downward Dog → zurück · 2:00","Aus dem Vierfüßler Zehen aufstellen, Becken hebt sich nach hinten-oben in Downward Dog — das Becken führt die Bewegung, die Wirbelsäule folgt Wirbel für Wirbel. Kontrolliert zurück in den Vierfüßler, Wirbelsäule wieder Wirbel für Wirbel.<div class='cue'>„Zehen aufstellen, Becken hebt sich nach hinten-oben — das Becken führt, die Wirbelsäule folgt.“<br>„Und kontrolliert zurück, wieder Wirbel für Wirbel.“</div>"),
+      P("3:30","Standing Roll Down als Welle · ×3 · 1:30","Aus dem Stand Kinn zur Brust, Wirbel für Wirbel abrollen, Arme und Kopf hängen schwer, dann Wirbel für Wirbel wieder aufrollen.<div class='cue'>„Kinn zur Brust, Wirbel für Wirbel — kein Fallenlassen.“</div>"),
+      P("5:00","Standing Wave · 1:30","Stehend, die Wirbelsäule wellt sich seitlich von einer Seite zur anderen, Arme schwingen locker mit dem Impuls mit.<div class='cue'>„Lasst die Welle durch den ganzen Körper laufen, nicht nur die Arme schwingen.“</div>"),
+      P("6:30","Erste Verbindung, mit Knieoption · 1:30","Roll Down → Hände laufen nach vorne in eine Knie-Plank (Knie am Boden) → kontrolliert in Bauchlage absenken → kleine Cobra, Brustbein hebt sich → zurück in Bauchlage → zurück in die Knie-Plank → Hände laufen zurück, aufrollen.<div class='cue'>„Roll Down, Hände laufen vor in die Knie-Plank.“<br>„Kontrolliert absenken in Bauchlage, kleine Cobra — Brustbein hebt sich.“<br>„Knie am Boden ist eine vollwertige Version, keine Notlösung.“<br>„Zurück in Bauchlage, zurück in die Knie-Plank, Hände laufen zurück, aufrollen.“</div>"),
+    ]},
+    {name:"FLOW", range:"8–27", start:480, blocks:[
+      P("8:00","Aufbau — zwei eindeutige Wege · 3:00",
+        "Aus Fold (Oberkörper hängt über den Beinen) Hände laufen nach vorne in die Plank. Von hier zwei konkrete, unterschiedliche Bodenkontakte statt einer pauschalen Anweisung. <span class='tag ground'>GROUND</span> Knie absetzen → kontrolliert in Bauchlage absenken → kleine Cobra, Brustbein hebt, Becken bleibt am Boden → Vierfüßler → Down Dog. <span class='tag flight'>FLIGHT</span> Plank → kontrolliert über Chaturanga (Ellbogen eng am Körper, Körper bleibt eine Linie) → Upward Dog, Oberschenkel heben ab → Down Dog.<div class='cue'>„Fold, Hände laufen vor in die Plank — jetzt zwei Wege, beide vollständig.“<br>„Ground: Knie ab, Bauchlage, kleine Cobra, Becken bleibt unten — Vierfüßler, Down Dog.“<br>„Flight: über Chaturanga, Ellbogen eng — Upward Dog, Oberschenkel heben ab — Down Dog.“<br>„Sucht euch den Weg, der zu eurem Tag passt.“</div>"),
+      P("11:00","Durchgang 1 — 2 vollständige Wellen · 4:00","Fold → Half Lift (Rücken lang, Fingerspitzen an den Schienbeinen) → Plank → Ground- oder Flight-Weg → Down Dog → Füße laufen zu den Händen, zurück zu Fold. Zwei komplette Durchgänge in diesen vier Minuten, jeweils eigene Wahl Ground oder Flight.<div class='cue'>„Fold, Half Lift — Rücken lang, Fingerspitzen an den Schienbeinen.“<br>„Plank, dann euer Weg — Ground oder Flight — hinein in Down Dog.“<br>„Füße laufen zu den Händen, zurück zu Fold. Zwei Durchgänge, eure Wahl bei jedem.“</div>"),
+      P("15:00","Durchgang 2 — 3 Wellen, etwas zügiger · 4:00","Gleiche Folge, drei vollständige Durchgänge, Übergänge werden bekannter, Tempo darf leicht steigen.<div class='cue'>„Die Übergänge werden bekannter — das Tempo darf ein wenig steigen.“</div>"),
+      P("19:00","Durchgang 3 — 3 Wellen, fließend · 4:00","Gleiche Folge, jetzt ohne Zwischenerklärung, Atem und Bewegung verbunden.<div class='cue'>„Ihr kennt die Welle jetzt — lasst sie laufen, Ground oder Flight, eure Wahl.“</div>"),
+      P("23:00","Ausklingen · 4:00",
+        "Zwei ausdrücklich langsamere Wellen über drei Minuten, jede Station deutlich länger gehalten als in den vorherigen Durchgängen → aus der letzten Down Dog Position Füße langsam zu den Händen laufen lassen, Wirbel für Wirbel aufrichten → im Stand lockeres Armschwingen, Gewicht sanft von einem Fuß zum anderen wiegen (1:00).<div class='cue'>„Langsamer, noch langsamer — die Welle darf jetzt ausrollen.“<br>„Zwei letzte Wellen, jede Station einen Moment länger als eben.“<br>„Aus Down Dog Füße langsam zu den Händen, Wirbel für Wirbel aufrichten.“<br>„Im Stand die Arme locker schwingen, Gewicht sanft von Fuß zu Fuß wiegen.“</div>"),
+    ]},
+    {name:"EXPLORE", range:"27–35", start:1620, blocks:[
+      P("27:00","Rechts: Warrior I → Warrior II → Reverse/Side Angle · 3:30",
+        "High Lunge rechts → Warrior I: hinterer (linker) Fuß dreht sich etwa 45 Grad nach außen, Ferse sinkt Richtung Boden — erst dann ist es Warrior I, nicht vorher. Beugen/Strecken des vorderen Knies ×5, Arme heben mit hoch (1:00). Übergang in Warrior II: hintere Ferse bleibt abgesetzt, Becken und Arme öffnen sich zur langen Mattenseite. Seitliches Verlagern ×6, Arme schwingen in vollem Bogen mit der Gewichtsverlagerung mit — nicht nur die Beine bewegen sich (1:15). Übergang in Reverse Warrior (hinterer Arm sinkt zum hinteren Bein, vorderer Arm reicht über den Kopf zurück) → Side Angle (Oberkörper neigt über das vordere Bein) als fließende Welle ×3 (1:15).<div class='cue'>„High Lunge rechts — hinterer Fuß dreht sich, Ferse sinkt — erst dann ist es Warrior I. Fünfmal das vordere Knie beugen und strecken, Arme heben mit.“<br>„Weiter in Warrior II: Becken und Arme öffnen sich zur langen Seite. Sechsmal seitlich verlagern — die Arme schwingen mit, nicht nur die Beine.“<br>„Und weiter: Reverse Warrior, hinterer Arm sinkt zum Bein — dann Side Angle, Oberkörper neigt über das vordere Bein. Dreimal als fließende Welle.“</div>"),
+      P("30:30","Links: Warrior I → Warrior II → Reverse/Side Angle · 3:30","Gleicher Aufbau, gespiegelt: High Lunge links → Warrior I (rechter hinterer Fuß dreht 45 Grad, Ferse sinkt) → Warrior II seitliches Verlagern ×6 → Reverse Warrior → Side Angle als Welle ×3.<div class='cue'>„Gleicher Weg, andere Seite: High Lunge links, Warrior I, Warrior II mit sechs Verlagerungen, dann Reverse Warrior und Side Angle als Welle.“</div>"),
+      P("34:00","Zusammenführen, Tempo abbauen, zum Boden · 1:00","Aus der letzten Position aufrichten, ein Atemzug im Stand, dann absitzen zum Boden.<div class='cue'>„Ein Atemzug im Stand, dann absitzen.“</div>"),
+    ]},
+    {name:"MELT", range:"35–54", start:2100, blocks:[
+      P("35:00","Ankommen im Sitz · 1:00","Aufrechter Sitz, Beine gekreuzt oder mattenbreit, kurz nachspüren.<div class='cue'>„Aufrechter Sitz, kurz nachspüren.“</div>"),
+      P("36:00","Sitzende Spinal Waves · ×8 · 2:30","Aufrechter Sitz, Wirbelsäule wellt sich vor und zurück, Becken kippt mit.<div class='cue'>„Die Welle wandert jetzt durch die sitzende Wirbelsäule.“</div>"),
+      P("38:30","Pelvic Curls in Rückenlage · ×8 · 2:30","Rückenlage, Füße aufgestellt. Größere Bewegung als die Spinal Waves: Becken hebt sich Wirbel für Wirbel zu einer Brücke und senkt sich vollständig wieder ab.<div class='cue'>„Rückenlage, Füße aufgestellt. Becken hebt sich Wirbel für Wirbel zu einer Brücke.“<br>„Und senkt sich genauso Wirbel für Wirbel wieder ab. Achtmal.“</div>"),
+      P("41:00","Knee Sways · ×10/Seite · 3:00","Rückenlage, Knie zusammen, andere Ebene als die Curls: seitliche, kleinere Bewegung statt Heben/Senken.<div class='cue'>„Andere Ebene als eben — seitlich statt auf und ab.“</div>"),
+      P("44:00","Die Knee Sways werden bewusst kleiner · 3:00","Die vorherigen Knee Sways werden über drei weitere Runden bewusst reduziert: erste Runde noch spürbar, zweite Runde kaum noch sichtbar, dritte Runde nur noch Absicht ohne äußere Bewegung.<div class='cue'>„Die Knee Sways werden jetzt über drei Runden kleiner.“<br>„Erste Runde noch spürbar, zweite Runde kaum noch sichtbar.“<br>„Dritte Runde: nur noch die Absicht, keine äußere Bewegung mehr.“</div>"),
+      P("47:00","Atembewegung beobachten · 3:00","Keine geführte Bewegung mehr — nur der Bauch hebt und senkt sich mit dem Atem.<div class='cue'>„Keine geführte Bewegung mehr — nur der Atem bewegt den Bauch.“</div>"),
+      P("50:00","Vollständige Stille · 4:00","Kein Kommentar mehr zum Atem — nur noch Ruhe.<div class='cue'>„Kein Kommentar mehr — nur noch Ruhe.“</div>"),
+    ]},
+    {name:"REST", range:"54–60", start:3240, blocks:[
+      P("54:00","Savasana · 5:00","Ab 44:00 bis Stundenende sind es rund 16 Minuten mit abnehmender bis keiner äußeren Bewegung — eine bewusst deutlich ruhigere Schlussphase als in anderen Energy-Klassen, passend zum Wellen-Charakter, der ausdrücklich kleiner werden soll.<div class='cue'>„Nichts mehr zu tun, nichts mehr zu beweisen.“</div>"),
+      P("59:00","Rückführung · 1:00","Behutsam reaktivieren — Finger und Zehen bewegen — und über die Seite zum Sitz kommen.<div class='cue'>„Finger und Zehen bewegen, tief einatmen — über die Seite zum Sitz kommen.“</div>"),
+    ]},
+  ],
+  cards:[
+    {label:"CAT-COW", phase:"AWAKEN", time:"0:00", title:"Cat-Cow → Wave-Übergang → Roll Down → Standing Wave", body:"Die Welle wird als Grundprinzip eingeführt."},
+    {label:"GROUND/FLIGHT", phase:"FLOW", time:"8:00", title:"Zwei eindeutige Wege durch die Welle", body:"Ground (über Bauchlage) oder Flight (über Chaturanga) — beide vollständig."},
+    {label:"DURCHGÄNGE", phase:"FLOW", time:"11:00", title:"Drei Durchgänge, steigende Anzahl und Tempo", body:"2 → 3 → 3 Wellen, vom Lernen zum Fließen."},
+    {label:"AUSKLINGEN", phase:"FLOW", time:"23:00", title:"Zwei langsame Wellen → Übergang in den Stand", body:"Bewusst verlangsamt vor dem Peak."},
+    {label:"WARRIOR-WELLE", phase:"EXPLORE", time:"27:00", title:"Warrior I → Warrior II → Reverse/Side Angle, beide Seiten gleich lang", body:"Der Peak — als durchgehende Welle, nicht als Einzelpositionen."},
+    {label:"SPINAL WAVES", phase:"MELT", time:"36:00", title:"Spinal Waves → Pelvic Curls → Knee Sways", body:"Sechs unterscheidbare Bewegungsqualitäten führen zur Stille."},
+    {label:"STILLE", phase:"MELT", time:"47:00", title:"Atembewegung → vollständige Stille", body:"Keine geführte Bewegung mehr."},
+    {label:"REST", phase:"REST", time:"54:00", title:"Savasana · 6 Min.", body:"Bewusst langer, ruhiger Ausklang."},
+  ]},
+
+balance: { label:"Balance", theme:"Stabil ist nicht dasselbe wie unbeweglich.", color:"#5a7a5a",
+  memory:["FUSSKONTAKT","TREE PREP","STANDWAAGE","WARRIOR III","HALF MOON","EAGLE ARMS","PENDELN","KNIEKREISE","TWIST","REST"],
+  phases:[
+    {name:"AWAKEN", range:"0–8", start:0, blocks:[
+      P("0:00","Fußkontakt und Gewichtsverlagerung · 2:00","Hüftbreiter Stand. Gewicht bewusst nach vorne auf die Ballen, zurück auf die Fersen, dann seitlich auf Außen- und Innenkante verlagern. Anschließend ein Bein zunehmend entlasten — das Gewicht wandert auf das andere, die Zehen des entlasteten Fußes bleiben als leichter Kontakt am Boden.<div class='cue'>„Hüftbreiter Stand. Gewicht nach vorne auf die Ballen, zurück auf die Fersen.“<br>„Und seitlich, auf Außen- und Innenkante.“<br>„Jetzt ein Bein langsam entlasten, ohne den Fuß ganz vom Boden zu heben.“</div>"),
+      P("2:00","Fersenheben und Seitenschritte · 2:00","Beide Fersen heben und senken ×8. Danach ein seitlicher Schritt zur Seite, Gewicht vollständig übernehmen, anderer Fuß tippt heran, ohne Gewicht aufzunehmen — viermal je Seite.<div class='cue'>„Beide Fersen heben und senken, achtmal.“<br>„Dann ein seitlicher Schritt, das Gewicht vollständig übernehmen — der andere Fuß tippt heran, ohne Gewicht. Viermal je Seite.“</div>"),
+      P("4:00","Tree Prep mit Armbewegung · 2:00","Je Seite 1:00: freie Ferse an den Standknöchel setzen, Zehen bleiben am Boden. Arme öffnen zur Seite, heben über den Kopf, senken wieder. <span class='tag flight'>FLIGHT</span> freien Fuß kurz vom Boden lösen, wer stabil steht.<div class='cue'>„Freie Ferse an den Standknöchel, Zehen bleiben am Boden.“<br>„Die Ferse am Knöchel, die Arme dürfen dabei ruhig weiterarbeiten — öffnen, über den Kopf, senken.“</div>"),
+      P("6:00","Vorbereitung der Standwaage · 2:00","Hände an die Hüften, ein Bein einen Schritt zurückstellen, Zehen bleiben unten. Oberkörper aus der Hüfte nach vorne neigen, Rücken bleibt lang, dann zurück aufrichten — viermal je Seite. Hintere Zehen bleiben währenddessen als Stütze am Boden.<div class='cue'>„Hände an die Hüften, ein Bein einen Schritt zurück, Zehen bleiben unten.“<br>„Aus der Hüfte nach vorne neigen — der Rücken bleibt lang, auch wenn der Oberkörper sinkt.“<br>„Und wieder aufrichten. Viermal je Seite.“</div>"),
+    ]},
+    {name:"FLOW", range:"8–27", start:480, blocks:[
+      P("8:00","Runde 1 — kennenlernen, rechts · 3:00",
+        "Stand → Chair (Kniebeuge, Arme heben) → großer Schritt zurück in High Lunge, hinteres Knie bleibt angehoben → Oberkörper neigt sich aus der Hüfte nach vorne, Rücken bleibt lang → Warrior III mit Handunterstützung: Hände setzen vor dem vorderen Fuß oder auf Blöcke, hinteres Bein hebt sich gestreckt nach hinten, Oberkörper und Bein bilden eine Linie → zurück in High Lunge, Bein senkt sich, hinterer Fuß setzt ab → Fuß nach vorne zum Standbein → Stand. Langsamer Durchgang, der Übergang Lunge–Standwaage wird innerhalb der drei Minuten zweimal wiederholt.<div class='cue'>„Großer Schritt zurück in High Lunge, hinteres Knie bleibt angehoben.“<br>„Der Rücken bleibt lang, auch wenn der Oberkörper sinkt — keine Rundung.“</div>"),
+      P("11:00","Runde 1 — kennenlernen, links · 3:00","Gleicher Aufbau, gespiegelt.<div class='cue'>„Gleicher Aufbau, andere Seite.“</div>"),
+      P("14:00","Runde 2 — öffnen, rechts · 3:00",
+        "Gleiche Grundfolge bis Warrior III mit Handunterstützung. Übergang in Half Moon für das rechte Standbein: rechte Hand auf Block oder Boden, linke Hand an die Hüfte. Das linke Bein bleibt nach hinten verlängert, während sich Becken und Brustkorb nach links öffnen. Wieder schließen zurück in Warrior III, dann zurück in High Lunge und Stand.<div class='cue'>„Gleicher Weg wie eben: High Lunge, Oberkörper neigt sich vor, Warrior III mit Handunterstützung.“<br>„Und jetzt neu: rechte Hand auf Block oder Boden, linke Hand an die Hüfte — das hintere Bein bleibt lang, Becken und Brustkorb öffnen sich zur Seite.“<br>„Wieder schließen zurück in Warrior III, dann zurück in High Lunge und Stand.“</div>"),
+      P("17:00","Runde 2 — öffnen, links · 3:00","Gleicher Aufbau, gespiegelt.<div class='cue'>„Gleicher Weg, andere Seite: Warrior III, dann Half Moon nach rechts öffnen.“</div>"),
+      P("20:00","Runde 3 — verbinden, rechts · 3:00",
+        "Gleiche Folge einmal durchlaufen bis zurück zum Stand. Danach: freies Knie nach vorne auf Tabletop-Höhe heben, Eagle Arms im aufrechten Einbeinstand — Arme kreuzen sich vor dem Körper, Unterarme wickeln umeinander — dann lösen. Das ist der Peak der Stunde. <span class='tag ground'>GROUND</span> eine Hand an der Wand, freie Hand an der Hüfte, Knie ohne Eagle Arms. <span class='tag flight'>FLIGHT</span> Zehenspitzenkontakt mit Eagle Arms.<div class='cue'>„Noch einmal die ganze Folge: High Lunge, Warrior III, Half Moon, zurück zum Stand.“<br>„Und jetzt der Peak: freies Knie nach vorne heben, Eagle Arms im aufrechten Einbeinstand — Arme kreuzen sich, Unterarme wickeln umeinander.“<br>„Wer mehr Stütze braucht: eine Hand an der Wand, freie Hand an der Hüfte, ohne Eagle Arms.“<br>„Blick auf einen festen Punkt. Wackelt es, Fuß absetzen und neu aufbauen — kein Kampf um den Stand.“</div>"),
+      P("23:00","Runde 3 — verbinden, links · 3:00","Gleicher Aufbau, gespiegelt.<div class='cue'>„Gleicher Weg, andere Seite — noch einmal der Peak: Eagle Arms im Einbeinstand.“</div>"),
+      P("26:00","Gemeinsamer Abschluss · 1:00","Beide Füße abstellen, Arme lösen, lockere Schritte auf der Stelle.<div class='cue'>„Beide Füße abstellen, kurz ausschütteln.“</div>"),
+    ]},
+    {name:"EXPLORE", range:"27–35", start:1620, blocks:[
+      P("27:00","Seitliches Pendeln · 3:00","Gewicht auf das rechte Bein verlagern, linker Fuß tippt heran, darf dabei kurz schweben — der rechte Standfuß bleibt am Boden. Spiegeln zur anderen Seite. Arme schwingen mit dem Impuls mit.<div class='cue'>„Gewicht aufs rechte Bein, linker Fuß tippt heran — er darf kurz schweben, der Standfuß bleibt am Boden.“<br>„Arme schwingen locker mit. Spiegeln zur anderen Seite.“<br>„Zum Schluss wieder mit mehr Zehenkontakt arbeiten.“</div>"),
+      P("30:00","Kleine Richtungswechsel · 3:00","Ein Standbein trägt, der andere Fuß tippt nach vorne, dann seitlich, dann zurück — zwei langsame Folgen je Seite, Hände an den Hüften oder an der Wand. Zum Schluss beide Füße belasten, Gewichtsverlagerung wird bewusst kleiner.<div class='cue'>„Ein Standbein trägt, der andere Fuß tippt — vor, seitlich, zurück.“<br>„Vor, seitlich, zurück — der Standfuß bleibt ruhig. Zwei Folgen je Seite.“<br>„Zum Schluss beide Füße belasten, die Verlagerung wird bewusst kleiner.“</div>"),
+      P("33:00","Übergang zum Boden · 2:00","Über einen unterstützten Ausfallschritt — Hände setzen neben den vorderen Fuß — in den Kniestand, seitlich zum Sitz kommen, weiter in die Rückenlage. Füße aufstellen, kurz nachspüren.<div class='cue'>„Hände setzen neben den vorderen Fuß, in den Kniestand kommen.“<br>„Seitlich zum Sitz, dann in die Rückenlage — kontrolliert, kein Fallenlassen.“</div>"),
+    ]},
+    {name:"MELT", range:"35–54", start:2100, blocks:[
+      P("35:00","Kniekreise rechts · 2:00","Rechtes Bein angewinkelt zum Körper nehmen, mit beiden Händen hinter dem Oberschenkel oder Schienbein unterstützen, kleine Kreise des Knies zulassen. Linker Fuß bleibt aufgestellt.<div class='cue'>„Rechtes Bein angewinkelt zum Körper, Hände hinter dem Oberschenkel oder Schienbein.“<br>„Kleine Kreise, die Hände führen sanft.“</div>"),
+      P("37:00","Kniekreise links · 2:00","Seitenwechsel, gleicher Aufbau.<div class='cue'>„Seitenwechsel.“</div>"),
+      P("39:00","Happy Baby · 3:00","Knie Richtung Achseln, Hände an die Fußaußenkanten oder Oberschenkelrückseiten. Zunächst sanft seitlich wiegen, dann Bewegung verkleinern und kurz ruhig werden.<div class='cue'>„Knie Richtung Achseln, Hände an die Fußaußenkanten oder Oberschenkelrückseiten.“<br>„Sanft seitlich wiegen, dann kleiner werden lassen und kurz ruhig werden.“</div>"),
+      P("42:00","Figure Four rechts · 2:00","Rückenlage, rechten Knöchel auf das linke Knie, Hände fassen hinter den linken Oberschenkel, Knie sanft Richtung Brust.<div class='cue'>„Knie sanft Richtung Brust, Knöchel bleibt aktiv.“</div>"),
+      P("44:00","Figure Four links · 2:00","Seitenwechsel. Beide Füße kurz abstellen vor dem Wechsel.<div class='cue'>„Seitenwechsel.“</div>"),
+      P("46:00","Reclined Butterfly · 3:00","Fußsohlen zusammen, Knie sinken nach außen. Ruhig werden, anschließend Knie mit den Händen sanft zusammenführen. <span class='tag ground'>GROUND</span> Kissen oder Block unter beide Knie, wenn dort Zug entsteht.<div class='cue'>„Fußsohlen zusammen, die Knie sinken von selbst nach außen — nicht drücken.“<br>„Ruhig werden. Am Ende die Knie sanft mit den Händen zusammenführen.“</div>"),
+      P("49:00","Rückenlage — Knie nach rechts · 2:00","Beide Knie zur rechten Seite ablegen, Arme in T-Position, Blick darf gegenüberliegend folgen.<div class='cue'>„Schultern bleiben schwer, während die Knie sinken.“</div>"),
+      P("51:00","Rückenlage — Knie nach links · 2:00","Bewusster Rückweg durch die Mitte, dann Seitenwechsel.<div class='cue'>„Rückweg durch die Mitte, dann wechseln.“</div>"),
+      P("53:00","Neutralisieren · 1:00","Beide Füße aufstellen, Beine nacheinander bequem ablegen.<div class='cue'>„Beine nacheinander ablegen, ganz bequem.“</div>"),
+    ]},
+    {name:"REST", range:"54–60", start:3240, blocks:[
+      P("54:00","Savasana · 6:00","Vollständige Ruhe. Letzte Minute behutsam reaktivieren — Finger und Zehen bewegen — und über die Seite zum Sitz kommen.<div class='cue'>„Nichts mehr zu tun, nichts mehr zu halten.“</div>"),
+    ]},
+  ],
+  cards:[
+    {label:"FUSSKONTAKT", phase:"AWAKEN", time:"0:00", title:"Gewichtsverlagerung → Fersenheben → Tree Prep → Standwaage-Vorbereitung", body:"Balance entwickelt sich aus Gewichtsverlagerung, nicht aus Anspannung."},
+    {label:"WARRIOR III", phase:"FLOW", time:"8:00", title:"High Lunge → Warrior III mit Handunterstützung", body:"Runde 1 — langsames Kennenlernen des zentralen Übergangs."},
+    {label:"HALF MOON", phase:"FLOW", time:"14:00", title:"Warrior III → Half Moon", body:"Runde 2 — Becken und Brustkorb öffnen sich seitlich."},
+    {label:"EAGLE ARMS", phase:"FLOW", time:"20:00", title:"Warrior III → Half Moon → Einbeinstand mit Eagle Arms", body:"Der Peak — Eagle Arms erst nach kontrolliertem Aufrichten, nicht während Half Moon."},
+    {label:"PENDELN", phase:"EXPLORE", time:"27:00", title:"Seitliches Pendeln → kleine Richtungswechsel", body:"Reduzierte Intensität, Standfuß bleibt immer am Boden."},
+    {label:"KNIEKREISE", phase:"MELT", time:"35:00", title:"Kniekreise → Happy Baby → Figure Four → Reclined Butterfly", body:"Die Beine, die eben trugen, dürfen sich jetzt öffnen."},
+    {label:"TWIST", phase:"MELT", time:"49:00", title:"Rückenlage — Knie nach rechts/links", body:"Bewusster Rückweg durch die Mitte zwischen den Seiten."},
+    {label:"REST", phase:"REST", time:"54:00", title:"Savasana · 6 Min.", body:"Vollständige Ruhe."},
+  ]},
+
+spiral: { label:"Spiral", theme:"Drehen. Aufrichten. Kraft verbinden.", color:"#6a4a6a",
+  memory:["ARMSCHWINGEN","CAT-COW","LOW LUNGE ROTATION","HIGH LUNGE ROTATION","TWISTED CHAIR","TWISTED TRIANGLE","THREAD THE NEEDLE","SITZENDE ROTATION","TWIST","REST"],
+  phases:[
+    {name:"AWAKEN", range:"0–8", start:0, blocks:[
+      P("0:00","Lockeres Armschwingen · 2:00","Hüftbreiter Stand, sanfte Rumpfdrehungen von Seite zu Seite. Arme schwingen mit der Drehung mit; Füße und Fersen dürfen der Bewegung folgen.<div class='cue'>„Locker, locker — die Arme fliegen einfach mit.“</div>"),
+      P("2:00","Standing Cat–Cow und Aufrichtung · 2:00","Hände auf den Oberschenkeln, Rücken runden und verlängern ×6. Anschließend aufrichten, Arme seitlich öffnen und wieder schließen.<div class='cue'>„Runden, verlängern — dann aufrichten und öffnen.“</div>"),
+      P("4:00","Diagonales Reichen · 2:00","Breiter Stand, Gewicht rechts/links verlagern. Jeweils ein Arm reicht diagonal über den Körper zur gegenüberliegenden Seite, Rückkehr zur Mitte — viermal je Seite.<div class='cue'>„Breiter Stand, Gewicht rechts und links verlagern.“<br>„Ein Arm reicht diagonal über den Körper, die Drehung kommt aus der Mitte — zurück zur Mitte. Viermal je Seite.“</div>"),
+      P("6:00","Rotation im kurzen Ausfallschritt · 2:00","Ein Fuß einen kurzen Schritt zurück, hintere Ferse angehoben. Hände vor dem Brustbein, Brustkorb dreht sich zum vorderen Bein und zurück — viermal je Seite. Kleine Bewegung als Vorbereitung, keine große Drehung.<div class='cue'>„Kurzer Schritt zurück, hintere Ferse angehoben, Hände vor dem Brustbein.“<br>„Klein bleiben — das ist Vorbereitung, keine große Drehung. Viermal je Seite.“</div>"),
+    ]},
+    {name:"FLOW", range:"8–27", start:480, blocks:[
+      P("8:00","Runde 1 — kennenlernen, rechts · 3:00",
+        "Stand → Chair → Fold (Oberkörper hängt über den Beinen) → großer Schritt zurück in Low Lunge → offene Rotation zum vorderen Bein: gegenüberliegende Hand setzt am Boden oder auf einem Block innen neben dem vorderen Fuß, anderer Arm dreht zur Decke, Brustkorb öffnet sich → zurück zur Mitte, beide Hände am Boden → High Lunge, hinteres Knie hebt → Hände zum Boden → Fuß nach vorne → Fold → Stand.<div class='cue'>„Chair, dann Fold — und ein großer Schritt zurück in den Low Lunge.“<br>„Die innere Hand setzt neben den vorderen Fuß, der andere Arm dreht zur Decke — die Drehung kommt aus dem Brustkorb, nicht aus dem Ziehen am Boden.“<br>„Zurück zur Mitte, beide Hände am Boden, hoch in den High Lunge.“<br>„Und zurück über Fold in den Stand — rechte Seite fertig.“</div>"),
+      P("11:00","Runde 1 — kennenlernen, links · 3:00","Gleicher Aufbau, gespiegelt.<div class='cue'>„Gleicher Weg, andere Seite: Chair, Fold, Low Lunge, offene Rotation, zurück über High Lunge und Fold.“</div>"),
+      P("14:00","Runde 2 — Kraft hinzufügen, rechts · 3:00",
+        "Gleiche Route bis High Lunge. Im High Lunge Hände vor dem Brustbein, Oberkörper leicht nach vorne neigen und zum vorderen Bein drehen. Entdrehen → High Lunge → Rückweg über Fold zum Stand. <span class='tag flight'>FLIGHT</span> optional gegenüberliegenden Ellbogen außen an den Oberschenkel setzen, wer stabil im High Lunge steht.<div class='cue'>„Gleiche Route wie eben, bis zum High Lunge.“<br>„Hände vor dem Brustbein, Oberkörper neigt sich und dreht zum vorderen Bein — die Drehung bekommt jetzt mehr Widerstand aus dem eigenen Körper.“<br>„Entdrehen, zurück in den High Lunge, dann über Fold zurück in den Stand.“</div>"),
+      P("17:00","Runde 2 — Kraft hinzufügen, links · 3:00","Gleicher Aufbau, gespiegelt.<div class='cue'>„Gleicher Weg, andere Seite: High Lunge, Drehung mit Widerstand, Entdrehen, zurück über Fold.“</div>"),
+      P("20:00","Runde 3 — verbinden, rechts · 3:00",
+        "Gleiche Route, ein Durchgang. Nach der Rückkehr zum Stand: Chair → Twisted Chair zur rechten Seite (gegenüberliegender Ellbogen außen am gegenüberliegenden Oberschenkel, Hände vor dem Brustbein oder gefaltet) → Mitte → aufrichten. Pro Drehposition zwei bis drei ruhige Atemzüge halten — die Verbindung der ganzen Route bildet den Peak.<div class='cue'>„Noch einmal die ganze Route: Low Lunge Rotation, High Lunge Drehung, zurück zum Stand.“<br>„Und jetzt der Peak: Chair, dann Twisted Chair zur rechten Seite — gegenüberliegender Ellbogen außen am Oberschenkel.“<br>„Zwei, drei Atemzüge in jeder Drehung — dann zurück zur Mitte, aufrichten.“</div>"),
+      P("23:00","Runde 3 — verbinden, links · 3:00","Gleicher Aufbau, gespiegelt.<div class='cue'>„Gleicher Weg, andere Seite — noch einmal der Peak: Twisted Chair zur linken Seite.“</div>"),
+      P("26:00","Gemeinsamer Abschluss · 1:00","Aufrichten, Arme lösen, lockere Drehschwünge im Stand.<div class='cue'>„Arme lösen, locker drehen.“</div>"),
+    ]},
+    {name:"EXPLORE", range:"27–35", start:1620, blocks:[
+      P("27:00","Unterstütztes Twisted Triangle rechts · 2:00","Aus dem Stand linken Fuß in einen kürzeren Schritt zurücksetzen, rechter Fuß bleibt vorn. Oberkörper über das vordere (rechte) Bein nach vorne verlängern, linke Hand auf Block oder Boden. Brustkorb dreimal zur rechten Seite öffnen und zur Mitte zurückführen. Vorderes Knie darf weich bleiben.<div class='cue'>„Linken Fuß kurz zurücksetzen, rechter Fuß bleibt vorn — Oberkörper verlängert sich über das vordere Bein.“<br>„Linke Hand auf Block oder Boden — die Hand trägt Gewicht ab, keine Kraftprobe.“<br>„Brustkorb öffnet sich dreimal zur rechten Seite und zurück zur Mitte.“</div>"),
+      P("29:00","Unterstütztes Twisted Triangle links · 2:00","Seitenwechsel, entsprechend gespiegelt: rechten Fuß zurücksetzen, linker Fuß bleibt vorn, rechte Hand auf Block oder Boden, Brustkorb öffnet zur linken Seite. Kein langer Hold, keine zusätzliche Balanceaufgabe.<div class='cue'>„Seitenwechsel, gleicher Aufbau — rechter Fuß zurück, rechte Hand auf Block oder Boden.“</div>"),
+      P("31:00","Freie Spiralen · 2:00","Breiter Stand. Seitliche Gewichtsverlagerung und Armschwung verbinden sich zu einer Drehbewegung, Füße dürfen mitdrehen. Große Bögen werden über die zwei Minuten bewusst kleiner, bis die Arme auspendeln.<div class='cue'>„Breiter Stand, Gewichtsverlagerung und Armschwung verbinden sich zur Drehung — die Füße dürfen mitdrehen.“<br>„Große Bögen werden kleiner — folgt dem eigenen Auspendeln.“</div>"),
+      P("33:00","Übergang zum Boden · 2:00","Über Fold und einen unterstützten Ausfallschritt in den Vierfüßler. Zwei bis drei kleine Cat–Cow-Bewegungen, dann neutrale Wirbelsäule.<div class='cue'>„Hände absetzen, hinteres Knie ablegen, in den Vierfüßler kommen.“</div>"),
+    ]},
+    {name:"MELT", range:"35–54", start:2100, blocks:[
+      P("35:00","Thread the Needle rechts · 2:00","Vierfüßler. Zunächst zweimal: rechter Arm öffnet zur Decke und fährt unter dem linken Arm hindurch. Danach Schulter und Schläfe ablegen, ruhig werden.<div class='cue'>„Der Arm fädelt hindurch, Schulter und Schläfe sinken.“</div>"),
+      P("37:00","Thread the Needle links · 2:00","Über die Stützhand wieder zurückkommen, Seitenwechsel.<div class='cue'>„Seitenwechsel.“</div>"),
+      P("39:00","Sitzende Rotation rechts · 2:00","Bequemer Sitz, Hände locker an Brustbein oder Schultern. Dreimal zur rechten Seite drehen und zurück, Bewegung anschließend verkleinern.<div class='cue'>„Die Drehung kommt aus der Wirbelsäule, nicht aus den Armen.“</div>"),
+      P("41:00","Sitzende Rotation links · 2:00","Seitenwechsel, gleicher Aufbau. Kein Ziehen über die Hände — die Drehung kommt aus der Wirbelsäule.<div class='cue'>„Seitenwechsel.“</div>"),
+      P("43:00","Reclined Chest Opener · 3:00","Über die Seite in Rückenlage kommen. Füße aufgestellt, Arme bequem in Kaktusposition oder weiter unten ablegen — ruhiger Gegenpol zur bisherigen Drehbewegung.<div class='cue'>„Über die Seite in die Rückenlage kommen, Füße aufstellen.“<br>„Arme bequem ablegen, Kaktusposition oder weiter unten — ein ruhiger Gegenpol. Die Drehung darf jetzt ruhen.“</div>"),
+      P("46:00","Rückenlage — Knie nach rechts · 2:00","Knie zur rechten Seite ablegen, bei Bedarf mit Kissen oder Block unterstützen.<div class='cue'>„Schultern bleiben schwer.“</div>"),
+      P("48:00","Rückenlage — Knie nach links · 2:00","Zurück zur Mitte, dann Seitenwechsel.<div class='cue'>„Rückweg durch die Mitte.“</div>"),
+      P("50:00","Kleine Knee Sways · 3:00","Füße aufgestellt, Knie langsam rechts/links pendeln. Der Bewegungsweg wird über die drei Minuten zunehmend kleiner.<div class='cue'>„Der Bewegungsweg wird über die Zeit immer kleiner.“</div>"),
+      P("53:00","Neutralisieren · 1:00","Knie zur Mitte, Beine bequem ablegen, Arme lösen.<div class='cue'>„Knie zur Mitte, Beine ablegen.“</div>"),
+    ]},
+    {name:"REST", range:"54–60", start:3240, blocks:[
+      P("54:00","Savasana · 6:00","Neutrale, bequeme Rückenlage. Letzte Minute reaktivieren und über die Seite zum Sitz kommen.<div class='cue'>„Nichts mehr zu tun.“</div>"),
+    ]},
+  ],
+  cards:[
+    {label:"ARMSCHWINGEN", phase:"AWAKEN", time:"0:00", title:"Armschwingen → Cat-Cow → diagonales Reichen → kurze Rotation", body:"Lockere Drehimpulse als Vorbereitung."},
+    {label:"LOW LUNGE ROTATION", phase:"FLOW", time:"8:00", title:"Low Lunge mit offener Rotation, beide Seiten", body:"Runde 1 — die Drehung kommt aus dem Brustkorb."},
+    {label:"HIGH LUNGE ROTATION", phase:"FLOW", time:"14:00", title:"High Lunge mit geschlossener Rotation", body:"Runde 2 — Kraft kommt hinzu."},
+    {label:"TWISTED CHAIR", phase:"FLOW", time:"20:00", title:"Gesamte Route → Twisted Chair", body:"Der Peak — Verbindung der ganzen Route mit gehaltener Drehung."},
+    {label:"TWISTED TRIANGLE", phase:"EXPLORE", time:"27:00", title:"Unterstütztes Twisted Triangle, beide Seiten", body:"Kein langer Hold, keine zusätzliche Balanceaufgabe."},
+    {label:"THREAD THE NEEDLE", phase:"MELT", time:"35:00", title:"Thread the Needle → sitzende Rotation", body:"Rotation läuft in kleinere Bodenbewegungen aus."},
+    {label:"TWIST", phase:"MELT", time:"46:00", title:"Rückenlage — Knie nach rechts/links", body:"Letzte Drehung vor der Stille."},
+    {label:"REST", phase:"REST", time:"54:00", title:"Savasana · 6 Min.", body:"Neutrale Rückenlage."},
   ]},
 
 unleashed: { label:"Unleashed", theme:"Kraft. Kontrolle. Keine angezogene Handbremse.", color:"#a13a2f",
@@ -21458,12 +21684,125 @@ underpressure: { label:"Under Pressure", theme:"Konsequenter Forearm-Aufbau bis 
 };
 
 const CATEGORY_JOURNEYS = {
-  joga: ["morning","evening","energy","qigongyin","yin","unleashed","airborne","underpressure"],
+  joga: ["morning","evening","energy","qigongyin","yin","groundedpower","wave","balance","spiral","unleashed","airborne","underpressure"],
   pilates: ["menspilates","mensreformer","pilatesrolle","holdtheline","chakrapilates"],
 };
 function journeyCategory(journeyKey){
   if(CATEGORY_JOURNEYS.pilates.includes(journeyKey)) return "pilates";
   return "joga"; // JIN-Journeys, custom Builder-Journeys und Fallback
+}
+
+// ===================== ZENTRALE KLASSENAUSWAHL =====================
+const NAV_GROUPS = [
+  { key:"energy", label:"Energy", journeys:["energy","groundedpower","wave","balance","spiral"] },
+  { key:"morningevening", label:"Morning / Evening", journeys:["morning","evening"] },
+  { key:"qijinyin", label:"QIJIN / Yin", journeys:["qigongyin","yin"] },
+  { key:"power", label:"Power Athletic", journeys:["unleashed","airborne","underpressure"] },
+  { key:"pilates", label:"Pilates", journeys:["menspilates","mensreformer","pilatesrolle","holdtheline","chakrapilates"] },
+];
+function customJourneyKeys(){
+  const known = NAV_GROUPS.flatMap(g=>g.journeys);
+  return Object.keys(DATA).filter(k=> !known.includes(k));
+}
+function groupOf(journeyKey){
+  return NAV_GROUPS.find(g=> g.journeys.includes(journeyKey));
+}
+function loadFavorites(){ return loadWB("jin-favorites", []); }
+function saveFavorites(arr){ saveWB("jin-favorites", arr); }
+function classRowHtml(key, isFav){
+  const j = DATA[key];
+  if(!j) return "";
+  return `<div class="cp-row" role="button" tabindex="0" data-key="${key}">
+    <button type="button" class="cp-star ${isFav?'active':''}" data-key="${key}" aria-label="${isFav?'Favorit entfernen':'Als Favorit merken'}">${isFav?'★':'☆'}</button>
+    <span class="cp-name">${j.label}</span>
+  </div>`;
+}
+function renderClassPickerBody(){
+  const body = document.getElementById("classPickerBody");
+  if(!body) return;
+  const searchEl = document.getElementById("classSearchInput");
+  const query = (searchEl && searchEl.value || "").toLowerCase().trim();
+  const favs = loadFavorites();
+  const matches = key => !query || (DATA[key] && DATA[key].label.toLowerCase().includes(query));
+  let html = "";
+  const favKeys = favs.filter(k=> DATA[k] && matches(k));
+  if(favKeys.length){
+    html += `<div class="cp-group"><div class="cp-grouplabel">★ Favoriten</div>` +
+      favKeys.map(k=> classRowHtml(k, true)).join("") + `</div>`;
+  }
+  NAV_GROUPS.forEach(g=>{
+    const keys = g.journeys.filter(matches);
+    if(!keys.length) return;
+    html += `<div class="cp-group"><div class="cp-grouplabel">${g.label}</div>` +
+      keys.map(k=> classRowHtml(k, favs.includes(k))).join("") + `</div>`;
+  });
+  const customKeys = customJourneyKeys().filter(matches);
+  if(customKeys.length){
+    html += `<div class="cp-group"><div class="cp-grouplabel">Eigene Klassen</div>` +
+      customKeys.map(k=> classRowHtml(k, favs.includes(k))).join("") + `</div>`;
+  }
+  body.innerHTML = html || `<div class="cp-empty">Keine Klasse gefunden.</div>`;
+  body.querySelectorAll(".cp-row").forEach(row=>{
+    const activate = ()=>{
+      switchJourney(row.dataset.key);
+      closeClassPicker();
+      render();
+    };
+    row.onclick = (e)=>{
+      if(e.target.closest(".cp-star")) return;
+      activate();
+    };
+    row.onkeydown = (e)=>{
+      if(e.target.closest(".cp-star")) return;
+      if(e.key==="Enter" || e.key===" "){ e.preventDefault(); activate(); }
+    };
+  });
+  body.querySelectorAll(".cp-star").forEach(star=>{
+    star.onclick = (e)=>{
+      e.stopPropagation();
+      const key = star.dataset.key;
+      let f = loadFavorites();
+      f = f.includes(key) ? f.filter(x=>x!==key) : [...f, key];
+      saveFavorites(f);
+      renderClassPickerBody();
+    };
+  });
+}
+function openClassPicker(){
+  const overlay = document.getElementById("classPickerOverlay");
+  const searchEl = document.getElementById("classSearchInput");
+  if(!overlay) return;
+  overlay.style.display = "flex";
+  if(searchEl){ searchEl.value = ""; searchEl.focus(); }
+  renderClassPickerBody();
+}
+function closeClassPicker(){
+  const overlay = document.getElementById("classPickerOverlay");
+  if(overlay) overlay.style.display = "none";
+}
+function updateClassTrigger(){
+  const grpEl = document.getElementById("currentClassGroup");
+  const nameEl = document.getElementById("currentClassName");
+  if(!grpEl || !nameEl) return;
+  if(state.journey==="core"||state.journey==="study"||state.journey==="builder"){
+    const labels = {core:"Grundlagen", study:"Nacharbeit", builder:"Erstellen"};
+    grpEl.textContent = "Werkzeuge";
+    nameEl.textContent = labels[state.journey];
+    return;
+  }
+  const j = DATA[state.journey];
+  if(!j) return;
+  const grp = groupOf(state.journey);
+  grpEl.textContent = grp ? grp.label : "Eigene Klassen";
+  nameEl.textContent = j.label;
+}
+// buildJourneyTabs bleibt als Name erhalten (wird u. a. vom Builder nach dem
+// Speichern/Löschen eigener Journeys aufgerufen) und aktualisiert jetzt die
+// Klassenauswahl, statt eine alte Tab-Leiste neu zu bauen.
+function buildJourneyTabs(){
+  const overlay = document.getElementById("classPickerOverlay");
+  if(overlay && overlay.style.display!=="none") renderClassPickerBody();
+  updateClassTrigger();
 }
 
 const CORE = {
@@ -21770,6 +22109,10 @@ const GENERATOR_RULES = {
   chakrapilates: "Diese Class nutzt sieben Zentren als körperliche Dramaturgie, nicht als esoterischen Vortrag. Im sichtbaren Unterrichtstext stehen die funktionalen Namen (Wurzel · Root, Sakral · Sacral, Solarplexus · Power, Herz · Heart, Kehle · Expression, Stirn · Focus, Krone · Integration) — Sanskrit-Namen nur als Klammerzusatz, nie als Hauptbegriff. Keine Wirkungsversprechen wie „öffnet Energiekanäle“ oder „löst Blockaden“. Solarplexus (14–24 Min.) ist der erste Kraft-Peak, Krone (47–55 Min.) der Integrations-Peak — der Teaser dort ist kein neuer Skill, seine Basis (Half Roll Back) wird bereits bei Solarplexus gelegt; keine Übung darf im letzten Drittel zum ersten Mal auftauchen. Größere Positionswechsel (z. B. Stand → Rückenlage, Boden → Stand) müssen explizit geführt werden, nie implizit angenommen. Optionen in jedem Block, nie als Anfänger/Fortgeschritten benannt. Alle Zeitangaben verstehen sich einschließlich Aufbau, Optionen und Positionswechsel.",
   airborne: "Diese Class ist für bewegungserfahrene Teilnehmende: schneller Flow, diagonale Core-Arbeit, tiefe Hüftöffnung, Grasshopper, Rückbeugen und freie, bereits bekannte Inversionspraxis — keine neue Inversion wird gelehrt. Im sichtbaren Unterrichtstext gilt dieselbe funktionale JOGA-Sprache wie bei Unleashed, erweitert um Low Line, Low Open Line (Cobra), Full Open Line (Upward Dog), Rising Lunge, Long Triangle (Trikonasana), Side Squat (Skandasana), Flow Link (Vinyasa), Half Arc/Full Arc, Staff Sit, Fersensitz (nie „Heldensitz“) — Sanskrit nur als Klammerzusatz. Wiederholungen und Rundenzahl immer explizit nennen, nie implizit lassen. Sprünge/Schritte zwischen Positionen (z. B. in die Low Line) müssen benannt werden, nicht nur die Endpositionen. Bei Full Arc als Stoppsignal ausschließlich Schmerz/Kribbeln/Taubheit/unangenehmer Druck nennen — „Zug“ ist bei Rückbeugen kein brauchbares Abbruchsignal. Vor Inversionen und Grasshopper-Elementen ausdrücklich Raum-Check ansagen. Finale verdichtet nur Bekanntes, keine neue Technik im letzten Drittel.",
   underpressure: "Diese Class ist für bewegungserfahrene Teilnehmende: konsequenter Forearm-Aufbau bis zum Forearm Stand (Pincha Mayurasana) als klarer Peak. Gleiche JOGA-Sprache wie Airborne, zusätzlich Humble Lunge (Humble Warrior), Straight Lunge Fold, Open Balance (Half Moon), Wide Lizard (Lizard), Forearm Stand (Pincha Mayurasana). Das Pincha Lab folgt zwingend der Reihenfolge Ground → Build → Wall → Flight — die Wand kommt erst nach Ground/Build, nie als früher Solo-Drill ohne Wand. Wandabstand der Hände: 10–20 cm, nie „eine Beinlänge“. Vor jedem Wall-Versuch: Kick-Radius hinter der Person muss frei sein, alle üben in dieselbe Richtung. Der freie Flight-Track ist ausschließlich für sicher beherrschte eigene Ausstiegstechnik — ein seitlicher Cartwheel-Ausstieg ist dort erlaubt, kein pauschales „nicht seitlich abkippen“. In der 45-Minuten-Fassung ist Pincha der alleinige Peak: Push-ups und Full Arc entfallen ersatzlos, die gewonnene Zeit bleibt vollständig im Pincha Lab.",
+  groundedpower: "Diese Energy-Alternative baut Beinarbeit über eine feste Kette auf (Chair → Low Lunge → Warrior II → Side Angle, beide Seiten), der Kraft-Peak liegt in EXPLORE als vier bekannte Holds (Warrior II re/li, Horse, Chair) — danach wird bewusst reduziert, keine weitere Steigerung nach dem Peak. Rückweg von Side Angle zu Warrior II und zurück zum Stand muss explizit beschrieben werden, nicht nur die Endpositionen.",
+  wave: "Diese Energy-Alternative lebt von einer wiederkehrenden Wellenfolge (Fold → Half Lift → Plank → Ground- oder Flight-Weg → Down Dog → zurück), die in FLOW mehrfach durchlaufen wird — beide Bodentracks (Ground über Bauchlage, Flight über Chaturanga) müssen bei jeder Erwähnung gleichwertig bleiben. Der Ausklang ist bewusst lang (siehe Ruhephasen-Hinweis im Stundentext) — das ist gewollt, nicht zu kürzen oder als Fehler zu behandeln.",
+  balance: "Diese Energy-Alternative entwickelt Balance stufenweise: Grundfolge (High Lunge → Warrior III) → Half Moon → aufrechte Balance mit Eagle Arms als Peak in Runde 3 von FLOW. Nach diesem Peak folgt in EXPLORE bewusst keine weitere Steigerung, nur Reduktion Richtung Boden — kein zusätzliches Balance-Element nach dem Peak einführen.",
+  spiral: "Diese Energy-Alternative entwickelt Rotation stufenweise: offene Rotation (Low Lunge) → belastete Rotation (High Lunge, mehr Widerstand aus dem Körper) → Verbindung mit Twisted Chair als Peak in Runde 3 von FLOW. Das unterstützte Twisted Triangle in EXPLORE ist bewusst kein zusätzlicher Balance-Peak — kein langer Hold, keine zusätzliche Balanceaufgabe dort einführen.",
 };
 function generatorRulesFor(journeyKey){
   if(journeyKey==="unleashed") return GENERATOR_RULES.unleashed;
@@ -21780,6 +22123,7 @@ function generatorRulesFor(journeyKey){
   if(journeyKey==="pilatesrolle") return GENERATOR_RULES.pilatesrolle;
   if(journeyKey==="holdtheline") return GENERATOR_RULES.holdtheline;
   if(journeyKey==="chakrapilates") return GENERATOR_RULES.chakrapilates;
+  if(GENERATOR_RULES[journeyKey]) return GENERATOR_RULES.jin + " " + GENERATOR_RULES[journeyKey];
   return GENERATOR_RULES.jin;
 }
 
@@ -21821,12 +22165,13 @@ function getActivePhases(journeyKey){
 // Journeys, die mit doppeltem Vokabular arbeiten (funktionaler JOGA-Begriff im
 // Fließtext, klassischer Name nur als Klammer-Hinweis gedacht). Für diese
 // Journeys kann zwischen JOGA- und Yoga-Sprache umgeschaltet werden.
-const VOCAB_JOURNEYS = ["unleashed","airborne","underpressure","morning","evening","energy","qigongyin","yin"];
+const VOCAB_JOURNEYS = ["unleashed","airborne","underpressure","morning","evening","energy","qigongyin","yin","groundedpower","wave","balance","spiral"];
 // "joga" = Text ist bereits in JOGA-Funktionssprache verfasst (Unleashed/Airborne/Under Pressure).
-// "yoga" = Text ist bereits in klassischer Yoga-Sprache verfasst (die fünf Original-JIN-Journeys).
+// "yoga" = Text ist bereits in klassischer Yoga-Sprache verfasst (die JIN-Journeys, inkl. der vier Energy-Alternativen).
 const VOCAB_NATIVE = {
   unleashed:"joga", airborne:"joga", underpressure:"joga",
   morning:"yoga", evening:"yoga", energy:"yoga", qigongyin:"yoga", yin:"yoga",
+  groundedpower:"yoga", wave:"yoga", balance:"yoga", spiral:"yoga",
 };
 const JOGA_TO_YOGA = {
   "Power Squat":"Chair (Utkatasana)",
@@ -21922,6 +22267,11 @@ function getDisplayJourney(journeyKey){
   if(!durSet || !durSet.phases) return base;
   const activePhases = getActivePhases(journeyKey);
   const merged = Object.assign({}, base, durSet, { phases: activePhases || durSet.phases });
+  if(activePhases){
+    // Eine KI-Variante ist aktiv: die Original-Karten passen nicht mehr zu den geänderten
+    // Phasen, deshalb werden frische Karten direkt aus der Variante abgeleitet.
+    merged.cards = deriveCardsFromPhases({phases: activePhases});
+  }
   return transformJourneyVocab(merged, journeyKey);
 }
 function ensureDraft(journeyKey){
@@ -21937,12 +22287,16 @@ function ensureDraft(journeyKey){
 async function aiSuggestBlock(journeyKey, phaseName, originalBlock, siblingTitles, durationSec){
   const j = DATA[journeyKey];
   const rules = generatorRulesFor(journeyKey);
+  const origPlain = originalBlock ? String(originalBlock.body||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim() : "";
+  const origContext = originalBlock
+    ? "Zu ersetzende Original-Übung: \"" + (originalBlock.title||"") + "\" — " + origPlain
+    : "";
   const res = await fetch("/.netlify/functions/joga", {
     method: "POST", headers:{"Content-Type":"application/json"},
     body: JSON.stringify({ type:"jin_move_suggestion", params:{
       phase: phaseName,
       journeyLabel: j.label,
-      journeyTheme: j.theme + " | Regeln: " + rules + " | Ersetze diese eine Übung, behalte die Dauer bei, vermeide Wiederholung von: " + siblingTitles.join(", "),
+      journeyTheme: j.theme + " | Regeln: " + rules + " | " + origContext + " | Ersetze diese eine Übung, behalte die Dauer und den methodischen Zweck bei, vermeide Wiederholung von: " + siblingTitles.join(", "),
       existingTitles: siblingTitles,
       remainingTime: secToTime(durationSec || 120),
       provider:"claude"
@@ -22023,16 +22377,48 @@ document.getElementById("cueToggle").onclick=()=>{
 };
 applyCueBtn();
 
-const journeytabsEl = document.getElementById("journeytabs");
 loadCustomJourneys();
 buildJourneyTabs();
 
+function switchJourney(newKey){
+  if(state.journey===newKey) return;
+  state.journey = newKey;
+  if(newKey!=="core" && newKey!=="study" && newKey!=="builder"){
+    state.category = journeyCategory(newKey);
+  }
+  state.timer.running = false;
+  clearInterval(state.timer.interval);
+  state.timer.elapsed = 0;
+  state.flashIndex = 0;
+  state.flashFlipped = false;
+  ttsStop();
+  ttsLastSpokenKey = null;
+  ttsInterruptedKey = null;
+}
 document.querySelectorAll(".modebtn").forEach(b=>{
   b.onclick=()=>{ state.mode=b.dataset.mode; render(); };
 });
 document.querySelectorAll("nav.bottom button").forEach(b=>{
-  b.onclick=()=>{ if(b.dataset.j==="core"){ state.journey="core"; } else { state.journey=b.dataset.j; if(state.mode==="_core") state.mode="study"; } render(); };
+  b.onclick=()=>{
+    const nav = b.dataset.nav;
+    if(nav==="classes"){ openClassPicker(); return; }
+    switchJourney(nav);
+    render();
+  };
 });
+const classPickerTriggerBtn = document.getElementById("classPickerTrigger");
+if(classPickerTriggerBtn) classPickerTriggerBtn.onclick = openClassPicker;
+const classPickerCloseBtn = document.getElementById("classPickerClose");
+if(classPickerCloseBtn) classPickerCloseBtn.onclick = closeClassPicker;
+const classPickerOverlayEl = document.getElementById("classPickerOverlay");
+if(classPickerOverlayEl) classPickerOverlayEl.onclick = (e)=>{ if(e.target===classPickerOverlayEl) closeClassPicker(); };
+document.addEventListener("keydown", (e)=>{
+  if(e.key==="Escape" && classPickerOverlayEl && classPickerOverlayEl.style.display!=="none"){
+    closeClassPicker();
+  }
+});
+const classSearchInputEl = document.getElementById("classSearchInput");
+if(classSearchInputEl) classSearchInputEl.oninput = renderClassPickerBody;
 
 function fmt(sec){
   sec = Math.max(0, Math.floor(sec));
@@ -22041,23 +22427,11 @@ function fmt(sec){
 }
 
 function render(){
-  document.querySelectorAll(".jtab").forEach(b=> b.classList.toggle("active", b.dataset.j===state.journey));
+  updateClassTrigger();
   document.querySelectorAll("nav.bottom button").forEach(b=>{
-    b.classList.toggle("active", b.dataset.j===state.journey);
-    b.style.display = b.dataset.cat===state.category ? "" : "none";
-  });
-  document.querySelectorAll(".catbtn").forEach(b=>{
-    b.classList.toggle("active", b.dataset.cat===state.category);
-    b.onclick = ()=>{
-      if(state.category===b.dataset.cat) return;
-      state.category = b.dataset.cat;
-      state.journey = CATEGORY_JOURNEYS[state.category][0];
-      state.mode = "study";
-      state.duration = "60";
-      state.timer.running=false; clearInterval(state.timer.interval); state.timer.elapsed=0;
-      buildJourneyTabs();
-      render();
-    };
+    const nav = b.dataset.nav;
+    const isClassesActive = nav==="classes" && !["core","study","builder"].includes(state.journey);
+    b.classList.toggle("active", isClassesActive || nav===state.journey);
   });
 
   const modebar = document.querySelector(".modebar");
@@ -22359,6 +22733,66 @@ const PLAYLISTS = {
       {artist:"Max Richter", title:"Dream 3 (in the midst of my life)"},
     ]},
   ]},
+  groundedpower: { type:"tracks", groups:[
+    { phase:"AWAKEN & FLOW", tracks:[
+      {artist:"Kaleo", title:"Way Down We Go"},
+      {artist:"The Black Keys", title:"Lonely Boy"},
+    ]},
+    { phase:"EXPLORE (Holds)", tracks:[
+      {artist:"Cage the Elephant", title:"Come a Little Closer"},
+      {artist:"Wolfmother", title:"Joker & the Thief"},
+    ]},
+    { phase:"MELT", tracks:[
+      {artist:"Bon Iver", title:"Holocene"},
+      {artist:"Rhye", title:"Open"},
+    ]},
+    { phase:"REST", tracks:[
+      {artist:"Max Richter", title:"Dream 3 (in the midst of my life)"},
+    ]},
+  ]},
+  wave: { type:"tracks", groups:[
+    { phase:"AWAKEN & FLOW", tracks:[
+      {artist:"Bonobo", title:"Cirrus"},
+      {artist:"Jamie xx", title:"Gosh"},
+      {artist:"ODESZA", title:"A Moment Apart"},
+    ]},
+    { phase:"EXPLORE", tracks:[
+      {artist:"Tame Impala", title:"Elephant"},
+      {artist:"Empire of the Sun", title:"Walking on a Dream"},
+    ]},
+    { phase:"MELT & REST", tracks:[
+      {artist:"Ólafur Arnalds", title:"Near Light"},
+      {artist:"Max Richter", title:"Dream 3 (in the midst of my life)"},
+    ]},
+  ]},
+  balance: { type:"tracks", groups:[
+    { phase:"AWAKEN & FLOW", tracks:[
+      {artist:"Rhye", title:"The Fall"},
+      {artist:"Khalid", title:"Better"},
+    ]},
+    { phase:"FLOW (Peak)", tracks:[
+      {artist:"Bonobo", title:"Kerala"},
+      {artist:"Jamie xx", title:"Gosh"},
+    ]},
+    { phase:"MELT & REST", tracks:[
+      {artist:"Nils Frahm", title:"Says"},
+      {artist:"Max Richter", title:"Dream 3 (in the midst of my life)"},
+    ]},
+  ]},
+  spiral: { type:"tracks", groups:[
+    { phase:"AWAKEN & FLOW", tracks:[
+      {artist:"MGMT", title:"Electric Feel"},
+      {artist:"Two Door Cinema Club", title:"What You Know"},
+    ]},
+    { phase:"EXPLORE", tracks:[
+      {artist:"Jungle", title:"Busy Earnin'"},
+      {artist:"Bonobo", title:"Kerala"},
+    ]},
+    { phase:"MELT & REST", tracks:[
+      {artist:"Kiasmos", title:"Blurred"},
+      {artist:"Max Richter", title:"Dream 3 (in the midst of my life)"},
+    ]},
+  ]},
   qigongyin: { type:"tracks", groups:[
     { phase:"Setlist", tracks:[
       {artist:"Ólafur Arnalds", title:"Near Light"},
@@ -22644,14 +23078,17 @@ function renderStudy(main, j){
 async function aiReviewClass(journeyKey, phases){
   const j = DATA[journeyKey];
   const rules = generatorRulesFor(journeyKey);
-  const overview = phases.map(ph => ph.name + ": " + ph.blocks.map(b=> b.time+" "+b.title).join(" | ")).join("\n");
+  const overview = phases.map(ph => ph.name + ":\n" + ph.blocks.map(b=>{
+    const plain = String(b.body||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().slice(0,160);
+    return "  " + b.time + " " + b.title + " — " + plain;
+  }).join("\n")).join("\n");
   const res = await fetch("/.netlify/functions/joga", {
     method: "POST", headers:{"Content-Type":"application/json"},
     body: JSON.stringify({ type:"jin_move_suggestion", params:{
       phase: "GESAMTE STUNDE — QUALITÄTSCHECK",
       journeyLabel: j.label,
-      journeyTheme: j.theme + " | Regeln: " + rules + " | Das ist die komplette generierte Stunde:\n" + overview +
-        "\nPrüfe auf Wiederholungen, Belastungsverteilung über die Stunde, Positionswechsel, Dramaturgie und die genannten Regeln. Antworte NUR mit JSON in der Form {\"flagged\":[{\"phase\":\"<Phasenname>\",\"title\":\"<exakter Übungstitel>\",\"reason\":\"<kurzer Grund>\"}]}. Wenn alles gut ist: {\"flagged\":[]}.",
+      journeyTheme: j.theme + " | Regeln: " + rules + " | Das ist die komplette generierte Stunde mit Bewegungsbeschreibungen:\n" + overview +
+        "\nPrüfe auf unbeabsichtigte Wiederholungen, Belastungsverteilung über die Stunde, Positionswechsel, Dramaturgie und die genannten Regeln. Bewusst wiederholte Lern-/Flow-/Verbindungsrunden derselben Bewegungskette (z. B. \"Runde 1 — kennenlernen\", \"Runde 2 — öffnen\", \"Runde 3 — verbinden\", jeweils rechts und links) sind kein Fehler, sondern methodisch gewollt — flagge diese nicht als Wiederholung. Antworte NUR mit JSON in der Form {\"flagged\":[{\"phase\":\"<Phasenname>\",\"title\":\"<exakter Übungstitel>\",\"reason\":\"<kurzer Grund>\"}]}. Wenn alles gut ist: {\"flagged\":[]}.",
       existingTitles: [],
       remainingTime: "",
       provider:"claude"
@@ -23683,16 +24120,6 @@ function renderBlockCard(pIdx, bIdx, bl){
   };
 
   return card;
-}
-
-function buildJourneyTabs(){
-  journeytabsEl.innerHTML = "";
-  Object.keys(DATA).filter(j=> journeyCategory(j)===state.category).forEach(j=>{
-    const b=document.createElement("button");
-    b.className="jtab"; b.textContent=DATA[j].label; b.dataset.j=j;
-    b.onclick=()=>{ state.journey=j; state.mode="study"; render(); };
-    journeytabsEl.appendChild(b);
-  });
 }
 
 // ---------- Word export ----------
