@@ -380,6 +380,7 @@ function formatDateDE(iso){
 const TRANSIENT_BACKUP_PREFIXES = [
   "build-active-workout",
   "build-rest-ends-at",
+  "build-finisher-start",
   "build-temp-reps:",
   "build-assistance-ui-progress",
   "build-mainlift-progress:",
@@ -481,14 +482,30 @@ const EXERCISES = {
   core_hollow: { name:"Core / Hollow Hold", type:"hold", region:"core", sets:2, timeSec:20,
     cue:"Rückenlage, unterer Rücken in den Boden gedrückt, Arme/Beine leicht angehoben.",
     videoUrl:"https://www.youtube.com/watch?v=0yPin8hSc8o" },
-  shoulder_press: { name:"Shoulder Press", type:"weight", region:"oberkoerper", sets:2, repMin:8, repMax:10, weightStep:2, startWeight:8,
+  // Langhantel-Varianten (Startwerte aus echten Einheiten, Sept 2026). Die
+  // Kurzhantel-/Koerpergewichts-Versionen bleiben als Hotel-/Ersatzuebung erhalten.
+  bb_lunge: { name:"Ausfallschritt (Langhantel)", type:"weight", region:"beine", sets:2, repMin:8, repMax:10, weightStep:2.5, startWeight:40,
+    cue:"Langhantel auf dem Rücken, großer Schritt nach vorn, Knie über dem Fuß, Rumpf aufrecht. Wiederholungen pro Bein." },
+  bb_shoulder_press: { name:"Schulterdrücken (Langhantel)", type:"weight", region:"oberkoerper", sets:2, repMin:8, repMax:10, weightStep:2.5, startWeight:30,
+    cue:"Stange auf Schulterhöhe, Rippen und Gesäß fest, gerade nach oben drücken, Kopf kurz zurück und wieder unter die Stange." },
+  shoulder_press: { name:"DB Shoulder Press", type:"weight", region:"oberkoerper", sets:2, repMin:8, repMax:10, weightStep:2, startWeight:8,
     cue:"Hanteln auf Schulterhöhe, kontrolliert hoch, Rippen und Becken stabil.",
     videoUrl:"https://www.youtube.com/watch?v=guW_ENwLOMI" },
   suitcase_carry: { name:"Suitcase Carry", type:"time", region:"core", sets:2, timeSec:30, weightStep:2, startWeight:16,
     cue:"Eine Hantel einseitig tragen, Rumpf bleibt gerade.",
     videoUrl:"https://www.youtube.com/watch?v=ur4ou6mX7sw" },
 
+  // ---- Extras (optional, nur 40-MIN): eigene Progression, kein Einfluss auf die Tagesbewertung ----
+  bb_curl: { name:"Langhantel-Curl", type:"weight", region:"oberkoerper", sets:3, repMin:10, repMax:12, weightStep:2.5, startWeight:20,
+    cue:"Ellbogen am Körper, ohne Schwung hoch, oben kurz halten, kontrolliert absenken." },
+  skull_crusher: { name:"Skull Crusher (Kurzhantel/SZ-Stange)", type:"weight", region:"oberkoerper", sets:3, repMin:15, repMax:20, weightStep:2, startWeight:10,
+    cue:"Rückenlage, Oberarme senkrecht und ruhig, nur die Unterarme bewegen. Lieber leicht und sauber, Ellbogen und Sehnen danken es dir." },
+  lateral_raise: { name:"Seitheben (Kurzhanteln)", type:"weight", region:"oberkoerper", sets:3, repMin:15, repMax:20, weightStep:1, startWeight:5,
+    cue:"Gewicht je Hantel. Ellbogen leicht gebeugt, bis Schulterhöhe heben, kontrolliert senken, kein Schwung." },
+
   // ---- Hotel-Substitute (Kurzhantel/Bank, kein Kabelzug/Langhantel noetig) ----
+  db_curl: { name:"DB Curl", type:"weight", region:"oberkoerper", sets:3, repMin:10, repMax:12, weightStep:2, startWeight:8,
+    cue:"Gewicht je Hantel. Ellbogen am Körper, ohne Schwung hoch, kontrolliert absenken." },
   db_deadlift: { name:"DB Romanian Deadlift", type:"weight", region:"po", sets:2, repMin:8, repMax:10, weightStep:2, startWeight:16,
     cue:"Zwei Kurzhanteln vor den Oberschenkeln, Hüfte weit nach hinten, Rücken lang." },
   goblet_squat: { name:"Goblet Squat", type:"weight", region:"beine", sets:2, repMin:8, repMax:10, weightStep:2, startWeight:12,
@@ -560,7 +577,7 @@ const BODYWEIGHT_LADDERS = {
 // Umrechnung Bodyweight→kg).
 // ============================================================
 const HOTEL_MAIN_MAP = { deadlift:"db_deadlift", squat:"goblet_squat", bench:"db_bench" };
-const HOTEL_ASSIST_MAP = { lat_pulldown:"db_pullover", cable_row:"db_row", hip_thrust:"db_hip_thrust" };
+const HOTEL_ASSIST_MAP = { lat_pulldown:"db_pullover", cable_row:"db_row", hip_thrust:"db_hip_thrust", bb_lunge:"split_squat", bb_shoulder_press:"shoulder_press", bb_curl:"db_curl" };
 
 // "Geraet besetzt" — keine freie Auswahl, sondern genau EINE feste
 // Ersatzuebung pro Original, damit im Gym nicht nachgedacht werden muss.
@@ -578,6 +595,8 @@ const OCCUPIED_SUBSTITUTE_MAP = {
   farmer_carry: "suitcase_carry",
   suitcase_carry: "farmer_carry",
   calf_raise: "bw_single_leg_calf_raise",
+  bb_lunge: "split_squat",
+  bb_shoulder_press: "shoulder_press",
 };
 
 const BODYWEIGHT_DAYS = {
@@ -594,10 +613,37 @@ const BODYWEIGHT_DAYS = {
 // Assistance — Deadlift/Squat 180s, Bench 120s).
 // ============================================================
 const MAIN_LIFTS = {
-  deadlift: { name:"Deadlift", region:"po", startWeight:40, increment:5, goalWeight:150, sets:3, reps:5, restSec:180 },
-  squat: { name:"Back Squat", region:"beine", startWeight:30, increment:2.5, goalWeight:110, sets:3, reps:5, restSec:180 },
-  bench: { name:"Bench Press", region:"oberkoerper", startWeight:20, increment:2.5, goalWeight:80, sets:3, reps:5, restSec:120 },
+  deadlift: { name:"Deadlift", region:"po", startWeight:60, increment:5, goalWeight:150, sets:3, reps:5, restSec:180 },
+  squat: { name:"Back Squat", region:"beine", startWeight:65, increment:2.5, calibrateIncrement:5, goalWeight:110, sets:3, reps:5, restSec:180 },
+  bench: { name:"Bench Press", region:"oberkoerper", startWeight:40, increment:2.5, goalWeight:80, sets:3, reps:5, restSec:120 },
 };
+
+// ============================================================
+// Schema: "3x5" (Standard, Linearprogression) oder "10x3" (10 Saetze a 3 Wdh.,
+// kurze Pause, leichter). Jedes Schema hat sein EIGENES Arbeitsgewicht, seine
+// eigene Letzte-RIR-Erinnerung und Kalibrierung — ein Wechsel loest also nie
+// einen Gewichtssprung aus. Die Schluessel des 3x5-Schemas bleiben unveraendert
+// (kein Suffix), damit bestehende Daten weiter gelten.
+// Progressionsregel 10x3 = dieselbe wie 3x5: alle Saetze sauber + RIR >= 3 →
+// naechstes Mal +increment; RIR 1–2 → bleibt; nicht alle Wdh. → Rueckschritt.
+// ============================================================
+const SCHEME_10X3 = {
+  deadlift: { startWeight:65 },
+  squat:    { startWeight:65 },
+  bench:    { startWeight:40 },
+};
+function getScheme(){
+  return loadJSON("build-scheme", "3x5") === "10x3" ? "10x3" : "3x5";
+}
+function schemeSuffix(){
+  return getScheme() === "10x3" ? "-10x3" : "";
+}
+// Wirksame Konfiguration eines Main Lifts im aktuellen Schema.
+function mainCfg(key){
+  const base = MAIN_LIFTS[key];
+  if(getScheme() !== "10x3") return { ...base, reducedSets:2, scheme:"3x5" };
+  return { ...base, sets:10, reps:3, restSec:60, startWeight:SCHEME_10X3[key].startWeight, reducedSets:6, scheme:"10x3" };
+}
 
 // ============================================================
 // BUILD-Tage — alle drei gleichwertig Pflicht, kein Bonus-Tier mehr.
@@ -611,11 +657,43 @@ const BUILD_DAYS = {
   A: { key:"A", label:"BUILD A", focus:"DEADLIFT", mainLift:"deadlift",
        assistance:["lat_pulldown","cable_row","hip_thrust","farmer_carry"], priorityAssistance:["lat_pulldown","hip_thrust"], skill:"klimmzug" },
   B: { key:"B", label:"BUILD B", focus:"SQUAT", mainLift:"squat",
-       assistance:["rdl","split_squat","calf_raise","core_hollow"], priorityAssistance:["rdl","split_squat"], skill:"lsit" },
+       assistance:["rdl","bb_lunge","calf_raise","core_hollow"], priorityAssistance:["rdl","bb_lunge"], skill:"lsit" },
   C: { key:"C", label:"BUILD C", focus:"BENCH", mainLift:"bench",
-       assistance:["cable_row","shoulder_press","lat_pulldown","suitcase_carry"], priorityAssistance:["cable_row","shoulder_press"], skill:"sidecrow" },
+       assistance:["cable_row","bb_shoulder_press","lat_pulldown","suitcase_carry"], priorityAssistance:["cable_row","bb_shoulder_press"], skill:"sidecrow" },
 };
 const DAY_ORDER = ["A","B","C"];
+// Extras: einzeln waehlbar, laufen NACH dem Skill (damit Arme/Schultern den
+// Skill nicht vorermueden). Nur im 40-MIN-Modus, nicht bei "muede", nicht im
+// Bodyweight-Modus. Je Extra eine Uebung, eigene Doppel-Progression.
+const EXTRAS = [
+  { key:"bb_curl", label:"Bizeps" },
+  { key:"skull_crusher", label:"Trizeps" },
+  { key:"lateral_raise", label:"Schultern" },
+];
+// Finisher: optionaler EMOM-Block am Ende (Kondition, kein Test). Bewusst nur
+// einfache, ueberall machbare Stationen; keine Snatches/Handstand-Push-ups.
+// 8 Min = 2 Stationen im Wechsel, 15 Min = 3 Stationen im Wechsel.
+const FINISHER_START_KEY = "build-finisher-start";
+const FINISHER_STATIONS = {
+  gym: [
+    { name:"10 Kalorien Fan Bike oder Rower", cue:"Moderat, kein Sprint. Du solltest noch sprechen können." },
+    { name:"8 Kurzhantel-Thruster (leicht)", cue:"Hanteln an den Schultern, tief in die Kniebeuge, beim Hochkommen über Kopf drücken." },
+    { name:"6 Step-back Burpees", cue:"Schritt zurück statt Sprung, Brust zum Boden, aufstehen. Liegestütz auf den Knien ist okay." },
+  ],
+  hotel: [
+    { name:"30 Hampelmänner", cue:"Gleichmäßig, nicht hetzen." },
+    { name:"8 Kurzhantel-Thruster (leicht)", cue:"Hanteln an den Schultern, tief in die Kniebeuge, beim Hochkommen über Kopf drücken." },
+    { name:"6 Step-back Burpees", cue:"Schritt zurück statt Sprung, Brust zum Boden, aufstehen. Liegestütz auf den Knien ist okay." },
+  ],
+  bodyweight: [
+    { name:"30 Hampelmänner", cue:"Gleichmäßig, nicht hetzen." },
+    { name:"12 Kniebeugen, Arme über Kopf", cue:"Tief, aber kontrolliert. Fersen bleiben unten." },
+    { name:"8 Liegestütze", cue:"Auf den Knien ist okay. Körper bleibt eine Linie." },
+  ],
+};
+function extrasAllowed(equipment, timeMinutes, fatigueToday){
+  return equipment !== "bodyweight" && (!timeMinutes || timeMinutes === 40) && !fatigueToday;
+}
 const REGION_LABELS = { beine:"Beine", po:"Po / hintere Kette", oberkoerper:"Oberkörper", core:"Rumpf/Griff" };
 
 // ============================================================
@@ -717,15 +795,20 @@ function saveRegionState(region, state){
 }
 // affectedRegions: Array von Regionen (leer/undefined bei Gruen/Gelb = betrifft
 // dann alle Regionen der trainierten Uebungen des Tages).
-function applySoreness(dayKey, soreness, affectedRegions){
+// impairs: "Beeintraechtigt der Muskelkater deine Bewegung?" — nur relevant ab 6.
+// false = starker Muskelkater, aber Bewegung normal → keine Reduzierung.
+function applySoreness(dayKey, soreness, affectedRegions, impairs){
   const day = BUILD_DAYS[dayKey];
   const dayRegions = [...new Set([MAIN_LIFTS[day.mainLift].region, ...day.assistance.map(k => EXERCISES[k].region)])];
   let note = "";
 
-  if(soreness >= 6){
+  if(soreness >= 6 && impairs === false){
+    dayRegions.forEach(region => saveRegionState(region, { reduceVolume: false }));
+    note = "Starker Muskelkater, aber die Bewegung ist nicht eingeschränkt. Alles bleibt normal.";
+  } else if(soreness >= 6){
     const regions = (affectedRegions && affectedRegions.length) ? affectedRegions : dayRegions;
     regions.forEach(region => saveRegionState(region, { reduceVolume: true }));
-    note = "Reduziertes Volumen nächstes Mal für: " + regions.map(r => REGION_LABELS[r]).join(", ") + ". Andere Regionen bleiben normal. Gewicht ist davon nicht betroffen.";
+    note = "Nächstes Mal reduziert für: " + regions.map(r => REGION_LABELS[r]).join(", ") + ". Dort läuft der Main Lift mit weniger Sätzen und etwa 10 % leichter, die Assistance mit einem Satz weniger. Dein Arbeitsgewicht bleibt unverändert. Andere Regionen bleiben normal.";
   } else {
     dayRegions.forEach(region => saveRegionState(region, { reduceVolume: false }));
     note = soreness < 3
@@ -858,22 +941,45 @@ function applyBodyweightProgression(exKey, repsPerSet, rating){
 //   nicht alle Wdh. geschafft         → Arbeitsgewicht −halber increment
 // ============================================================
 function getMainLiftWeight(key){
-  return loadJSON("build-mainlift-weight:" + key, MAIN_LIFTS[key].startWeight);
+  return loadJSON("build-mainlift-weight" + schemeSuffix() + ":" + key, mainCfg(key).startWeight);
 }
 function saveMainLiftWeight(key, w){
-  saveJSON("build-mainlift-weight:" + key, w);
+  saveJSON("build-mainlift-weight" + schemeSuffix() + ":" + key, w);
+}
+// Kalibrierung: Lifts mit calibrateIncrement steigen in groesseren Spruengen, bis
+// zum ersten Mal ein Satz-Ergebnis nicht mehr "leicht" war (RIR unter 3 oder
+// nicht alle Wdh.). Danach gilt der normale increment. Verhindert, dass ein
+// zu vorsichtig gewaehlter Startwert Wochen kostet.
+// Fehlversuche in Folge (je Schema, je Lift). Ein einzelner schlechter Tag setzt
+// das Arbeitsgewicht nicht zurueck; erst der zweite Fehlversuch in Folge — oder
+// ein deutlicher Einbruch — loest den Rueckschritt aus.
+function getMisses(key){
+  return loadJSON("build-mainlift-misses" + schemeSuffix() + ":" + key, 0);
+}
+function saveMisses(key, n){
+  saveJSON("build-mainlift-misses" + schemeSuffix() + ":" + key, n);
+}
+// Deutlicher Einbruch: weniger als 75 % der geplanten Wiederholungen oder ein
+// Satz mit hoechstens der Haelfte des Ziels (5er-Saetze: <=2, 3er-Saetze: <=1).
+function isCollapse(repsCompleted, main){
+  const planned = main.sets * main.reps;
+  const total = repsCompleted.reduce((a, b) => a + b, 0);
+  return total < planned * 0.75 || repsCompleted.some(r => r <= Math.floor(main.reps / 2));
+}
+function isCalibrated(key){
+  return !MAIN_LIFTS[key].calibrateIncrement || loadJSON("build-mainlift-calibrated" + schemeSuffix() + ":" + key, false);
 }
 function getMainLiftLast(key){
-  return loadJSON("build-mainlift-last:" + key, { rir: null, allClean: null });
+  return loadJSON("build-mainlift-last" + schemeSuffix() + ":" + key, { rir: null, allClean: null });
 }
 function saveMainLiftLast(key, rir, allClean){
-  saveJSON("build-mainlift-last:" + key, { rir, allClean });
+  saveJSON("build-mainlift-last" + schemeSuffix() + ":" + key, { rir, allClean });
 }
 function roundToIncrement(w, inc){
   return Math.round(w / inc) * inc;
 }
 function suggestedMainLiftSession(key, fatigueToday){
-  const main = MAIN_LIFTS[key];
+  const main = mainCfg(key);
   const region = getRegionState(main.region);
   const last = getMainLiftLast(key);
   const workingWeight = getMainLiftWeight(key);
@@ -883,13 +989,13 @@ function suggestedMainLiftSession(key, fatigueToday){
   // Nimmt Vorrang vor der Muskelkater-Logik, feste Regel: ca. -10%, 2 statt 3
   // Saetze. Wie lighter/recovery veraendert das NIE das Arbeitsgewicht dauerhaft.
   if(fatigueToday){
-    return { mode:"fatigue", sets:2, reps: main.reps, weight: roundToIncrement(workingWeight * 0.9, main.increment) };
+    return { mode:"fatigue", sets:main.reducedSets, reps: main.reps, weight: roundToIncrement(workingWeight * 0.9, main.increment) };
   }
   if(region.reduceVolume){
     if(last.rir !== null && last.rir <= 1){
-      return { mode:"recovery", sets:2, reps: main.reps, weight: roundToIncrement(workingWeight * 0.65, main.increment) };
+      return { mode:"recovery", sets:main.reducedSets, reps: main.reps, weight: roundToIncrement(workingWeight * 0.65, main.increment) };
     }
-    return { mode:"lighter", sets:2, reps: main.reps, weight: roundToIncrement(workingWeight * 0.9, main.increment) };
+    return { mode:"lighter", sets:main.reducedSets, reps: main.reps, weight: roundToIncrement(workingWeight * 0.9, main.increment) };
   }
   return { mode:"normal", sets: main.sets, reps: main.reps, weight: workingWeight };
 }
@@ -903,7 +1009,7 @@ function suggestedMainLiftSession(key, fatigueToday){
 // einzigen Satz zusammengelegt statt sinnlos dupliziert.
 const BARBELL_WEIGHT = 20;
 function computeRampUp(key, fatigueToday){
-  const main = MAIN_LIFTS[key];
+  const main = mainCfg(key);
   const session = suggestedMainLiftSession(key, fatigueToday);
   const target = session.weight;
   if(target <= BARBELL_WEIGHT){
@@ -924,7 +1030,7 @@ function computeRampUp(key, fatigueToday){
 }
 // repsCompleted: Array der tatsaechlich geschafften Wdh. je Satz. rir: 0-4 (4 = "4+").
 function applyMainLiftProgression(key, mode, repsCompleted, rir){
-  const main = MAIN_LIFTS[key];
+  const main = mainCfg(key);
   const allClean = repsCompleted.every(r => r >= main.reps);
   saveMainLiftLast(key, rir, allClean);
 
@@ -933,17 +1039,30 @@ function applyMainLiftProgression(key, mode, repsCompleted, rir){
   }
   const workingWeight = getMainLiftWeight(key);
   if(!allClean){
+    if(main.calibrateIncrement) saveJSON("build-mainlift-calibrated" + schemeSuffix() + ":" + key, true);
+    const misses = getMisses(key);
+    if(misses < 1 && !isCollapse(repsCompleted, main)){
+      saveMisses(key, misses + 1);
+      return "Nicht alle Wiederholungen geschafft. Gewicht bleibt bei " + workingWeight + " kg. Klappt es beim nächsten Mal wieder nicht, geht es runter.";
+    }
+    saveMisses(key, 0);
     // Floor statt round-to-nearest: garantiert einen echten Rueckschritt, auch wenn
     // (Gewicht − halber Increment) rechnerisch exakt auf einer Rundungsgrenze landet.
-    const next = Math.max(main.startWeight, Math.floor((workingWeight - main.increment/2) / main.increment) * main.increment);
+    // Untergrenze ist die leere Langhantel, nicht der Startwert — sonst kaeme man
+    // von einem zu hoch gewaehlten Startwert nie wieder herunter.
+    const next = Math.max(BARBELL_WEIGHT, Math.floor((workingWeight - main.increment/2) / main.increment) * main.increment);
     saveMainLiftWeight(key, next);
     return "Nicht alle Wiederholungen geschafft. Nächstes Mal " + next + " kg.";
   }
+  saveMisses(key, 0); // saubere Session: Fehlversuchs-Serie beendet
   if(rir >= 3){
-    const next = workingWeight + main.increment;
+    const calibrating = !isCalibrated(key);
+    const step = calibrating ? main.calibrateIncrement : main.increment;
+    const next = workingWeight + step;
     saveMainLiftWeight(key, next);
-    return "Sauber bei RIR " + (rir===4 ? "4+" : rir) + ". Nächstes Mal " + next + " kg.";
+    return "Sauber bei RIR " + (rir===4 ? "4+" : rir) + ". Nächstes Mal " + next + " kg." + (calibrating ? " (Kalibrierung: +" + step + " kg, bis es sich schwerer anfühlt.)" : "");
   }
+  if(main.calibrateIncrement) saveJSON("build-mainlift-calibrated" + schemeSuffix() + ":" + key, true);
   return "Sauber bei RIR " + rir + ". Gewicht bleibt bei " + workingWeight + " kg.";
 }
 
@@ -1071,6 +1190,7 @@ function discardActiveSession(){
   Object.keys(MAIN_LIFTS).forEach(key => clearMainLiftProgress(key));
   clearAssistanceUIProgress();
   clearRestEndsAt();
+  saveJSON(FINISHER_START_KEY, null);
   clearActiveWorkout();
 }
 
@@ -1156,8 +1276,28 @@ const WARMUP_GENERAL = [
   "10× Arm Circles",
   "5–8× Push-ups",
 ];
+// Tagesspezifisches Aufwaermen: bewusst kurz (3 Punkte, passt in die 2 Minuten).
+// Die eigentliche Vorbereitung sind danach die Ramp-up-Saetze des Main Lifts.
+// Ohne statisches Dehnen, nur mit Dingen, die auch im Hotel gehen.
+const WARMUP_BY_DAY = {
+  A: [ // Deadlift
+    "10× Deadbug pro Seite",
+    "10× Hip Hinge mit leerer Stange oder Hantel",
+    "10× Arm Circles",
+  ],
+  B: [ // Squat
+    "10× Goblet Squat, unten 2 Sek. halten",
+    "10× Hüftkreise pro Seite",
+    "10× Deadbug pro Seite",
+  ],
+  C: [ // Bench
+    "10× Arm Circles",
+    "8× Push-up Plus (oben die Schulterblätter weit nach vorn)",
+    "5× Prone IYT (Bauchlage, Arme als I, Y, T heben)",
+  ],
+};
 
-function WarmupStep({ mainKey, showRampUp, fatigueToday, onDone }){
+function WarmupStep({ mainKey, dayKey, showRampUp, fatigueToday, onDone }){
   const [phase, setPhase] = useState('general'); // 'general' | 'rampup'
   const [left, setLeft] = useState(120);
   const startRef = useRef(Date.now());
@@ -1173,10 +1313,10 @@ function WarmupStep({ mainKey, showRampUp, fatigueToday, onDone }){
 
   if(phase === 'general'){
     return e('div', { style:{textAlign:'center', padding:'26px 20px'} },
-      e('div', {style:{fontSize:12, color:'var(--accent)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', marginBottom:10}}, 'Warm-up · Allgemein'),
+      e('div', {style:{fontSize:12, color:'var(--accent)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', marginBottom:10}}, WARMUP_BY_DAY[dayKey] ? 'Warm-up · ' + BUILD_DAYS[dayKey].focus : 'Warm-up · Allgemein'),
       e('div', {style:{fontSize:40, fontWeight:800, color:'var(--text)', fontVariantNumeric:'tabular-nums', marginBottom:18}}, m + ':' + String(s).padStart(2,'0')),
       e('div', {style:{textAlign:'left', display:'inline-block'}},
-        WARMUP_GENERAL.map((line, i) => e('div', {key:i, style:{fontSize:15, color:'var(--text-body)', padding:'6px 0', display:'flex', gap:8}},
+        (WARMUP_BY_DAY[dayKey] || WARMUP_GENERAL).map((line, i) => e('div', {key:i, style:{fontSize:15, color:'var(--text-body)', padding:'6px 0', display:'flex', gap:8}},
           e('span', {style:{color:'var(--accent)', fontWeight:700}}, '·'), line))
       ),
       e('button', {className:'btn btn-primary', onClick:()=> showRampUp ? setPhase('rampup') : onDone(), style:{marginTop:24}},
@@ -1314,7 +1454,7 @@ function AssistanceStep({ exKey, setNr, totalSets, resumeUI, onSetDone, onExerci
 // von der Main-Lift-Engine und wird sichtbar erklärt, nicht versteckt.
 // ============================================================
 function MainLiftStep({ mainKey, fatigueToday, onDone }){
-  const main = MAIN_LIFTS[mainKey];
+  const main = mainCfg(mainKey);
   const [session] = useState(() => suggestedMainLiftSession(mainKey, fatigueToday));
   const resumeProgress = useState(() => loadMainLiftProgress(mainKey))[0];
   const [weight, setWeight] = useState(() => resumeProgress ? resumeProgress.weight : session.weight);
@@ -1387,11 +1527,11 @@ function MainLiftStep({ mainKey, fatigueToday, onDone }){
   }
 
   const modeInfo = session.mode === 'recovery'
-    ? { label:'RECOVERY', color:'danger', text:'Starker Muskelkater in der relevanten Region + niedriges RIR zuletzt. Heute 2×' + session.reps + ', deutlich leichter, reiner Technikfokus.' }
+    ? { label:'RECOVERY', color:'danger', text:'Starker Muskelkater in der relevanten Region + niedriges RIR zuletzt. Heute ' + session.sets + '×' + session.reps + ', deutlich leichter, reiner Technikfokus.' }
     : session.mode === 'lighter'
-    ? { label:'HEUTE LEICHTER', color:'warning', text:'Muskelkater in der relevanten Region gemeldet. Heute 2×' + session.reps + ' statt ' + main.sets + '×' + main.reps + ', etwas leichter.' }
+    ? { label:'HEUTE LEICHTER', color:'warning', text:'Muskelkater in der relevanten Region gemeldet. Heute ' + session.sets + '×' + session.reps + ' statt ' + main.sets + '×' + main.reps + ', etwas leichter.' }
     : session.mode === 'fatigue'
-    ? { label:'MÜDE / NICHT FIT', color:'warning', text:'Du hast heute "müde/nicht fit" gewählt — kein Muskelkater-Grund, einfach dein Tagesgefühl. Heute 2×' + session.reps + ' statt ' + main.sets + '×' + main.reps + ', ca. −10%.' }
+    ? { label:'MÜDE / NICHT FIT', color:'warning', text:'Du hast heute "müde/nicht fit" gewählt — kein Muskelkater-Grund, einfach dein Tagesgefühl. Heute ' + session.sets + '×' + session.reps + ' statt ' + main.sets + '×' + main.reps + ', ca. −10%.' }
     : null;
 
   if(phase === 'resting'){
@@ -1481,6 +1621,7 @@ function HowWasItStep({ dayKey, onDone }){
     clearActiveWorkout();
     clearAssistanceUIProgress();
     clearRestEndsAt();
+    saveJSON(FINISHER_START_KEY, null);
     saveJSON('build-lastday', dayKey);
     saveJSON('build-pending-soreness', { day: dayKey, date: todayISO() });
     setTimeout(onDone, 600);
@@ -1499,19 +1640,23 @@ function HowWasItStep({ dayKey, onDone }){
 // ============================================================
 function SorenessCheck({ pending, onDone }){
   const [val, setVal] = useState(3);
-  const [step, setStep] = useState('slider'); // 'slider' | 'region'
+  const [step, setStep] = useState('slider'); // 'slider' | 'impair' | 'region'
   const [saved, setSaved] = useState(null);
 
   function proceedFromSlider(){
     if(val >= 6){
-      setStep('region');
+      setStep('impair');
     } else {
       finish(null);
     }
   }
-  function finish(region){
+  function answerImpair(impairs){
+    if(impairs) setStep('region');
+    else finish(null, false);
+  }
+  function finish(region, impairs){
     const affectedRegions = region ? (region === 'ueberall' ? ['beine','po','oberkoerper','core'] : [region]) : null;
-    const note = applySoreness(pending.day, val, affectedRegions);
+    const note = applySoreness(pending.day, val, affectedRegions, impairs);
     updateHistoryWithSoreness(pending.date, pending.day, val, affectedRegions);
     saveJSON('build-pending-soreness', null);
     setSaved(note);
@@ -1536,6 +1681,14 @@ function SorenessCheck({ pending, onDone }){
         e('div', {style:{fontSize:13, fontWeight:700, marginTop:4, color:'var(--' + zone.c + '-text)'}}, zone.label)
       ),
       e('button', {className:'btn btn-primary', onClick:proceedFromSlider}, 'Bestätigen')
+    ) : step === 'impair' ? e(React.Fragment, null,
+      e('div', {style:{fontSize:15, color:'var(--text-body)', marginBottom:16, lineHeight:1.5}}, 'Beeinträchtigt der Muskelkater deine Bewegung?'),
+      e('div', {style:{display:'flex', flexDirection:'column', gap:8}},
+        [[true,'JA — Bewegung eingeschränkt'],[false,'NEIN — nur Muskelkater, ich bewege mich normal']].map(([v,lbl]) =>
+          e('button', {key:String(v), className:'btn', onClick:()=>answerImpair(v),
+            style:{padding:'14px', borderRadius:12, border:'1px solid var(--border)', background:'var(--bg)', color:'var(--text)', fontSize:14, fontWeight:700}}, lbl))
+      ),
+      e('div', {style:{fontSize:11, color:'var(--text-hint)', marginTop:12, fontStyle:'italic'}}, 'Beispiel: Treppensteigen, Hocke oder Beugen fühlt sich merklich schlechter an.')
     ) : e(React.Fragment, null,
       e('div', {style:{fontSize:15, color:'var(--text-body)', marginBottom:16, lineHeight:1.5}}, 'Wo hauptsächlich?'),
       e('div', {style:{display:'flex', flexDirection:'column', gap:8}},
@@ -1556,7 +1709,7 @@ function GoalsOverview(){
     e('div', {style:{fontSize:11, color:'var(--accent)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', marginBottom:10}}, 'Strength'),
     Object.entries(MAIN_LIFTS).map(([key, m]) => e('div', {key, style:{display:'flex', justifyContent:'space-between', padding:'6px 0', borderTop:'1px solid var(--border)'}},
       e('span', {style:{fontSize:14, color:'var(--text)'}}, m.name),
-      e('span', {style:{fontSize:13, color:'var(--text-secondary)'}}, getMainLiftWeight(key) + ' kg → ' + m.goalWeight + ' kg')
+      e('span', {style:{fontSize:13, color:'var(--text-secondary)'}}, getMainLiftWeight(key) + ' kg → ' + m.goalWeight + ' kg' + (getScheme()==='10x3' ? ' (10×3)' : ''))
     )),
     e('div', {style:{fontSize:11, color:'var(--accent)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', margin:'16px 0 10px'}}, 'JOGA Skills'),
     Object.entries(SKILLS).map(([key, s]) => {
@@ -1667,7 +1820,7 @@ function ProgressDashboard({ onBack }){
   );
 }
 
-function TodayScreen({ activeDay, setActiveDay, equipment, setEquipment, timeMinutes, setTimeMinutes, fatigueToday, setFatigueToday, onStart }){
+function TodayScreen({ activeDay, setActiveDay, equipment, setEquipment, timeMinutes, setTimeMinutes, fatigueToday, setFatigueToday, scheme, setScheme, extras, toggleExtra, finisherMin, setFinisher, onStart }){
   const [view, setView] = useState('today'); // 'today' | 'progress'
   const day = getEffectiveDay(activeDay, equipment, timeMinutes);
   const skill = SKILLS[day.skill];
@@ -1679,6 +1832,8 @@ function TodayScreen({ activeDay, setActiveDay, equipment, setEquipment, timeMin
   }
 
   const EQUIPMENT_LABELS = { gym:'GYM', hotel:'HOTEL GYM', bodyweight:'BODYWEIGHT' };
+  const activeExtras = extrasAllowed(equipment, timeMinutes, fatigueToday) ? EXTRAS.filter(x => extras.includes(x.key)).map(x => x.label) : [];
+  const addOns = [activeExtras.length ? 'Extras: ' + activeExtras.join(', ') : null, (!fatigueToday && finisherMin) ? 'Finisher ' + finisherMin + ' Min' : null].filter(Boolean);
 
   return e('div', null,
     tooHardWarning ? e('div', {style:{fontSize:12, color:'var(--warning-text)', fontWeight:600, marginBottom:14, padding:'10px 12px', background:'var(--warning-bg)', border:'1px solid var(--warning-border)', borderRadius:10, lineHeight:1.5}}, tooHardWarning) : null,
@@ -1700,6 +1855,27 @@ function TodayScreen({ activeDay, setActiveDay, equipment, setEquipment, timeMin
           border:'1px solid ' + (timeMinutes===k ? 'var(--accent)' : 'var(--border)'),
           background: timeMinutes===k ? 'rgba(193,84,31,0.12)' : 'transparent', color: timeMinutes===k ? 'var(--accent)' : 'var(--text-hint)'}}, TIME_MODES[k].label))
     ),
+    equipment === 'gym' ? e('div', {style:{display:'flex', gap:6, marginBottom:8, alignItems:'center'}},
+      e('span', {style:{fontSize:11, color:'var(--text-hint)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', width:62, flexShrink:0}}, 'Schema'),
+      [['3x5','3×5 · schwerer'], ['10x3','10×3 · kurze Pause']].map(([k, label]) => e('button', {key:k, className:'btn', onClick:()=>setScheme(k),
+        style:{flex:1, padding:'8px 4px', borderRadius:9, fontSize:11, fontWeight:700,
+          border:'1px solid ' + (scheme===k ? 'var(--accent)' : 'var(--border)'),
+          background: scheme===k ? 'rgba(193,84,31,0.12)' : 'transparent', color: scheme===k ? 'var(--accent)' : 'var(--text-hint)'}}, label))
+    ) : null,
+    extrasAllowed(equipment, timeMinutes, fatigueToday) ? e('div', {style:{display:'flex', gap:6, marginBottom:8, alignItems:'center'}},
+      e('span', {style:{fontSize:11, color:'var(--text-hint)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', width:62, flexShrink:0}}, 'Extras'),
+      EXTRAS.map(x => e('button', {key:x.key, className:'btn', onClick:()=>toggleExtra(x.key),
+        style:{flex:1, padding:'8px 4px', borderRadius:9, fontSize:11, fontWeight:700,
+          border:'1px solid ' + (extras.includes(x.key) ? 'var(--accent)' : 'var(--border)'),
+          background: extras.includes(x.key) ? 'rgba(193,84,31,0.12)' : 'transparent', color: extras.includes(x.key) ? 'var(--accent)' : 'var(--text-hint)'}}, (extras.includes(x.key) ? '✓ ' : '') + x.label))
+    ) : null,
+    !fatigueToday ? e('div', {style:{display:'flex', gap:6, marginBottom:8, alignItems:'center'}},
+      e('span', {style:{fontSize:11, color:'var(--text-hint)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', width:62, flexShrink:0}}, 'Finisher'),
+      [[0,'AUS'],[8,'8 MIN'],[15,'15 MIN']].map(([k, label]) => e('button', {key:k, className:'btn', onClick:()=>setFinisher(k),
+        style:{flex:1, padding:'8px 4px', borderRadius:9, fontSize:11, fontWeight:700,
+          border:'1px solid ' + (finisherMin===k ? 'var(--accent)' : 'var(--border)'),
+          background: finisherMin===k ? 'rgba(193,84,31,0.12)' : 'transparent', color: finisherMin===k ? 'var(--accent)' : 'var(--text-hint)'}}, label))
+    ) : null,
     e('button', {className:'btn', onClick:()=>setFatigueToday(!fatigueToday),
       style:{width:'100%', marginBottom:16, padding:'9px 4px', borderRadius:9, fontSize:12, fontWeight:700,
         border:'1px solid ' + (fatigueToday ? 'var(--warning-border)' : 'var(--border)'),
@@ -1710,20 +1886,21 @@ function TodayScreen({ activeDay, setActiveDay, equipment, setEquipment, timeMin
       e('div', {style:{fontSize:26, fontWeight:800, color:'var(--accent)', marginBottom:8}}, day.label + ' · ' + day.focus + (equipment !== 'gym' ? ' · ' + EQUIPMENT_LABELS[equipment] : '')),
       day.hasMainLift ? renderGymPreview(day, fatigueToday) : renderSubstitutePreview(day, activeDay, equipment),
       e('div', {style:{fontSize:13, color:'var(--text-hint)', marginBottom:20, marginTop:6}}, '★ ' + skill.name + ' · Stufe ' + (skillStageIdx+1) + '/' + skill.stages.length + (day.skillNote ? ' — ' + day.skillNote : '') + (day.skillMode !== 'full' ? ' · ' + (day.skillMode==='optional'?'optional':'kurz') : '')),
+      addOns.length ? e('div', {style:{fontSize:13, color:'var(--text-secondary)', marginBottom:20, marginTop:-10}}, '+ ' + addOns.join(' · ')) : null,
       e('button', {className:'btn btn-primary', onClick:onStart}, 'START')
     ),
     e('button', {className:'btn', onClick:()=>setView('progress'), style:{width:'100%', marginTop:14, padding:'10px', borderRadius:10, border:'1px solid var(--border)', color:'var(--text-secondary)', fontSize:13, fontWeight:700}}, 'PROGRESS'),
     e(GoalsOverview),
     e('div', {style:{fontSize:12, color:'var(--text-hint)', textAlign:'center', lineHeight:1.6, marginTop:16}},
       equipment === 'gym'
-        ? '2 Min Warm-up + Ramp-up → Main Lift → Assistance → Skill. Kein Kalendergefängnis — läuft einfach weiter, wo du zuletzt aufgehört hast.'
+        ? '2 Min Warm-up + Ramp-up → Main Lift → Assistance → Skill → Extras → Finisher (die letzten beiden optional). Kein Kalendergefängnis — läuft einfach weiter, wo du zuletzt aufgehört hast.'
         : equipment === 'hotel'
         ? 'Kurzhantel-Ersatz für Langhantel/Kabelzug. Dein normales Arbeitsgewicht bleibt eingefroren, bis du wieder im Gym bist.'
         : 'Reine Erhaltung ohne Equipment. Kein Kraftaufbau Richtung 150/110/80 — dein Arbeitsgewicht bleibt eingefroren, bis du wieder im Gym bist.')
   );
 }
 function renderGymPreview(day, fatigueToday){
-  const main = MAIN_LIFTS[day.mainLift];
+  const main = mainCfg(day.mainLift);
   const session = suggestedMainLiftSession(day.mainLift, fatigueToday);
   return e(React.Fragment, null,
     e('div', {style:{fontSize:15, color:'var(--text-body)', fontWeight:600}},
@@ -1744,10 +1921,79 @@ function renderSubstitutePreview(day, dayKey, equipment){
 }
 
 // ============================================================
+// Finisher — EMOM-Timer. Der Start wird als absoluter Zeitstempel gespeichert,
+// damit ein Reload mitten im Finisher exakt an der richtigen Minute weitermacht.
+// ============================================================
+function FinisherStep({ equipment, minutes, onDone }){
+  const stations = FINISHER_STATIONS[equipment] || FINISHER_STATIONS.gym;
+  const count = minutes === 8 ? 2 : 3;
+  const total = minutes * 60;
+  const [startTs, setStartTs] = useState(() => loadJSON(FINISHER_START_KEY, null));
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if(!startTs) return;
+    const iv = setInterval(() => setNow(Date.now()), 500);
+    return () => clearInterval(iv);
+  }, [startTs]);
+  function start(){
+    const ts = Date.now();
+    saveJSON(FINISHER_START_KEY, ts);
+    setStartTs(ts); setNow(ts);
+  }
+  function finish(elapsedSec){
+    const doneAll = elapsedSec >= total;
+    appendSessionLogLine(doneAll ? 'Finisher ' + minutes + ' Min (EMOM)' : 'Finisher nach ' + Math.floor(elapsedSec/60) + ' von ' + minutes + ' Min beendet');
+    saveJSON(FINISHER_START_KEY, null);
+    onDone();
+  }
+  const labelStyle = {fontSize:12, color:'var(--accent)', fontWeight:700, letterSpacing:1, textTransform:'uppercase', marginBottom:10};
+
+  if(!startTs){
+    return e('div', { className:'card', style:{padding:'24px 18px', textAlign:'center'} },
+      e('div', {style:labelStyle}, 'Finisher · ' + minutes + ' Min'),
+      e('div', {style:{fontSize:15, color:'var(--text-body)', lineHeight:1.55, marginBottom:14, textAlign:'left'}},
+        'Jede volle Minute startet die nächste Station, im Wechsel:'),
+      e('div', {style:{textAlign:'left', marginBottom:14}},
+        stations.slice(0, count).map((st, i) => e('div', {key:i, style:{fontSize:15, fontWeight:700, color:'var(--text)', padding:'4px 0'}}, (i+1) + '. ' + st.name))),
+      e('div', {style:{fontSize:13, color:'var(--text-hint)', lineHeight:1.5, marginBottom:18, textAlign:'left'}},
+        'Bist du vor Minutenende fertig, ist der Rest Pause. Ziel: anstrengend, aber nicht am Limit. Wird es hektisch, Wiederholungen reduzieren.'),
+      e('button', {className:'btn btn-primary', onClick:start}, 'Los'),
+      e('button', {className:'btn', onClick:()=>onDone(), style:{width:'100%', marginTop:10, padding:'8px', fontSize:12, color:'var(--text-hint)', textDecoration:'underline'}}, 'Heute auslassen')
+    );
+  }
+
+  const elapsed = Math.max(0, Math.floor((now - startTs) / 1000));
+  if(elapsed >= total){
+    return e('div', { className:'card', style:{padding:'28px 18px', textAlign:'center'} },
+      e(IconCheck),
+      e('div', {style:{fontSize:18, fontWeight:800, color:'var(--text)', margin:'12px 0 18px'}}, 'Finisher geschafft'),
+      e('button', {className:'btn btn-primary', onClick:()=>finish(elapsed)}, 'Weiter')
+    );
+  }
+  const minIdx = Math.floor(elapsed / 60);
+  const left = 60 - (elapsed % 60);
+  const cur = stations[minIdx % count];
+  const next = minIdx + 1 < minutes ? stations[(minIdx + 1) % count] : null;
+  return e('div', { className:'card', style:{padding:'24px 18px', textAlign:'center'} },
+    e('div', {style:labelStyle}, 'Finisher · Minute ' + (minIdx+1) + ' von ' + minutes),
+    e('div', {style:{fontSize:44, fontWeight:800, color:'var(--text)', fontVariantNumeric:'tabular-nums', marginBottom:14}}, '0:' + String(left).padStart(2,'0')),
+    e('div', {style:{fontSize:22, fontWeight:800, color:'var(--text)', lineHeight:1.25, marginBottom:8}}, cur.name),
+    e('div', {style:{fontSize:13, color:'var(--text-secondary)', lineHeight:1.5, marginBottom:16}}, cur.cue),
+    next ? e('div', {style:{fontSize:12, color:'var(--text-hint)', marginBottom:18}}, 'Danach: ' + next.name) : e('div', {style:{fontSize:12, color:'var(--text-hint)', marginBottom:18}}, 'Letzte Minute'),
+    e('button', {className:'btn', onClick:()=>finish(elapsed), style:{width:'100%', padding:'8px', fontSize:12, color:'var(--text-hint)', textDecoration:'underline'}}, 'Finisher jetzt beenden')
+  );
+}
+
+// ============================================================
 // Workout-Ablauf (Zustandsmaschine)
 // ============================================================
-function WorkoutFlow({ dayKey, equipment, timeMinutes, fatigueToday, resume, onFinish, onCancel }){
+function WorkoutFlow({ dayKey, equipment, timeMinutes, fatigueToday, extras, finisherMin, resume, onFinish, onCancel }){
   const day = getEffectiveDay(dayKey, equipment, timeMinutes);
+  // Extras laufen nach dem Skill; die Uebungsliste ist [regulaere Assistance..., Extras...].
+  const extraKeys = extrasAllowed(equipment, timeMinutes, fatigueToday)
+    ? (extras || []).map(k => equipment === "hotel" ? (HOTEL_ASSIST_MAP[k] || k) : k) : [];
+  const mainCount = day.assistance.length;
+  const allEx = day.assistance.concat(extraKeys);
   const [phase, setPhase] = useState(() => resume ? resume.phase : 'warmup');
   const [exIdx, setExIdx] = useState(() => resume ? resume.exIdx : 0);
   const [setNr, setSetNr] = useState(() => resume ? resume.setNr : 1);
@@ -1761,7 +2007,7 @@ function WorkoutFlow({ dayKey, equipment, timeMinutes, fatigueToday, resume, onF
   useEffect(() => { const t = setTimeout(() => setPendingRestEndsAt(null), 0); return () => clearTimeout(t); }, []);
   const [resumeUI] = useState(() => resume ? loadAssistanceUIProgress() : null);
 
-  const originalExKey = day.assistance[exIdx];
+  const originalExKey = allEx[exIdx];
   const exKey = substitutions[exIdx] || originalExKey;
   const targetSets = exKey ? suggestedVolume(exKey, fatigueToday).sets : 1;
   const skillSkippable = day.skillMode === 'optional' || !!fatigueToday;
@@ -1778,7 +2024,7 @@ function WorkoutFlow({ dayKey, equipment, timeMinutes, fatigueToday, resume, onF
   // Reload oder Schliessen des Browsers die Einheit automatisch fortsetzt
   // statt sie zu verwerfen.
   useEffect(() => {
-    saveActiveWorkout({ dayKey, equipment, timeMinutes, fatigueToday, phase, exIdx, setNr, substitutions });
+    saveActiveWorkout({ dayKey, equipment, timeMinutes, fatigueToday, extras, finisherMin, phase, exIdx, setNr, substitutions });
   }, [phase, exIdx, setNr, substitutions]);
 
   // Wird nur fuer NICHT-letzte Saetze aufgerufen (letzter Satz -> Bewertung
@@ -1792,14 +2038,33 @@ function WorkoutFlow({ dayKey, equipment, timeMinutes, fatigueToday, resume, onF
   }
   // Wird aufgerufen, nachdem eine Uebung fertig bewertet ist (oder bei Hold
   // sofort nach dem letzten Satz, da Holds keine Bewertung haben).
+  const finisherEff = fatigueToday ? 0 : (finisherMin || 0);
+  function afterExtras(){
+    setPhase(finisherEff ? 'finisher' : 'howwasit');
+  }
   function handleExerciseRated(){
     clearAssistanceUIProgress();
-    if(exIdx < day.assistance.length - 1){
+    if(exIdx < mainCount - 1){ // naechste regulaere Assistance
       setExIdx(exIdx+1);
       setSetNr(1);
       setPhase('rest-exercise');
-    } else {
+    } else if(exIdx === mainCount - 1){ // letzte regulaere Assistance → Skill (Extras kommen danach)
       setPhase('skill');
+    } else if(exIdx < allEx.length - 1){ // naechstes Extra
+      setExIdx(exIdx+1);
+      setSetNr(1);
+      setPhase('rest-exercise');
+    } else { // letztes Extra
+      afterExtras();
+    }
+  }
+  function handleSkillDone(){
+    if(extraKeys.length > 0){
+      setExIdx(mainCount);
+      setSetNr(1);
+      setPhase('exercise');
+    } else {
+      afterExtras();
     }
   }
   function handleExerciseRestDone(){
@@ -1829,15 +2094,16 @@ function WorkoutFlow({ dayKey, equipment, timeMinutes, fatigueToday, resume, onF
     e('div', {style:{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10}},
       e('span', null),
       e('div', {style:{fontSize:12, color:'var(--text-hint)', textAlign:'center', flex:1}},
-        day.label + ' · ' + day.focus + (equipment !== 'gym' ? ' · ' + (equipment==='hotel'?'Hotel':'Bodyweight') : '') + (timeMinutes && timeMinutes !== 40 ? ' · ' + TIME_MODES[timeMinutes].label : '') + (fatigueToday ? ' · müde/nicht fit' : '') + (phase==='exercise'||phase.startsWith('rest') ? ' · Übung ' + (exIdx+1) + '/' + day.assistance.length : '')),
+        day.label + ' · ' + day.focus + (equipment !== 'gym' ? ' · ' + (equipment==='hotel'?'Hotel':'Bodyweight') : '') + (timeMinutes && timeMinutes !== 40 ? ' · ' + TIME_MODES[timeMinutes].label : '') + (fatigueToday ? ' · müde/nicht fit' : '') + (phase==='exercise'||phase.startsWith('rest') ? ' · ' + (exIdx >= mainCount ? 'Extra ' + (exIdx-mainCount+1) + '/' + extraKeys.length : 'Übung ' + (exIdx+1) + '/' + mainCount) : phase==='finisher' ? ' · Finisher' : '')),
       e('button', {className:'btn', onClick:handleCancelClick, style:{fontSize:12, color:'var(--text-hint)', textDecoration:'underline', flexShrink:0, marginLeft:8}}, 'Abbrechen')
     ),
-    phase === 'warmup' ? e(WarmupStep, { mainKey: day.mainLift, showRampUp: day.hasMainLift, fatigueToday, onDone: ()=> setPhase(day.hasMainLift ? 'mainlift' : 'exercise') }) :
+    phase === 'warmup' ? e(WarmupStep, { mainKey: day.mainLift, dayKey, showRampUp: day.hasMainLift, fatigueToday, onDone: ()=> setPhase(day.hasMainLift ? 'mainlift' : 'exercise') }) :
     phase === 'mainlift' ? e(MainLiftStep, { mainKey: day.mainLift, fatigueToday, onDone: ()=>{ clearMainLiftProgress(day.mainLift); setPhase('exercise'); } }) :
     phase === 'exercise' ? e(AssistanceStep, { key: exIdx + ':' + exKey, exKey, setNr, totalSets: targetSets, resumeUI, onSetDone: handleSetDone, onExerciseRated: handleExerciseRated, onSubstitute: handleSubstitute }) :
     phase === 'rest-set' ? e(RestTimer, { seconds: 75, resumeEndsAt: pendingRestEndsAt, onDone: handleSetRestDone }) :
     phase === 'rest-exercise' ? e(RestTimer, { seconds: 75, resumeEndsAt: pendingRestEndsAt, onDone: handleExerciseRestDone }) :
-    phase === 'skill' ? e(SkillStep, { skillKey: day.skill, note: day.skillNote, skippable: skillSkippable, shortMode: skillShort, onDone: ()=>setPhase('howwasit') }) :
+    phase === 'skill' ? e(SkillStep, { skillKey: day.skill, note: day.skillNote, skippable: skillSkippable, shortMode: skillShort, onDone: handleSkillDone }) :
+    phase === 'finisher' ? e(FinisherStep, { equipment, minutes: finisherEff || 8, onDone: ()=>setPhase('howwasit') }) :
     phase === 'howwasit' ? e(HowWasItStep, { dayKey, onDone: onFinish }) : null
   );
 }
@@ -1852,6 +2118,17 @@ function JogaBuild(){
   const [equipment, setEquipment] = useState(() => activeWorkout ? activeWorkout.equipment : loadJSON('build-equipment', 'gym'));
   const [timeMinutes, setTimeMinutes] = useState(() => activeWorkout ? activeWorkout.timeMinutes : loadJSON('build-time-minutes', 40));
   const [fatigueToday, setFatigueToday] = useState(() => activeWorkout ? activeWorkout.fatigueToday : loadJSON('build-fatigue-today', false));
+  const [extras, setExtrasState] = useState(() => activeWorkout ? (activeWorkout.extras || []) : loadJSON('build-extras', []));
+  function toggleExtra(k){
+    const next = extras.includes(k) ? extras.filter(x => x !== k) : [...extras, k];
+    saveJSON('build-extras', next); setExtrasState(next);
+  }
+  const [finisherMin, setFinisherState] = useState(() => activeWorkout ? (activeWorkout.finisherMin || 0) : loadJSON('build-finisher', 0));
+  function setFinisher(v){ saveJSON('build-finisher', v); setFinisherState(v); }
+  const [scheme, setSchemeState] = useState(() => getScheme());
+  // Synchron speichern (nicht erst im Effect): TodayScreen liest Schema und
+  // Arbeitsgewicht beim naechsten Render direkt aus dem Speicher.
+  function setScheme(v){ saveJSON('build-scheme', v); setSchemeState(v); }
   const [screen, setScreen] = useState(() => activeWorkout ? 'workout' : 'today');
   const [pendingSoreness, setPendingSoreness] = useState(() => getPendingSorenessCheck());
 
@@ -1883,8 +2160,8 @@ function JogaBuild(){
       e('h1', { style:{color:'var(--text)', fontSize:22, fontWeight:800, margin:'2px 0 18px'} }, 'Strong enough. Move better.'),
 
       pendingSoreness ? e(SorenessCheck, { pending: pendingSoreness, onDone: ()=>setPendingSoreness(null) }) :
-      screen === 'today' ? e(TodayScreen, { activeDay, setActiveDay, equipment, setEquipment, timeMinutes, setTimeMinutes, fatigueToday, setFatigueToday, onStart: ()=>setScreen('workout') }) :
-      e(WorkoutFlow, { dayKey: activeDay, equipment, timeMinutes, fatigueToday, resume: activeWorkout, onFinish: finishSession, onCancel: cancelSession })
+      screen === 'today' ? e(TodayScreen, { activeDay, setActiveDay, equipment, setEquipment, timeMinutes, setTimeMinutes, fatigueToday, setFatigueToday, scheme, setScheme, extras, toggleExtra, finisherMin, setFinisher, onStart: ()=>setScreen('workout') }) :
+      e(WorkoutFlow, { dayKey: activeDay, equipment, timeMinutes, fatigueToday, extras, finisherMin, resume: activeWorkout, onFinish: finishSession, onCancel: cancelSession })
     )
   );
 }
